@@ -1,0 +1,528 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */; };
+		374EC9CF1D7CB5A90047B82B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9CE1D7CB5A90047B82B /* ViewController.swift */; };
+		374EC9D21D7CB5A90047B82B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D01D7CB5A90047B82B /* Main.storyboard */; };
+		374EC9D41D7CB5A90047B82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D31D7CB5A90047B82B /* Assets.xcassets */; };
+		374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */; };
+		374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */; };
+		374EC9ED1D7CB5AA0047B82B /* CAVOKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		374EC9DE1D7CB5AA0047B82B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 374EC9C11D7CB5A90047B82B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 374EC9C81D7CB5A90047B82B;
+			remoteInfo = CAVOK;
+		};
+		374EC9E91D7CB5AA0047B82B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 374EC9C11D7CB5A90047B82B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 374EC9C81D7CB5A90047B82B;
+			remoteInfo = CAVOK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		374EC9C91D7CB5A90047B82B /* CAVOK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAVOK.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		374EC9CE1D7CB5A90047B82B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		374EC9D11D7CB5A90047B82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		374EC9D31D7CB5A90047B82B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		374EC9D61D7CB5A90047B82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		374EC9D81D7CB5A90047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		374EC9DD1D7CB5AA0047B82B /* CAVOKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKTests.swift; sourceTree = "<group>"; };
+		374EC9E31D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKUITests.swift; sourceTree = "<group>"; };
+		374EC9EE1D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		374EC9C61D7CB5A90047B82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		374EC9DA1D7CB5AA0047B82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		374EC9E51D7CB5AA0047B82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		374EC9C01D7CB5A90047B82B = {
+			isa = PBXGroup;
+			children = (
+				374EC9CB1D7CB5A90047B82B /* CAVOK */,
+				374EC9E01D7CB5AA0047B82B /* CAVOKTests */,
+				374EC9EB1D7CB5AA0047B82B /* CAVOKUITests */,
+				374EC9CA1D7CB5A90047B82B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		374EC9CA1D7CB5A90047B82B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				374EC9C91D7CB5A90047B82B /* CAVOK.app */,
+				374EC9DD1D7CB5AA0047B82B /* CAVOKTests.xctest */,
+				374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		374EC9CB1D7CB5A90047B82B /* CAVOK */ = {
+			isa = PBXGroup;
+			children = (
+				374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */,
+				374EC9CE1D7CB5A90047B82B /* ViewController.swift */,
+				374EC9D01D7CB5A90047B82B /* Main.storyboard */,
+				374EC9D31D7CB5A90047B82B /* Assets.xcassets */,
+				374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */,
+				374EC9D81D7CB5A90047B82B /* Info.plist */,
+			);
+			path = CAVOK;
+			sourceTree = "<group>";
+		};
+		374EC9E01D7CB5AA0047B82B /* CAVOKTests */ = {
+			isa = PBXGroup;
+			children = (
+				374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */,
+				374EC9E31D7CB5AA0047B82B /* Info.plist */,
+			);
+			path = CAVOKTests;
+			sourceTree = "<group>";
+		};
+		374EC9EB1D7CB5AA0047B82B /* CAVOKUITests */ = {
+			isa = PBXGroup;
+			children = (
+				374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */,
+				374EC9EE1D7CB5AA0047B82B /* Info.plist */,
+			);
+			path = CAVOKUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		374EC9C81D7CB5A90047B82B /* CAVOK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 374EC9F11D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOK" */;
+			buildPhases = (
+				374EC9C51D7CB5A90047B82B /* Sources */,
+				374EC9C61D7CB5A90047B82B /* Frameworks */,
+				374EC9C71D7CB5A90047B82B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAVOK;
+			productName = CAVOK;
+			productReference = 374EC9C91D7CB5A90047B82B /* CAVOK.app */;
+			productType = "com.apple.product-type.application";
+		};
+		374EC9DC1D7CB5AA0047B82B /* CAVOKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 374EC9F41D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKTests" */;
+			buildPhases = (
+				374EC9D91D7CB5AA0047B82B /* Sources */,
+				374EC9DA1D7CB5AA0047B82B /* Frameworks */,
+				374EC9DB1D7CB5AA0047B82B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				374EC9DF1D7CB5AA0047B82B /* PBXTargetDependency */,
+			);
+			name = CAVOKTests;
+			productName = CAVOKTests;
+			productReference = 374EC9DD1D7CB5AA0047B82B /* CAVOKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		374EC9E71D7CB5AA0047B82B /* CAVOKUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 374EC9F71D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKUITests" */;
+			buildPhases = (
+				374EC9E41D7CB5AA0047B82B /* Sources */,
+				374EC9E51D7CB5AA0047B82B /* Frameworks */,
+				374EC9E61D7CB5AA0047B82B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				374EC9EA1D7CB5AA0047B82B /* PBXTargetDependency */,
+			);
+			name = CAVOKUITests;
+			productName = CAVOKUITests;
+			productReference = 374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		374EC9C11D7CB5A90047B82B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Juho Kolehmainen";
+				TargetAttributes = {
+					374EC9C81D7CB5A90047B82B = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+					374EC9DC1D7CB5AA0047B82B = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 374EC9C81D7CB5A90047B82B;
+					};
+					374EC9E71D7CB5AA0047B82B = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 374EC9C81D7CB5A90047B82B;
+					};
+				};
+			};
+			buildConfigurationList = 374EC9C41D7CB5A90047B82B /* Build configuration list for PBXProject "CAVOK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 374EC9C01D7CB5A90047B82B;
+			productRefGroup = 374EC9CA1D7CB5A90047B82B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				374EC9C81D7CB5A90047B82B /* CAVOK */,
+				374EC9DC1D7CB5AA0047B82B /* CAVOKTests */,
+				374EC9E71D7CB5AA0047B82B /* CAVOKUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		374EC9C71D7CB5A90047B82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */,
+				374EC9D41D7CB5A90047B82B /* Assets.xcassets in Resources */,
+				374EC9D21D7CB5A90047B82B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		374EC9DB1D7CB5AA0047B82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		374EC9E61D7CB5AA0047B82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		374EC9C51D7CB5A90047B82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				374EC9CF1D7CB5A90047B82B /* ViewController.swift in Sources */,
+				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		374EC9D91D7CB5AA0047B82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		374EC9E41D7CB5AA0047B82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				374EC9ED1D7CB5AA0047B82B /* CAVOKUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		374EC9DF1D7CB5AA0047B82B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 374EC9C81D7CB5A90047B82B /* CAVOK */;
+			targetProxy = 374EC9DE1D7CB5AA0047B82B /* PBXContainerItemProxy */;
+		};
+		374EC9EA1D7CB5AA0047B82B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 374EC9C81D7CB5A90047B82B /* CAVOK */;
+			targetProxy = 374EC9E91D7CB5AA0047B82B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		374EC9D01D7CB5A90047B82B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				374EC9D11D7CB5A90047B82B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				374EC9D61D7CB5A90047B82B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		374EC9EF1D7CB5AA0047B82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		374EC9F01D7CB5AA0047B82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		374EC9F21D7CB5AA0047B82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CAVOK/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		374EC9F31D7CB5AA0047B82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CAVOK/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		374EC9F51D7CB5AA0047B82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CAVOKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAVOK.app/CAVOK";
+			};
+			name = Debug;
+		};
+		374EC9F61D7CB5AA0047B82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CAVOKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAVOK.app/CAVOK";
+			};
+			name = Release;
+		};
+		374EC9F81D7CB5AA0047B82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = CAVOKUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = CAVOK;
+			};
+			name = Debug;
+		};
+		374EC9F91D7CB5AA0047B82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = CAVOKUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = CAVOK;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		374EC9C41D7CB5A90047B82B /* Build configuration list for PBXProject "CAVOK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				374EC9EF1D7CB5AA0047B82B /* Debug */,
+				374EC9F01D7CB5AA0047B82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		374EC9F11D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				374EC9F21D7CB5AA0047B82B /* Debug */,
+				374EC9F31D7CB5AA0047B82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		374EC9F41D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				374EC9F51D7CB5AA0047B82B /* Debug */,
+				374EC9F61D7CB5AA0047B82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		374EC9F71D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				374EC9F81D7CB5AA0047B82B /* Debug */,
+				374EC9F91D7CB5AA0047B82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 374EC9C11D7CB5A90047B82B /* Project object */;
+}
