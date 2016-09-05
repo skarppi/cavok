@@ -14,6 +14,12 @@
 		374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */; };
 		374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */; };
 		374EC9ED1D7CB5AA0047B82B /* CAVOKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */; };
+		377123D71D7D91630010CA1F /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123D41D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.framework */; };
+		377123D91D7D92FB0010CA1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123D81D7D92FB0010CA1F /* CoreLocation.framework */; };
+		377123DB1D7D93110010CA1F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DA1D7D93110010CA1F /* libc++.tbd */; };
+		377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DC1D7D931E0010CA1F /* libz.tbd */; };
+		377123DF1D7D93280010CA1F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DE1D7D93280010CA1F /* libsqlite3.tbd */; };
+		377123E11D7D93300010CA1F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E01D7D93300010CA1F /* libxml2.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +37,20 @@
 			remoteGlobalIDString = 374EC9C81D7CB5A90047B82B;
 			remoteInfo = CAVOK;
 		};
+		377123D31D7D8EF90010CA1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2BE536FF1D2499E500B60FAD;
+			remoteInfo = WhirlyGlobeMaplyComponent;
+		};
+		377123D51D7D8EF90010CA1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2BE537091D2499E500B60FAD;
+			remoteInfo = WhirlyGlobeMaplyComponentTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +67,12 @@
 		374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKUITests.swift; sourceTree = "<group>"; };
 		374EC9EE1D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/WhirlyGlobeSrc/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
+		377123D81D7D92FB0010CA1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		377123DA1D7D93110010CA1F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		377123DC1D7D931E0010CA1F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		377123DE1D7D93280010CA1F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		377123E01D7D93300010CA1F /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +80,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				377123E11D7D93300010CA1F /* libxml2.tbd in Frameworks */,
+				377123DF1D7D93280010CA1F /* libsqlite3.tbd in Frameworks */,
+				377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */,
+				377123DB1D7D93110010CA1F /* libc++.tbd in Frameworks */,
+				377123D91D7D92FB0010CA1F /* CoreLocation.framework in Frameworks */,
+				377123D71D7D91630010CA1F /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +113,7 @@
 				374EC9E01D7CB5AA0047B82B /* CAVOKTests */,
 				374EC9EB1D7CB5AA0047B82B /* CAVOKUITests */,
 				374EC9CA1D7CB5A90047B82B /* Products */,
+				377123CC1D7D8EF80010CA1F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +156,28 @@
 				374EC9EE1D7CB5AA0047B82B /* Info.plist */,
 			);
 			path = CAVOKUITests;
+			sourceTree = "<group>";
+		};
+		377123CC1D7D8EF80010CA1F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				377123E01D7D93300010CA1F /* libxml2.tbd */,
+				377123DE1D7D93280010CA1F /* libsqlite3.tbd */,
+				377123DC1D7D931E0010CA1F /* libz.tbd */,
+				377123DA1D7D93110010CA1F /* libc++.tbd */,
+				377123D81D7D92FB0010CA1F /* CoreLocation.framework */,
+				377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		377123CE1D7D8EF90010CA1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				377123D41D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.framework */,
+				377123D61D7D8EF90010CA1F /* WhirlyGlobeMaplyComponentTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +273,12 @@
 			mainGroup = 374EC9C01D7CB5A90047B82B;
 			productRefGroup = 374EC9CA1D7CB5A90047B82B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 377123CE1D7D8EF90010CA1F /* Products */;
+					ProjectRef = 377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				374EC9C81D7CB5A90047B82B /* CAVOK */,
@@ -226,6 +287,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		377123D41D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WhirlyGlobeMaplyComponent.framework;
+			remoteRef = 377123D31D7D8EF90010CA1F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		377123D61D7D8EF90010CA1F /* WhirlyGlobeMaplyComponentTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WhirlyGlobeMaplyComponentTests.xctest;
+			remoteRef = 377123D51D7D8EF90010CA1F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		374EC9C71D7CB5A90047B82B /* Resources */ = {
@@ -416,6 +494,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/WhirlyGlobeSrc/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -428,6 +507,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/WhirlyGlobeSrc/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -505,6 +585,7 @@
 				374EC9F31D7CB5AA0047B82B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		374EC9F41D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +594,7 @@
 				374EC9F61D7CB5AA0047B82B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		374EC9F71D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +603,7 @@
 				374EC9F91D7CB5AA0047B82B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
