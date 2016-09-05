@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370222281D7DF07800984647 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123F31D7DB06D0010CA1F /* PMKFoundation.framework */; };
+		370222291D7DF07800984647 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E81D7D961A0010CA1F /* PromiseKit.framework */; };
+		3702222A1D7DF07800984647 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E91D7D961A0010CA1F /* SwiftyJSON.framework */; };
 		374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */; };
 		374EC9CF1D7CB5A90047B82B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9CE1D7CB5A90047B82B /* ViewController.swift */; };
 		374EC9D21D7CB5A90047B82B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D01D7CB5A90047B82B /* Main.storyboard */; };
@@ -20,6 +23,8 @@
 		377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DC1D7D931E0010CA1F /* libz.tbd */; };
 		377123DF1D7D93280010CA1F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DE1D7D93280010CA1F /* libsqlite3.tbd */; };
 		377123E11D7D93300010CA1F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E01D7D93300010CA1F /* libxml2.tbd */; };
+		377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377123E31D7D944B0010CA1F /* TileJSONLayer.swift */; };
+		377123E71D7D94F50010CA1F /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = 377123E61D7D94F50010CA1F /* CAVOK.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +78,13 @@
 		377123DC1D7D931E0010CA1F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		377123DE1D7D93280010CA1F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		377123E01D7D93300010CA1F /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		377123E31D7D944B0010CA1F /* TileJSONLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileJSONLayer.swift; path = Map/TileJSONLayer.swift; sourceTree = "<group>"; };
+		377123E61D7D94F50010CA1F /* CAVOK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CAVOK.plist; sourceTree = "<group>"; };
+		377123E81D7D961A0010CA1F /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
+		377123E91D7D961A0010CA1F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		377123EC1D7D967F0010CA1F /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		377123EE1D7D96880010CA1F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		377123F31D7DB06D0010CA1F /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				370222281D7DF07800984647 /* PMKFoundation.framework in Frameworks */,
+				370222291D7DF07800984647 /* PromiseKit.framework in Frameworks */,
+				3702222A1D7DF07800984647 /* SwiftyJSON.framework in Frameworks */,
 				377123E11D7D93300010CA1F /* libxml2.tbd in Frameworks */,
 				377123DF1D7D93280010CA1F /* libsqlite3.tbd in Frameworks */,
 				377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */,
@@ -109,6 +124,8 @@
 		374EC9C01D7CB5A90047B82B = {
 			isa = PBXGroup;
 			children = (
+				377123EE1D7D96880010CA1F /* README.md */,
+				377123EC1D7D967F0010CA1F /* Cartfile */,
 				374EC9CB1D7CB5A90047B82B /* CAVOK */,
 				374EC9E01D7CB5AA0047B82B /* CAVOKTests */,
 				374EC9EB1D7CB5AA0047B82B /* CAVOKUITests */,
@@ -130,12 +147,14 @@
 		374EC9CB1D7CB5A90047B82B /* CAVOK */ = {
 			isa = PBXGroup;
 			children = (
+				377123E21D7D94110010CA1F /* Map */,
 				374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */,
 				374EC9CE1D7CB5A90047B82B /* ViewController.swift */,
 				374EC9D01D7CB5A90047B82B /* Main.storyboard */,
 				374EC9D31D7CB5A90047B82B /* Assets.xcassets */,
 				374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */,
 				374EC9D81D7CB5A90047B82B /* Info.plist */,
+				377123E61D7D94F50010CA1F /* CAVOK.plist */,
 			);
 			path = CAVOK;
 			sourceTree = "<group>";
@@ -161,6 +180,9 @@
 		377123CC1D7D8EF80010CA1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				377123F31D7DB06D0010CA1F /* PMKFoundation.framework */,
+				377123E81D7D961A0010CA1F /* PromiseKit.framework */,
+				377123E91D7D961A0010CA1F /* SwiftyJSON.framework */,
 				377123E01D7D93300010CA1F /* libxml2.tbd */,
 				377123DE1D7D93280010CA1F /* libsqlite3.tbd */,
 				377123DC1D7D931E0010CA1F /* libz.tbd */,
@@ -180,6 +202,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		377123E21D7D94110010CA1F /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				377123E31D7D944B0010CA1F /* TileJSONLayer.swift */,
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -190,6 +220,7 @@
 				374EC9C51D7CB5A90047B82B /* Sources */,
 				374EC9C61D7CB5A90047B82B /* Frameworks */,
 				374EC9C71D7CB5A90047B82B /* Resources */,
+				3702222B1D7DF19F00984647 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -311,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */,
+				377123E71D7D94F50010CA1F /* CAVOK.plist in Resources */,
 				374EC9D41D7CB5A90047B82B /* Assets.xcassets in Resources */,
 				374EC9D21D7CB5A90047B82B /* Main.storyboard in Resources */,
 			);
@@ -332,12 +364,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3702222B1D7DF19F00984647 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		374EC9C51D7CB5A90047B82B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				374EC9CF1D7CB5A90047B82B /* ViewController.swift in Sources */,
+				377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,6 +542,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = CAVOK/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
@@ -503,6 +559,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = CAVOK/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;

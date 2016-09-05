@@ -26,6 +26,15 @@ class ViewController: UIViewController {
         mapView.frameInterval = 2 // 30fps
         mapView.threadPerLayer = true
         mapView.autoMoveToTap = false
+        
+        if let basemap = UserDefaults.standard.string(forKey: "basemapURL"), let url = URL(string: basemap) {
+            TileJSONLayer().load(url: url).then { layer in
+                self.mapView.add(layer)
+            }.catch { e in
+                print(e)
+            }
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

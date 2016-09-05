@@ -1,0 +1,3 @@
+github "mxcl/PromiseKit" "4.0.0"
+github "visskiss/SwiftyJSON" "01d39d1e38af08d9d0337d7b23bdd93914afd652"
+github "PromiseKit/Foundation" "1.0.0"
