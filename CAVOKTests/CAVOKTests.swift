@@ -2,7 +2,7 @@
 //  CAVOKTests.swift
 //  CAVOKTests
 //
-//  Created by Juho Kolehmainen on 04.09.16.
+//  Created by Juho Kolehmainen on 21.10.12.
 //  Copyright © 2016 Juho Kolehmainen. All rights reserved.
 //
 

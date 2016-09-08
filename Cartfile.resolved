@@ -1,3 +1,4 @@
 github "mxcl/PromiseKit" "4.0.0"
 github "visskiss/SwiftyJSON" "01d39d1e38af08d9d0337d7b23bdd93914afd652"
+github "realm/realm-cocoa" "88bf015b5cf58053fb045c5b86e0ef6de156928a"
 github "PromiseKit/Foundation" "1.0.0"

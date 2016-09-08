@@ -10,7 +10,9 @@
 		370222281D7DF07800984647 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123F31D7DB06D0010CA1F /* PMKFoundation.framework */; };
 		370222291D7DF07800984647 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E81D7D961A0010CA1F /* PromiseKit.framework */; };
 		3702222A1D7DF07800984647 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E91D7D961A0010CA1F /* SwiftyJSON.framework */; };
+		371E0E321D7E0DAE00BE1846 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */; };
 		371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E0E3B1D7E11F700BE1846 /* UserMarker.swift */; };
+		371E0E3E1D7F4AC900BE1846 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E3D1D7F4AC800BE1846 /* Realm.framework */; };
 		374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */; };
 		374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */; };
 		374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9CE1D7CB5A90047B82B /* MapViewController.swift */; };
@@ -27,8 +29,21 @@
 		377123E11D7D93300010CA1F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E01D7D93300010CA1F /* libxml2.tbd */; };
 		377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377123E31D7D944B0010CA1F /* TileJSONLayer.swift */; };
 		377123E71D7D94F50010CA1F /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = 377123E61D7D94F50010CA1F /* CAVOK.plist */; };
+		378AE5F81D80B56D008492D5 /* TafTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE5F71D80B56D008492D5 /* TafTests.swift */; };
+		378AE5FC1D80BB35008492D5 /* ObservationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */; };
 		37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A54FFC1D7FE15B002BADA0 /* LastSession.swift */; };
 		37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */; };
+		37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDBE1D8064E5009307F0 /* Observation.swift */; };
+		37B7FDC21D8064E5009307F0 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */; };
+		37B7FDC31D8064E5009307F0 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC01D8064E5009307F0 /* Station.swift */; };
+		37B7FDC51D806523009307F0 /* MetarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC41D806523009307F0 /* MetarTests.swift */; };
+		37B7FDC71D80654F009307F0 /* Metar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC61D80654F009307F0 /* Metar.swift */; };
+		37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC81D8065BD009307F0 /* Taf.swift */; };
+		37B7FDCA1D806B54009307F0 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E3D1D7F4AC800BE1846 /* Realm.framework */; };
+		37B7FDCB1D806B54009307F0 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */; };
+		37B7FDCC1D806B54009307F0 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123F31D7DB06D0010CA1F /* PMKFoundation.framework */; };
+		37B7FDCD1D806B54009307F0 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E81D7D961A0010CA1F /* PromiseKit.framework */; };
+		37B7FDCE1D806B54009307F0 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E91D7D961A0010CA1F /* SwiftyJSON.framework */; };
 		37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +79,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		371E0E3B1D7E11F700BE1846 /* UserMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMarker.swift; path = Map/UserMarker.swift; sourceTree = "<group>"; };
+		371E0E3D1D7F4AC800BE1846 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationManager.swift; path = Map/LocationManager.swift; sourceTree = "<group>"; };
 		374EC9C91D7CB5A90047B82B /* CAVOK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAVOK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,8 +109,16 @@
 		377123EC1D7D967F0010CA1F /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		377123EE1D7D96880010CA1F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		377123F31D7DB06D0010CA1F /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
+		378AE5F71D80B56D008492D5 /* TafTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TafTests.swift; sourceTree = "<group>"; };
+		378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTestCase.swift; sourceTree = "<group>"; };
 		37A54FFC1D7FE15B002BADA0 /* LastSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastSession.swift; path = Map/LastSession.swift; sourceTree = "<group>"; };
 		37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Maply+Additions.swift"; path = "Extensions/Maply+Additions.swift"; sourceTree = "<group>"; };
+		37B7FDBE1D8064E5009307F0 /* Observation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observation.swift; path = Weather/Models/Observation.swift; sourceTree = "<group>"; };
+		37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tokenizer.swift; path = Weather/Models/Tokenizer.swift; sourceTree = "<group>"; };
+		37B7FDC01D8064E5009307F0 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Station.swift; path = Weather/Models/Station.swift; sourceTree = "<group>"; };
+		37B7FDC41D806523009307F0 /* MetarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetarTests.swift; sourceTree = "<group>"; };
+		37B7FDC61D80654F009307F0 /* Metar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Metar.swift; path = Weather/Models/Metar.swift; sourceTree = "<group>"; };
+		37B7FDC81D8065BD009307F0 /* Taf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Taf.swift; path = Weather/Models/Taf.swift; sourceTree = "<group>"; };
 		37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +127,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				371E0E3E1D7F4AC900BE1846 /* Realm.framework in Frameworks */,
+				371E0E321D7E0DAE00BE1846 /* RealmSwift.framework in Frameworks */,
 				370222281D7DF07800984647 /* PMKFoundation.framework in Frameworks */,
 				370222291D7DF07800984647 /* PromiseKit.framework in Frameworks */,
 				3702222A1D7DF07800984647 /* SwiftyJSON.framework in Frameworks */,
@@ -118,6 +145,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37B7FDCA1D806B54009307F0 /* Realm.framework in Frameworks */,
+				37B7FDCB1D806B54009307F0 /* RealmSwift.framework in Frameworks */,
+				37B7FDCC1D806B54009307F0 /* PMKFoundation.framework in Frameworks */,
+				37B7FDCD1D806B54009307F0 /* PromiseKit.framework in Frameworks */,
+				37B7FDCE1D806B54009307F0 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +200,7 @@
 			children = (
 				374ACD101D7F4E7D00C45A18 /* Extensions */,
 				377123E21D7D94110010CA1F /* Map */,
+				37B7FDBA1D8064B8009307F0 /* Weather */,
 				374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */,
 				374EC9D01D7CB5A90047B82B /* Main.storyboard */,
 				374EC9D31D7CB5A90047B82B /* Assets.xcassets */,
@@ -182,6 +215,9 @@
 			isa = PBXGroup;
 			children = (
 				374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */,
+				378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */,
+				37B7FDC41D806523009307F0 /* MetarTests.swift */,
+				378AE5F71D80B56D008492D5 /* TafTests.swift */,
 				374EC9E31D7CB5AA0047B82B /* Info.plist */,
 			);
 			path = CAVOKTests;
@@ -199,6 +235,8 @@
 		377123CC1D7D8EF80010CA1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				371E0E3D1D7F4AC800BE1846 /* Realm.framework */,
+				371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */,
 				377123F31D7DB06D0010CA1F /* PMKFoundation.framework */,
 				377123E81D7D961A0010CA1F /* PromiseKit.framework */,
 				377123E91D7D961A0010CA1F /* SwiftyJSON.framework */,
@@ -231,6 +269,26 @@
 				371E0E3B1D7E11F700BE1846 /* UserMarker.swift */,
 			);
 			name = Map;
+			sourceTree = "<group>";
+		};
+		37B7FDBA1D8064B8009307F0 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				37B7FDBD1D8064CA009307F0 /* Models */,
+			);
+			name = Weather;
+			sourceTree = "<group>";
+		};
+		37B7FDBD1D8064CA009307F0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				37B7FDBE1D8064E5009307F0 /* Observation.swift */,
+				37B7FDC61D80654F009307F0 /* Metar.swift */,
+				37B7FDC01D8064E5009307F0 /* Station.swift */,
+				37B7FDC81D8065BD009307F0 /* Taf.swift */,
+				37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +455,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 			);
 			outputPaths = (
 			);
@@ -413,11 +473,16 @@
 			files = (
 				374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */,
 				371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */,
+				37B7FDC21D8064E5009307F0 /* Tokenizer.swift in Sources */,
 				374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */,
 				37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */,
+				37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */,
 				37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */,
+				37B7FDC71D80654F009307F0 /* Metar.swift in Sources */,
 				377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */,
+				37B7FDC31D8064E5009307F0 /* Station.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
+				37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */,
 				37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,7 +491,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				378AE5F81D80B56D008492D5 /* TafTests.swift in Sources */,
 				374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */,
+				37B7FDC51D806523009307F0 /* MetarTests.swift in Sources */,
+				378AE5FC1D80BB35008492D5 /* ObservationTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +675,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
@@ -621,6 +693,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;

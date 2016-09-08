@@ -1,3 +1,4 @@
 github "visskiss/SwiftyJSON" "swift3"
 github "PromiseKit/Foundation" ~> 1.0
 github "mxcl/PromiseKit" ~> 4.0
+github "realm/realm-cocoa.git" "master"
