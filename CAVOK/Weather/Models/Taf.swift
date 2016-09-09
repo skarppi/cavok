@@ -18,6 +18,13 @@ public class Taf: Observation {
         // TAF
         parser.next()
         
+        if let type = parser.peek()  {
+            if type.contains(["COR", "AMD"]) {
+                self.type = type
+                parser.next()
+            }
+        }
+        
         // identifier
         self.identifier = parser.pop()!
         

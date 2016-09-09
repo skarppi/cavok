@@ -23,6 +23,7 @@ public struct WindData {
 
 open class Observation: Object {
     
+    open dynamic var type: String = ""
     public var identifier: String = ""
     public var cloudHeight = RealmOptional<Int>()
     public dynamic var condition: Int16 = 0

@@ -15,7 +15,6 @@ public class Metar: Observation {
     open let dewPoint = RealmOptional<Int>()
     open dynamic var runwayVisualRange: String?
     open let temperature = RealmOptional<Int>()
-    open dynamic var type: String = ""
     
     func temperatureDifference() -> Int? {
         if temperature.value != nil && dewPoint.value != nil {
