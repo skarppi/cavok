@@ -25,8 +25,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             manager.delegate = self;
             manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            manager.requestWhenInUseAuthorization()
-            manager.requestLocation()
+            
+            if CLLocationManager.authorizationStatus() == .notDetermined {
+                manager.requestWhenInUseAuthorization()
+            } else {
+                manager.requestLocation()
+            }
             print("Location requested")
         } else {
             reject("Location not enabled")
@@ -43,6 +47,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             print("Status not determined")
         default:
             print("Looking for location with status \(status)")
+            manager.requestLocation()
         }
     }
     
