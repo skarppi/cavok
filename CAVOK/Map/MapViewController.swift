@@ -33,7 +33,7 @@ class MapViewController: UIViewController {
         mapView.threadPerLayer = true
         mapView.autoMoveToTap = false
         
-        if let (center, height) = LastSession.restore() {
+        if let (center, height) = LastSession.load() {
             mapView.height = height
             mapView.setPosition(center)
         }
@@ -72,7 +72,7 @@ class MapViewController: UIViewController {
     }
     
     func enteredBackground(notification: Notification) {
-        LastSession.store(center: mapView.getPosition(), height: mapView.getHeight())
+        LastSession.save(center: mapView.getPosition(), height: mapView.getHeight())
     }
     
     func enteredForeground(notification: Notification) {
@@ -88,7 +88,7 @@ class MapViewController: UIViewController {
         }
         
         let bbox = mapView.getCurrentExtents()
-        let height = LastSession.restore()?.height
+        let height = LastSession.load()?.height
         if height == nil || !bbox.inside(coordinate) {
             mapView.height = height ?? 0.2
             mapView.animate(toPosition: coordinate, time:0.5)

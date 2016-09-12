@@ -10,7 +10,7 @@ import Foundation
 
 class LastSession {
     
-    class func restore() -> (center: MaplyCoordinate, height: Float)? {
+    class func load() -> (center: MaplyCoordinate, height: Float)? {
         if let lastSession = UserDefaults.standard.dictionary(forKey: "LastSession") as? [String : Float] {
             if let longitude = lastSession["longitude"],
                 let latitude = lastSession["latitude"],
@@ -22,7 +22,7 @@ class LastSession {
         return nil
     }
     
-    class func store(center: MaplyCoordinate, height: Double) {
+    class func save(center: MaplyCoordinate, height: Double) {
         let lastSession: [String : Any] = [
             "longitude" : center.deg.x,
             "latitude" : center.deg.y,
