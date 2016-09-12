@@ -12,9 +12,13 @@ import PromiseKit
 
 class MapViewController: UIViewController {
     
-    @IBOutlet internal var mapView: WhirlyGlobeViewController!
+    @IBOutlet weak var status: UITextField!
+    
+    fileprivate var mapView: WhirlyGlobeViewController!
 
-    private var components: [NSObject: MaplyComponentObject] = [:]
+    fileprivate var module: MapModule!
+    
+    fileprivate var components: [NSObject: MaplyComponentObject] = [:]
     
     private var locationManager: LocationManager!
     
@@ -24,8 +28,8 @@ class MapViewController: UIViewController {
         // Create an empty globe and add it to the view
         mapView = WhirlyGlobeViewController()
         
-        self.view.addSubview(mapView.view)
-        mapView.view.frame = self.view.bounds
+        view.insertSubview(mapView.view, at: 0)
+        mapView.view.frame = view.bounds
         addChildViewController(mapView)
         
         mapView.keepNorthUp = true
@@ -95,6 +99,31 @@ class MapViewController: UIViewController {
         }
     }
     
+}
+
+// MARK: - MapDelegate
+extension MapViewController : MapDelegate {
+
+    func setStatus(error: Error) {
+        switch error {
+        case let Weather.error(msg):
+            setStatus(text: msg)
+        default:
+            print(error)
+            setStatus(text: error.localizedDescription)
+        }
+        
+    }
+    
+    func setStatus(text: String?, color: UIColor = UIColor.red) {
+        if let text = text {
+            DispatchQueue.main.async {
+                self.status.textColor = color
+                self.status.text = "\(text)"
+            }
+        }
+    }
+    
     func clearComponents(of: NSObject.Type?) {
         if let filter = of {
             let matching = components.filter { (key,_) in
@@ -110,3 +139,14 @@ class MapViewController: UIViewController {
         }
     }
 }
+
+// MARK: - UITextFieldDelegate
+extension MapViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == self.status {
+            module.refreshData()
+        }
+        return false
+    }
+}
+

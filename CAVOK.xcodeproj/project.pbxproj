@@ -33,6 +33,7 @@
 		378AE5FC1D80BB35008492D5 /* ObservationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */; };
 		37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A54FFC1D7FE15B002BADA0 /* LastSession.swift */; };
 		37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */; };
+		37B22BF21D82085F001AF5BA /* MapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22BF11D82085F001AF5BA /* MapModule.swift */; };
 		37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDBE1D8064E5009307F0 /* Observation.swift */; };
 		37B7FDC21D8064E5009307F0 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */; };
 		37B7FDC31D8064E5009307F0 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC01D8064E5009307F0 /* Station.swift */; };
@@ -113,6 +114,7 @@
 		378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTestCase.swift; sourceTree = "<group>"; };
 		37A54FFC1D7FE15B002BADA0 /* LastSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastSession.swift; path = Map/LastSession.swift; sourceTree = "<group>"; };
 		37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Maply+Additions.swift"; path = "Extensions/Maply+Additions.swift"; sourceTree = "<group>"; };
+		37B22BF11D82085F001AF5BA /* MapModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapModule.swift; path = Map/MapModule.swift; sourceTree = "<group>"; };
 		37B7FDBE1D8064E5009307F0 /* Observation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observation.swift; path = Weather/Models/Observation.swift; sourceTree = "<group>"; };
 		37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tokenizer.swift; path = Weather/Models/Tokenizer.swift; sourceTree = "<group>"; };
 		37B7FDC01D8064E5009307F0 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Station.swift; path = Weather/Models/Station.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 		377123E21D7D94110010CA1F /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				37B22BF11D82085F001AF5BA /* MapModule.swift */,
 				37A54FFC1D7FE15B002BADA0 /* LastSession.swift */,
 				374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */,
 				374EC9CE1D7CB5A90047B82B /* MapViewController.swift */,
@@ -479,6 +482,7 @@
 				37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */,
 				37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */,
 				37B7FDC71D80654F009307F0 /* Metar.swift in Sources */,
+				37B22BF21D82085F001AF5BA /* MapModule.swift in Sources */,
 				377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */,
 				37B7FDC31D8064E5009307F0 /* Station.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
