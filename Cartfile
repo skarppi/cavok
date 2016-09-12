@@ -2,3 +2,5 @@ github "visskiss/SwiftyJSON" "swift3"
 github "PromiseKit/Foundation" ~> 1.0
 github "mxcl/PromiseKit" ~> 4.0
 github "realm/realm-cocoa.git" "master"
+github "drmohundro/SWXMLHash" "xcode-8.0"
+github "1024jp/GzipSwift" ~> 3.0.0

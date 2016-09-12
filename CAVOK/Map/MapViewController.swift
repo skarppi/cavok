@@ -68,6 +68,8 @@ class MapViewController: UIViewController {
                 self.clearComponents(of: UserMarker.self)
             })
         locationManager.requestLocation()
+        
+        module = WeatherModule(delegate: self)
     }
 
     override func didReceiveMemoryWarning() {

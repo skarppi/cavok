@@ -1,4 +1,6 @@
-github "mxcl/PromiseKit" "4.0.0"
+github "1024jp/GzipSwift" "3.0.0"
+github "mxcl/PromiseKit" "4.0.1"
+github "drmohundro/SWXMLHash" "e48ea38adef2d52a9302fcdc5edd5e2c3067256d"
 github "visskiss/SwiftyJSON" "01d39d1e38af08d9d0337d7b23bdd93914afd652"
-github "realm/realm-cocoa" "88bf015b5cf58053fb045c5b86e0ef6de156928a"
+github "realm/realm-cocoa" "742e530446e7c3b74abdf902b9109ab8f1086753"
 github "PromiseKit/Foundation" "1.0.0"
