@@ -21,6 +21,8 @@
 		374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */; };
 		374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */; };
 		374EC9ED1D7CB5AA0047B82B /* CAVOKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */; };
+		3765505C1D86E6E500610329 /* RegionSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765505B1D86E6E500610329 /* RegionSelection.swift */; };
+		3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765505D1D86E72100610329 /* RegionAnnotationView.swift */; };
 		377123D71D7D91630010CA1F /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123D41D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.framework */; };
 		377123D91D7D92FB0010CA1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123D81D7D92FB0010CA1F /* CoreLocation.framework */; };
 		377123DB1D7D93110010CA1F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DA1D7D93110010CA1F /* libc++.tbd */; };
@@ -105,6 +107,8 @@
 		374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKUITests.swift; sourceTree = "<group>"; };
 		374EC9EE1D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3765505B1D86E6E500610329 /* RegionSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegionSelection.swift; path = Weather/Views/RegionSelection.swift; sourceTree = "<group>"; };
+		3765505D1D86E72100610329 /* RegionAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegionAnnotationView.swift; path = Weather/Views/RegionAnnotationView.swift; sourceTree = "<group>"; };
 		377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/WhirlyGlobeSrc/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		377123D81D7D92FB0010CA1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		377123DA1D7D93110010CA1F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -252,6 +256,15 @@
 			path = CAVOKUITests;
 			sourceTree = "<group>";
 		};
+		376550581D86E6B100610329 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3765505B1D86E6E500610329 /* RegionSelection.swift */,
+				3765505D1D86E72100610329 /* RegionAnnotationView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		377123CC1D7D8EF80010CA1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,10 +319,11 @@
 		37B7FDBA1D8064B8009307F0 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				37B22BED1D820658001AF5BA /* WeatherModule.swift */,
+				37B22BE11D81DDE3001AF5BA /* WeatherRegion.swift */,
 				37B7FDBD1D8064CA009307F0 /* Models */,
 				37B22B651D81D75E001AF5BA /* Services */,
-				37B22BE11D81DDE3001AF5BA /* WeatherRegion.swift */,
-				37B22BED1D820658001AF5BA /* WeatherModule.swift */,
+				376550581D86E6B100610329 /* Views */,
 			);
 			name = Weather;
 			sourceTree = "<group>";
@@ -317,8 +331,8 @@
 		37B7FDBD1D8064CA009307F0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				37B7FDBE1D8064E5009307F0 /* Observation.swift */,
 				37B7FDC61D80654F009307F0 /* Metar.swift */,
+				37B7FDBE1D8064E5009307F0 /* Observation.swift */,
 				37B7FDC01D8064E5009307F0 /* Station.swift */,
 				37B7FDC81D8065BD009307F0 /* Taf.swift */,
 				37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */,
@@ -510,12 +524,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				37B22BE41D81E067001AF5BA /* WeatherService.swift in Sources */,
+				3765505C1D86E6E500610329 /* RegionSelection.swift in Sources */,
 				37B22BEE1D820658001AF5BA /* WeatherModule.swift in Sources */,
 				374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */,
 				371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */,
 				37B7FDC21D8064E5009307F0 /* Tokenizer.swift in Sources */,
 				374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */,
 				37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */,
+				3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */,
 				37B22BE61D81E330001AF5BA /* Weather.swift in Sources */,
 				37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */,
 				37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */,

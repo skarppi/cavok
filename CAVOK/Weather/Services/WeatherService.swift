@@ -10,9 +10,6 @@ import RealmSwift
 import PromiseKit
 
 public class WeatherServer {
-    public init() {
-        WeatherRegion(minLat: 60, maxLat: 70, minLon: 20, maxLon: 30, radius: 1000).save()
-    }
     
     // query stations available
     func queryStations() -> Promise<[Station]> {

@@ -14,7 +14,7 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var status: UITextField!
     
-    fileprivate var mapView: WhirlyGlobeViewController!
+    internal var mapView: WhirlyGlobeViewController!
 
     fileprivate var module: MapModule!
     
@@ -25,8 +25,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Create an empty globe and add it to the view
         mapView = WhirlyGlobeViewController()
+        mapView.delegate = self
         
         view.insertSubview(mapView.view, at: 0)
         mapView.view.frame = view.bounds
@@ -65,7 +65,7 @@ class MapViewController: UIViewController {
         locationManager = LocationManager(
             fulfill: userLocationChanged,
             reject: { error in
-                self.clearComponents(of: UserMarker.self)
+                self.clearComponents(ofType: UserMarker.self)
             })
         locationManager.requestLocation()
         
@@ -86,11 +86,11 @@ class MapViewController: UIViewController {
     }
 
     func userLocationChanged(coordinate: MaplyCoordinate) {
-        clearComponents(of: UserMarker.self)
+        clearComponents(ofType: UserMarker.self)
         
         let userLocation = UserMarker(coordinate: coordinate)
         if let objects = mapView.addScreenMarkers([userLocation], desc: nil) {
-            components[userLocation] = objects
+            addComponents(key: userLocation, value: objects)
         }
         
         let bbox = mapView.getCurrentExtents()
@@ -98,9 +98,16 @@ class MapViewController: UIViewController {
         if height == nil || !bbox.inside(coordinate) {
             mapView.height = height ?? 0.2
             mapView.animate(toPosition: coordinate, time:0.5)
+            
+            if height == nil {
+                module.resetRegion(centerPoint: userLocation.loc)
+            }
         }
     }
     
+    @IBAction func resetRegion(sender: UIButton) {
+        module.resetRegion(centerPoint: nil)
+    }
 }
 
 // MARK: - MapDelegate
@@ -126,15 +133,38 @@ extension MapViewController : MapDelegate {
         }
     }
     
-    func clearComponents(of: NSObject.Type?) {
-        if let filter = of {
-            let matching = components.filter { (key,_) in
-                type(of: key) == filter
+    func clearAnnotations(ofType: MaplyAnnotation.Type?) {
+        if let ofType = ofType, let annotations = mapView.annotations() {
+            annotations.forEach { annotation in
+                if type(of: annotation) == ofType {
+                    mapView.removeAnnotation(annotation as! MaplyAnnotation)
+                }
             }
-            let objects = matching.flatMap { (key, _) in
-                components.removeValue(forKey: key)
-            }
-            mapView.remove(objects)
+        } else {
+            mapView.clearAnnotations()
+        }
+    }
+
+    func findComponent(ofType: NSObject.Type) -> NSObject? {
+        return components.keys.filter { $0.isKind(of: ofType) }.first
+    }
+    
+//    func findComponents(ofType: NSObject.Type) -> [MaplyComponentObject] {
+//        return components
+//            .filter { type(of: $0.key) == ofType }
+//            .map { $0.value }
+//    }
+    
+    func addComponents(key: NSObject, value: MaplyComponentObject) {
+        components[key] = value
+    }
+    
+    func clearComponents(ofType: NSObject.Type?) {
+        if let ofType = ofType {
+            let matching = components
+                .filter { type(of: $0.key) == ofType }
+                .flatMap { components.removeValue(forKey: $0.key) }
+            mapView.remove(matching)
         } else {
             mapView.remove([MaplyComponentObject](components.values))
             components.removeAll()
@@ -146,9 +176,17 @@ extension MapViewController : MapDelegate {
 extension MapViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == self.status {
-            module.refreshData()
+            module.refresh()
         }
         return false
     }
 }
 
+// MARK: - WhirlyGlobeViewControllerDelegate
+extension MapViewController: WhirlyGlobeViewControllerDelegate {
+    func globeViewController(_ view: WhirlyGlobeViewController, didTapAt coord: MaplyCoordinate) {
+        view.clearAnnotations()
+        
+        module.didTapAt(coord: coord)
+    }
+}

@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-struct WeatherRegion {
+class WeatherRegion {
     // bounding box
     var minLat: Float
     var maxLat: Float
@@ -17,7 +17,12 @@ struct WeatherRegion {
     var maxLon: Float
     
     // radius of the circle
-    var radius: Int
+    var radius: Int {
+        didSet {
+            let recalculated = WeatherRegion(center: center, radius: radius)
+            copyBoundaries(from: recalculated)
+        }
+    }
 
     // center of the circle
     var center: MaplyCoordinate {
@@ -27,6 +32,38 @@ struct WeatherRegion {
             
             return MaplyCoordinateMakeWithDegrees(longitude, latitude)
         }
+        set {
+            let recalculated = WeatherRegion(center: newValue, radius: radius)
+            copyBoundaries(from: recalculated)
+        }
+    }
+    
+    init(minLat: Float, maxLat: Float, minLon: Float, maxLon: Float, radius: Int) {
+        self.minLat = minLat
+        self.maxLat = maxLat
+        self.minLon = minLon
+        self.maxLon = maxLon
+        self.radius = radius
+    }
+    
+    init(center: MaplyCoordinate, radius: Int) {
+        let top = center.locationAt(distance: radius, direction:0)
+        let right = center.locationAt(distance: radius, direction:90)
+        let bottom = center.locationAt(distance: radius, direction:180)
+        let left = center.locationAt(distance: radius, direction:270)
+        
+        self.minLat = bottom.deg.y
+        self.maxLat = top.deg.y
+        self.minLon = left.deg.x
+        self.maxLon = right.deg.x
+        self.radius = radius
+    }
+    
+    private func copyBoundaries(from: WeatherRegion) {
+        self.minLat = from.minLat
+        self.maxLat = from.maxLat
+        self.minLon = from.minLon
+        self.maxLon = from.maxLon
     }
     
     static func load() -> WeatherRegion? {
