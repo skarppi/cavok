@@ -91,9 +91,9 @@
 
 /* Begin PBXFileReference section */
 		371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
-		371E0E3B1D7E11F700BE1846 /* UserMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMarker.swift; path = Map/UserMarker.swift; sourceTree = "<group>"; };
+		371E0E3B1D7E11F700BE1846 /* UserMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMarker.swift; path = Map/Location/UserMarker.swift; sourceTree = "<group>"; };
 		371E0E3D1D7F4AC800BE1846 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
-		374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationManager.swift; path = Map/LocationManager.swift; sourceTree = "<group>"; };
+		374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationManager.swift; path = Map/Location/LocationManager.swift; sourceTree = "<group>"; };
 		374EC9C91D7CB5A90047B82B /* CAVOK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAVOK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		374EC9CE1D7CB5A90047B82B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Map/MapViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		377123DC1D7D931E0010CA1F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		377123DE1D7D93280010CA1F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		377123E01D7D93300010CA1F /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
-		377123E31D7D944B0010CA1F /* TileJSONLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileJSONLayer.swift; path = Map/TileJSONLayer.swift; sourceTree = "<group>"; };
+		377123E31D7D944B0010CA1F /* TileJSONLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileJSONLayer.swift; path = Map/Layers/TileJSONLayer.swift; sourceTree = "<group>"; };
 		377123E61D7D94F50010CA1F /* CAVOK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CAVOK.plist; sourceTree = "<group>"; };
 		377123E81D7D961A0010CA1F /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		377123E91D7D961A0010CA1F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		377123F31D7DB06D0010CA1F /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
 		378AE5F71D80B56D008492D5 /* TafTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TafTests.swift; sourceTree = "<group>"; };
 		378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTestCase.swift; sourceTree = "<group>"; };
-		37A54FFC1D7FE15B002BADA0 /* LastSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastSession.swift; path = Map/LastSession.swift; sourceTree = "<group>"; };
+		37A54FFC1D7FE15B002BADA0 /* LastSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastSession.swift; path = Map/Location/LastSession.swift; sourceTree = "<group>"; };
 		37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Maply+Additions.swift"; path = "Extensions/Maply+Additions.swift"; sourceTree = "<group>"; };
 		37B22B661D81D78B001AF5BA /* AddsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddsService.swift; path = Weather/Services/AddsService.swift; sourceTree = "<group>"; };
 		37B22BDE1D81DC40001AF5BA /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/iOS/SWXMLHash.framework; sourceTree = "<group>"; };
@@ -187,6 +187,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37486F261D89ECF800357E11 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				377123E31D7D944B0010CA1F /* TileJSONLayer.swift */,
+			);
+			name = Layers;
+			sourceTree = "<group>";
+		};
+		37486F271D89ED2C00357E11 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				37A54FFC1D7FE15B002BADA0 /* LastSession.swift */,
+				374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */,
+				371E0E3B1D7E11F700BE1846 /* UserMarker.swift */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
 		374ACD101D7F4E7D00C45A18 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,11 +316,9 @@
 			isa = PBXGroup;
 			children = (
 				37B22BF11D82085F001AF5BA /* MapModule.swift */,
-				37A54FFC1D7FE15B002BADA0 /* LastSession.swift */,
-				374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */,
 				374EC9CE1D7CB5A90047B82B /* MapViewController.swift */,
-				377123E31D7D944B0010CA1F /* TileJSONLayer.swift */,
-				371E0E3B1D7E11F700BE1846 /* UserMarker.swift */,
+				37486F261D89ECF800357E11 /* Layers */,
+				37486F271D89ED2C00357E11 /* Location */,
 			);
 			name = Map;
 			sourceTree = "<group>";
