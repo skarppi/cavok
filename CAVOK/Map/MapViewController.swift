@@ -13,6 +13,8 @@ import PromiseKit
 class MapViewController: UIViewController {
     
     @IBOutlet weak var status: UITextField!
+
+    @IBOutlet weak var moduleType: UISegmentedControl!
     
     internal var mapView: WhirlyGlobeViewController!
 
@@ -71,7 +73,12 @@ class MapViewController: UIViewController {
             })
         locationManager.requestLocation()
         
-        module = modules.loadModule(index: 0, delegate: self)
+        moduleType.removeAllSegments()
+        for (index, title) in modules.availableTitles().enumerated() {
+            moduleType.insertSegment(withTitle: title, at: index, animated: true)
+        }
+        moduleType.selectedSegmentIndex = 0
+        moduleTypeChanged()
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,9 +112,14 @@ class MapViewController: UIViewController {
         }
     }
     
-    @IBAction func resetRegion(sender: UIButton) {
+    @IBAction func resetRegion() {
         module.configure(userLocation: nil)
     }
+    
+    @IBAction func moduleTypeChanged() {
+        module = modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
+    }
+    
 }
 
 // MARK: - MapDelegate
