@@ -95,7 +95,7 @@ open class WeatherModule: MapModule {
     func refresh() {
         weatherServer.refreshObservations().then(execute: { observations -> Void in
             self.weatherLayer.render(observations: observations)
-            self.delegate.setStatus(text: "\(observations.count)", color: UIColor.red)
+            self.delegate.setStatus(text: "\(observations.count) observations", color: UIColor.red)
         }).catch(execute: { error -> Void in
             self.delegate.setStatus(error: error)
         })
@@ -110,4 +110,9 @@ open class WeatherModule: MapModule {
             self.delegate.setStatus(error: error)
         }
     }
+    
+    func render(index: Int) {
+        weatherLayer.go(index: index)
+    }
+    
 }

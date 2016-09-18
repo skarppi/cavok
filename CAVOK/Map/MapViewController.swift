@@ -16,6 +16,8 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var moduleType: UISegmentedControl!
     
+    @IBOutlet weak var timeslots: UISegmentedControl!
+    
     internal var mapView: WhirlyGlobeViewController!
 
     fileprivate let modules = Modules()
@@ -120,6 +122,10 @@ class MapViewController: UIViewController {
         module = modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
     }
     
+    @IBAction func timeslotChanged() {
+        module.render(index: timeslots.selectedSegmentIndex)
+    }
+    
 }
 
 // MARK: - MapDelegate
@@ -141,6 +147,20 @@ extension MapViewController : MapDelegate {
             DispatchQueue.main.async {
                 self.status.textColor = color
                 self.status.text = "\(text)"
+            }
+        }
+    }
+    
+    func setTimeslots(slots: [Date]) {
+        timeslots.removeAllSegments()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        DispatchQueue.main.async {
+            for (index, slot) in slots.enumerated() {
+                let title = formatter.string(from: slot)
+                self.timeslots.insertSegment(withTitle: title, at: index, animated: true)
             }
         }
     }

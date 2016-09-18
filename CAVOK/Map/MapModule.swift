@@ -16,12 +16,16 @@ protocol MapModule {
     func refresh()
     
     func configure(userLocation: MaplyCoordinate?)
+    
+    func render(index: Int)
 }
 
 public protocol MapDelegate {
     func setStatus(text: String?, color: UIColor)
     
     func setStatus(error: Error)
+    
+    func setTimeslots(slots: [Date])
     
     func clearAnnotations(ofType: MaplyAnnotation.Type?)
     

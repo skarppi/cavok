@@ -41,6 +41,18 @@
                                             <action selector="resetRegionWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6EM-rd-cjF"/>
                                         </connections>
                                     </button>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-9l-uIq">
+                                        <frame key="frameInset" minX="8" height="29" maxX="8" maxY="7"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <segments>
+                                            <segment title="First"/>
+                                            <segment title="Second"/>
+                                        </segments>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <action selector="timeslotChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="Lkh-3E-meV"/>
+                                        </connections>
+                                    </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -61,6 +73,7 @@
                     <connections>
                         <outlet property="moduleType" destination="EAe-qi-deb" id="95T-eG-88J"/>
                         <outlet property="status" destination="3Iv-da-dXc" id="GmS-fJ-prQ"/>
+                        <outlet property="timeslots" destination="Is0-9l-uIq" id="OGw-ts-yXV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

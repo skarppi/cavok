@@ -56,7 +56,7 @@ class WeatherLayer {
         delegate.mapView.add(frameChanger)
         self.frameChanger = frameChanger
         
-        //self.delegate.setAvailableTimeSlots(grouped.map { $0.0 })
+        delegate.setTimeslots(slots: grouped.map { $0.0})
     }
     
     func go(index: Int) {
