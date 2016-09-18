@@ -15,7 +15,7 @@ protocol MapModule {
     
     func refresh()
     
-    func resetRegion(centerPoint: MaplyCoordinate?)
+    func configure(userLocation: MaplyCoordinate?)
 }
 
 public protocol MapDelegate {

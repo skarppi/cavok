@@ -107,4 +107,10 @@ class WeatherRegion {
         return Int(distance) <= radius * 1000
     }
     
+    func bbox(padding: Int) -> MaplyBoundingBox {
+        let ll = MaplyCoordinateMakeWithDegrees(minLon, minLat).locationAt(distance: padding, direction: 225)
+        let ur = MaplyCoordinateMakeWithDegrees(maxLon, maxLat).locationAt(distance: padding, direction: 45)
+        
+        return MaplyBoundingBox(ll: ll, ur: ur)
+    }
 }

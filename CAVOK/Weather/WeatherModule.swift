@@ -8,14 +8,47 @@
 
 import Foundation
 
-final class WeatherModule: MapModule {
+class Ceiling: WeatherModule {
+    required init(delegate: MapDelegate) {
+        super.init(delegate: delegate, observationValue: { $0.cloudHeight.value })
+    }
+}
+
+class Visibility: WeatherModule {
+    required init(delegate: MapDelegate) {
+        super.init(delegate: delegate, observationValue: { $0.visibility.value })
+    }
+}
+
+final class Temperature: WeatherModule {
+    required init(delegate: MapDelegate) {
+        super.init(delegate: delegate, observationValue: { ($0 as? Metar)?.temperature.value })
+    }
+}
+
+
+open class WeatherModule: MapModule {
 
     private let delegate: MapDelegate
     
-    let weatherServer = WeatherServer()
+    private let weatherServer = WeatherServer()
     
-    init(delegate: MapDelegate) {
+    private var weatherLayer: WeatherLayer! = nil
+    
+    public required init(delegate: MapDelegate) {
         self.delegate = delegate
+        self.weatherLayer = nil
+    }
+    
+    public init(delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
+        self.delegate = delegate
+        
+        self.weatherLayer = WeatherLayer(module: self, delegate: self.delegate, observationValue: observationValue)
+        
+        let observations = weatherServer.observations(Metar.self)
+        if !observations.isEmpty {
+            weatherLayer.render(observations: observations)
+        }
     }
     
     func didTapAt(coord: MaplyCoordinate) {
@@ -34,6 +67,7 @@ final class WeatherModule: MapModule {
             self.delegate.clearAnnotations(ofType: RegionAnnotationView.self)
             if region.save() {
                 self.refreshStations()
+                self.weatherLayer.reposition()
             }
         }, resized: { region in
             self.startRegionSelection(region: region)
@@ -47,18 +81,21 @@ final class WeatherModule: MapModule {
         self.delegate.mapView.addAnnotation(annotation, forPoint: region.center, offset: CGPoint.zero)
     }
     
-    func resetRegion(centerPoint: MaplyCoordinate?) {
+    func configure(userLocation: MaplyCoordinate?) {
         if let region = WeatherRegion.load() {
-            startRegionSelection(region: region)
+            if userLocation == nil {
+                startRegionSelection(region: region)
+            }
         } else {
-            let center = centerPoint ?? delegate.mapView.getPosition()
+            let center = userLocation ?? delegate.mapView.getPosition()
             startRegionSelection(region: WeatherRegion(center: center, radius: 100))
         }
     }
     
     func refresh() {
-        weatherServer.refreshObservations().then(execute: { stations -> Void in
-            self.delegate.setStatus(text: "\(stations.count)", color: UIColor.red)
+        weatherServer.refreshObservations().then(execute: { observations -> Void in
+            self.weatherLayer.render(observations: observations)
+            self.delegate.setStatus(text: "\(observations.count)", color: UIColor.red)
         }).catch(execute: { error -> Void in
             self.delegate.setStatus(error: error)
         })
@@ -73,5 +110,4 @@ final class WeatherModule: MapModule {
             self.delegate.setStatus(error: error)
         }
     }
-    
 }

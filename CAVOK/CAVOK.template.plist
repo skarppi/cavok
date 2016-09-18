@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>basemapURL</key>
+	<string>https://api.mapbox.com/v4/mapbox.light.json?access_token=</string>
+	<key>addsURL</key>
+	<string>https://www.aviationweather.gov/adds/dataserver_current/httpparam</string>
+	<key>modules</key>
+	<array>
+		<dict>
+			<key>class</key>
+			<string>Ceiling</string>
+			<key>name</key>
+			<string>Cld</string>
+			<key>unit</key>
+			<string>ft</string>
+			<key>steps</key>
+			<dict>
+				<key>0000</key>
+				<string>&lt; 500 ft</string>
+				<key>0500</key>
+				<string>500-999 ft</string>
+				<key>1000</key>
+				<string>1000-1499 ft</string>
+				<key>1500</key>
+				<string>1500-1999 ft</string>
+				<key>2000</key>
+				<string>2000-4999 ft</string>
+				<key>5000</key>
+				<string>&gt; 5000 ft</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>class</key>
+			<string>Visibility</string>
+			<key>name</key>
+			<string>vis</string>
+			<key>unit</key>
+			<string>ft</string>
+			<key>steps</key>
+			<dict>
+				<key>00000</key>
+				<string>&lt; 1.5 km</string>
+				<key>01500</key>
+				<string>1.5 - 3 km</string>
+				<key>03000</key>
+				<string>3 - 5 km</string>
+				<key>05000</key>
+				<string>5 - 8 km</string>
+				<key>08000</key>
+				<string>8 - 10 km</string>
+				<key>10000</key>
+				<string>&gt; 10 km</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>class</key>
+			<string>Temperature</string>
+			<key>name</key>
+			<string>temp</string>
+			<key>unit</key>
+			<string>c</string>
+			<key>steps</key>
+			<dict>
+				<key>0000</key>
+				<string>0-2.5 (&lt;010)</string>
+				<key>0250</key>
+				<string>2.5-5 (&lt;020)</string>
+				<key>0500</key>
+				<string>5-7.5 (&lt;030)</string>
+				<key>0750</key>
+				<string>7.5-10 (&lt;040)</string>
+				<key>1000</key>
+				<string>10-12.5(&lt;050)</string>
+				<key>1250</key>
+				<string>12.5+(&gt; 050)</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

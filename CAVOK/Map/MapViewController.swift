@@ -16,6 +16,8 @@ class MapViewController: UIViewController {
     
     internal var mapView: WhirlyGlobeViewController!
 
+    fileprivate let modules = Modules()
+    
     fileprivate var module: MapModule!
     
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]
@@ -69,7 +71,7 @@ class MapViewController: UIViewController {
             })
         locationManager.requestLocation()
         
-        module = WeatherModule(delegate: self)
+        module = modules.loadModule(index: 0, delegate: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,14 +101,12 @@ class MapViewController: UIViewController {
             mapView.height = height ?? 0.2
             mapView.animate(toPosition: coordinate, time:0.5)
             
-            if height == nil {
-                module.resetRegion(centerPoint: userLocation.loc)
-            }
+            module.configure(userLocation: userLocation.loc)
         }
     }
     
     @IBAction func resetRegion(sender: UIButton) {
-        module.resetRegion(centerPoint: nil)
+        module.configure(userLocation: nil)
     }
 }
 
@@ -148,12 +148,6 @@ extension MapViewController : MapDelegate {
     func findComponent(ofType: NSObject.Type) -> NSObject? {
         return components.keys.filter { $0.isKind(of: ofType) }.first
     }
-    
-//    func findComponents(ofType: NSObject.Type) -> [MaplyComponentObject] {
-//        return components
-//            .filter { type(of: $0.key) == ofType }
-//            .map { $0.value }
-//    }
     
     func addComponents(key: NSObject, value: MaplyComponentObject) {
         components[key] = value
