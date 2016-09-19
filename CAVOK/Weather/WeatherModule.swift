@@ -75,12 +75,10 @@ open class WeatherModule: MapModule {
     }
     
     private func startRegionSelection(region: WeatherRegion) {
-        self.delegate.clearComponents(ofType: RegionSelection.self)
-        self.delegate.clearAnnotations(ofType: RegionAnnotationView.self)
-
+        endRegionSelection()
+        
         let annotation = RegionAnnotationView(region: region, closed: { region in
-            self.delegate.clearComponents(ofType: RegionSelection.self)
-            self.delegate.clearAnnotations(ofType: RegionAnnotationView.self)
+            self.endRegionSelection()
             if region.save() {
                 self.refreshStations()
                 self.weatherLayer.reposition()
@@ -97,7 +95,17 @@ open class WeatherModule: MapModule {
         self.delegate.mapView.addAnnotation(annotation, forPoint: region.center, offset: CGPoint.zero)
     }
     
-    func configure(userLocation: MaplyCoordinate?) {
+    private func endRegionSelection() {
+        delegate.clearComponents(ofType: RegionSelection.self)
+        delegate.clearAnnotations(ofType: RegionAnnotationView.self)
+    }
+    
+    func configure(userLocation: MaplyCoordinate?) -> Bool {
+        guard delegate.findComponent(ofType: RegionSelection.self) == nil else {
+            endRegionSelection()
+            return false
+        }
+        
         if let region = WeatherRegion.load() {
             if userLocation == nil {
                 startRegionSelection(region: region)
@@ -106,6 +114,7 @@ open class WeatherModule: MapModule {
             let center = userLocation ?? delegate.mapView.getPosition()
             startRegionSelection(region: WeatherRegion(center: center, radius: 100))
         }
+        return true
     }
     
     func refresh() {

@@ -18,6 +18,9 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var timeslots: UISegmentedControl!
     
+    @IBOutlet weak var region: UIButton!
+    
+    
     internal var mapView: WhirlyGlobeViewController!
 
     fileprivate let modules = Modules()
@@ -30,6 +33,11 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        region.layer.borderWidth = 1
+        region.layer.borderColor = view.tintColor.cgColor
+        region.layer.cornerRadius = 5
+        region.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         
         mapView = WhirlyGlobeViewController()
         mapView.delegate = self
@@ -110,12 +118,12 @@ class MapViewController: UIViewController {
             mapView.height = height ?? 0.2
             mapView.animate(toPosition: coordinate, time:0.5)
             
-            module.configure(userLocation: userLocation.loc)
+            region.isSelected = module.configure(userLocation: userLocation.loc)
         }
     }
     
     @IBAction func resetRegion() {
-        module.configure(userLocation: nil)
+        region.isSelected = module.configure(userLocation: nil)
     }
     
     @IBAction func moduleTypeChanged() {

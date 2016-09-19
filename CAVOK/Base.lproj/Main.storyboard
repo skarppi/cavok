@@ -22,25 +22,16 @@
                                 <frame key="frameInset" height="114"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="MOI" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Iv-da-dXc" userLabel="Status">
-                                        <frame key="frameInset" minX="30" height="30" maxX="27" maxY="44"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Loading..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Iv-da-dXc" userLabel="Status">
+                                        <frame key="frameInset" minX="8" height="30" maxX="8" maxY="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="jn6-iO-RT7"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-XM-x3W">
-                                        <frame key="frameInset" minX="334" minY="8" width="33" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Region"/>
-                                        <state key="selected" image="RegionSet"/>
-                                        <connections>
-                                            <action selector="resetRegionWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6EM-rd-cjF"/>
-                                        </connections>
-                                    </button>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-9l-uIq">
                                         <frame key="frameInset" minX="8" height="29" maxX="8" maxY="7"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -67,11 +58,22 @@
                                     <action selector="moduleTypeChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="P3S-kj-riy"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-XM-x3W">
+                                <frame key="frameInset" minX="326" minY="61" width="33" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="Region"/>
+                                <state key="selected" image="RegionSet"/>
+                                <connections>
+                                    <action selector="resetRegion" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jg9-Jw-JFi"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.84696906810000006" green="0.84711199999999998" blue="0.84694892170000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="moduleType" destination="EAe-qi-deb" id="95T-eG-88J"/>
+                        <outlet property="region" destination="bjl-XM-x3W" id="bZy-vJ-vZI"/>
                         <outlet property="status" destination="3Iv-da-dXc" id="GmS-fJ-prQ"/>
                         <outlet property="timeslots" destination="Is0-9l-uIq" id="OGw-ts-yXV"/>
                     </connections>
