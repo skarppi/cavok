@@ -12,6 +12,8 @@ import PromiseKit
 
 class MapViewController: UIViewController {
     
+    @IBOutlet weak var bottomView: UIView!
+    
     @IBOutlet weak var status: UITextField!
 
     @IBOutlet weak var moduleType: UISegmentedControl!
@@ -85,7 +87,7 @@ class MapViewController: UIViewController {
         
         moduleType.removeAllSegments()
         for (index, title) in modules.availableTitles().enumerated() {
-            moduleType.insertSegment(withTitle: title, at: index, animated: true)
+            moduleType.insertSegment(withTitle: title, at: index, animated: false)
         }
         moduleType.selectedSegmentIndex = 0
         moduleTypeChanged()
@@ -123,7 +125,25 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func resetRegion() {
-        region.isSelected = module.configure(userLocation: nil)
+        let hide = module.configure(userLocation: nil)
+        updatePanels(hide: hide)
+    }
+    
+    func updatePanels(hide: Bool) {
+        self.region.isSelected = hide
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            if hide {
+                self.moduleType.alpha = 0
+                self.bottomView.alpha = 0
+            } else {
+                self.moduleType.alpha = 1
+                self.bottomView.alpha = 0.7
+            }
+        }, completion: { finished in
+                self.moduleType.isHidden = hide
+                self.bottomView.isHidden = hide
+        })
     }
     
     @IBAction func moduleTypeChanged() {
@@ -172,6 +192,11 @@ extension MapViewController : MapDelegate {
                 self.timeslots.insertSegment(withTitle: title, at: index, animated: true)
             }
             self.timeslots.selectedSegmentIndex = slots.count - 1
+            
+            // everything is loaded, show panels
+            if self.region.isSelected {
+                self.updatePanels(hide: false)
+            }
         }
     }
     
