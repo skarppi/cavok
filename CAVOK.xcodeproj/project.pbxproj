@@ -13,6 +13,8 @@
 		371E0E321D7E0DAE00BE1846 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */; };
 		371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E0E3B1D7E11F700BE1846 /* UserMarker.swift */; };
 		371E0E3E1D7F4AC900BE1846 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E3D1D7F4AC800BE1846 /* Realm.framework */; };
+		372C04221D8FB4F400BEA8EB /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */; };
+		372C04261D8FB52A00BEA8EB /* ObservationCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372C04251D8FB52A00BEA8EB /* ObservationCalloutView.swift */; };
 		3737DA9E1D8E7D2400EB57A2 /* ColorRamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737DA9D1D8E7D2400EB57A2 /* ColorRamp.swift */; };
 		37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37486F221D89EA8300357E11 /* FrameChanger.swift */; };
 		374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */; };
@@ -101,6 +103,8 @@
 		371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		371E0E3B1D7E11F700BE1846 /* UserMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMarker.swift; path = Map/Location/UserMarker.swift; sourceTree = "<group>"; };
 		371E0E3D1D7F4AC800BE1846 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationMarker.swift; path = Weather/Views/ObservationMarker.swift; sourceTree = "<group>"; };
+		372C04251D8FB52A00BEA8EB /* ObservationCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationCalloutView.swift; path = Weather/Views/ObservationCalloutView.swift; sourceTree = "<group>"; };
 		3737DA961D8DDDE600EB57A2 /* CAVOK.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CAVOK.template.plist; sourceTree = "<group>"; };
 		3737DA9D1D8E7D2400EB57A2 /* ColorRamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorRamp.swift; path = Weather/Layers/ColorRamp.swift; sourceTree = "<group>"; };
 		37486F221D89EA8300357E11 /* FrameChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameChanger.swift; path = Weather/Layers/FrameChanger.swift; sourceTree = "<group>"; };
@@ -311,6 +315,8 @@
 			children = (
 				3765505B1D86E6E500610329 /* RegionSelection.swift */,
 				3765505D1D86E72100610329 /* RegionAnnotationView.swift */,
+				372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */,
+				372C04251D8FB52A00BEA8EB /* ObservationCalloutView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -587,7 +593,9 @@
 				37B22BE61D81E330001AF5BA /* Weather.swift in Sources */,
 				3765504B1D86BAB000610329 /* WeatherTileSource.swift in Sources */,
 				3765504F1D86BB7C00610329 /* WeatherLayer.swift in Sources */,
+				372C04221D8FB4F400BEA8EB /* ObservationMarker.swift in Sources */,
 				37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */,
+				372C04261D8FB52A00BEA8EB /* ObservationCalloutView.swift in Sources */,
 				376550511D86BBD400610329 /* Modules.swift in Sources */,
 				37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */,
 				376550531D86C14A00610329 /* DebugTileSource.swift in Sources */,

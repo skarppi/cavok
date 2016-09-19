@@ -119,6 +119,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func moduleTypeChanged() {
+        module = nil
         module = modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
     }
     
@@ -162,6 +163,7 @@ extension MapViewController : MapDelegate {
                 let title = formatter.string(from: slot)
                 self.timeslots.insertSegment(withTitle: title, at: index, animated: true)
             }
+            self.timeslots.selectedSegmentIndex = slots.count - 1
         }
     }
     
@@ -214,5 +216,21 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
         view.clearAnnotations()
         
         module.didTapAt(coord: coord)
+    }
+    
+    func globeViewController(_ view: WhirlyGlobeViewController, didSelect selected: NSObject, atLoc coord: MaplyCoordinate, onScreen screenPt: CGPoint) {
+        
+        view.clearAnnotations()
+        
+        if let marker = selected as? MaplyScreenMarker {
+            let userObject = marker.userObject
+            let location = marker.loc
+            
+            if let contentView = module.annotation(object: userObject, parentFrame: self.view.frame) {
+                let annotation = MaplyAnnotation()
+                annotation.contentView = contentView
+                view.addAnnotation(annotation, forPoint: location, offset: .zero)
+            }
+        }
     }
 }

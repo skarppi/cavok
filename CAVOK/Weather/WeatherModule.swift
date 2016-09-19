@@ -31,24 +31,40 @@ open class WeatherModule: MapModule {
 
     private let delegate: MapDelegate
     
+    private var ramp: ColorRamp! = nil
+    
     private let weatherServer = WeatherServer()
+    
+    private let observationValue: (Observation) -> Int?
     
     private var weatherLayer: WeatherLayer! = nil
     
     public required init(delegate: MapDelegate) {
         self.delegate = delegate
         self.weatherLayer = nil
+        self.observationValue = { (_) in nil }
+        self.ramp = ColorRamp(module: self)
     }
     
     public init(delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
         self.delegate = delegate
         
-        self.weatherLayer = WeatherLayer(module: self, delegate: self.delegate, observationValue: observationValue)
+        self.observationValue = observationValue
+        
+        self.ramp = ColorRamp(module: self)
+        
+        self.weatherLayer = WeatherLayer(delegate: self.delegate, ramp: ramp, observationValue: observationValue)
         
         let observations = weatherServer.observations(Metar.self)
         if !observations.isEmpty {
-            weatherLayer.render(observations: observations)
+            let index = weatherLayer.render(observations: observations)
+            render(index: index)
         }
+    }
+    
+    deinit {
+        delegate.clearAnnotations(ofType: nil)
+        delegate.clearComponents(ofType: ObservationMarker.self)
     }
     
     func didTapAt(coord: MaplyCoordinate) {
@@ -93,18 +109,21 @@ open class WeatherModule: MapModule {
     }
     
     func refresh() {
+        delegate.setStatus(text: "Refreshing observations...", color: .black)
+        
         weatherServer.refreshObservations().then(execute: { observations -> Void in
-            self.weatherLayer.render(observations: observations)
-            self.delegate.setStatus(text: "\(observations.count) observations", color: UIColor.red)
+            let frame = self.weatherLayer.render(observations: observations)
+            self.render(index: frame)
         }).catch(execute: { error -> Void in
             self.delegate.setStatus(error: error)
         })
     }
     
-    fileprivate func refreshStations() {
-        delegate.setStatus(text: "Reloading stations...", color: UIColor.black)
+    private func refreshStations() {
+        delegate.setStatus(text: "Reloading stations...", color: .black)
         
         weatherServer.refreshStations().then { stations -> Void in
+            self.delegate.setStatus(text: "Found \(stations.count) stations...", color: UIColor.black)
             self.refresh()
         }.catch { error -> Void in
             self.delegate.setStatus(error: error)
@@ -112,7 +131,71 @@ open class WeatherModule: MapModule {
     }
     
     func render(index: Int) {
-        weatherLayer.go(index: index)
+        delegate.clearAnnotations(ofType: nil)
+        delegate.clearComponents(ofType: ObservationMarker.self)
+        
+        let observations = weatherLayer.go(index: index)
+        
+        let stations = observations.map({ obs in
+            return ObservationMarker(obs: obs)
+        })
+        
+        if let key = stations.first, let markers = delegate.mapView.addScreenMarkers(stations, desc: nil) {
+            delegate.addComponents(key: key, value: markers)
+        }
+        
+        let times = observations.map { $0.datetime }
+        renderTimestamp(min: times.min(), max: times.max())
+        
     }
     
+    private func renderTimestamp(min: Date!, max: Date!) {
+        guard min != nil && max != nil else {
+            delegate.setStatus(text: "No data, click to reload.", color: .red)
+            return
+        }
+        
+        let interval = min.timeIntervalSinceNow
+        let minutes = Int(interval / -60)
+        let hours = minutes / 60
+        
+        guard hours < 24 else {
+            delegate.setStatus(text: "\(hours / 24) days old, click to reload", color: .red)
+            return
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        let from = dateFormatter.string(from: min)
+        let to = dateFormatter.string(from: max)
+        
+        let status: String = {
+            if from == to {
+                return "\(from), \(minutes) min"
+            } else {
+                return "\(from) - \(to), \(minutes) min"
+            }
+        }()
+        
+        let condition: WeatherConditions = {
+            if(minutes <= 30) {
+                return .VFR
+            } else if(minutes <= 60) {
+                return .MVFR
+            } else {
+                return .IFR
+            }
+        }()
+        
+        delegate.setStatus(text: status, color: ColorRamp.color(forCondition: condition, alpha: 1))
+    }
+    
+    func annotation(object: Any, parentFrame: CGRect) -> UIView? {
+        if let observation = object as? Observation, let value = observationValue(observation) {
+            return ObservationCalloutView(value: value, obs: observation, ramp: ramp, parentFrame: parentFrame)
+        } else {
+            return nil
+        }
+    }
 }

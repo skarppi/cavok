@@ -18,6 +18,8 @@ fileprivate struct GridSteps {
 }
 
 class ColorRamp {
+    let unit: String
+    
     private let steps: GridSteps
     
     init(module: MapModule) {
@@ -28,14 +30,17 @@ class ColorRamp {
         if let module = modules.first(where: { $0["class"] as? String == moduleClassName }),
             let steps = module["steps"] as? [String:String] {
             
+            self.unit = module["unit"] as? String ?? ""
+            
             let k = Array(steps.keys).sorted(by: {$0 < $1}).map { key in Int(key)! }
             self.steps = GridSteps(purple: k[0], red: k[1], orange: k[2], yellow: k[3], green: k[4], blue: k[5])
         } else {
             self.steps = GridSteps(purple: 0,red: 0,orange: 0,yellow: 0,green: 0,blue: 0)
+            self.unit = ""
         }
     }
     
-    func colorFor(value: Int, alpha: CGFloat) -> CGColor {
+    func color(forValue value: Int, alpha: CGFloat) -> CGColor {
         // Point-Slope Equation of a Line: y - y1 = m(x - x1)
         func HueValue (_ x: Int, xFrom: Int, xTo: Int, hueFrom: CGFloat, hueTo: CGFloat) -> CGFloat {
             let slope = (hueTo - hueFrom) / CGFloat(xTo - xFrom)
@@ -64,5 +69,18 @@ class ColorRamp {
         }
         
         return UIColor(hue:hue, saturation:1, brightness:brightness, alpha:alpha).cgColor
+    }
+    
+    class func color(forCondition condition: WeatherConditions, alpha: CGFloat = 0.8) -> UIColor {
+        switch condition {
+        case .VFR:
+            return UIColor(hue:120/360, saturation:1, brightness:0.81, alpha:alpha)
+        case .MVFR:
+            return UIColor(hue:45/360, saturation:1, brightness:0.81, alpha:alpha)
+        case .IFR:
+            return UIColor(hue:0, saturation:1, brightness:0.61, alpha:alpha)
+        default:
+            return UIColor(hue:0, saturation:0, brightness:0.1, alpha:alpha)
+        }
     }
 }

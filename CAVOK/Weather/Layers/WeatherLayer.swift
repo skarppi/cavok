@@ -20,10 +20,10 @@ class WeatherLayer {
     
     private var frameChanger: FrameChanger? = nil
     
-    init(module: MapModule, delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
+    init(delegate: MapDelegate, ramp: ColorRamp, observationValue: @escaping (Observation) -> Int?) {
         self.delegate = delegate
         self.observationValue = observationValue
-        self.ramp = ColorRamp(module: module)
+        self.ramp = ramp
     }
     
     deinit {
@@ -36,7 +36,7 @@ class WeatherLayer {
         }
     }
     
-    func render(observations: [Observation]) {
+    func render(observations: [Observation]) -> Int {
         if config == nil {
             reposition()
         }
@@ -49,7 +49,7 @@ class WeatherLayer {
         delegate.mapView.add(layer)
         self.layer = layer
         
-        let priorities: [Int] = Array(0...grouped.count-1).reversed()
+        let priorities: [Int] = Array(0...grouped.count - 1).reversed()
         layer.setFrameLoadingPriority(priorities)
         
         let frameChanger = FrameChanger(layer: layer)
@@ -57,11 +57,19 @@ class WeatherLayer {
         self.frameChanger = frameChanger
         
         delegate.setTimeslots(slots: grouped.map { $0.0})
+        
+        return grouped.count - 1
     }
     
-    func go(index: Int) {
+    func go(index: Int) -> [Observation] {
         if let frameChanger = self.frameChanger {
             frameChanger.go(index)
+        }
+        
+        if let tileSource = layer?.tileSource as? WeatherTileSource {
+            return tileSource.frames[index].observations
+        } else {
+            return []
         }
     }
     
@@ -96,8 +104,6 @@ class WeatherLayer {
         layer.imageDepth = UInt32(frames.count)
         layer.currentImage = Float(frames.count - 1)
         layer.allowFrameLoading = true
-        //layer.animationWrap = true
-        //layer.animationPeriod = 1.0
         
         return layer
     }

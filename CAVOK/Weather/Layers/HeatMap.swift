@@ -126,7 +126,7 @@ class HeatMap {
         
         for i in 0 ..< config.width * config.height {
             if data.value[i] > 0 && data.alpha[i] > 0 {
-                let color = self.ramp.colorFor(value: Int(data.value[i]), alpha: data.alpha[i])
+                let color = self.ramp.color(forValue: Int(data.value[i]), alpha: data.alpha[i])
                 
                 let comps = color.components!
                 let alpha = comps[3] * 255

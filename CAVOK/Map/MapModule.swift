@@ -18,6 +18,8 @@ protocol MapModule {
     func configure(userLocation: MaplyCoordinate?)
     
     func render(index: Int)
+    
+    func annotation(object: Any, parentFrame: CGRect) -> UIView?
 }
 
 public protocol MapDelegate {
