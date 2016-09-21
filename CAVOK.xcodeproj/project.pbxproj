@@ -25,6 +25,7 @@
 		374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */; };
 		374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */; };
 		374EC9ED1D7CB5AA0047B82B /* CAVOKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */; };
+		375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375784DF1D9321220046A8A7 /* TimeslotView.swift */; };
 		376550471D86B9C100610329 /* HeatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376550461D86B9C100610329 /* HeatMap.swift */; };
 		3765504B1D86BAB000610329 /* WeatherTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504A1D86BAB000610329 /* WeatherTileSource.swift */; };
 		3765504D1D86BAD100610329 /* WeatherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504C1D86BAD100610329 /* WeatherConfig.swift */; };
@@ -122,6 +123,7 @@
 		374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKUITests.swift; sourceTree = "<group>"; };
 		374EC9EE1D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		375784DF1D9321220046A8A7 /* TimeslotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeslotView.swift; path = Map/Views/TimeslotView.swift; sourceTree = "<group>"; };
 		376550461D86B9C100610329 /* HeatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMap.swift; path = Weather/Layers/HeatMap.swift; sourceTree = "<group>"; };
 		3765504A1D86BAB000610329 /* WeatherTileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherTileSource.swift; path = Weather/Layers/WeatherTileSource.swift; sourceTree = "<group>"; };
 		3765504C1D86BAD100610329 /* WeatherConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherConfig.swift; path = Weather/Layers/WeatherConfig.swift; sourceTree = "<group>"; };
@@ -296,6 +298,14 @@
 			path = CAVOKUITests;
 			sourceTree = "<group>";
 		};
+		375784DC1D9320280046A8A7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				375784DF1D9321220046A8A7 /* TimeslotView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		376550431D86B9AA00610329 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,6 +368,7 @@
 				376550501D86BBD400610329 /* Modules.swift */,
 				37486F261D89ECF800357E11 /* Layers */,
 				37486F271D89ED2C00357E11 /* Location */,
+				375784DC1D9320280046A8A7 /* Views */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -604,6 +615,7 @@
 				37B7FDC71D80654F009307F0 /* Metar.swift in Sources */,
 				37B22BF21D82085F001AF5BA /* MapModule.swift in Sources */,
 				377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */,
+				375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */,
 				37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */,
 				37B7FDC31D8064E5009307F0 /* Station.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,

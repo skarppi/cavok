@@ -32,7 +32,7 @@
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="jn6-iO-RT7"/>
                                         </connections>
                                     </textField>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-9l-uIq">
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-9l-uIq" customClass="TimeslotView" customModule="CAVOK" customModuleProvider="target">
                                         <frame key="frameInset" minX="8" height="29" maxX="8" maxY="7"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <segments>
@@ -41,7 +41,7 @@
                                         </segments>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <action selector="timeslotChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="Lkh-3E-meV"/>
+                                            <action selector="timeslotChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="I5T-ML-GzE"/>
                                         </connections>
                                     </segmentedControl>
                                 </subviews>
