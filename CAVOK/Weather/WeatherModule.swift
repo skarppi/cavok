@@ -153,51 +153,41 @@ open class WeatherModule: MapModule {
             delegate.addComponents(key: key, value: markers)
         }
         
-        let times = observations.map { $0.datetime }
-        renderTimestamp(min: times.min(), max: times.max())
+        renderTimestamp(min: observations.map { $0.datetime }.min())
         
     }
     
-    private func renderTimestamp(min: Date!, max: Date!) {
-        guard min != nil && max != nil else {
-            delegate.setStatus(text: "No data, click to reload.", color: .red)
+    private func renderTimestamp(min: Date?) {
+        guard let min = min else {
+            delegate.setStatus(text: "No data, click to reload.", color: ColorRamp.color(for: .IFR))
             return
         }
         
-        let interval = min.timeIntervalSinceNow
-        let minutes = Int(interval / -60)
-        let hours = minutes / 60
+        let interval = min.timeIntervalSinceNow.negated()
+        let minutes = Int(interval / 60)
         
-        guard hours < 24 else {
-            delegate.setStatus(text: "\(hours / 24) days old, click to reload", color: .red)
-            return
+        let formatter = DateComponentsFormatter()
+        if minutes < 60*12  {
+            formatter.allowedUnits = [.hour, .minute]
+        } else {
+            formatter.allowedUnits = [.day, .hour]
         }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        
-        let from = dateFormatter.string(from: min)
-        let to = dateFormatter.string(from: max)
-        
-        let status: String = {
-            if from == to {
-                return "\(from), \(minutes) min"
-            } else {
-                return "\(from) - \(to), \(minutes) min"
-            }
-        }()
+        formatter.unitsStyle = .brief
+        formatter.zeroFormattingBehavior = .dropLeading
+
+        let status = formatter.string(from: interval)
         
         let condition: WeatherConditions = {
             if(minutes <= 30) {
                 return .VFR
-            } else if(minutes <= 60) {
+            } else if(minutes <= 90) {
                 return .MVFR
             } else {
                 return .IFR
             }
         }()
         
-        delegate.setStatus(text: status, color: ColorRamp.color(forCondition: condition, alpha: 1))
+        delegate.setStatus(text: status, color: ColorRamp.color(for: condition))
     }
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView? {

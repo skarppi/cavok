@@ -2,22 +2,11 @@
 //  ObservationCalloutView.swift
 //  CAVOK
 //
-//  Created by Juho Kolehmainen on 19.09.16.
+//  Created by Juho Kolehmainen on 31.01.15.
 //  Copyright © 2016 Juho Kolehmainen. All rights reserved.
 //
 
 import Foundation
-
-//
-//  MetarCalloutView.swift
-//  Lentosaa
-//
-//  Created by Juho Kolehmainen on 31.01.15.
-//  Copyright (c) 2015 Juho Kolehmainen. All rights reserved.
-//
-
-import Foundation
-import UIKit
 
 class ObservationCalloutView: UIView {
     
@@ -26,7 +15,7 @@ class ObservationCalloutView: UIView {
         
         let valueStr = value.map {String($0)} ?? "-"
         
-        let valueColor:CGColor = ramp.color(forValue: value ?? 0, alpha: 1)
+        let valueColor:CGColor = ramp.color(for: value ?? 0)
         let valueAttributes = [NSForegroundColorAttributeName : UIColor(cgColor: valueColor)]
         titleAttr.append(NSAttributedString(string: valueStr, attributes:valueAttributes))
         

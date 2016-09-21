@@ -40,7 +40,7 @@ class ColorRamp {
         }
     }
     
-    func color(forValue value: Int, alpha: CGFloat) -> CGColor {
+    func color(for value: Int, alpha: CGFloat = 1) -> CGColor {
         // Point-Slope Equation of a Line: y - y1 = m(x - x1)
         func HueValue (_ x: Int, xFrom: Int, xTo: Int, hueFrom: CGFloat, hueTo: CGFloat) -> CGFloat {
             let slope = (hueTo - hueFrom) / CGFloat(xTo - xFrom)
@@ -71,7 +71,7 @@ class ColorRamp {
         return UIColor(hue:hue, saturation:1, brightness:brightness, alpha:alpha).cgColor
     }
     
-    class func color(forCondition condition: WeatherConditions, alpha: CGFloat = 0.8) -> UIColor {
+    class func color(for condition: WeatherConditions, alpha: CGFloat = 1) -> UIColor {
         switch condition {
         case .VFR:
             return UIColor(hue:120/360, saturation:1, brightness:0.81, alpha:alpha)

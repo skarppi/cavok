@@ -24,7 +24,7 @@ class ObservationMarker : MaplyScreenMarker {
         
         if let context = UIGraphicsGetCurrentContext() {
             context.setLineWidth(1)
-            context.setFillColor(ColorRamp.color(forCondition: condition).cgColor)
+            context.setFillColor(ColorRamp.color(for: condition, alpha: 0.8).cgColor)
             context.setStrokeColor(UIColor.black.cgColor)
             context.addEllipse(in: CGRect(x: 1, y: 1, width: size - 2, height: size - 2))
             context.drawPath(using: .fillStroke)

@@ -31,21 +31,18 @@ class RegionSelection : MaplySticker {
     }
     
     func render() -> UIImage {
-        let radius = CGFloat(200)
+        let radius = 512
         
         UIGraphicsBeginImageContext(CGSize(width: radius, height: radius))
         
         let context = UIGraphicsGetCurrentContext()
         context?.setLineWidth(2)
         
-        //let path = CGPathCreateMutable()
-        //CGPathAddArc(path, nil, CGFloat(centerPoint.x), CGFloat(centerPoint.y), CGFloat(radius), CGFloat(0.0), CGFloat(2.0 * M_PI), true)
-        
         let blue = UIColor.blue
         
         context?.setFillColor(blue.withAlphaComponent(0.2).cgColor)
         context?.setStrokeColor(blue.withAlphaComponent(0.7).cgColor)
-        context?.addEllipse(in: CGRect(x: 0.0, y: 0.0, width: radius-2, height: radius-2))
+        context?.addEllipse(in: CGRect(x: 2, y: 2, width: radius-4, height: radius-4))
         context?.drawPath(using: CGPathDrawingMode.fillStroke)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -53,10 +50,5 @@ class RegionSelection : MaplySticker {
         UIGraphicsEndImageContext()
         
         return image!
-        
-        //let centerPoint = self.pointForMapPoint(MKMapPointForCoordinate(center))
-        //let radius = MKMapPointsPerMeterAtLatitude(center.latitude) * region.radius
-        //CGPathAddArc(path, nil, CGFloat(centerPoint.x), CGFloat(centerPoint.y), CGFloat(radius), CGFloat(0.0), CGFloat(2.0 * M_PI), true)
-        
     }
 }
