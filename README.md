@@ -19,9 +19,11 @@ carthage bootstrap
 
 git submodule update --init
 
-cd libs/WhirlyGlobe­Maply
+cd libs/WhirlyGlobe
 git submodule update --init
+
+cp CAVOK/CAVOK.template.plist CAVOK/CAVOK.plist
 ```
 
-Edit `CAVOK.plist` with missing data
+Edit `CAVOK/CAVOK.plist` with missing data
 * `basemapURL` add [MapBox](https://www.mapbox.com) access token or any other [TileJSON](https://github.com/mapbox/tilejson-spec)

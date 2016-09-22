@@ -34,8 +34,8 @@ public class WeatherServer {
     func refreshStations() -> Promise<[Station]> {
         return queryStations().then { stations -> [Station] in
             let realm = try! Realm()
-            let oldStations = realm.allObjects(ofType: Station.self)
-            let oldMetars = realm.allObjects(ofType: Metar.self)
+            let oldStations = realm.objects(Station.self)
+            let oldMetars = realm.objects(Metar.self)
             
             try realm.write {
                 realm.delete(oldStations)
@@ -56,8 +56,8 @@ public class WeatherServer {
             )
         }.then { addsMetars, addsTafs -> [Observation] in
             let realm = try! Realm()
-            let oldMetars = realm.allObjects(ofType: Metar.self)
-            let oldTafs = realm.allObjects(ofType: Taf.self)
+            let oldMetars = realm.objects(Metar.self)
+            let oldTafs = realm.objects(Taf.self)
             
             let metars: [Observation] = (addsMetars).flatMap { metar in
                 self.parseObservation(Metar(), raw: metar, realm: realm)
@@ -81,7 +81,7 @@ public class WeatherServer {
     private func parseObservation<T: Observation>(_ obs: T, raw: String, realm: Realm) -> T? {
         obs.parse(raw: raw)
         
-        let stations = realm.allObjects(ofType: Station.self).filter(using: "identifier == '\(obs.identifier)'")
+        let stations = realm.objects(Station.self).filter("identifier == '\(obs.identifier)'")
         if stations.count == 1 {
             obs.station = stations[0]
             return obs
@@ -95,24 +95,24 @@ public class WeatherServer {
     
     func getStationCount() -> Int {
         let realm = try! Realm()
-        return realm.allObjects(ofType: Station.self).count
+        return realm.objects(Station.self).count
     }
     
     func observations(_ type: Observation.Type) -> [Observation] {
         let realm = try! Realm()
-        let observations = realm.allObjects(ofType: type)
-        return Array(observations.sorted(onProperty: "datetime"))
+        let observations = realm.objects(type)
+        return Array(observations.sorted(byProperty: "datetime"))
     }
     
     func observations(_ from: Date, minutes: Int, type:Observation.Type) -> [Observation] {
         let realm = try! Realm()
-        let observations = realm.allObjects(ofType: type)
+        let observations = realm.objects(type)
         
         let to = Calendar.current.date(byAdding: .minute, value: minutes, to: from)
         
-        let filtered = observations.filter(using: NSPredicate(format: "datetime >= \(from) and datetime < \(to)"))
+        let filtered = observations.filter(NSPredicate(format: "datetime >= \(from) and datetime < \(to)"))
         print("filtered \(filtered.count) \(type.className()) between \(from) and  \(to)")
-        return Array(filtered.sorted(onProperty: "datetime"))
+        return Array(filtered.sorted(byProperty: "datetime"))
     }
     
 }
