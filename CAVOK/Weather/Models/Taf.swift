@@ -10,6 +10,9 @@ import Foundation
 
 public class Taf: Observation {
     
+    public dynamic var from: Date = Date()
+    public dynamic var to: Date = Date()
+    
     override public func parse(raw: String) {
         super.parse(raw: raw)
         
@@ -28,12 +31,20 @@ public class Taf: Observation {
         // identifier
         self.identifier = parser.pop()!
         
-        if let time = parser.pop() {
-            self.datetime = parseDate(value: time)
+        let time = parseDate(value: parser.peek())
+        if let time = time {
+            self.datetime = time
+            parser.next()
         }
         
-        // validity
-        parser.next()
+        // validity start and end
+        if let (from,to) = parse(validity: parser.pop()) {
+            if time == nil {
+                self.datetime = from
+            }
+            self.from = from
+            self.to = to
+        }
         
         if let wind = parseWind(value: parser.peek()) {
             self.wind = wind
@@ -75,4 +86,17 @@ public class Taf: Observation {
         self.condition = self.parseCondition().rawValue
     }
     
+    private func parse(validity: String?) -> (Date, Date)? {
+        if let validity = validity {
+            let components = validity.components(separatedBy: "/").flatMap { component in
+                self.parseDate(value: "\(component)00Z")
+            }
+            if components.count == 2 {
+                 return (components[0], components[1])
+            }
+        }
+        return nil
+        
+    }
+
 }

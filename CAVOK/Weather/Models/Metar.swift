@@ -34,9 +34,10 @@ public class Metar: Observation {
         // identifier
         self.identifier = parser.pop()!
         
-        if let time = parser.pop() {
-            self.datetime = parseDate(value: time)
+        if let time = parseDate(value: parser.pop()) {
+            self.datetime = time
         }
+        
         
         if let type = parser.peek()  {
             if type.contains(["METAR", "SPECI", "AUTO"]) {

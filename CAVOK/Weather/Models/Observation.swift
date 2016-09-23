@@ -71,21 +71,24 @@ open class Observation: Object {
     // MARK: - Date format
     
     // 041600Z indicates the day of the month (the 4th) followed by the time of day (1600 Zulu time).
-    func parseDate(value: String) -> Date {
-        let cal = Calendar.current
-        let now = Date()
-        let today = cal.dateComponents([.day, .month, .year], from: now)
-        
-        let dateInput = "\(today.year!)-\(today.month!)-\(value)"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-ddHHmmZ"
-        let date = dateFormatter.date(from: dateInput)!
-        
-        if date > now {
-            return cal.date(byAdding: .month, value: -1, to: date)!
+    func parseDate(value: String?) -> Date? {
+        if let value = value {
+            let cal = Calendar.current
+            let now = Date()
+            let today = cal.dateComponents([.day, .month, .year], from: now)
+            
+            let dateInput = "\(today.year!)-\(today.month!)-\(value)"
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-ddHHmmZ"
+            if let date = dateFormatter.date(from: dateInput) {
+                if date > now {
+                    return cal.date(byAdding: .month, value: -1, to: date)!
+                }
+                return date
+            }
         }
-        return date
+        return nil
     }
     
     // MARK: - Wind parsers
