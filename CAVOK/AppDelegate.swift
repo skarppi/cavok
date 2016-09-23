@@ -81,8 +81,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Now that we've told Realm how to handle the schema change, opening the file
         // will automatically perform the migration
-        let realm = try! Realm()
-        print(realm.configuration.fileURL)
+        do {
+            let realm = try Realm()
+            print(realm.configuration.fileURL)
+        } catch {
+            let realmURL = config.fileURL!
+            [
+                realmURL,
+                realmURL.appendingPathExtension("lock"),
+                realmURL.appendingPathExtension("log_a"),
+                realmURL.appendingPathExtension("log_b"),
+                realmURL.appendingPathExtension("note")
+            ].forEach { url in
+                try! FileManager.default.removeItem(at: url)
+            }
+            let realm = try! Realm()
+            print(realm.configuration.fileURL)
+        }
     }
 }
 

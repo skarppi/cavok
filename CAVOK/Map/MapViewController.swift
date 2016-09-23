@@ -106,6 +106,10 @@ class MapViewController: UIViewController {
         locationManager.requestLocation()
     }
 
+    private func isFirstLoad() -> Bool {
+        return self.region.isSelected && WeatherRegion.load() == nil
+    }
+    
     func userLocationChanged(coordinate: MaplyCoordinate) {
         clearComponents(ofType: UserMarker.self)
         
@@ -114,35 +118,36 @@ class MapViewController: UIViewController {
             addComponents(key: userLocation, value: objects)
         }
         
-        let bbox = mapView.getCurrentExtents()
         let height = LastSession.load()?.height
-        if height == nil || !bbox.inside(coordinate) {
+        if height == nil || !mapView.getCurrentExtents().inside(coordinate) {
             mapView.height = height ?? 0.2
             mapView.animate(toPosition: coordinate, time:0.5)
-            
-            region.isSelected = module.configure(userLocation: userLocation.loc)
+        }
+        
+        if isFirstLoad() {
+            self.module.configure(open: true, userLocation: userLocation.loc)
+        } else {
+            updatePanels(visible: true)
         }
     }
     
     @IBAction func resetRegion() {
-        let hide = module.configure(userLocation: nil)
-        updatePanels(hide: hide)
+        if isFirstLoad() {
+            return
+        }
+        let start = !region.isSelected
+        updatePanels(visible: !start)
+        module.configure(open: start, userLocation: nil)
     }
     
-    func updatePanels(hide: Bool) {
-        self.region.isSelected = hide
-        
+    fileprivate func updatePanels(visible: Bool) {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            if hide {
-                self.moduleType.alpha = 0
-                self.bottomView.alpha = 0
-            } else {
-                self.moduleType.alpha = 1
-                self.bottomView.alpha = 0.7
-            }
+            self.region.isSelected = !visible
+            self.moduleType.alpha = (visible ? 1 : 0)
+            self.bottomView.alpha = (visible ? 0.7 : 0)
         }, completion: { finished in
-                self.moduleType.isHidden = hide
-                self.bottomView.isHidden = hide
+                self.moduleType.isHidden = !visible
+                self.bottomView.isHidden = !visible
         })
     }
     
@@ -152,7 +157,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func timeslotChanged() {
-        module.render(index: timeslots.selectedSegmentIndex)
+        module.render(frame: timeslots.selectedSegmentIndex)
     }
     
 }
@@ -195,7 +200,7 @@ extension MapViewController : MapDelegate {
             
             // everything is loaded, show panels
             if self.region.isSelected {
-                self.updatePanels(hide: false)
+                self.updatePanels(visible: true)
             }
         }
     }
@@ -254,6 +259,11 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
     func globeViewController(_ view: WhirlyGlobeViewController, didSelect selected: NSObject, atLoc coord: MaplyCoordinate, onScreen screenPt: CGPoint) {
         
         view.clearAnnotations()
+        
+        if self.region.isSelected {
+            module.didTapAt(coord: coord)
+            return
+        }
         
         if let marker = selected as? MaplyScreenMarker {
             let userObject = marker.userObject

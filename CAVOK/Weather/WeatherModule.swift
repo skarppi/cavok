@@ -56,16 +56,16 @@ open class WeatherModule: MapModule {
         self.weatherLayer = WeatherLayer(delegate: self.delegate, ramp: ramp, observationValue: observationValue)
         
         let observations = weatherServer.observations(Metar.self)
-        if !observations.isEmpty {
-            let index = weatherLayer.render(observations: observations)
-            render(index: index)
-        }
+        let frame = weatherLayer.render(observations: observations)
+        render(frame: frame)
     }
     
     deinit {
         delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
     }
+    
+    // MARK: - Region selection
     
     func didTapAt(coord: MaplyCoordinate) {
         if let selection = delegate.findComponent(ofType: RegionSelection.self) as? RegionSelection {
@@ -75,54 +75,51 @@ open class WeatherModule: MapModule {
     }
     
     private func startRegionSelection(region: WeatherRegion) {
-        endRegionSelection()
+        let annotation = RegionAnnotationView(region: region,
+                                              closed: self.endRegionSelection,
+                                              resized: self.showRegionSelection)
+        delegate.mapView.addAnnotation(annotation, forPoint: region.center, offset: CGPoint.zero)
         
-        let annotation = RegionAnnotationView(region: region, closed: { region in
-            self.endRegionSelection()
-            if region.save() {
-                self.refreshStations()
-                self.weatherLayer.reposition()
-            }
-        }, resized: { region in
-            self.startRegionSelection(region: region)
-        })
+        showRegionSelection(region: region)
+    }
+    
+    private func showRegionSelection(region: WeatherRegion) {
+        delegate.clearComponents(ofType: RegionSelection.self)
         
         let selection = RegionSelection(region: region)
-        
-        if let stickers = self.delegate.mapView.addStickers([selection], desc: [kMaplyFade: 1.0]) {
-            self.delegate.addComponents(key: selection, value: stickers)
+        if let stickers = delegate.mapView.addStickers([selection], desc: [kMaplyFade: 1.0]) {
+            delegate.addComponents(key: selection, value: stickers)
         }
-        self.delegate.mapView.addAnnotation(annotation, forPoint: region.center, offset: CGPoint.zero)
     }
     
-    private func endRegionSelection() {
+    private func endRegionSelection(region: WeatherRegion? = nil) {
         delegate.clearComponents(ofType: RegionSelection.self)
         delegate.clearAnnotations(ofType: RegionAnnotationView.self)
+        
+        if region?.save() == true {
+            self.refreshStations()
+            self.weatherLayer.reposition()
+        }
     }
     
-    func configure(userLocation: MaplyCoordinate?) -> Bool {
-        guard delegate.findComponent(ofType: RegionSelection.self) == nil else {
-            endRegionSelection()
-            return false
-        }
-        
-        if let region = WeatherRegion.load() {
-            if userLocation == nil {
-                startRegionSelection(region: region)
-            }
+    func configure(open: Bool, userLocation: MaplyCoordinate?) {
+        if open {
+            let region = WeatherRegion.load() ?? WeatherRegion(center: userLocation ?? delegate.mapView.getPosition(),
+                                                               radius: 100)
+            startRegionSelection(region: region)
         } else {
-            let center = userLocation ?? delegate.mapView.getPosition()
-            startRegionSelection(region: WeatherRegion(center: center, radius: 100))
+            endRegionSelection()
         }
-        return true
     }
+    
+    // MARK: - Observations
     
     func refresh() {
         delegate.setStatus(text: "Refreshing observations...", color: .black)
         
         weatherServer.refreshObservations().then(execute: { observations -> Void in
             let frame = self.weatherLayer.render(observations: observations)
-            self.render(index: frame)
+            self.render(frame: frame)
         }).catch(execute: { error -> Void in
             self.delegate.setStatus(error: error)
         })
@@ -139,11 +136,16 @@ open class WeatherModule: MapModule {
         }
     }
     
-    func render(index: Int) {
+    func render(frame: Int?) {
+        guard let frame = frame else {
+            delegate.setStatus(text: "No data, click to reload.", color: ColorRamp.color(for: .IFR))
+            return
+        }
+        
         delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
         
-        let observations = weatherLayer.go(index: index)
+        let observations = weatherLayer.go(frame: frame)
         
         let stations = observations.map({ obs in
             return ObservationMarker(obs: obs)
@@ -153,16 +155,11 @@ open class WeatherModule: MapModule {
             delegate.addComponents(key: key, value: markers)
         }
         
-        renderTimestamp(min: observations.map { $0.datetime }.min())
+        renderTimestamp(min: observations.map { $0.datetime }.min()!)
         
     }
     
-    private func renderTimestamp(min: Date?) {
-        guard let min = min else {
-            delegate.setStatus(text: "No data, click to reload.", color: ColorRamp.color(for: .IFR))
-            return
-        }
-        
+    private func renderTimestamp(min: Date) {
         let interval = min.timeIntervalSinceNow.negated()
         let minutes = Int(interval / 60)
         

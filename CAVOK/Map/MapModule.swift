@@ -15,9 +15,9 @@ protocol MapModule {
     
     func refresh()
     
-    func configure(userLocation: MaplyCoordinate?) -> Bool
+    func configure(open: Bool, userLocation: MaplyCoordinate?)
     
-    func render(index: Int)
+    func render(frame: Int?)
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView?
 }

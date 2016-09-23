@@ -36,7 +36,11 @@ class WeatherLayer {
         }
     }
     
-    func render(observations: [Observation]) -> Int {
+    func render(observations: [Observation]) -> Int? {
+        if observations.isEmpty {
+            return nil
+        }
+        
         if config == nil {
             reposition()
         }
@@ -61,13 +65,13 @@ class WeatherLayer {
         return grouped.count - 1
     }
     
-    func go(index: Int) -> [Observation] {
+    func go(frame: Int) -> [Observation] {
         if let frameChanger = self.frameChanger {
-            frameChanger.go(index)
+            frameChanger.go(frame)
         }
         
         if let tileSource = layer?.tileSource as? WeatherTileSource {
-            return tileSource.frames[index].observations
+            return tileSource.frames[frame].observations
         } else {
             return []
         }
