@@ -14,6 +14,6 @@ class UserMarker : MaplyScreenMarker {
         super.init()
         image = UIImage(named: "Location");
         loc = coordinate
-        size = CGSize(width: 10,height: 10);
+        size = CGSize(width: 12,height: 12);
     }
 }

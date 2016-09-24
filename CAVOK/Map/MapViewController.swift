@@ -266,13 +266,10 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
         }
         
         if let marker = selected as? MaplyScreenMarker {
-            let userObject = marker.userObject
-            let location = marker.loc
-            
-            if let contentView = module.annotation(object: userObject, parentFrame: self.view.frame) {
+            if let contentView = module.annotation(object: marker.userObject, parentFrame: self.view.frame) {
                 let annotation = MaplyAnnotation()
                 annotation.contentView = contentView
-                view.addAnnotation(annotation, forPoint: location, offset: .zero)
+                view.addAnnotation(annotation, forPoint: marker.loc, offset: .zero)
             }
         }
     }
