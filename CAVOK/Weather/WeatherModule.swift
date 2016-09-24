@@ -56,8 +56,7 @@ open class WeatherModule: MapModule {
         self.weatherLayer = WeatherLayer(delegate: self.delegate, ramp: ramp, observationValue: observationValue)
         
         let observations = weatherServer.observations(Metar.self)
-        let frame = weatherLayer.render(observations: observations)
-        render(frame: frame)
+        render(observations: observations)
     }
     
     deinit {
@@ -117,12 +116,11 @@ open class WeatherModule: MapModule {
     func refresh() {
         delegate.setStatus(text: "Refreshing observations...", color: .black)
         
-        weatherServer.refreshObservations().then(execute: { observations -> Void in
-            let frame = self.weatherLayer.render(observations: observations)
-            self.render(frame: frame)
-        }).catch(execute: { error -> Void in
-            self.delegate.setStatus(error: error)
-        })
+        weatherServer.refreshObservations()
+            .then(execute: render)
+            .catch(execute: { error -> Void in
+                self.delegate.setStatus(error: error)
+            })
     }
     
     private func refreshStations() {
@@ -134,6 +132,14 @@ open class WeatherModule: MapModule {
         }.catch { error -> Void in
             self.delegate.setStatus(error: error)
         }
+    }
+    
+    private func render(observations: [Observation]) {
+        let groups = ObservationGroup.group(observations: observations)
+        self.delegate.setTimeslots(slots: groups.map { $0.slot })
+        
+        let frame = self.weatherLayer.render(groups: groups.map { $0.observations })
+        render(frame: frame)
     }
     
     func render(frame: Int?) {

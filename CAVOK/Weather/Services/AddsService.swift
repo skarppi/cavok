@@ -49,10 +49,12 @@ public class AddsService {
                 return []
             }
             
-            let name = doc["response"]["data"].children[0].element!.name
-            return doc["response"]["data"][name].all.flatMap { item in
+            let collection = doc["response"]["data"].children[0].element!.name
+            let raws = doc["response"]["data"][collection].all.flatMap { item in
                 item["raw_text"].element?.text
             }
+            // remove possible duplicate entries
+            return Array(Set(raws))
         }
     }
     

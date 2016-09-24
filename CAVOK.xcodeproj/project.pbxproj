@@ -67,6 +67,7 @@
 		37B7FDCD1D806B54009307F0 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E81D7D961A0010CA1F /* PromiseKit.framework */; };
 		37B7FDCE1D806B54009307F0 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E91D7D961A0010CA1F /* SwiftyJSON.framework */; };
 		37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */; };
+		C054D09F1D96D79200B71BF4 /* ObservationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* ObservationGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		37B7FDC61D80654F009307F0 /* Metar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Metar.swift; path = Weather/Models/Metar.swift; sourceTree = "<group>"; };
 		37B7FDC81D8065BD009307F0 /* Taf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Taf.swift; path = Weather/Models/Taf.swift; sourceTree = "<group>"; };
 		37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
+		C054D09E1D96D79200B71BF4 /* ObservationGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationGroup.swift; path = Weather/Models/ObservationGroup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +402,7 @@
 			children = (
 				37B7FDC61D80654F009307F0 /* Metar.swift */,
 				37B7FDBE1D8064E5009307F0 /* Observation.swift */,
+				C054D09E1D96D79200B71BF4 /* ObservationGroup.swift */,
 				37B7FDC01D8064E5009307F0 /* Station.swift */,
 				37B7FDC81D8065BD009307F0 /* Taf.swift */,
 				37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */,
@@ -601,6 +604,7 @@
 				374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */,
 				37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */,
 				3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */,
+				C054D09F1D96D79200B71BF4 /* ObservationGroup.swift in Sources */,
 				37B22BE61D81E330001AF5BA /* Weather.swift in Sources */,
 				3765504B1D86BAB000610329 /* WeatherTileSource.swift in Sources */,
 				3765504F1D86BB7C00610329 /* WeatherLayer.swift in Sources */,

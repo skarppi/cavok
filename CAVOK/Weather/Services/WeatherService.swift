@@ -69,7 +69,7 @@ public class WeatherServer {
             try realm.write {
                 realm.delete(oldMetars)
                 realm.delete(oldTafs)
-                realm.add(metars + tafs, update: true)
+                realm.add(observations, update: true)
             }
             return observations
         }.always { observations in
@@ -103,16 +103,4 @@ public class WeatherServer {
         let observations = realm.objects(type)
         return Array(observations.sorted(byProperty: "datetime"))
     }
-    
-    func observations(_ from: Date, minutes: Int, type:Observation.Type) -> [Observation] {
-        let realm = try! Realm()
-        let observations = realm.objects(type)
-        
-        let to = Calendar.current.date(byAdding: .minute, value: minutes, to: from)
-        
-        let filtered = observations.filter(NSPredicate(format: "datetime >= \(from) and datetime < \(to)"))
-        print("filtered \(filtered.count) \(type.className()) between \(from) and  \(to)")
-        return Array(filtered.sorted(byProperty: "datetime"))
-    }
-    
 }
