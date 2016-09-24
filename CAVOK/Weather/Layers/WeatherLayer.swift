@@ -10,7 +10,7 @@ import Foundation
 
 class WeatherLayer {
 
-    private let delegate: MapDelegate
+    private let mapView: WhirlyGlobeViewController
     private let observationValue: (Observation) -> Int?
     private let ramp: ColorRamp
     
@@ -20,8 +20,8 @@ class WeatherLayer {
     
     private var frameChanger: FrameChanger? = nil
     
-    init(delegate: MapDelegate, ramp: ColorRamp, observationValue: @escaping (Observation) -> Int?) {
-        self.delegate = delegate
+    init(mapView: WhirlyGlobeViewController, ramp: ColorRamp, observationValue: @escaping (Observation) -> Int?) {
+        self.mapView = mapView
         self.observationValue = observationValue
         self.ramp = ramp
     }
@@ -48,7 +48,7 @@ class WeatherLayer {
         clean()
         
         let layer = initLayer(groups: groups)
-        delegate.mapView.add(layer)
+        mapView.add(layer)
         self.layer = layer
         
         // load last frames first
@@ -56,7 +56,7 @@ class WeatherLayer {
         layer.setFrameLoadingPriority(priorities)
         
         let frameChanger = FrameChanger(layer: layer)
-        delegate.mapView.add(frameChanger)
+        mapView.add(frameChanger)
         self.frameChanger = frameChanger
         
         return groups.count - 1
@@ -76,10 +76,10 @@ class WeatherLayer {
     
     private func clean() {
         if let frameChanger = self.frameChanger {
-            delegate.mapView.remove(frameChanger)
+            mapView.remove(frameChanger)
         }
         if let layer = self.layer {
-            delegate.mapView.remove(layer)
+            mapView.remove(layer)
         }
     }
     

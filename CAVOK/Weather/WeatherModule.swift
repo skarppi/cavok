@@ -8,52 +8,46 @@
 
 import Foundation
 
-class Ceiling: WeatherModule {
+class Ceiling: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
         super.init(delegate: delegate, observationValue: { $0.cloudHeight.value })
     }
 }
 
-class Visibility: WeatherModule {
+class Visibility: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
         super.init(delegate: delegate, observationValue: { $0.visibility.value })
     }
 }
 
-final class Temperature: WeatherModule {
+final class Temperature: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
         super.init(delegate: delegate, observationValue: { ($0 as? Metar)?.temperature.value })
     }
 }
 
 
-open class WeatherModule: MapModule {
+open class WeatherModule {
 
     private let delegate: MapDelegate
     
-    private var ramp: ColorRamp! = nil
+    private let ramp: ColorRamp
     
     private let weatherServer = WeatherServer()
     
     private let observationValue: (Observation) -> Int?
     
-    private var weatherLayer: WeatherLayer! = nil
-    
-    public required init(delegate: MapDelegate) {
-        self.delegate = delegate
-        self.weatherLayer = nil
-        self.observationValue = { (_) in nil }
-        self.ramp = ColorRamp(module: self)
-    }
+    private let weatherLayer: WeatherLayer
     
     public init(delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
         self.delegate = delegate
         
         self.observationValue = observationValue
         
-        self.ramp = ColorRamp(module: self)
+        let ramp = ColorRamp(module: type(of: self))
+        self.ramp = ramp
         
-        self.weatherLayer = WeatherLayer(delegate: self.delegate, ramp: ramp, observationValue: observationValue)
+        self.weatherLayer = WeatherLayer(mapView: delegate.mapView, ramp: ramp, observationValue: observationValue)
         
         let observations = weatherServer.observations(Metar.self)
         render(observations: observations)

@@ -22,8 +22,8 @@ class ColorRamp {
     
     private let steps: GridSteps
     
-    init(module: MapModule) {
-        let moduleClassName = String(describing: type(of: module))
+    init(module: WeatherModule.Type) {
+        let moduleClassName = String(describing: module)
         
         let modules = UserDefaults.standard.array(forKey: "modules") as! [[String:AnyObject]]
         
