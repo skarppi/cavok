@@ -36,10 +36,10 @@ public class AddsService {
         }
     }
     
-    class func fetchObservations(_ source: AddsSource) -> Promise<[String]> {
+    class func fetchObservations(_ source: AddsSource, history: Bool) -> Promise<[String]> {
         let query = [
             "hoursBeforeNow": "3",
-            "mostRecentForEachStation": "false",
+            "mostRecentForEachStation": String(history == false),
             "fields": "raw_text"
         ]
         return fetch(dataSource: String(source.rawValue), with: query).then { doc -> [String] in

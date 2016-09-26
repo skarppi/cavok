@@ -36,7 +36,7 @@ class WeatherConfig {
     init(region: WeatherRegion) {
         self.region = region
         
-        self.padding = min(region.radius / 3, 300)
+        self.padding = min(region.radius / 2, 300)
         
         let bbox = region.bbox(padding: padding)
         let (ll, ur) = bbox.tiles(zoom: Int32(zoom))

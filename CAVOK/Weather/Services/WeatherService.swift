@@ -12,7 +12,7 @@ import PromiseKit
 public class WeatherServer {
     
     // query stations available
-    func queryStations() -> Promise<[Station]> {
+    private func queryStations() -> Promise<[Station]> {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
             //when(fulfilled:
@@ -34,44 +34,43 @@ public class WeatherServer {
     func refreshStations() -> Promise<[Station]> {
         return queryStations().then { stations -> [Station] in
             let realm = try! Realm()
-            let oldStations = realm.objects(Station.self)
-            let oldMetars = realm.objects(Metar.self)
-            
             try realm.write {
-                realm.delete(oldStations)
-                realm.delete(oldMetars)
+                realm.deleteAll()
                 realm.add(stations)
             }
-            
             return stations
         }
     }
     
-    func refreshObservations() -> Promise<[Observation]> {
+    func refreshObservations() -> Promise<Observations> {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
             when(fulfilled:
-                AddsService.fetchObservations(.METAR),
-                AddsService.fetchObservations(.TAF)
+                AddsService.fetchObservations(.METAR, history: true),
+                 AddsService.fetchObservations(.TAF, history: false)
             )
-        }.then { addsMetars, addsTafs -> [Observation] in
+        }.then { addsMetars, addsTafs -> Observations in
             let realm = try! Realm()
             let oldMetars = realm.objects(Metar.self)
             let oldTafs = realm.objects(Taf.self)
             
-            let metars: [Observation] = (addsMetars).flatMap { metar in
+            let metars = (addsMetars).flatMap { metar in
                 self.parseObservation(Metar(), raw: metar, realm: realm)
+            }.sorted { a, b in
+                a.datetime < b.datetime
             }
-            let tafs: [Observation] = addsTafs.flatMap { taf in
+            let tafs = addsTafs.flatMap { taf in
                 self.parseObservation(Taf(), raw: taf, realm: realm)
+            }.sorted { a, b in
+                a.from < b.from
             }
-            let observations = metars + tafs
             try realm.write {
                 realm.delete(oldMetars)
                 realm.delete(oldTafs)
-                realm.add(observations, update: true)
+                realm.add(metars, update: true)
+                realm.add(tafs, update: true)
             }
-            return observations
+            return Observations(metars: metars, tafs: tafs)
         }.always { observations in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return observations
@@ -86,7 +85,6 @@ public class WeatherServer {
             obs.station = stations[0]
             return obs
         } else {
-            //NSLog("Station '%@' returned %tu items", identifier, stations.count);
             return nil
         }
     }
@@ -98,9 +96,12 @@ public class WeatherServer {
         return realm.objects(Station.self).count
     }
     
-    func observations(_ type: Observation.Type) -> [Observation] {
+    func observations() -> Observations {
         let realm = try! Realm()
-        let observations = realm.objects(type)
-        return Array(observations.sorted(byProperty: "datetime"))
+        
+        let metars = realm.objects(Metar.self).sorted(byProperty: "datetime")
+        let tafs = realm.objects(Taf.self).sorted(byProperty: "from")
+
+        return Observations(metars: Array(metars), tafs: Array(tafs))
     }
 }

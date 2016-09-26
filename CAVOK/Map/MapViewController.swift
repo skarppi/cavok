@@ -18,7 +18,7 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var moduleType: UISegmentedControl!
     
-    @IBOutlet weak var timeslots: UISegmentedControl!
+    @IBOutlet weak var timeslots: TimeslotView!
     
     @IBOutlet weak var region: UIButton!
     
@@ -185,18 +185,17 @@ extension MapViewController : MapDelegate {
         }
     }
     
-    func setTimeslots(slots: [Date]) {
-        timeslots.removeAllSegments()
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+    func loaded(frame:Int?, timeslots: [Timeslot]) {
+        self.timeslots.removeAllSegments()
         
         DispatchQueue.main.async {
-            for (index, slot) in slots.enumerated() {
-                let title = formatter.string(from: slot)
-                self.timeslots.insertSegment(withTitle: title, at: index, animated: true)
+            for (index, slot) in timeslots.enumerated() {
+                self.timeslots.insertSegment(with: slot, at: index, animated: true)
             }
-            self.timeslots.selectedSegmentIndex = slots.count - 1
+            
+            self.timeslots.selectedSegmentIndex = frame ?? -1
+            
+            self.module.render(frame: frame)
             
             // everything is loaded, show panels
             if self.region.isSelected {

@@ -71,6 +71,23 @@ class ColorRamp {
         return UIColor(hue:hue, saturation:1, brightness:brightness, alpha:alpha).cgColor
     }
     
+    class func color(for date: Date, alpha: CGFloat = 1) -> UIColor {
+        let minutes = Int(date.timeIntervalSinceNow.negated() / 60)
+        return ColorRamp.color(forMinutes: minutes, alpha: alpha)
+    }
+    
+    class func color(forMinutes minutes: Int, alpha: CGFloat = 1) -> UIColor {
+        if (minutes < 0) {
+            return UIColor(hue:190/360, saturation:1, brightness:0.81, alpha:alpha)
+        } else if(minutes <= 30) {
+            return ColorRamp.color(for: .VFR, alpha: alpha)
+        } else if(minutes <= 90) {
+            return ColorRamp.color(for: .MVFR, alpha: alpha)
+        } else {
+            return ColorRamp.color(for: .IFR, alpha: alpha)
+        }
+    }
+    
     class func color(for condition: WeatherConditions, alpha: CGFloat = 1) -> UIColor {
         switch condition {
         case .VFR:

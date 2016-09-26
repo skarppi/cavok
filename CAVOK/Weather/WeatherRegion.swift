@@ -1,5 +1,5 @@
 //
-//  RegionHelpers.swift
+//  WeatherRegion.swift
 //  CAVOK
 //
 //  Created by Juho Kolehmainen on 13.08.14.

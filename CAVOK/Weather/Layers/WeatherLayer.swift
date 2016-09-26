@@ -59,7 +59,7 @@ class WeatherLayer {
         mapView.add(frameChanger)
         self.frameChanger = frameChanger
         
-        return groups.count - 1
+        return groups.count - 2
     }
     
     func go(frame: Int) -> [Observation] {

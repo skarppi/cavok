@@ -33,7 +33,7 @@ open class WeatherModule {
     
     private let ramp: ColorRamp
     
-    private let weatherServer = WeatherServer()
+    private let weatherService = WeatherServer()
     
     private let observationValue: (Observation) -> Int?
     
@@ -49,8 +49,7 @@ open class WeatherModule {
         
         self.weatherLayer = WeatherLayer(mapView: delegate.mapView, ramp: ramp, observationValue: observationValue)
         
-        let observations = weatherServer.observations(Metar.self)
-        render(observations: observations)
+        reset(observations: weatherService.observations())
     }
     
     deinit {
@@ -110,8 +109,8 @@ open class WeatherModule {
     func refresh() {
         delegate.setStatus(text: "Refreshing observations...", color: .black)
         
-        weatherServer.refreshObservations()
-            .then(execute: render)
+        weatherService.refreshObservations()
+            .then(execute: reset)
             .catch(execute: { error -> Void in
                 self.delegate.setStatus(error: error)
             })
@@ -120,7 +119,7 @@ open class WeatherModule {
     private func refreshStations() {
         delegate.setStatus(text: "Reloading stations...", color: .black)
         
-        weatherServer.refreshStations().then { stations -> Void in
+        weatherService.refreshStations().then { stations -> Void in
             self.delegate.setStatus(text: "Found \(stations.count) stations...", color: UIColor.black)
             self.refresh()
         }.catch { error -> Void in
@@ -128,12 +127,12 @@ open class WeatherModule {
         }
     }
     
-    private func render(observations: [Observation]) {
-        let groups = ObservationGroup.group(observations: observations)
-        self.delegate.setTimeslots(slots: groups.map { $0.slot })
+    private func reset(observations: Observations) {
+        let groups = observations.group()
         
         let frame = self.weatherLayer.render(groups: groups.map { $0.observations })
-        render(frame: frame)
+        
+        self.delegate.loaded(frame: frame, timeslots: groups.map { $0.slot })
     }
     
     func render(frame: Int?) {
@@ -155,16 +154,18 @@ open class WeatherModule {
             delegate.addComponents(key: key, value: markers)
         }
         
-        renderTimestamp(min: observations.map { $0.datetime }.min()!)
-        
+        if let tafs = observations as? [Taf] {
+            renderTimestamp(date: tafs.map { $0.to }.max()!, suffix: "forecast")
+        } else {
+            renderTimestamp(date: observations.map { $0.datetime }.min()!, suffix: "ago")
+        }
     }
     
-    private func renderTimestamp(min: Date) {
-        let interval = min.timeIntervalSinceNow.negated()
-        let minutes = Int(interval / 60)
+    private func renderTimestamp(date: Date, suffix: String) {
+        let seconds = abs(date.timeIntervalSinceNow)
         
         let formatter = DateComponentsFormatter()
-        if minutes < 60*12  {
+        if seconds < 3600*6 {
             formatter.allowedUnits = [.hour, .minute]
         } else {
             formatter.allowedUnits = [.day, .hour]
@@ -172,19 +173,9 @@ open class WeatherModule {
         formatter.unitsStyle = .brief
         formatter.zeroFormattingBehavior = .dropLeading
 
-        let status = formatter.string(from: interval)
+        let status = formatter.string(from: seconds)!
         
-        let condition: WeatherConditions = {
-            if(minutes <= 30) {
-                return .VFR
-            } else if(minutes <= 90) {
-                return .MVFR
-            } else {
-                return .IFR
-            }
-        }()
-        
-        delegate.setStatus(text: status, color: ColorRamp.color(for: condition))
+        delegate.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView? {
