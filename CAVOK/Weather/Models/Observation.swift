@@ -71,7 +71,7 @@ open class Observation: Object {
     // MARK: - Date format
     
     // 041600Z indicates the day of the month (the 4th) followed by the time of day (1600 Zulu time).
-    func parseDate(value: String?) -> Date? {
+    func parseDate(value: String?, dayOffset: Int = 0, monthOffset: Bool = false) -> Date? {
         if let value = value {
             let cal = Calendar.current
             let now = Date()
@@ -82,10 +82,13 @@ open class Observation: Object {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-ddHHmmZ"
             if let date = dateFormatter.date(from: dateInput) {
-                if date > now {
-                    return cal.date(byAdding: .month, value: -1, to: date)!
+
+                let corrected = cal.date(byAdding: .day, value: dayOffset, to: date)!
+                
+                if monthOffset && date > now {
+                    return cal.date(byAdding: .month, value: -1, to: corrected)!
                 }
-                return date
+                return corrected
             }
         }
         return nil

@@ -88,12 +88,14 @@ public class Taf: Observation {
     
     private func parse(validity: String?) -> (Date, Date)? {
         if let validity = validity {
-            let components = validity.components(separatedBy: "/").flatMap { component in
-                self.parseDate(value: "\(component)00Z")
+            let components = validity.components(separatedBy: "/").map { component -> Date in
+                if component.hasSuffix("24") {
+                    let day = component.subString(0, length: 2)
+                    return self.parseDate(value: "\(day)0000Z", dayOffset: 1)!
+                }
+                return self.parseDate(value: "\(component)00Z")!
             }
-            if components.count == 2 {
-                 return (components[0], components[1])
-            }
+            return (components[0], components[1])
         }
         return nil
         

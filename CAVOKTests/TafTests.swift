@@ -87,4 +87,29 @@ class TafTests : ObservationTestCase {
         
         XCTAssertEqual(taf.supplements!, "PROB30 2319/2408 2000 BCFG BKN002 BECMG 2410/2412 19010KT")
     }
+    
+    func testTafMidnight() {
+        let taf = Taf()
+        taf.parse(raw: "TAF EETN 242310Z 2500/2524 21005KT 9999 BKN025 PROB40 TEMPO 2520/2524 2000 BR BKN003")
+        
+        XCTAssertEqual(taf.datetime, getDateFor(24, 23, 10))
+        XCTAssertEqual(taf.from, getDateFor(25, 00, 00))
+        XCTAssertEqual(taf.to, getDateFor(26, 00, 00))
+        
+        XCTAssertEqual(taf.identifier, "EETN")
+        
+        let wind = taf.wind
+        XCTAssertEqual(wind.direction!, 210)
+        XCTAssertEqual(wind.speed!, 5)
+        XCTAssertNil(wind.gust)
+        XCTAssertNil(wind.variability)
+        XCTAssertEqual(taf.visibility.value!, 9999)
+        XCTAssertEqual(taf.weather!, "")
+        XCTAssertEqual(taf.clouds!, "BKN025")
+        
+        XCTAssertEqual(taf.cloudHeight.value!, 2500);
+        XCTAssertEqual(taf.conditionEnum, WeatherConditions.MVFR);
+        
+        XCTAssertEqual(taf.supplements!, "PROB40 TEMPO 2520/2524 2000 BR BKN003")
+    }
 }
