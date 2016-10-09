@@ -33,6 +33,8 @@ class WeatherLayer {
     func reposition() {
         if let region = WeatherRegion.load() {
             config = WeatherConfig(region: region)
+        } else {
+            print ("Region not set")
         }
     }
     
@@ -43,6 +45,9 @@ class WeatherLayer {
         
         if config == nil {
             reposition()
+            if config == nil {
+                return nil
+            }
         }
         
         clean()
@@ -59,7 +64,7 @@ class WeatherLayer {
         mapView.add(frameChanger)
         self.frameChanger = frameChanger
         
-        return groups.count - 2
+        return max(0, groups.count - 2)
     }
     
     func go(frame: Int) -> [Observation] {
@@ -93,7 +98,6 @@ class WeatherLayer {
         //let tileSource = DebugTileSource(frames: frames, config: config)
         
         let tileSource = WeatherTileSource(frames: frames, config: config!)
-        tileSource.preload(frames.count - 1)
         
         let layer = MaplyQuadImageTilesLayer(coordSystem:tileSource.coordSys(), tileSource:tileSource)!
         layer.handleEdges = false

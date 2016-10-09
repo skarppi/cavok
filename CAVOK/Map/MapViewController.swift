@@ -193,7 +193,10 @@ extension MapViewController : MapDelegate {
                 self.timeslots.insertSegment(with: slot, at: index, animated: true)
             }
             
-            self.timeslots.selectedSegmentIndex = frame ?? -1
+            if let frame = frame {
+                self.timeslots.selectedSegmentIndex = frame
+            }
+            
             
             self.module.render(frame: frame)
             

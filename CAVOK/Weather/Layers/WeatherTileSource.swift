@@ -78,7 +78,7 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
     
     open func fetchTile(layer: MaplyQuadImageTilesLayer, tileID: MaplyTileID, frame:Int32) -> Data? {
         let bbox = tileID.bbox
-        print("Fetched frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
+//        print("Fetched frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
         
         let localBox = config.coordSystem.geo(toLocalBox: bbox)
 //        layer.bounds(forTile: tileID, bbox: &bbox)
@@ -109,14 +109,6 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
             if let layer = layer as? MaplyQuadImageTilesLayer, let image = self.fetchTile(layer: layer, tileID: tileID, frame:frame) {
                 layer.loadedImages(MaplyImageTile(pnGorJPEGData: image), forTile: tileID, frame: frame)
             }
-        }
-    }
-    
-    func preload(_ frame: Int) {
-        if frames[frame].output == nil {
-            // loaded
-            frames[frame].generateOutput()
-            print("preloaded frame \(frame)")
         }
     }
 }

@@ -67,7 +67,11 @@
 		37B7FDCD1D806B54009307F0 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E81D7D961A0010CA1F /* PromiseKit.framework */; };
 		37B7FDCE1D806B54009307F0 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E91D7D961A0010CA1F /* SwiftyJSON.framework */; };
 		37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */; };
+		C00C54001D9D71F800D39CBB /* HeatMap.metal in Resources */ = {isa = PBXBuildFile; fileRef = C00C53FF1D9D71F800D39CBB /* HeatMap.metal */; };
+		C015BE171DA6D43C00C4B26A /* HeatMapCPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE161DA6D43C00C4B26A /* HeatMapCPU.swift */; };
+		C015BE191DA6D5C200C4B26A /* HeatMapGPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE181DA6D5C200C4B26A /* HeatMapGPU.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
+		C0BE7B651DA27207003888B9 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BE7B641DA27207003888B9 /* Metal.framework */; };
 		C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483671D99CDDB007A1404 /* MapDelegate.swift */; };
 		C0F4836A1D99CDF9007A1404 /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483691D99CDF9007A1404 /* Timeslot.swift */; };
 /* End PBXBuildFile section */
@@ -167,7 +171,11 @@
 		37B7FDC61D80654F009307F0 /* Metar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Metar.swift; path = Weather/Models/Metar.swift; sourceTree = "<group>"; };
 		37B7FDC81D8065BD009307F0 /* Taf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Taf.swift; path = Weather/Models/Taf.swift; sourceTree = "<group>"; };
 		37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
+		C00C53FF1D9D71F800D39CBB /* HeatMap.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = HeatMap.metal; path = Weather/Layers/HeatMap.metal; sourceTree = "<group>"; };
+		C015BE161DA6D43C00C4B26A /* HeatMapCPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMapCPU.swift; path = Weather/Layers/HeatMapCPU.swift; sourceTree = "<group>"; };
+		C015BE181DA6D5C200C4B26A /* HeatMapGPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMapGPU.swift; path = Weather/Layers/HeatMapGPU.swift; sourceTree = "<group>"; };
 		C054D09E1D96D79200B71BF4 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observations.swift; path = Weather/Models/Observations.swift; sourceTree = "<group>"; };
+		C0BE7B641DA27207003888B9 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		C0F483671D99CDDB007A1404 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDelegate.swift; path = Map/MapDelegate.swift; sourceTree = "<group>"; };
 		C0F483691D99CDF9007A1404 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeslot.swift; path = Map/Timeslot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0BE7B651DA27207003888B9 /* Metal.framework in Frameworks */,
 				37B22BEA1D81E7A3001AF5BA /* Gzip.framework in Frameworks */,
 				37B22BE01D81DC5B001AF5BA /* SWXMLHash.framework in Frameworks */,
 				371E0E3E1D7F4AC900BE1846 /* Realm.framework in Frameworks */,
@@ -319,6 +328,9 @@
 				376550521D86C14A00610329 /* DebugTileSource.swift */,
 				37486F221D89EA8300357E11 /* FrameChanger.swift */,
 				376550461D86B9C100610329 /* HeatMap.swift */,
+				C00C53FF1D9D71F800D39CBB /* HeatMap.metal */,
+				C015BE181DA6D5C200C4B26A /* HeatMapGPU.swift */,
+				C015BE161DA6D43C00C4B26A /* HeatMapCPU.swift */,
 				3765504C1D86BAD100610329 /* WeatherConfig.swift */,
 				3765504E1D86BB7C00610329 /* WeatherLayer.swift */,
 				3765504A1D86BAB000610329 /* WeatherTileSource.swift */,
@@ -340,6 +352,7 @@
 		377123CC1D7D8EF80010CA1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0BE7B641DA27207003888B9 /* Metal.framework */,
 				37B22BE91D81E7A3001AF5BA /* Gzip.framework */,
 				37B22BDE1D81DC40001AF5BA /* SWXMLHash.framework */,
 				371E0E3D1D7F4AC800BE1846 /* Realm.framework */,
@@ -549,6 +562,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */,
+				C00C54001D9D71F800D39CBB /* HeatMap.metal in Resources */,
 				377123E71D7D94F50010CA1F /* CAVOK.plist in Resources */,
 				374EC9D41D7CB5A90047B82B /* Assets.xcassets in Resources */,
 				374EC9D21D7CB5A90047B82B /* Main.storyboard in Resources */,
@@ -621,6 +635,7 @@
 				376550511D86BBD400610329 /* Modules.swift in Sources */,
 				37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */,
 				376550531D86C14A00610329 /* DebugTileSource.swift in Sources */,
+				C015BE171DA6D43C00C4B26A /* HeatMapCPU.swift in Sources */,
 				37B22B671D81D78B001AF5BA /* AddsService.swift in Sources */,
 				C0F4836A1D99CDF9007A1404 /* Timeslot.swift in Sources */,
 				37B22BE21D81DDE3001AF5BA /* WeatherRegion.swift in Sources */,
@@ -630,6 +645,7 @@
 				375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */,
 				37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */,
 				37B7FDC31D8064E5009307F0 /* Station.swift in Sources */,
+				C015BE191DA6D5C200C4B26A /* HeatMapGPU.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
 				37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */,
 				37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */,

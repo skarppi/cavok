@@ -15,7 +15,7 @@ class LastSession {
             if let longitude = lastSession["longitude"],
                 let latitude = lastSession["latitude"],
                 let height = lastSession["height"] {
-                print("Restoring location \(lastSession)")
+                //print("Restoring location \(lastSession)")
                 return (MaplyCoordinateMakeWithDegrees(longitude, latitude), height)
             }
         }
