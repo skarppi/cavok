@@ -27,14 +27,16 @@ class HeatMapGPU {
         
         let width = config.width
         let height = config.height
-        
-        var arr = input.flatMap { i in [i.x, i.y, i.value] }
-        
-        var steps = [steps.purple.int4(), steps.red.int4(), steps.orange.int4(), steps.yellow.int4(), steps.green.int4(), steps.blue.int4()].flatMap { $0 }
-        
-        print("start \(config.width)x\(config.height) \(arr)")
+
         let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: width, height: height, mipmapped: false)
         self.outTexture = device.makeTexture(descriptor: outTextureDescriptor)
+        
+        var arr = input.flatMap { i in [i.x, i.y, i.value] }
+        if (arr.isEmpty) {
+            return;
+        }
+        
+        print("start \(config.width)x\(config.height) \(arr)")
         
         let commandBuffer = commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer.makeComputeCommandEncoder()
@@ -50,7 +52,8 @@ class HeatMapGPU {
         
         let dataBuffer = device.makeBuffer(bytes: &arr, length: MemoryLayout<Int32>.stride * arr.count, options: .storageModeShared)
         commandEncoder.setBuffer(dataBuffer, offset: 0, at: 2)
-        
+
+        var steps = [steps.purple.int4(), steps.red.int4(), steps.orange.int4(), steps.yellow.int4(), steps.green.int4(), steps.blue.int4()].flatMap { $0 }
         let stepsBuffer = device.makeBuffer(bytes: &steps, length: MemoryLayout<Int32>.stride * steps.count, options: .storageModeShared)
         commandEncoder.setBuffer(stepsBuffer, offset: 0, at: 3)
         
