@@ -130,9 +130,8 @@ open class WeatherModule {
     private func reset(observations: Observations) {
         let groups = observations.group()
         
-        let frame = self.weatherLayer.render(groups: groups.map { $0.observations })
-        
-        self.delegate.loaded(frame: frame, timeslots: groups.map { $0.slot })
+        self.weatherLayer.render(groups: groups)
+        self.delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots)
     }
     
     func render(frame: Int?) {

@@ -13,7 +13,7 @@ class DebugTileSource : WeatherTileSource {
     let debugColors: [Int] = [0x86812D, 0x5EB9C9, 0x2A7E3E, 0x4F256F, 0xD89CDE, 0x773B28, 0x333D99, 0x862D52, 0xC2C653, 0xB8583D]
     
     class func save(_ tileID: MaplyTileID, data: Data?) {
-        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
+        if let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first {
             let path = "\(dir)/\(tileID.level)x\(tileID.x)x\(tileID.y).png"
             try? data?.write(to: URL(fileURLWithPath: path), options: [])
         }

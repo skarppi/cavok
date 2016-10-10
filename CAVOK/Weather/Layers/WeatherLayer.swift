@@ -33,16 +33,21 @@ class WeatherLayer {
     func reposition() {
         if let region = WeatherRegion.load() {
             config = WeatherConfig(region: region)
+        } else {
+            print ("Region not set")
         }
     }
     
-    func render(groups: [[Observation]]) -> Int? {
-        if groups.isEmpty {
-            return nil
+    func render(groups: ObservationGroups) {
+        guard groups.selectedFrame != nil else {
+            return
         }
         
         if config == nil {
             reposition()
+            guard config != nil else {
+                return
+            }
         }
         
         clean()
@@ -51,15 +56,17 @@ class WeatherLayer {
         mapView.add(layer)
         self.layer = layer
         
-        // load last frames first
-        let priorities: [Int] = Array(0...groups.count - 1).reversed()
-        layer.setFrameLoadingPriority(priorities)
+        if let selected = groups.selectedFrame {
+            // load selected frame first and then others in reverse order
+            var priorities: [Int] = Array(0...groups.count - 1)
+            priorities.remove(at: selected)
+            priorities.append(selected)
+            layer.setFrameLoadingPriority(priorities.reversed())
+        }
         
         let frameChanger = FrameChanger(layer: layer)
         mapView.add(frameChanger)
         self.frameChanger = frameChanger
-        
-        return groups.count - 2
     }
     
     func go(frame: Int) -> [Observation] {
@@ -83,17 +90,17 @@ class WeatherLayer {
         }
     }
     
-    private func initLayer(groups: [[Observation]]) -> MaplyQuadImageTilesLayer {
+    private func initLayer(groups: ObservationGroups) -> MaplyQuadImageTilesLayer {
         
-        let frames = groups.enumerated().map { (frame, obs) in
-            return HeatMap(observations: obs, config: config!, observationValue: observationValue, ramp: ramp, frame: frame)
+        // generate heatmaps in inverse order
+        let frames = groups.frames.enumerated().map { (frame, obs) in
+            return HeatMap(observations: obs, config: config!, observationValue: observationValue, ramp: ramp, frame: frame, priority: frame == groups.selectedFrame)
         }
         
         // for debugging tiles
         //let tileSource = DebugTileSource(frames: frames, config: config)
         
         let tileSource = WeatherTileSource(frames: frames, config: config!)
-        tileSource.preload(frames.count - 1)
         
         let layer = MaplyQuadImageTilesLayer(coordSystem:tileSource.coordSys(), tileSource:tileSource)!
         layer.handleEdges = false

@@ -56,6 +56,9 @@ class MapViewController: UIViewController {
         if let (center, height) = LastSession.load() {
             mapView.height = height
             mapView.setPosition(center)
+        } else {
+            mapView.height = 0.7
+            mapView.setPosition(MaplyCoordinateMakeWithDegrees(10, 50))
         }
         
         if let basemap = UserDefaults.standard.string(forKey: "basemapURL"), let url = URL(string: basemap) {
@@ -193,7 +196,10 @@ extension MapViewController : MapDelegate {
                 self.timeslots.insertSegment(with: slot, at: index, animated: true)
             }
             
-            self.timeslots.selectedSegmentIndex = frame ?? -1
+            if let frame = frame {
+                self.timeslots.selectedSegmentIndex = frame
+            }
+            
             
             self.module.render(frame: frame)
             

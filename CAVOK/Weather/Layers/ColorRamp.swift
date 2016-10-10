@@ -8,19 +8,58 @@
 
 import Foundation
 
-fileprivate struct GridSteps {
-    var purple: Int
-    var red: Int
-    var orange: Int
-    var yellow: Int
-    var green: Int
-    var blue: Int
+struct GridStep {
+    var lower: Int32
+    var upper: Int32
+    var fromHue: Int32
+    var toHue: Int32
+    
+    func int4() -> [Int32] {
+        return [lower, upper, fromHue, toHue]
+    }
+}
+
+struct GridSteps {
+    var purple: GridStep
+    var red: GridStep
+    var orange: GridStep
+    var yellow: GridStep
+    var green: GridStep
+    var blue: GridStep
+    
+    init(purple: Int32, red: Int32, orange: Int32, yellow: Int32, green: Int32, blue: Int32) {
+        self.purple = GridStep(lower: purple, upper: red, fromHue: 300, toHue: 359)
+        self.red = GridStep(lower: red, upper: orange, fromHue: 0, toHue: 45)
+        self.orange = GridStep(lower: orange, upper: yellow, fromHue: 45, toHue: 60)
+        self.yellow = GridStep(lower: yellow, upper: green, fromHue: 60, toHue: 75)
+        self.green = GridStep(lower: green, upper: blue, fromHue: 75, toHue: 190)
+        self.blue = GridStep(lower: blue, upper: blue * 10, fromHue: 190, toHue: 200)
+    }
+    
+    func stepFor(value: Int32) -> GridStep? {
+        if(value >= blue.lower) {
+            return blue
+        } else if(value >= green.lower) {
+            return green
+        } else if(value >= yellow.lower) {
+            return yellow
+        } else if(value >= orange.lower) {
+            return orange
+        } else if(value >= red.lower) {
+            return red
+        } else if(value >= purple.lower) {
+            return purple
+        } else {
+            return nil
+        }
+
+    }
 }
 
 class ColorRamp {
     let unit: String
     
-    private let steps: GridSteps
+    let steps: GridSteps
     
     init(module: WeatherModule.Type) {
         let moduleClassName = String(describing: module)
@@ -32,43 +71,27 @@ class ColorRamp {
             
             self.unit = module["unit"] as? String ?? ""
             
-            let k = Array(steps.keys).sorted(by: {$0 < $1}).map { key in Int(key)! }
+            let k = Array(steps.keys).sorted(by: {$0 < $1}).map { key in Int32(key)! }
             self.steps = GridSteps(purple: k[0], red: k[1], orange: k[2], yellow: k[3], green: k[4], blue: k[5])
         } else {
-            self.steps = GridSteps(purple: 0,red: 0,orange: 0,yellow: 0,green: 0,blue: 0)
+            self.steps = GridSteps(purple:0, red:0, orange:0, yellow:0, green:0, blue: 0)
             self.unit = ""
         }
     }
     
     func color(for value: Int, alpha: CGFloat = 1) -> CGColor {
-        // Point-Slope Equation of a Line: y - y1 = m(x - x1)
-        func HueValue (_ x: Int, xFrom: Int, xTo: Int, hueFrom: CGFloat, hueTo: CGFloat) -> CGFloat {
-            let slope = (hueTo - hueFrom) / CGFloat(xTo - xFrom)
-            return (slope * CGFloat(x - xFrom) + hueFrom) / 360
-        }
-        
-        let hue: CGFloat
+        let value32 = Int32(value)
         let brightness = CGFloat(0.81)
         
-        if(value >= steps.blue) {
-            hue = HueValue(value, xFrom: steps.blue, xTo: steps.blue * 2, hueFrom: 190, hueTo: 200)
-            //brightness = HueValue(value, xFrom: steps.blue, xTo: steps.blue * 2, hueFrom: 0.81*360, hueTo: 360)
-        } else if(value >= steps.green) {
-            hue = HueValue(value, xFrom: steps.green, xTo: steps.blue, hueFrom: 75, hueTo: 190) // 75, 120
-        } else if(value >= steps.yellow) {
-            hue = HueValue(value, xFrom: steps.yellow, xTo: steps.green, hueFrom: 60, hueTo: 75)
-        } else if(value >= steps.orange) {
-            hue = HueValue(value, xFrom: steps.orange, xTo: steps.yellow, hueFrom: 45, hueTo: 60)
-        } else if(value >= steps.red) {
-            hue = HueValue(value, xFrom: steps.red, xTo: steps.orange, hueFrom: 0, hueTo: 45)
-            //brightness = HueValue(value, steps.red, steps.orange, .61, .81)
-        } else if(value >= steps.purple) {
-            hue = HueValue(value, xFrom: steps.purple, xTo: steps.red, hueFrom: 300, hueTo: 359)
+        if let step = steps.stepFor(value: value32) {
+            // Point-Slope Equation of a Line: y - y1 = m(x - x1)
+            let slope = CGFloat(step.toHue - step.fromHue) / CGFloat(step.upper - step.lower)
+            let hue = slope * CGFloat(value32 - step.lower) + CGFloat(step.fromHue)
+            
+            return UIColor(hue:hue/360, saturation:1, brightness:brightness, alpha:alpha).cgColor
         } else {
-            hue = alpha
+            return UIColor.black.cgColor
         }
-        
-        return UIColor(hue:hue, saturation:1, brightness:brightness, alpha:alpha).cgColor
     }
     
     class func color(for date: Date, alpha: CGFloat = 1) -> UIColor {
