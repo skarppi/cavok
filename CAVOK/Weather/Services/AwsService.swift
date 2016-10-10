@@ -16,8 +16,8 @@ enum AwsSource: String {
 
 public class AwsService {
     
-    class func fetchStations() -> Promise<[Station]> {
-        return fetch(dataSource: AwsSource.STATION).then { json -> [Station] in
+    class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
+        return fetch(dataSource: AwsSource.STATION, at: region).then { json -> [Station] in
             let stations = json?.dictionaryValue.values.map { station -> Station in
                 return Station(
                     identifier: station["p1"].stringValue.subString(0, length: 4),
@@ -35,8 +35,8 @@ public class AwsService {
         }
     }
     
-    class func fetchObservations() -> Promise<[String]> {
-        return fetch(dataSource: AwsSource.METAR).then { json -> [String] in
+    class func fetchObservations(at region: WeatherRegion) -> Promise<[String]> {
+        return fetch(dataSource: AwsSource.METAR, at: region).then { json -> [String] in
             let raws = json?["data"]["aws"]["finland"].dictionaryValue.values.flatMap { obs -> [String] in
                 return [obs["message"].stringValue] + obs["old_messages"].arrayValue.map { $0.stringValue }
             } ?? []
@@ -48,12 +48,8 @@ public class AwsService {
         }
     }
     
-    private class func fetch(dataSource: AwsSource) -> Promise<JSON?> {
-        guard let b = WeatherRegion.load() else {
-            return Promise(error: Weather.error(msg: "Region not set"))
-        }
-        
-        guard b.maxLat > 59 && b.minLat < 70 && b.maxLon > 19 && b.minLon < 30 else {
+    private class func fetch(dataSource: AwsSource, at region: WeatherRegion) -> Promise<JSON?> {
+        guard region.maxLat > 59 && region.minLat < 70 && region.maxLon > 19 && region.minLon < 30 else {
             print("Skipping AWS because out of bounds.")
             return Promise(value: nil)
         }

@@ -18,8 +18,8 @@ enum AddsSource: String {
 
 public class AddsService {
     
-    class func fetchStations() -> Promise<[Station]> {
-        return fetch(dataSource: "stations").then { doc -> [Station] in
+    class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
+        return fetch(dataSource: "stations", at: region).then { doc -> [Station] in
             NSLog("Found \(doc["response"]["data"].children.count) ADDS stations")
             
             return doc["response"]["data"]["Station"].all.map { station in
@@ -36,13 +36,13 @@ public class AddsService {
         }
     }
     
-    class func fetchObservations(_ source: AddsSource, history: Bool) -> Promise<[String]> {
+    class func fetchObservations(_ source: AddsSource, history: Bool, at region: WeatherRegion) -> Promise<[String]> {
         let query = [
             "hoursBeforeNow": "3",
             "mostRecentForEachStation": String(history == false),
             "fields": "raw_text"
         ]
-        return fetch(dataSource: String(source.rawValue), with: query).then { doc -> [String] in
+        return fetch(dataSource: source.rawValue, with: query, at: region).then { doc -> [String] in
             let count = doc["response"]["data"].children.count
             print("Found \(count) ADDS \(source.rawValue)")
             guard count > 0 else {
@@ -73,20 +73,16 @@ public class AddsService {
         return doc
     }
     
-    private class func fetch(dataSource: String, with: [String: String] = [:]) -> Promise<XMLIndexer> {
-        guard let b = WeatherRegion.load() else {
-            return Promise(error: Weather.error(msg: "Region not set"))
-        }
-            
+    private class func fetch(dataSource: String, with: [String: String] = [:], at region: WeatherRegion) -> Promise<XMLIndexer> {
         var params = [
             "dataSource": dataSource,
             "requestType": "retrieve",
             "format": "xml",
             "compression": "gzip",
-            "minLat": String(b.minLat),
-            "minLon": String(b.minLon),
-            "maxLat": String(b.maxLat),
-            "maxLon": String(b.maxLon)
+            "minLat": String(region.minLat),
+            "minLon": String(region.minLon),
+            "maxLat": String(region.maxLat),
+            "maxLon": String(region.maxLon)
         ]
         with.forEach { params[$0] = $1 }
         

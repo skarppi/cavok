@@ -71,6 +71,7 @@
 		C015BE171DA6D43C00C4B26A /* HeatMapCPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE161DA6D43C00C4B26A /* HeatMapCPU.swift */; };
 		C015BE191DA6D5C200C4B26A /* HeatMapGPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE181DA6D5C200C4B26A /* HeatMapGPU.swift */; };
 		C015BE311DAC070200C4B26A /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE301DAC070200C4B26A /* AwsService.swift */; };
+		C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE341DAC254B00C4B26A /* StationMarker.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
 		C0BE7B651DA27207003888B9 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BE7B641DA27207003888B9 /* Metal.framework */; };
 		C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483671D99CDDB007A1404 /* MapDelegate.swift */; };
@@ -176,6 +177,7 @@
 		C015BE161DA6D43C00C4B26A /* HeatMapCPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMapCPU.swift; path = Weather/Layers/HeatMapCPU.swift; sourceTree = "<group>"; };
 		C015BE181DA6D5C200C4B26A /* HeatMapGPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMapGPU.swift; path = Weather/Layers/HeatMapGPU.swift; sourceTree = "<group>"; };
 		C015BE301DAC070200C4B26A /* AwsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AwsService.swift; path = Weather/Services/AwsService.swift; sourceTree = "<group>"; };
+		C015BE341DAC254B00C4B26A /* StationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationMarker.swift; path = Weather/Views/StationMarker.swift; sourceTree = "<group>"; };
 		C054D09E1D96D79200B71BF4 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observations.swift; path = Weather/Models/Observations.swift; sourceTree = "<group>"; };
 		C0BE7B641DA27207003888B9 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		C0F483671D99CDDB007A1404 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDelegate.swift; path = Map/MapDelegate.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				3765505D1D86E72100610329 /* RegionAnnotationView.swift */,
 				372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */,
 				372C04251D8FB52A00BEA8EB /* ObservationCalloutView.swift */,
+				C015BE341DAC254B00C4B26A /* StationMarker.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				3737DA9E1D8E7D2400EB57A2 /* ColorRamp.swift in Sources */,
 				376550471D86B9C100610329 /* HeatMap.swift in Sources */,
 				37B22BE41D81E067001AF5BA /* WeatherService.swift in Sources */,
+				C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */,
 				3765505C1D86E6E500610329 /* RegionSelection.swift in Sources */,
 				37B22BEE1D820658001AF5BA /* WeatherModule.swift in Sources */,
 				374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */,

@@ -12,18 +12,14 @@ import PromiseKit
 public class WeatherServer {
     
     // query stations available
-    private func queryStations() -> Promise<[Station]> {
+    func queryStations(at region: WeatherRegion) -> Promise<[Station]> {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
             when(fulfilled:
-                AddsService.fetchStations(),
-                AwsService.fetchStations()
+                AddsService.fetchStations(at: region),
+                 AwsService.fetchStations(at: region)
             )
         }.then { (adds, aws) -> [Station] in
-            guard let region = WeatherRegion.load() else {
-                return []
-            }
-            
             return (adds + aws).filter { station -> Bool in
                 return region.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
 
@@ -35,7 +31,11 @@ public class WeatherServer {
     
     // query and persist stations
     func refreshStations() -> Promise<[Station]> {
-        return queryStations().then { stations -> [Station] in
+        guard let region = WeatherRegion.load() else {
+            return Promise(error: Weather.error(msg: "Region not set"))
+        }
+        
+        return queryStations(at: region).then { stations -> [Station] in
             let realm = try! Realm()
             try realm.write {
                 realm.deleteAll()
@@ -46,12 +46,16 @@ public class WeatherServer {
     }
     
     func refreshObservations() -> Promise<Observations> {
+        guard let region = WeatherRegion.load() else {
+            return Promise(error: Weather.error(msg: "Region not set"))
+        }
+        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
             when(fulfilled:
-                AddsService.fetchObservations(.METAR, history: true),
-                 AddsService.fetchObservations(.TAF, history: false),
-                 AwsService.fetchObservations()
+                AddsService.fetchObservations(.METAR, history: true, at: region),
+                 AddsService.fetchObservations(.TAF, history: false, at: region),
+                 AwsService.fetchObservations(at: region)
             )
         }.then { addsMetars, addsTafs, awsMetars -> Observations in
             let realm = try! Realm()

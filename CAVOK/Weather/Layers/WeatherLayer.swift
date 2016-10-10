@@ -30,12 +30,8 @@ class WeatherLayer {
         clean()
     }
     
-    func reposition() {
-        if let region = WeatherRegion.load() {
-            config = WeatherConfig(region: region)
-        } else {
-            print ("Region not set")
-        }
+    func reposition(region: WeatherRegion) {
+        config = WeatherConfig(region: region)
     }
     
     func render(groups: ObservationGroups) {
@@ -44,10 +40,11 @@ class WeatherLayer {
         }
         
         if config == nil {
-            reposition()
-            guard config != nil else {
+            guard let region = WeatherRegion.load() else {
+                print ("Region not set")
                 return
             }
+            config = WeatherConfig(region: region)
         }
         
         clean()
@@ -81,7 +78,7 @@ class WeatherLayer {
         }
     }
     
-    private func clean() {
+    func clean() {
         if let frameChanger = self.frameChanger {
             mapView.remove(frameChanger)
         }
