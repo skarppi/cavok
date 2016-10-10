@@ -45,7 +45,7 @@ public class AddsService {
         return fetch(dataSource: String(source.rawValue), with: query).then { doc -> [String] in
             let count = doc["response"]["data"].children.count
             print("Found \(count) ADDS \(source.rawValue)")
-            if count == 0 {
+            guard count > 0 else {
                 return []
             }
             
@@ -61,52 +61,53 @@ public class AddsService {
     private class func parse(data: Data, expecting dataSource: String) throws -> XMLIndexer {
         let doc = SWXMLHash.lazy(data)
         
-        if doc["response"]["data_source"].element?.attribute(by: "name")?.text != dataSource {
+        guard doc["response"]["data_source"].element?.attribute(by: "name")?.text == dataSource else {
             throw Weather.error(msg: "No data")
-            
-        } else if doc["response"]["errors"].children.count > 0 {
+        }
+        
+        guard doc["response"]["errors"].children.count == 0  else {
             let errors = doc["response"]["errors"]["error"].all.flatMap { $0.element?.text }
             throw Weather.error(msg: errors.joined(separator: ", "))
         }
+        
         return doc
     }
     
     private class func fetch(dataSource: String, with: [String: String] = [:]) -> Promise<XMLIndexer> {
-        if let b = WeatherRegion.load() {
-            
-            var params = [
-                "dataSource": dataSource,
-                "requestType": "retrieve",
-                "format": "xml",
-                "compression": "gzip",
-                "minLat": String(b.minLat),
-                "minLon": String(b.minLon),
-                "maxLat": String(b.maxLat),
-                "maxLon": String(b.maxLon)
-            ]
-            with.forEach { params[$0] = $1 }
-            
-            let host = UserDefaults.standard.string(forKey: "addsURL")!
-            var components = URLComponents(string: host)!
-            components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
-
-            let rq = URLRequest(url: components.url!)
-            NSLog("Fetching ADDS data from \(components.url!)")
-            
-            return URLSession.shared.dataTask(with: rq).then { data -> XMLIndexer in
-                let unzipped: Data = try {
-                    if data.isGzipped {
-                        return try data.gunzipped()
-                    } else {
-                        return data
-                    }
-                }()
-                
-                
-                return try self.parse(data: unzipped, expecting: dataSource)
-            }
-        } else {
+        guard let b = WeatherRegion.load() else {
             return Promise(error: Weather.error(msg: "Region not set"))
+        }
+            
+        var params = [
+            "dataSource": dataSource,
+            "requestType": "retrieve",
+            "format": "xml",
+            "compression": "gzip",
+            "minLat": String(b.minLat),
+            "minLon": String(b.minLon),
+            "maxLat": String(b.maxLat),
+            "maxLon": String(b.maxLon)
+        ]
+        with.forEach { params[$0] = $1 }
+        
+        let host = UserDefaults.standard.string(forKey: "addsURL")!
+        var components = URLComponents(string: host)!
+        components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
+
+        let rq = URLRequest(url: components.url!)
+        NSLog("Fetching ADDS data from \(components.url!)")
+        
+        return URLSession.shared.dataTask(with: rq).then { data -> XMLIndexer in
+            let unzipped: Data = try {
+                if data.isGzipped {
+                    return try data.gunzipped()
+                } else {
+                    return data
+                }
+            }()
+            
+            
+            return try self.parse(data: unzipped, expecting: dataSource)
         }
     }
 }

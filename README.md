@@ -9,6 +9,8 @@ CAVOK is an abbreviation for Ceiling And Visibility OK, indicating no significan
 Data sources include
 
 * METAR/TAF worldwide by [ADDS data server](https://aviationweather.gov/adds/dataserver)
+* Finnish unofficial [AWS-METARS](https://ilmailusaa.fi/info.html#info-location-aws) 
+
 ## Requirements
 
 * [Xcode 8](https://developer.apple.com/xcode)

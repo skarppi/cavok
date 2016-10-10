@@ -15,14 +15,17 @@ public class WeatherServer {
     private func queryStations() -> Promise<[Station]> {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
-            //when(fulfilled:
-                AddsService.fetchStations()
-                //AwsService.fetchStations()
-            //)
-        }.then { (adds) -> [Station] in
-            let region = WeatherRegion.load()
-            return adds.filter { station -> Bool in
-                return region!.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
+            when(fulfilled:
+                AddsService.fetchStations(),
+                AwsService.fetchStations()
+            )
+        }.then { (adds, aws) -> [Station] in
+            guard let region = WeatherRegion.load() else {
+                return []
+            }
+            
+            return (adds + aws).filter { station -> Bool in
+                return region.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
 
             }
         }.always {
@@ -47,14 +50,15 @@ public class WeatherServer {
         return firstly {
             when(fulfilled:
                 AddsService.fetchObservations(.METAR, history: true),
-                 AddsService.fetchObservations(.TAF, history: false)
+                 AddsService.fetchObservations(.TAF, history: false),
+                 AwsService.fetchObservations()
             )
-        }.then { addsMetars, addsTafs -> Observations in
+        }.then { addsMetars, addsTafs, awsMetars -> Observations in
             let realm = try! Realm()
             let oldMetars = realm.objects(Metar.self)
             let oldTafs = realm.objects(Taf.self)
             
-            let metars = (addsMetars).flatMap { metar in
+            let metars = (addsMetars + awsMetars).flatMap { metar in
                 self.parseObservation(Metar(), raw: metar, realm: realm)
             }.sorted { a, b in
                 a.datetime < b.datetime
