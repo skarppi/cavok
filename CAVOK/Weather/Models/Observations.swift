@@ -8,7 +8,17 @@
 
 import Foundation
 
-typealias ObservationSlot = (slot: Timeslot, observations: [Observation])
+private typealias ObservationSlot = (slot: Timeslot, observations: [Observation])
+
+struct ObservationGroups {
+    let timeslots: [Timeslot]
+    let frames: [[Observation]]
+    let selectedFrame: Int?
+    
+    var count: Int {
+        return frames.count
+    }
+}
 
 class Observations {
     
@@ -55,7 +65,13 @@ class Observations {
         }
     }
     
-    func group() -> [ObservationSlot] {
-        return groupMetars() + groupTafs()
+    func group() -> ObservationGroups {
+        let metars = groupMetars()
+        let tafs = groupTafs()
+        let all = metars + tafs
+        
+        let selectedFrame: Int? = metars.isEmpty ? nil : metars.count - 1
+        
+        return ObservationGroups(timeslots: all.map { $0.slot }, frames: all.map { $0.observations }, selectedFrame: selectedFrame)
     }
 }

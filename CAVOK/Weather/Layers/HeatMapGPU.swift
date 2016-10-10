@@ -36,8 +36,6 @@ class HeatMapGPU {
             return;
         }
         
-        print("start \(config.width)x\(config.height) \(arr)")
-        
         let commandBuffer = commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer.makeComputeCommandEncoder()
         
@@ -57,7 +55,7 @@ class HeatMapGPU {
         let stepsBuffer = device.makeBuffer(bytes: &steps, length: MemoryLayout<Int32>.stride * steps.count, options: .storageModeShared)
         commandEncoder.setBuffer(stepsBuffer, offset: 0, at: 3)
         
-        let threadGroupCount = MTLSizeMake(1, 1, 1)
+        let threadGroupCount = MTLSizeMake(5, 5, 1)
         let threadGroups = MTLSizeMake(width / threadGroupCount.width, height / threadGroupCount.height, 1)
         
         commandEncoder.dispatchThreadgroups(threadGroups, threadsPerThreadgroup: threadGroupCount)
@@ -67,7 +65,9 @@ class HeatMapGPU {
         
         commandBuffer.waitUntilCompleted()
         
-        print("done \(commandBuffer.error) \(commandBuffer.status.rawValue)")
+        if let error = commandBuffer.error {
+            print("rendering failed with error: \(error) status: \(commandBuffer.status.rawValue)")
+        }
     }
     
     func render() -> CGImage? {

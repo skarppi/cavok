@@ -27,20 +27,14 @@ class HeatMapCPU {
                 let i = config.width * (config.height - 1 - y) + x
                 
                 let interp = getInterpValue(x: x, y: y, input: input)
-                if !interp.val.isNaN {
-                    let color = ramp.color(for: Int(interp.val), alpha: CGFloat(interp.alpha))
-                    let comps = color.components!
-                    let alpha = comps[3] * 255
-                    bitmapData[i*4 + 0] = UInt8(comps[0] * alpha)
-                    bitmapData[i*4 + 1] = UInt8(comps[1] * alpha)
-                    bitmapData[i*4 + 2] = UInt8(comps[2] * alpha)
-                    bitmapData[i*4 + 3] = UInt8(alpha)
-                } else {
-                    bitmapData[i*4 + 0] = UInt8(0)
-                    bitmapData[i*4 + 1] = UInt8(0)
-                    bitmapData[i*4 + 2] = UInt8(0)
-                    bitmapData[i*4 + 3] = UInt8(0)
-                }
+                
+                let color = ramp.color(for: Int(interp.val), alpha: CGFloat(interp.alpha))
+                let comps = color.components!
+                let alpha = comps[3] * 255
+                bitmapData[i*4 + 0] = UInt8(comps[0] * alpha)
+                bitmapData[i*4 + 1] = UInt8(comps[1] * alpha)
+                bitmapData[i*4 + 2] = UInt8(comps[2] * alpha)
+                bitmapData[i*4 + 3] = UInt8(alpha)
             }
         }
         

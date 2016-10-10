@@ -19,10 +19,12 @@ class HeatMap {
     let observations: [Observation]
     
     let config: WeatherConfig
+
+    let group = DispatchGroup()
     
     var output: CGImage? = nil
     
-    init(observations: [Observation], config: WeatherConfig, observationValue: (Observation) -> Int?, ramp: ColorRamp, frame: Int) {
+    init(observations: [Observation], config: WeatherConfig, observationValue: (Observation) -> Int?, ramp: ColorRamp, frame: Int, priority: Bool) {
         
         self.observations = observations
         
@@ -40,13 +42,19 @@ class HeatMap {
             }
         }
         
-        timer("frame \(frame)") {
-            self.output = HeatMapGPU(input: input, config: config, steps: ramp.steps).render()
-            
-            if output == nil {
-                output = HeatMapCPU(input: input, config: config, ramp: ramp).render()
+        let qos: DispatchQoS.QoSClass = (priority) ? .userInitiated : .background
+        
+        DispatchQueue.global(qos: qos).async(group: group, execute: DispatchWorkItem {
+            self.timer("end frame \(frame)") {
+                print("start frame \(frame)")
+                
+                self.output = HeatMapGPU(input: input, config: config, steps: ramp.steps).render()
+                
+                if self.output == nil {
+                    self.output = HeatMapCPU(input: input, config: config, ramp: ramp).render()
+                }
             }
-        }
+        })
     }
     
     deinit {
@@ -84,11 +92,7 @@ class HeatMap {
     }
     
     func render(_ tileID: MaplyTileID, bbox: MaplyBoundingBox, imageSize: Int) -> UIImage? {
-        if output == nil {
-            synced {
-                print("waiting lock")
-            }
-        }
+        group.wait()
         
         let crop = cropBox(bbox)
         if let cropped = output?.cropping(to: crop) {
@@ -96,12 +100,6 @@ class HeatMap {
         } else {
             return nil
         }
-    }
-
-    func synced(_ closure: () -> ()) {
-        objc_sync_enter(self)
-        closure()
-        objc_sync_exit(self)
     }
     
     func timer<T>(_ title:String, _ operation:() -> T) -> T {
