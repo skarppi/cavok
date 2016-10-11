@@ -65,7 +65,7 @@ class MapViewController: UIViewController {
             TileJSONLayer().load(url: url).then { layer in
                 self.mapView.add(layer)
             }.catch { error in
-                setStatus(error: error)
+                self.setStatus(error: error)
             }
         }
         
