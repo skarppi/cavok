@@ -43,6 +43,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             print("Restricted Access to location")
         case CLAuthorizationStatus.denied:
             print("User denied access to location")
+            reject("Location not allowed")
         case CLAuthorizationStatus.notDetermined:
             print("Status not determined")
         default:

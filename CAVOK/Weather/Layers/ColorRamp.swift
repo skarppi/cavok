@@ -33,7 +33,7 @@ struct GridSteps {
         self.orange = GridStep(lower: orange, upper: yellow, fromHue: 45, toHue: 60)
         self.yellow = GridStep(lower: yellow, upper: green, fromHue: 60, toHue: 75)
         self.green = GridStep(lower: green, upper: blue, fromHue: 75, toHue: 190)
-        self.blue = GridStep(lower: blue, upper: blue * 10, fromHue: 190, toHue: 200)
+        self.blue = GridStep(lower: blue, upper: Int32.max, fromHue: 190, toHue: 200)
     }
     
     func stepFor(value: Int32) -> GridStep? {
