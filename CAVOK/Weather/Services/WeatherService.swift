@@ -12,17 +12,16 @@ import PromiseKit
 public class WeatherServer {
     
     // query stations available
-    private func queryStations() -> Promise<[Station]> {
+    func queryStations(at region: WeatherRegion) -> Promise<[Station]> {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
-            //when(fulfilled:
-                AddsService.fetchStations()
-                //AwsService.fetchStations()
-            //)
-        }.then { (adds) -> [Station] in
-            let region = WeatherRegion.load()
-            return adds.filter { station -> Bool in
-                return region!.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
+            when(fulfilled:
+                AddsService.fetchStations(at: region),
+                 AwsService.fetchStations(at: region)
+            )
+        }.then { (adds, aws) -> [Station] in
+            return (adds + aws).filter { station -> Bool in
+                return region.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
 
             }
         }.always {
@@ -32,7 +31,11 @@ public class WeatherServer {
     
     // query and persist stations
     func refreshStations() -> Promise<[Station]> {
-        return queryStations().then { stations -> [Station] in
+        guard let region = WeatherRegion.load() else {
+            return Promise(error: Weather.error(msg: "Region not set"))
+        }
+        
+        return queryStations(at: region).then { stations -> [Station] in
             let realm = try! Realm()
             try realm.write {
                 realm.deleteAll()
@@ -43,18 +46,23 @@ public class WeatherServer {
     }
     
     func refreshObservations() -> Promise<Observations> {
+        guard let region = WeatherRegion.load() else {
+            return Promise(error: Weather.error(msg: "Region not set"))
+        }
+        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
             when(fulfilled:
-                AddsService.fetchObservations(.METAR, history: true),
-                 AddsService.fetchObservations(.TAF, history: false)
+                AddsService.fetchObservations(.METAR, history: true, at: region),
+                 AddsService.fetchObservations(.TAF, history: false, at: region),
+                 AwsService.fetchObservations(at: region)
             )
-        }.then { addsMetars, addsTafs -> Observations in
+        }.then { addsMetars, addsTafs, awsMetars -> Observations in
             let realm = try! Realm()
             let oldMetars = realm.objects(Metar.self)
             let oldTafs = realm.objects(Taf.self)
             
-            let metars = (addsMetars).flatMap { metar in
+            let metars = (addsMetars + awsMetars).flatMap { metar in
                 self.parseObservation(Metar(), raw: metar, realm: realm)
             }.sorted { a, b in
                 a.datetime < b.datetime

@@ -20,34 +20,27 @@ class WeatherLayer {
     
     private var frameChanger: FrameChanger? = nil
     
-    init(mapView: WhirlyGlobeViewController, ramp: ColorRamp, observationValue: @escaping (Observation) -> Int?) {
+    init(mapView: WhirlyGlobeViewController, ramp: ColorRamp, observationValue: @escaping (Observation) -> Int?, region: WeatherRegion?) {
         self.mapView = mapView
         self.observationValue = observationValue
         self.ramp = ramp
+        
+        if let region = region {
+            reposition(region: region)
+        }
     }
     
     deinit {
         clean()
     }
     
-    func reposition() {
-        if let region = WeatherRegion.load() {
-            config = WeatherConfig(region: region)
-        } else {
-            print ("Region not set")
-        }
+    func reposition(region: WeatherRegion) {
+        config = WeatherConfig(region: region)
     }
     
-    func render(groups: ObservationGroups) {
-        guard groups.selectedFrame != nil else {
+    func load(groups: ObservationGroups) {
+        guard let _ = config, let selected = groups.selectedFrame else {
             return
-        }
-        
-        if config == nil {
-            reposition()
-            guard config != nil else {
-                return
-            }
         }
         
         clean()
@@ -56,13 +49,11 @@ class WeatherLayer {
         mapView.add(layer)
         self.layer = layer
         
-        if let selected = groups.selectedFrame {
-            // load selected frame first and then others in reverse order
-            var priorities: [Int] = Array(0...groups.count - 1)
-            priorities.remove(at: selected)
-            priorities.append(selected)
-            layer.setFrameLoadingPriority(priorities.reversed())
-        }
+        // load selected frame first and then others in reverse order
+        var priorities: [Int] = Array(0...groups.count - 1)
+        priorities.remove(at: selected)
+        priorities.append(selected)
+        layer.setFrameLoadingPriority(priorities.reversed())
         
         let frameChanger = FrameChanger(layer: layer)
         mapView.add(frameChanger)
@@ -81,7 +72,7 @@ class WeatherLayer {
         }
     }
     
-    private func clean() {
+    func clean() {
         if let frameChanger = self.frameChanger {
             mapView.remove(frameChanger)
         }

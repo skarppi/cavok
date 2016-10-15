@@ -64,8 +64,8 @@ class MapViewController: UIViewController {
         if let basemap = UserDefaults.standard.string(forKey: "basemapURL"), let url = URL(string: basemap) {
             TileJSONLayer().load(url: url).then { layer in
                 self.mapView.add(layer)
-            }.catch { e in
-                print(e)
+            }.catch { error in
+                self.setStatus(error: error)
             }
         }
         
@@ -85,6 +85,10 @@ class MapViewController: UIViewController {
             fulfill: userLocationChanged,
             reject: { error in
                 self.clearComponents(ofType: UserMarker.self)
+                
+                if self.isFirstLoad() {
+                    self.module.configure(open: true, userLocation: nil)
+                }
             })
         locationManager.requestLocation()
         
@@ -109,7 +113,7 @@ class MapViewController: UIViewController {
         locationManager.requestLocation()
     }
 
-    private func isFirstLoad() -> Bool {
+    fileprivate func isFirstLoad() -> Bool {
         return self.region.isSelected && WeatherRegion.load() == nil
     }
     
@@ -123,36 +127,41 @@ class MapViewController: UIViewController {
         
         let height = LastSession.load()?.height
         if height == nil || !mapView.getCurrentExtents().inside(coordinate) {
-            mapView.height = height ?? 0.2
-            mapView.animate(toPosition: coordinate, time:0.5)
+            mapView.animate(toPosition: coordinate, height: height ?? 0.2, heading: 0, time: 0.5)
         }
         
         if isFirstLoad() {
-            self.module.configure(open: true, userLocation: userLocation.loc)
-        } else {
-            updatePanels(visible: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { 
+                self.module.configure(open: true, userLocation: userLocation.loc)
+            })
         }
     }
     
     @IBAction func resetRegion() {
-        if isFirstLoad() {
-            return
-        }
         let start = !region.isSelected
-        updatePanels(visible: !start)
+        region.isSelected = start
+        if start {
+            animateModuleType(show: false)
+            animateTimeslots(show: false)
+        }
         module.configure(open: start, userLocation: nil)
     }
     
-    fileprivate func updatePanels(visible: Bool) {
+    fileprivate func animateModuleType(show: Bool) {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            self.region.isSelected = !visible
-            self.moduleType.alpha = (visible ? 1 : 0)
-            self.bottomView.alpha = (visible ? 0.7 : 0)
+            self.moduleType.alpha = (show ? 1 : 0)
         }, completion: { finished in
-                self.moduleType.isHidden = !visible
-                self.bottomView.isHidden = !visible
+            self.moduleType.isHidden = self.moduleType.alpha == 0
         })
     }
+    
+    fileprivate func animateTimeslots(show: Bool) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            let height: CGFloat = (show ? 80 : 40)
+            self.bottomView.frame.origin = CGPoint(x: 0, y: self.view.bounds.height - height)
+        })
+    }
+    
     
     @IBAction func moduleTypeChanged() {
         module = nil
@@ -189,24 +198,24 @@ extension MapViewController : MapDelegate {
     }
     
     func loaded(frame:Int?, timeslots: [Timeslot]) {
-        self.timeslots.removeAllSegments()
-        
         DispatchQueue.main.async {
-            for (index, slot) in timeslots.enumerated() {
-                self.timeslots.insertSegment(with: slot, at: index, animated: true)
-            }
-            
             if let frame = frame {
+                self.timeslots.removeAllSegments()
+                for (index, slot) in timeslots.enumerated() {
+                    self.timeslots.insertSegment(with: slot, at: index, animated: true)
+                }
+                
+                self.animateTimeslots(show: true)
+                self.animateModuleType(show: true)
+                
                 self.timeslots.selectedSegmentIndex = frame
+            } else {
+                self.animateTimeslots(show: false)
+                self.animateModuleType(show: false)
             }
-            
-            
-            self.module.render(frame: frame)
-            
-            // everything is loaded, show panels
-            if self.region.isSelected {
-                self.updatePanels(visible: true)
-            }
+            // make sure region selection is canceled
+            self.region.isHidden = false
+            self.region.isSelected = false
         }
     }
     

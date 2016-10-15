@@ -34,7 +34,7 @@ class TileJSONLayer {
             
             return layer
         }.always {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
 }
