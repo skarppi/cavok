@@ -58,16 +58,32 @@
                                     <action selector="moduleTypeChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="P3S-kj-riy"/>
                                 </connections>
                             </segmentedControl>
-                            <button hidden="YES" opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-XM-x3W">
-                                <frame key="frameInset" minY="61" width="33" height="32" maxX="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="Region"/>
-                                <state key="selected" image="RegionSet"/>
-                                <connections>
-                                    <action selector="resetRegion" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jg9-Jw-JFi"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRG-OZ-0Vb">
+                                <frame key="frameInset" minX="326" minY="56" width="33" height="72"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button hidden="YES" opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-XM-x3W">
+                                        <frame key="frameInset" width="33" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="Region"/>
+                                        <state key="selected" image="RegionSet"/>
+                                        <connections>
+                                            <action selector="resetRegion" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jg9-Jw-JFi"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sep-4y-nGV">
+                                        <frame key="frameInset" minY="40" width="33" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="Safari"/>
+                                        <state key="selected" image="Safari"/>
+                                        <connections>
+                                            <action selector="openWebView" destination="BYZ-38-t0r" eventType="touchUpInside" id="vKP-O6-5X7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.84696906810000006" green="0.84711199999999998" blue="0.84694892170000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -77,15 +93,81 @@
                         <outlet property="region" destination="bjl-XM-x3W" id="bZy-vJ-vZI"/>
                         <outlet property="status" destination="3Iv-da-dXc" id="GmS-fJ-prQ"/>
                         <outlet property="timeslots" destination="Is0-9l-uIq" id="OGw-ts-yXV"/>
+                        <outlet property="webView" destination="sep-4y-nGV" id="CT7-zy-6na"/>
+                        <segue destination="U9G-f2-9Ay" kind="presentation" identifier="OpenBrowser" id="RaL-Fk-TrO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="141.59999999999999" y="119.1904047976012"/>
         </scene>
+        <!--Web View Controller-->
+        <scene sceneID="NtG-LO-eRl">
+            <objects>
+                <viewController id="U9G-f2-9Ay" customClass="WebViewController" customModule="CAVOK" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mcc-vb-9fY"/>
+                        <viewControllerLayoutGuide type="bottom" id="JKx-ZN-l9L"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pPV-3b-dWt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mY2-wS-zNb">
+                                <frame key="frameInset" minY="-20" width="375" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3MZ-K3-H7V">
+                                        <frame key="frameInset" minY="30" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <items>
+                                            <navigationItem id="3ej-JD-D6R">
+                                                <barButtonItem key="leftBarButtonItem" title="&lt;" id="83L-O3-Wkb">
+                                                    <connections>
+                                                        <action selector="close" destination="U9G-f2-9Ay" id="qdf-44-U7Y"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem key="rightBarButtonItem" style="plain" id="w5q-3P-DBr">
+                                                    <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="fzy-Xh-Hbv">
+                                                        <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <segments>
+                                                            <segment title="fmi"/>
+                                                            <segment title="mb"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="load" destination="U9G-f2-9Ay" eventType="valueChanged" id="jJn-aZ-dVV"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EWh-1r-1oq">
+                                <frame key="frameInset" minY="53"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="EWh-1r-1oq" id="aCO-Je-1eh"/>
+                        <outlet property="topbar" destination="mY2-wS-zNb" id="LzH-1Q-LxY"/>
+                        <outlet property="urls" destination="fzy-Xh-Hbv" id="u6O-YR-Ui7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QaN-H4-EbG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1308" y="118.29085457271366"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Region" width="50" height="50"/>
         <image name="RegionSet" width="50" height="50"/>
+        <image name="Safari" width="50" height="50"/>
     </resources>
 </document>

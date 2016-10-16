@@ -31,3 +31,14 @@ cp CAVOK/CAVOK.template.plist CAVOK/CAVOK.plist
 
 Edit `CAVOK/CAVOK.plist` with missing data
 * `basemapURL` add [MapBox](https://www.mapbox.com) access token or any other [TileJSON](https://github.com/mapbox/tilejson-spec)
+
+## Customizations
+
+Application can be customized by editing *CAVOK.plist*.
+
+- modules for observation visualizations
+  - steps used for color ramp 
+- external links in webview
+  - title
+  - url with optional {lat}, {lon} replacements for last known location
+  - optional CSS selectors for hiding elements

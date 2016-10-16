@@ -73,6 +73,8 @@
 		C015BE311DAC070200C4B26A /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE301DAC070200C4B26A /* AwsService.swift */; };
 		C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE341DAC254B00C4B26A /* StationMarker.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
+		C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */; };
+		C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */; };
 		C0BE7B651DA27207003888B9 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BE7B641DA27207003888B9 /* Metal.framework */; };
 		C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483671D99CDDB007A1404 /* MapDelegate.swift */; };
 		C0F4836A1D99CDF9007A1404 /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483691D99CDF9007A1404 /* Timeslot.swift */; };
@@ -179,6 +181,8 @@
 		C015BE301DAC070200C4B26A /* AwsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AwsService.swift; path = Weather/Services/AwsService.swift; sourceTree = "<group>"; };
 		C015BE341DAC254B00C4B26A /* StationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationMarker.swift; path = Weather/Views/StationMarker.swift; sourceTree = "<group>"; };
 		C054D09E1D96D79200B71BF4 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observations.swift; path = Weather/Models/Observations.swift; sourceTree = "<group>"; };
+		C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Web/WebViewController.swift; sourceTree = "<group>"; };
+		C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastLocation.swift; path = Map/Location/LastLocation.swift; sourceTree = "<group>"; };
 		C0BE7B641DA27207003888B9 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		C0F483671D99CDDB007A1404 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDelegate.swift; path = Map/MapDelegate.swift; sourceTree = "<group>"; };
 		C0F483691D99CDF9007A1404 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeslot.swift; path = Map/Timeslot.swift; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 		37486F271D89ED2C00357E11 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */,
 				37A54FFC1D7FE15B002BADA0 /* LastSession.swift */,
 				374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */,
 				371E0E3B1D7E11F700BE1846 /* UserMarker.swift */,
@@ -285,6 +290,7 @@
 				374ACD101D7F4E7D00C45A18 /* Extensions */,
 				377123E21D7D94110010CA1F /* Map */,
 				37B7FDBA1D8064B8009307F0 /* Weather */,
+				C0B778D41DAFDEF400DBB1FB /* Web */,
 				374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */,
 				374EC9D01D7CB5A90047B82B /* Main.storyboard */,
 				374EC9D31D7CB5A90047B82B /* Assets.xcassets */,
@@ -434,6 +440,14 @@
 				37B22BE51D81E330001AF5BA /* Weather.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		C0B778D41DAFDEF400DBB1FB /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */,
+			);
+			name = Web;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -633,6 +647,7 @@
 				374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */,
 				37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */,
 				3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */,
+				C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */,
 				C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */,
 				37B22BE61D81E330001AF5BA /* Weather.swift in Sources */,
 				3765504B1D86BAB000610329 /* WeatherTileSource.swift in Sources */,
@@ -640,6 +655,7 @@
 				372C04221D8FB4F400BEA8EB /* ObservationMarker.swift in Sources */,
 				37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */,
 				372C04261D8FB52A00BEA8EB /* ObservationCalloutView.swift in Sources */,
+				C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */,
 				376550511D86BBD400610329 /* Modules.swift in Sources */,
 				37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */,
 				376550531D86C14A00610329 /* DebugTileSource.swift in Sources */,
