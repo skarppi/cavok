@@ -114,20 +114,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mY2-wS-zNb">
-                                <frame key="frameInset" minY="-20" width="375" height="74"/>
+                                <frame key="frameInset" minY="-20" width="375" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3MZ-K3-H7V">
-                                        <frame key="frameInset" minY="30" height="44"/>
+                                        <frame key="frameInset" minY="33" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <items>
                                             <navigationItem id="3ej-JD-D6R">
-                                                <barButtonItem key="leftBarButtonItem" title="&lt;" id="83L-O3-Wkb">
+                                                <barButtonItem key="leftBarButtonItem" image="Back" id="83L-O3-Wkb">
                                                     <connections>
                                                         <action selector="close" destination="U9G-f2-9Ay" id="qdf-44-U7Y"/>
                                                     </connections>
                                                 </barButtonItem>
-                                                <barButtonItem key="rightBarButtonItem" style="plain" id="w5q-3P-DBr">
+                                                <barButtonItem key="rightBarButtonItem" id="w5q-3P-DBr">
                                                     <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="fzy-Xh-Hbv">
                                                         <rect key="frame" x="276" y="7" width="83" height="30"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -144,10 +144,10 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.30457746478873238" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EWh-1r-1oq">
-                                <frame key="frameInset" minY="53"/>
+                                <frame key="frameInset" minY="58"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -162,10 +162,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QaN-H4-EbG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1308" y="118.29085457271366"/>
+            <point key="canvasLocation" x="1307.5" y="117.5"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Back" width="13" height="21"/>
         <image name="Region" width="50" height="50"/>
         <image name="RegionSet" width="50" height="50"/>
         <image name="Safari" width="50" height="50"/>
