@@ -8,12 +8,18 @@
 
 import Foundation
 
+public struct Legend {
+    var unit: String
+    var gradient: [CGColor]
+    var titles: [String]
+}
+
 public protocol MapDelegate {
     func setStatus(text: String?, color: UIColor)
     
     func setStatus(error: Error)
     
-    func loaded(frame:Int?, timeslots: [Timeslot])
+    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend)
     
     func clearAnnotations(ofType: MaplyAnnotation.Type?)
     

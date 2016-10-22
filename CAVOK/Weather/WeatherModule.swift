@@ -22,7 +22,7 @@ class Visibility: WeatherModule, MapModule {
 
 final class Temperature: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
-        super.init(delegate: delegate, observationValue: { ($0 as? Metar)?.temperature.value })
+        super.init(delegate: delegate, observationValue: { ($0 as? Metar)?.temperatureDifference() })
     }
 }
 
@@ -158,7 +158,7 @@ open class WeatherModule {
         let groups = observations.group()
         
         self.weatherLayer.load(groups: groups)
-        self.delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots)
+        self.delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots, legend: ramp.legend())
         self.render(frame: groups.selectedFrame)
     }
     
