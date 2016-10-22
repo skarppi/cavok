@@ -22,6 +22,8 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var region: UIButton!
     
+    @IBOutlet weak var webView: UIButton!
+    
     
     internal var mapView: WhirlyGlobeViewController!
 
@@ -39,7 +41,12 @@ class MapViewController: UIViewController {
         region.layer.borderWidth = 1
         region.layer.borderColor = view.tintColor.cgColor
         region.layer.cornerRadius = 5
-        region.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        region.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        
+        webView.layer.borderWidth = 1
+        webView.layer.borderColor = view.tintColor.cgColor
+        webView.layer.cornerRadius = 5
+        webView.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         
         mapView = WhirlyGlobeViewController()
         mapView.delegate = self
@@ -137,6 +144,11 @@ class MapViewController: UIViewController {
         }
     }
     
+    @IBAction func openWebView() {
+        
+        self.performSegue(withIdentifier: "OpenBrowser", sender: self)
+    }
+    
     @IBAction func resetRegion() {
         let start = !region.isSelected
         region.isSelected = start
@@ -216,6 +228,7 @@ extension MapViewController : MapDelegate {
             // make sure region selection is canceled
             self.region.isHidden = false
             self.region.isSelected = false
+            self.webView.isHidden = false
         }
     }
     

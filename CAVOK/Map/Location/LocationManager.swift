@@ -59,6 +59,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             print("Got location with accuracy \(location.horizontalAccuracy) is \(howRecent) old");
             let coordinate = MaplyCoordinateMakeWithDegrees(Float(location.coordinate.longitude), Float(location.coordinate.latitude))
             fulfill(coordinate)
+            
+            LastLocation.save(location: coordinate)
         }
     }
     
