@@ -16,9 +16,14 @@ public class Metar: Observation {
     open dynamic var runwayVisualRange: String?
     open let temperature = RealmOptional<Int>()
     
-    func temperatureDifference() -> Int? {
-        if temperature.value != nil && dewPoint.value != nil {
-            return temperature.value! - dewPoint.value!
+    // The cloud base can be estimated from surface measurements of air temperature and 
+    // humidity by calculating the lifted condensation level.
+    // - Find the difference between the surface temperature and the dew point. This value is known as the "spread".
+    // - Divide the spread °C by 2.5 then multiply by 1000. This will give you cloud base in feet AGL (Above Ground Level)
+    // https://en.wikipedia.org/wiki/Cloud_base
+    func spreadCeiling() -> Int? {
+        if let temp = temperature.value, let dp = dewPoint.value {
+            return (temp - dp) * 400
         } else {
             return nil
         }
@@ -46,9 +51,8 @@ public class Metar: Observation {
             }
         }
         
-        if let wind = parseWind(value: parser.peek()) {
+        if let wind = parseWind(value: parser.pop()) {
             self.wind = wind
-            parser.next()
         } else {
             self.wind = WindData()
         }

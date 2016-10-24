@@ -45,7 +45,12 @@ class WeatherLayer {
         
         clean()
         
-        let layer = initLayer(groups: groups)
+        // generate heatmaps in inverse order
+        let frames = groups.frames.enumerated().map { (frame, obs) in
+            return HeatMap(observations: obs, config: config!, observationValue: observationValue, ramp: ramp, frame: frame, priority: frame == groups.selectedFrame)
+        }
+        
+        let layer = initLayer(frames: frames)
         mapView.add(layer)
         self.layer = layer
         
@@ -81,13 +86,7 @@ class WeatherLayer {
         }
     }
     
-    private func initLayer(groups: ObservationGroups) -> MaplyQuadImageTilesLayer {
-        
-        // generate heatmaps in inverse order
-        let frames = groups.frames.enumerated().map { (frame, obs) in
-            return HeatMap(observations: obs, config: config!, observationValue: observationValue, ramp: ramp, frame: frame, priority: frame == groups.selectedFrame)
-        }
-        
+    private func initLayer(frames: [HeatMap]) -> MaplyQuadImageTilesLayer {
         // for debugging tiles
         //let tileSource = DebugTileSource(frames: frames, config: config)
         

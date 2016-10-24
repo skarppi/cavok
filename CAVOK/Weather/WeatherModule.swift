@@ -22,7 +22,7 @@ class Visibility: WeatherModule, MapModule {
 
 final class Temperature: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
-        super.init(delegate: delegate, observationValue: { ($0 as? Metar)?.temperatureDifference() })
+        super.init(delegate: delegate, observationValue: { ($0 as? Metar)?.spreadCeiling() })
     }
 }
 

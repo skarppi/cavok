@@ -114,6 +114,13 @@ class MetarTests : ObservationTestCase {
         XCTAssertEqual(metar.dewPoint.value!, -2);
     }
     
+    func testAwsTemperatureWithoutWind() {
+        let metar = Metar()
+        metar.parse(raw: "ILZM 150730Z AUTO /////KT 9999 SCT004 OVC014 03/02 Q1035=")
+        XCTAssertEqual(metar.temperature.value!, 3);
+        XCTAssertEqual(metar.dewPoint.value!, 2);
+    }
+    
     func testVFRConditions() {
         let metar = Metar()
         metar.parse(raw: "ILZU 012120Z AUTO 31009KT 9999 OVC031")

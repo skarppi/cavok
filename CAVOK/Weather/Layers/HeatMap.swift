@@ -42,10 +42,6 @@ class HeatMap {
             }
         }
         
-        guard !input.isEmpty else {
-            return
-        }
-        
         let qos: DispatchQoS.QoSClass = (priority) ? .userInitiated : .background
         
         DispatchQueue.global(qos: qos).async(group: group, execute: DispatchWorkItem {
