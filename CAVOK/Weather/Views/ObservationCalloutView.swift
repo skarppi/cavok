@@ -15,7 +15,7 @@ class ObservationCalloutView: UIView {
         
         let valueStr = value.map {String($0)} ?? "-"
         
-        let valueColor:CGColor = ramp.color(for: value ?? 0)
+        let valueColor:CGColor = ramp.color(for: value.map { Int32($0) } ?? 0)
         let valueAttributes = [NSForegroundColorAttributeName : UIColor(cgColor: valueColor)]
         titleAttr.append(NSAttributedString(string: valueStr, attributes:valueAttributes))
         

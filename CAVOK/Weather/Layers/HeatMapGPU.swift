@@ -14,7 +14,7 @@ class HeatMapGPU {
     
     private var outTexture: MTLTexture? = nil
     
-    init(input: [HeatData], config: WeatherConfig, steps: GridSteps) {
+    init(input: [HeatData], config: WeatherConfig, steps: [GridStep]) {
         guard let device = MTLCreateSystemDefaultDevice(),
             let defaultLibrary = device.newDefaultLibrary()
             else { return }
@@ -51,8 +51,8 @@ class HeatMapGPU {
         let dataBuffer = device.makeBuffer(bytes: &arr, length: MemoryLayout<Int32>.stride * arr.count, options: .storageModeShared)
         commandEncoder.setBuffer(dataBuffer, offset: 0, at: 2)
 
-        var steps = [steps.purple.int4(), steps.red.int4(), steps.orange.int4(), steps.yellow.int4(), steps.green.int4(), steps.blue.int4()].flatMap { $0 }
-        let stepsBuffer = device.makeBuffer(bytes: &steps, length: MemoryLayout<Int32>.stride * steps.count, options: .storageModeShared)
+        var stepsArray = steps.flatMap { $0.int4() }
+        let stepsBuffer = device.makeBuffer(bytes: &stepsArray, length: MemoryLayout<Int32>.stride * stepsArray.count, options: .storageModeShared)
         commandEncoder.setBuffer(stepsBuffer, offset: 0, at: 3)
         
         let threadGroupCount = MTLSizeMake(5, 5, 1)

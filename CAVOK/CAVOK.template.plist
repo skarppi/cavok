@@ -18,21 +18,21 @@
 			<key>name</key>
 			<string>Ceiling</string>
 			<key>unit</key>
-			<string>ft</string>
+			<string>FL</string>
 			<key>steps</key>
 			<dict>
 				<key>0000</key>
-				<string>&lt; 500 ft</string>
+				<string>000</string>
 				<key>0500</key>
-				<string>500-999 ft</string>
+				<string>005</string>
 				<key>1000</key>
-				<string>1000-1499 ft</string>
+				<string>010</string>
 				<key>1500</key>
-				<string>1500-1999 ft</string>
+				<string>015</string>
 				<key>2000</key>
-				<string>2000-4999 ft</string>
+				<string>020</string>
 				<key>5000</key>
-				<string>&gt; 5000 ft</string>
+				<string>050</string>
 			</dict>
 		</dict>
 		<dict>
@@ -41,44 +41,44 @@
 			<key>name</key>
 			<string>Visibility</string>
 			<key>unit</key>
-			<string>ft</string>
+			<string>KM</string>
 			<key>steps</key>
 			<dict>
 				<key>00000</key>
-				<string>&lt; 1.5 km</string>
+				<string>0</string>
 				<key>01500</key>
-				<string>1.5 - 3 km</string>
+				<string>1.5</string>
 				<key>03000</key>
-				<string>3 - 5 km</string>
+				<string>3</string>
 				<key>05000</key>
-				<string>5 - 8 km</string>
+				<string>5</string>
 				<key>08000</key>
-				<string>8 - 10 km</string>
+				<string>8</string>
 				<key>10000</key>
-				<string>&gt; 10 km</string>
+				<string>10</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>class</key>
 			<string>Temperature</string>
 			<key>name</key>
-			<string>Temp-dp</string>
+			<string>Spread</string>
 			<key>unit</key>
-			<string>c</string>
+			<string>FL</string>
 			<key>steps</key>
 			<dict>
 				<key>0000</key>
-				<string>0-2.5 (&lt;010)</string>
-				<key>0250</key>
-				<string>2.5-5 (&lt;020)</string>
+				<string>000</string>
 				<key>0500</key>
-				<string>5-7.5 (&lt;030)</string>
-				<key>0750</key>
-				<string>7.5-10 (&lt;040)</string>
+				<string>005</string>
 				<key>1000</key>
-				<string>10-12.5(&lt;050)</string>
-				<key>1250</key>
-				<string>12.5+(&gt; 050)</string>
+				<string>010</string>
+				<key>1500</key>
+				<string>015</string>
+				<key>2000</key>
+				<string>020</string>
+				<key>5000</key>
+				<string>050</string>
 			</dict>
 		</dict>
 	</array>

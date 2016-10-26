@@ -28,7 +28,7 @@ class HeatMapCPU {
                 
                 let interp = getInterpValue(x: x, y: y, input: input)
                 
-                let color = ramp.color(for: Int(interp.val), alpha: CGFloat(interp.alpha))
+                let color = ramp.color(for: Int32(interp.val), alpha: CGFloat(interp.alpha))
                 let comps = color.components!
                 let alpha = comps[3] * 255
                 bitmapData[i*4 + 0] = UInt8(comps[0] * alpha)
@@ -64,6 +64,9 @@ class HeatMapCPU {
     }
 
     func getInterpValue(x: Int, y: Int, input: [HeatData]) -> (val: Float, alpha: Float) {
+        guard !input.isEmpty else {
+            return (0, 0)
+        }
         
         let distances = getAllDistancesFromPoint(x: Int32(x), y: Int32(y), input: input)
         let minDistance = distances.min()!

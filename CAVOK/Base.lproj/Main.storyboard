@@ -58,9 +58,9 @@
                                     <action selector="moduleTypeChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="P3S-kj-riy"/>
                                 </connections>
                             </segmentedControl>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRG-OZ-0Vb">
-                                <frame key="frameInset" minX="326" minY="56" width="33" height="72"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRG-OZ-0Vb" userLabel="Buttons">
+                                <frame key="frameInset" minY="56" width="33" height="72" maxX="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-XM-x3W">
                                         <frame key="frameInset" width="33" height="33"/>
@@ -84,11 +84,44 @@
                                     </button>
                                 </subviews>
                             </view>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8T7-O4-mC4" userLabel="Legend">
+                                <frame key="frameInset" width="47" height="100" maxX="2" maxY="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ev-NG-Jg3">
+                                        <frame key="frameInset" width="65.31%" height="102" maxX="-2"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
+                                        <string key="text">1
+2 3 4 5 6</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="textContainer.lineFragmentPadding">
+                                                <integer key="value" value="0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="rect" keyPath="textContainerInset">
+                                                <rect key="value" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Etg-nY-Te6" customClass="LegendGradientView" customModule="CAVOK" customModuleProvider="target">
+                                        <frame key="frameInset" minY="12" width="100.00%" height="90" maxX="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.84696906810000006" green="0.84711199999999998" blue="0.84694892170000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="wXz-ED-41p" id="Ow9-u1-9ef"/>
+                        <outlet property="legendGradient" destination="Etg-nY-Te6" id="VuM-lC-a9O"/>
+                        <outlet property="legendText" destination="1Ev-NG-Jg3" id="33a-7h-goL"/>
                         <outlet property="moduleType" destination="EAe-qi-deb" id="95T-eG-88J"/>
                         <outlet property="region" destination="bjl-XM-x3W" id="bZy-vJ-vZI"/>
                         <outlet property="status" destination="3Iv-da-dXc" id="GmS-fJ-prQ"/>

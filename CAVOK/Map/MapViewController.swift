@@ -24,6 +24,10 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var webView: UIButton!
     
+    @IBOutlet weak var legendText: UITextView!
+    
+    @IBOutlet weak var legendGradient: LegendGradientView!
+    
     
     internal var mapView: WhirlyGlobeViewController!
 
@@ -209,7 +213,7 @@ extension MapViewController : MapDelegate {
         }
     }
     
-    func loaded(frame:Int?, timeslots: [Timeslot]) {
+    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend) {
         DispatchQueue.main.async {
             if let frame = frame {
                 self.timeslots.removeAllSegments()
@@ -229,6 +233,9 @@ extension MapViewController : MapDelegate {
             self.region.isHidden = false
             self.region.isSelected = false
             self.webView.isHidden = false
+            
+            self.legendText.text = legend.unit + "\n" + legend.titles.joined(separator: "\n")
+            self.legendGradient.gradient(ramp: legend.gradient)
         }
     }
     
