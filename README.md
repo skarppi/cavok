@@ -19,7 +19,7 @@ Data sources include
 ## Initial setup
 
 ```sh
-carthage bootstrap
+carthage bootstrap --platform iOS --no-use-binaries
 
 git submodule update --init
 
