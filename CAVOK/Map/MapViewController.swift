@@ -23,6 +23,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var region: UIButton!
     
     @IBOutlet weak var webView: UIButton!
+
+    @IBOutlet weak var legendView: UIView!
     
     @IBOutlet weak var legendText: UITextView!
     
@@ -63,6 +65,7 @@ class MapViewController: UIViewController {
         mapView.frameInterval = 2 // 30fps
         mapView.threadPerLayer = true
         mapView.autoMoveToTap = false
+        mapView.clearColor = view.backgroundColor
         
         if let (center, height) = LastSession.load() {
             mapView.height = height
@@ -236,6 +239,7 @@ extension MapViewController : MapDelegate {
             
             self.legendText.text = legend.unit + "\n" + legend.titles.joined(separator: "\n")
             self.legendGradient.gradient(ramp: legend.gradient)
+            self.legendView.isHidden = false
         }
     }
     

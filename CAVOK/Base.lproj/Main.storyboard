@@ -84,7 +84,7 @@
                                     </button>
                                 </subviews>
                             </view>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8T7-O4-mC4" userLabel="Legend">
+                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8T7-O4-mC4" userLabel="Legend">
                                 <frame key="frameInset" width="47" height="100" maxX="2" maxY="88"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -122,6 +122,7 @@
                         <outlet property="bottomView" destination="wXz-ED-41p" id="Ow9-u1-9ef"/>
                         <outlet property="legendGradient" destination="Etg-nY-Te6" id="VuM-lC-a9O"/>
                         <outlet property="legendText" destination="1Ev-NG-Jg3" id="33a-7h-goL"/>
+                        <outlet property="legendView" destination="8T7-O4-mC4" id="HlT-PA-2Ts"/>
                         <outlet property="moduleType" destination="EAe-qi-deb" id="95T-eG-88J"/>
                         <outlet property="region" destination="bjl-XM-x3W" id="bZy-vJ-vZI"/>
                         <outlet property="status" destination="3Iv-da-dXc" id="GmS-fJ-prQ"/>
