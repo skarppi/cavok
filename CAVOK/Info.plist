@@ -8,6 +8,11 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>tusina.net</key>
+			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>mapbox.com</key>
 			<dict>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>

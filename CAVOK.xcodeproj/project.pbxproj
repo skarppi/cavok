@@ -44,6 +44,9 @@
 		377123E71D7D94F50010CA1F /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = 377123E61D7D94F50010CA1F /* CAVOK.plist */; };
 		378AE5F81D80B56D008492D5 /* TafTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE5F71D80B56D008492D5 /* TafTests.swift */; };
 		378AE5FC1D80BB35008492D5 /* ObservationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */; };
+		378F1F191DE4747300B2314A /* AirspaceAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F1F181DE4747300B2314A /* AirspaceAttributes.swift */; };
+		378F1F1B1DE474EB00B2314A /* AirspaceCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F1F1A1DE474EB00B2314A /* AirspaceCalloutView.swift */; };
+		378F1F1D1DE4751F00B2314A /* AirspaceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F1F1C1DE4751F00B2314A /* AirspaceModule.swift */; };
 		37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A54FFC1D7FE15B002BADA0 /* LastSession.swift */; };
 		37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */; };
 		37B22B671D81D78B001AF5BA /* AddsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22B661D81D78B001AF5BA /* AddsService.swift */; };
@@ -159,6 +162,9 @@
 		377123F31D7DB06D0010CA1F /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
 		378AE5F71D80B56D008492D5 /* TafTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TafTests.swift; sourceTree = "<group>"; };
 		378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTestCase.swift; sourceTree = "<group>"; };
+		378F1F181DE4747300B2314A /* AirspaceAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AirspaceAttributes.swift; path = Airspace/AirspaceAttributes.swift; sourceTree = "<group>"; };
+		378F1F1A1DE474EB00B2314A /* AirspaceCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AirspaceCalloutView.swift; path = Airspace/AirspaceCalloutView.swift; sourceTree = "<group>"; };
+		378F1F1C1DE4751F00B2314A /* AirspaceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AirspaceModule.swift; path = Airspace/AirspaceModule.swift; sourceTree = "<group>"; };
 		37A54FFC1D7FE15B002BADA0 /* LastSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastSession.swift; path = Map/Location/LastSession.swift; sourceTree = "<group>"; };
 		37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Maply+Additions.swift"; path = "Extensions/Maply+Additions.swift"; sourceTree = "<group>"; };
 		37B22B661D81D78B001AF5BA /* AddsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddsService.swift; path = Weather/Services/AddsService.swift; sourceTree = "<group>"; };
@@ -289,6 +295,7 @@
 		374EC9CB1D7CB5A90047B82B /* CAVOK */ = {
 			isa = PBXGroup;
 			children = (
+				378F1F151DE4745600B2314A /* Airspace */,
 				374ACD101D7F4E7D00C45A18 /* Extensions */,
 				377123E21D7D94110010CA1F /* Map */,
 				37B7FDBA1D8064B8009307F0 /* Weather */,
@@ -406,6 +413,16 @@
 				375784DC1D9320280046A8A7 /* Views */,
 			);
 			name = Map;
+			sourceTree = "<group>";
+		};
+		378F1F151DE4745600B2314A /* Airspace */ = {
+			isa = PBXGroup;
+			children = (
+				378F1F181DE4747300B2314A /* AirspaceAttributes.swift */,
+				378F1F1A1DE474EB00B2314A /* AirspaceCalloutView.swift */,
+				378F1F1C1DE4751F00B2314A /* AirspaceModule.swift */,
+			);
+			name = Airspace;
 			sourceTree = "<group>";
 		};
 		37B22B651D81D75E001AF5BA /* Services */ = {
@@ -649,6 +666,7 @@
 				C0B778EC1DB423DD00DBB1FB /* LegendGradientView.swift in Sources */,
 				37B7FDC21D8064E5009307F0 /* Tokenizer.swift in Sources */,
 				374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */,
+				378F1F191DE4747300B2314A /* AirspaceAttributes.swift in Sources */,
 				37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */,
 				3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */,
 				C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */,
@@ -658,6 +676,7 @@
 				3765504F1D86BB7C00610329 /* WeatherLayer.swift in Sources */,
 				372C04221D8FB4F400BEA8EB /* ObservationMarker.swift in Sources */,
 				37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */,
+				378F1F1D1DE4751F00B2314A /* AirspaceModule.swift in Sources */,
 				372C04261D8FB52A00BEA8EB /* ObservationCalloutView.swift in Sources */,
 				C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */,
 				376550511D86BBD400610329 /* Modules.swift in Sources */,
@@ -670,6 +689,7 @@
 				37B7FDC71D80654F009307F0 /* Metar.swift in Sources */,
 				37B22BF21D82085F001AF5BA /* MapModule.swift in Sources */,
 				377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */,
+				378F1F1B1DE474EB00B2314A /* AirspaceCalloutView.swift in Sources */,
 				375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */,
 				37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */,
 				37B7FDC31D8064E5009307F0 /* Station.swift in Sources */,

@@ -10,6 +10,8 @@
 	<string>https://ilmailusaa.fi/weatheranim.php?id=viscloud</string>
 	<key>awsStationsURL</key>
 	<string>https://ilmailusaa.fi/backend.php?%7B%22mode%22%3A%22autometar%22%2C%22radius%22%3A%2250%22%2C%22points%22%3A%5B%7B%22_area%22%3A%221%22%7D%5D%7D</string>
+	<key>airspaceURL</key>
+	<string>http://tusina.net:8000/aip</string>
 	<key>modules</key>
 	<array>
 		<dict>
