@@ -10,6 +10,7 @@ Data sources include
 
 * METAR/TAF worldwide by [ADDS data server](https://aviationweather.gov/adds/dataserver)
 * Finnish unofficial [AWS-METARS](https://ilmailusaa.fi/info.html#info-location-aws) 
+* Finnish airspaces [CAVOK-server](https://github.com/skarppi/cavok-server)
 
 ## Requirements
 

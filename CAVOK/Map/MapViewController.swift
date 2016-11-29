@@ -20,7 +20,11 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var timeslots: TimeslotView!
     
+    @IBOutlet weak var buttonView: UIView!
+    
     @IBOutlet weak var region: UIButton!
+    
+    @IBOutlet weak var airspace: UIButton!
     
     @IBOutlet weak var webView: UIButton!
 
@@ -37,6 +41,8 @@ class MapViewController: UIViewController {
     
     fileprivate var module: MapModule!
     
+    fileprivate var airspaceModule: AirspaceModule!
+    
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]
     
     private var locationManager: LocationManager!
@@ -48,6 +54,11 @@ class MapViewController: UIViewController {
         region.layer.borderColor = view.tintColor.cgColor
         region.layer.cornerRadius = 5
         region.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        
+        airspace.layer.borderWidth = 1
+        airspace.layer.borderColor = view.tintColor.cgColor
+        airspace.layer.cornerRadius = 5
+        airspace.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         
         webView.layer.borderWidth = 1
         webView.layer.borderColor = view.tintColor.cgColor
@@ -82,6 +93,8 @@ class MapViewController: UIViewController {
                 self.setStatus(error: error)
             }
         }
+        
+        airspaceModule = AirspaceModule(delegate: self)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredBackground(notification:)),
@@ -149,6 +162,10 @@ class MapViewController: UIViewController {
                 self.module.configure(open: true, userLocation: userLocation.loc)
             })
         }
+    }
+    
+    @IBAction func airspaceLayers() {
+        airspaceModule.render(frame: 0)
     }
     
     @IBAction func openWebView() {
@@ -233,9 +250,9 @@ extension MapViewController : MapDelegate {
                 self.animateModuleType(show: false)
             }
             // make sure region selection is canceled
-            self.region.isHidden = false
             self.region.isSelected = false
-            self.webView.isHidden = false
+            
+            self.buttonView.isHidden = false
             
             self.legendText.text = legend.unit + "\n" + legend.titles.joined(separator: "\n")
             self.legendGradient.gradient(ramp: legend.gradient)
@@ -303,12 +320,22 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
             return
         }
         
-        if let marker = selected as? MaplyScreenMarker {
-            if let contentView = module.annotation(object: marker.userObject, parentFrame: self.view.frame) {
-                let annotation = MaplyAnnotation()
-                annotation.contentView = contentView
-                view.addAnnotation(annotation, forPoint: marker.loc, offset: .zero)
-            }
+        let location: MaplyCoordinate?
+        let contentView: UIView?
+        if let marker = selected as? MaplyScreenMarker, let object = marker.userObject {
+            contentView = module.annotation(object: object, parentFrame: self.view.frame)
+            location = marker.loc
+        } else if let object = (selected as? MaplyVectorObject)?.userObject {
+            contentView = airspaceModule.annotation(object: object, parentFrame: self.view.frame)
+            location = coord
+        } else {
+            return
+        }
+        
+        if let contentView = contentView, let location = location {
+            let annotation = MaplyAnnotation()
+            annotation.contentView = contentView
+            view.addAnnotation(annotation, forPoint: location, offset: .zero)
         }
     }
 }
