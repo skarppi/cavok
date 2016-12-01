@@ -1,3 +1,6 @@
 [submodule "libs/WhirlyGlobe"]
 	path = libs/WhirlyGlobe
 	url = https://github.com/mousebird/WhirlyGlobe.git
+[submodule "libs/Pulley"]
+	path = libs/Pulley
+	url = https://github.com/52inc/Pulley.git

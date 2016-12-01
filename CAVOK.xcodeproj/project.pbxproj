@@ -26,6 +26,8 @@
 		374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */; };
 		374EC9ED1D7CB5AA0047B82B /* CAVOKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */; };
 		375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375784DF1D9321220046A8A7 /* TimeslotView.swift */; };
+		375B78111DF08B38000A9199 /* PulleyPassthroughScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B780F1DF08B38000A9199 /* PulleyPassthroughScrollView.swift */; };
+		375B78121DF08B38000A9199 /* PulleyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B78101DF08B38000A9199 /* PulleyViewController.swift */; };
 		376550471D86B9C100610329 /* HeatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376550461D86B9C100610329 /* HeatMap.swift */; };
 		3765504B1D86BAB000610329 /* WeatherTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504A1D86BAB000610329 /* WeatherTileSource.swift */; };
 		3765504D1D86BAD100610329 /* WeatherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504C1D86BAD100610329 /* WeatherConfig.swift */; };
@@ -139,6 +141,8 @@
 		374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKUITests.swift; sourceTree = "<group>"; };
 		374EC9EE1D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		375784DF1D9321220046A8A7 /* TimeslotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeslotView.swift; path = Map/Views/TimeslotView.swift; sourceTree = "<group>"; };
+		375B780F1DF08B38000A9199 /* PulleyPassthroughScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulleyPassthroughScrollView.swift; sourceTree = "<group>"; };
+		375B78101DF08B38000A9199 /* PulleyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulleyViewController.swift; sourceTree = "<group>"; };
 		376550461D86B9C100610329 /* HeatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMap.swift; path = Weather/Layers/HeatMap.swift; sourceTree = "<group>"; };
 		3765504A1D86BAB000610329 /* WeatherTileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherTileSource.swift; path = Weather/Layers/WeatherTileSource.swift; sourceTree = "<group>"; };
 		3765504C1D86BAD100610329 /* WeatherConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherConfig.swift; path = Weather/Layers/WeatherConfig.swift; sourceTree = "<group>"; };
@@ -341,6 +345,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		375B780E1DF08B38000A9199 /* PulleyLib */ = {
+			isa = PBXGroup;
+			children = (
+				375B780F1DF08B38000A9199 /* PulleyPassthroughScrollView.swift */,
+				375B78101DF08B38000A9199 /* PulleyViewController.swift */,
+			);
+			name = PulleyLib;
+			path = libs/Pulley/PulleyLib;
+			sourceTree = "<group>";
+		};
 		376550431D86B9AA00610329 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,6 +387,7 @@
 		377123CC1D7D8EF80010CA1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				375B780E1DF08B38000A9199 /* PulleyLib */,
 				C0BE7B641DA27207003888B9 /* Metal.framework */,
 				37B22BE91D81E7A3001AF5BA /* Gzip.framework */,
 				37B22BDE1D81DC40001AF5BA /* SWXMLHash.framework */,
@@ -653,6 +668,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				375B78121DF08B38000A9199 /* PulleyViewController.swift in Sources */,
 				3737DA9E1D8E7D2400EB57A2 /* ColorRamp.swift in Sources */,
 				376550471D86B9C100610329 /* HeatMap.swift in Sources */,
 				37B22BE41D81E067001AF5BA /* WeatherService.swift in Sources */,
@@ -698,6 +714,7 @@
 				37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */,
 				37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */,
 				3765504D1D86BAD100610329 /* WeatherConfig.swift in Sources */,
+				375B78111DF08B38000A9199 /* PulleyPassthroughScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
