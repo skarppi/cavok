@@ -14,12 +14,7 @@ public struct Legend {
     var titles: [String]
 }
 
-public protocol MapDelegate {
-    func setStatus(text: String?, color: UIColor)
-    
-    func setStatus(error: Error)
-    
-    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend)
+public protocol MapDelegate: DrawerDelegate {
     
     func clearAnnotations(ofType: MaplyAnnotation.Type?)
     

@@ -12,13 +12,7 @@ import PromiseKit
 
 class MapViewController: UIViewController {
     
-    @IBOutlet weak var bottomView: UIView!
-    
-    @IBOutlet weak var status: UITextField!
-
     @IBOutlet weak var moduleType: UISegmentedControl!
-    
-    @IBOutlet weak var timeslots: TimeslotView!
     
     @IBOutlet weak var buttonView: UIView!
     
@@ -34,7 +28,6 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var legendGradient: LegendGradientView!
     
-    
     internal var mapView: WhirlyGlobeViewController!
 
     fileprivate let modules = Modules()
@@ -46,6 +39,8 @@ class MapViewController: UIViewController {
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]
     
     private var locationManager: LocationManager!
+    
+    fileprivate var drawer: DrawerViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,6 +121,15 @@ class MapViewController: UIViewController {
         moduleType.selectedSegmentIndex = 0
         moduleTypeChanged()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let pulley = self.parent as? PulleyViewController {
+            drawer = pulley.drawerContentViewController as! DrawerViewController
+            drawer.setModule(module: module)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -178,7 +182,10 @@ class MapViewController: UIViewController {
         region.isSelected = start
         if start {
             animateModuleType(show: false)
-            animateTimeslots(show: false)
+            
+            if let pulley = self.parent as? PulleyViewController {
+                pulley.setDrawerPosition(position: .closed)
+            }
         }
         module.configure(open: start, userLocation: nil)
     }
@@ -191,64 +198,36 @@ class MapViewController: UIViewController {
         })
     }
     
-    fileprivate func animateTimeslots(show: Bool) {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            let height: CGFloat = (show ? 80 : 40)
-            self.bottomView.frame.origin = CGPoint(x: 0, y: self.view.bounds.height - height)
-        })
-    }
-    
-    
     @IBAction func moduleTypeChanged() {
         module = nil
         module = modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
+        drawer?.setModule(module: module)
     }
-    
-    @IBAction func timeslotChanged() {
-        module.render(frame: timeslots.selectedSegmentIndex)
-    }
-    
 }
 
 // MARK: - MapDelegate
 extension MapViewController : MapDelegate {
 
     func setStatus(error: Error) {
-        switch error {
-        case let Weather.error(msg):
-            setStatus(text: msg)
-        default:
-            print(error)
-            setStatus(text: error.localizedDescription)
-        }
-        
+        drawer.setStatus(error: error)
     }
     
     func setStatus(text: String?, color: UIColor = UIColor.red) {
-        if let text = text {
-            DispatchQueue.main.async {
-                self.status.textColor = color
-                self.status.text = "\(text)"
-            }
+        DispatchQueue.main.async {
+            self.drawer.setStatus(text: text, color: color)
         }
     }
     
     func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend) {
         DispatchQueue.main.async {
-            if let frame = frame {
-                self.timeslots.removeAllSegments()
-                for (index, slot) in timeslots.enumerated() {
-                    self.timeslots.insertSegment(with: slot, at: index, animated: true)
-                }
-                
-                self.animateTimeslots(show: true)
-                self.animateModuleType(show: true)
-                
-                self.timeslots.selectedSegmentIndex = frame
-            } else {
-                self.animateTimeslots(show: false)
-                self.animateModuleType(show: false)
+            self.drawer.loaded(frame: frame, timeslots: timeslots, legend: legend)
+            
+            if let pulley = self.parent as? PulleyViewController {
+                pulley.setDrawerPosition(position: .collapsed)
             }
+            
+            self.animateModuleType(show: frame != nil)
+            
             // make sure region selection is canceled
             self.region.isSelected = false
             
@@ -290,16 +269,6 @@ extension MapViewController : MapDelegate {
             mapView.remove([MaplyComponentObject](components.values))
             components.removeAll()
         }
-    }
-}
-
-// MARK: - UITextFieldDelegate
-extension MapViewController: UITextFieldDelegate {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == self.status {
-            module.refresh()
-        }
-        return false
     }
 }
 

@@ -28,6 +28,8 @@
 		375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375784DF1D9321220046A8A7 /* TimeslotView.swift */; };
 		375B78111DF08B38000A9199 /* PulleyPassthroughScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B780F1DF08B38000A9199 /* PulleyPassthroughScrollView.swift */; };
 		375B78121DF08B38000A9199 /* PulleyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B78101DF08B38000A9199 /* PulleyViewController.swift */; };
+		375B78161DF09763000A9199 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B78151DF09763000A9199 /* DrawerViewController.swift */; };
+		375B78181DF0C17E000A9199 /* DrawerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B78171DF0C17E000A9199 /* DrawerDelegate.swift */; };
 		376550471D86B9C100610329 /* HeatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376550461D86B9C100610329 /* HeatMap.swift */; };
 		3765504B1D86BAB000610329 /* WeatherTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504A1D86BAB000610329 /* WeatherTileSource.swift */; };
 		3765504D1D86BAD100610329 /* WeatherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504C1D86BAD100610329 /* WeatherConfig.swift */; };
@@ -143,6 +145,8 @@
 		375784DF1D9321220046A8A7 /* TimeslotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeslotView.swift; path = Map/Views/TimeslotView.swift; sourceTree = "<group>"; };
 		375B780F1DF08B38000A9199 /* PulleyPassthroughScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulleyPassthroughScrollView.swift; sourceTree = "<group>"; };
 		375B78101DF08B38000A9199 /* PulleyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulleyViewController.swift; sourceTree = "<group>"; };
+		375B78151DF09763000A9199 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawerViewController.swift; path = Map/DrawerViewController.swift; sourceTree = "<group>"; };
+		375B78171DF0C17E000A9199 /* DrawerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawerDelegate.swift; path = Map/DrawerDelegate.swift; sourceTree = "<group>"; };
 		376550461D86B9C100610329 /* HeatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMap.swift; path = Weather/Layers/HeatMap.swift; sourceTree = "<group>"; };
 		3765504A1D86BAB000610329 /* WeatherTileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherTileSource.swift; path = Weather/Layers/WeatherTileSource.swift; sourceTree = "<group>"; };
 		3765504C1D86BAD100610329 /* WeatherConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherConfig.swift; path = Weather/Layers/WeatherConfig.swift; sourceTree = "<group>"; };
@@ -418,6 +422,8 @@
 		377123E21D7D94110010CA1F /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				375B78171DF0C17E000A9199 /* DrawerDelegate.swift */,
+				375B78151DF09763000A9199 /* DrawerViewController.swift */,
 				C0F483671D99CDDB007A1404 /* MapDelegate.swift */,
 				37B22BF11D82085F001AF5BA /* MapModule.swift */,
 				374EC9CE1D7CB5A90047B82B /* MapViewController.swift */,
@@ -675,6 +681,7 @@
 				C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */,
 				3765505C1D86E6E500610329 /* RegionSelection.swift in Sources */,
 				37B22BEE1D820658001AF5BA /* WeatherModule.swift in Sources */,
+				375B78181DF0C17E000A9199 /* DrawerDelegate.swift in Sources */,
 				374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */,
 				371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */,
 				C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */,
@@ -709,6 +716,7 @@
 				375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */,
 				37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */,
 				37B7FDC31D8064E5009307F0 /* Station.swift in Sources */,
+				375B78161DF09763000A9199 /* DrawerViewController.swift in Sources */,
 				C015BE191DA6D5C200C4B26A /* HeatMapGPU.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
 				37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */,
