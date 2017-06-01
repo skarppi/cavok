@@ -36,7 +36,6 @@
 		376550531D86C14A00610329 /* DebugTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376550521D86C14A00610329 /* DebugTileSource.swift */; };
 		3765505C1D86E6E500610329 /* RegionSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765505B1D86E6E500610329 /* RegionSelection.swift */; };
 		3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765505D1D86E72100610329 /* RegionAnnotationView.swift */; };
-		377123D71D7D91630010CA1F /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123D41D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.framework */; };
 		377123D91D7D92FB0010CA1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123D81D7D92FB0010CA1F /* CoreLocation.framework */; };
 		377123DB1D7D93110010CA1F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DA1D7D93110010CA1F /* libc++.tbd */; };
 		377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DC1D7D931E0010CA1F /* libz.tbd */; };
@@ -79,6 +78,7 @@
 		C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE341DAC254B00C4B26A /* StationMarker.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
 		C0A8E8B11E94DD9400270F50 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B01E94DD9400270F50 /* Pulley.framework */; };
+		C0A8E8BB1E9BB41B00270F50 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; };
 		C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */; };
 		C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */; };
 		C0B778EC1DB423DD00DBB1FB /* LegendGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */; };
@@ -102,16 +102,16 @@
 			remoteGlobalIDString = 374EC9C81D7CB5A90047B82B;
 			remoteInfo = CAVOK;
 		};
-		377123D31D7D8EF90010CA1F /* PBXContainerItemProxy */ = {
+		C0A8E8B71E9BB41500270F50 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */;
+			containerPortal = C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 2BE536FF1D2499E500B60FAD;
 			remoteInfo = WhirlyGlobeMaplyComponent;
 		};
-		377123D51D7D8EF90010CA1F /* PBXContainerItemProxy */ = {
+		C0A8E8B91E9BB41500270F50 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */;
+			containerPortal = C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 2BE537091D2499E500B60FAD;
 			remoteInfo = WhirlyGlobeMaplyComponentTests;
@@ -152,7 +152,6 @@
 		376550521D86C14A00610329 /* DebugTileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugTileSource.swift; path = Weather/Layers/DebugTileSource.swift; sourceTree = "<group>"; };
 		3765505B1D86E6E500610329 /* RegionSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegionSelection.swift; path = Weather/Views/RegionSelection.swift; sourceTree = "<group>"; };
 		3765505D1D86E72100610329 /* RegionAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegionAnnotationView.swift; path = Weather/Views/RegionAnnotationView.swift; sourceTree = "<group>"; };
-		377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/WhirlyGlobeSrc/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		377123D81D7D92FB0010CA1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		377123DA1D7D93110010CA1F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		377123DC1D7D931E0010CA1F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -194,6 +193,7 @@
 		C015BE341DAC254B00C4B26A /* StationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationMarker.swift; path = Weather/Views/StationMarker.swift; sourceTree = "<group>"; };
 		C054D09E1D96D79200B71BF4 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observations.swift; path = Weather/Models/Observations.swift; sourceTree = "<group>"; };
 		C0A8E8B01E94DD9400270F50 /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
+		C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Web/WebViewController.swift; sourceTree = "<group>"; };
 		C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastLocation.swift; path = Map/Location/LastLocation.swift; sourceTree = "<group>"; };
 		C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LegendGradientView.swift; path = Map/Views/LegendGradientView.swift; sourceTree = "<group>"; };
@@ -207,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0A8E8BB1E9BB41B00270F50 /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
 				C0A8E8B11E94DD9400270F50 /* Pulley.framework in Frameworks */,
 				C0BE7B651DA27207003888B9 /* Metal.framework in Frameworks */,
 				37B22BEA1D81E7A3001AF5BA /* Gzip.framework in Frameworks */,
@@ -221,7 +222,6 @@
 				377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */,
 				377123DB1D7D93110010CA1F /* libc++.tbd in Frameworks */,
 				377123D91D7D92FB0010CA1F /* CoreLocation.framework in Frameworks */,
-				377123D71D7D91630010CA1F /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +380,7 @@
 		377123CC1D7D8EF80010CA1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */,
 				C0A8E8B01E94DD9400270F50 /* Pulley.framework */,
 				C0BE7B641DA27207003888B9 /* Metal.framework */,
 				37B22BE91D81E7A3001AF5BA /* Gzip.framework */,
@@ -394,18 +395,8 @@
 				377123DC1D7D931E0010CA1F /* libz.tbd */,
 				377123DA1D7D93110010CA1F /* libc++.tbd */,
 				377123D81D7D92FB0010CA1F /* CoreLocation.framework */,
-				377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		377123CE1D7D8EF90010CA1F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				377123D41D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.framework */,
-				377123D61D7D8EF90010CA1F /* WhirlyGlobeMaplyComponentTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		377123E21D7D94110010CA1F /* Map */ = {
@@ -470,6 +461,15 @@
 				37B22BE51D81E330001AF5BA /* Weather.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		C0A8E8B31E9BB41500270F50 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */,
+				C0A8E8BA1E9BB41500270F50 /* WhirlyGlobeMaplyComponentTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		C0B778D41DAFDEF400DBB1FB /* Web */ = {
@@ -577,8 +577,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 377123CE1D7D8EF90010CA1F /* Products */;
-					ProjectRef = 377123CD1D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.xcodeproj */;
+					ProductGroup = C0A8E8B31E9BB41500270F50 /* Products */;
+					ProjectRef = C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -591,18 +591,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		377123D41D7D8EF90010CA1F /* WhirlyGlobeMaplyComponent.framework */ = {
+		C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = WhirlyGlobeMaplyComponent.framework;
-			remoteRef = 377123D31D7D8EF90010CA1F /* PBXContainerItemProxy */;
+			remoteRef = C0A8E8B71E9BB41500270F50 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		377123D61D7D8EF90010CA1F /* WhirlyGlobeMaplyComponentTests.xctest */ = {
+		C0A8E8BA1E9BB41500270F50 /* WhirlyGlobeMaplyComponentTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = WhirlyGlobeMaplyComponentTests.xctest;
-			remoteRef = 377123D51D7D8EF90010CA1F /* PBXContainerItemProxy */;
+			remoteRef = C0A8E8B91E9BB41500270F50 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -877,7 +877,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/WhirlyGlobeSrc/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -895,7 +895,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/WhirlyGlobeSrc/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
