@@ -15,7 +15,7 @@ protocol MapModule {
     
     func refresh()
     
-    func configure(open: Bool, userLocation: MaplyCoordinate?)
+    func configure(open: Bool)
     
     func render(frame: Int?)
     

@@ -89,7 +89,7 @@ class MapViewController: UIViewController {
                 self.clearComponents(ofType: UserMarker.self)
                 
                 if self.isFirstLoad() {
-                    self.module.configure(open: true, userLocation: nil)
+                    self.module.configure(open: true)
                 }
             })
         locationManager.requestLocation()
@@ -140,8 +140,8 @@ class MapViewController: UIViewController {
         }
         
         if isFirstLoad() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { 
-                self.module.configure(open: true, userLocation: userLocation.loc)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                self.module.configure(open: true)
             })
         }
     }
@@ -158,7 +158,7 @@ class MapViewController: UIViewController {
     @IBAction func resetRegion() {
         buttonView.isHidden = true
         animateModuleType(show: false)
-        module.configure(open: true, userLocation: nil)
+        module.configure(open: true)
     }
     
     fileprivate func animateModuleType(show: Bool) {

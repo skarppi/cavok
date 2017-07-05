@@ -263,7 +263,7 @@
         <!--Drawer View Controller-->
         <scene sceneID="iY8-bx-7cs">
             <objects>
-                <viewController id="Z5g-T4-ndi" customClass="DrawerViewController" customModule="CAVOK" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="drawer" id="Z5g-T4-ndi" customClass="DrawerViewController" customModule="CAVOK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bjV-qD-2Bz"/>
                         <viewControllerLayoutGuide type="bottom" id="iqn-we-9l8"/>
@@ -321,10 +321,103 @@
             </objects>
             <point key="canvasLocation" x="113" y="600"/>
         </scene>
+        <!--Region Drawer Controller-->
+        <scene sceneID="OWe-4s-abo">
+            <objects>
+                <viewController storyboardIdentifier="regionDrawer" id="tAm-7j-98t" customClass="RegionDrawerController" customModule="CAVOK" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zyb-iL-lIE"/>
+                        <viewControllerLayoutGuide type="bottom" id="aCa-T8-G0o"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mRC-Ut-72G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Monitored weather region" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwf-7h-Pz8">
+                                <rect key="frame" x="9" y="9" width="252" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Radius 0 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3B2-yU-RvQ">
+                                <rect key="frame" x="9" y="39" width="157" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Found 0 stations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wwf-hm-F3h">
+                                <rect key="frame" x="9" y="114" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minimumValue="100" maximumValue="3000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="1eD-5x-oQS">
+                                <rect key="frame" x="167" y="35" width="94" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="radiusChanged:" destination="tAm-7j-98t" eventType="valueChanged" id="cZM-Wm-x06"/>
+                                </connections>
+                            </stepper>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwz-1I-4wc">
+                                <rect key="frame" x="81" y="72" width="213" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Center Aroud My Location">
+                                    <color key="titleColor" red="0.20629309117794037" green="0.47134092450141907" blue="0.96651327610015869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.2062930912" green="0.47134092449999998" blue="0.96651327610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="center:" destination="tAm-7j-98t" eventType="touchUpInside" id="kps-JI-6at"/>
+                                </connections>
+                            </button>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BYl-LG-zIL" userLabel="Gripper view">
+                                <rect key="frame" x="170" y="8" width="36" height="5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.72941176470000002" green="0.72549019609999998" blue="0.71372549019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hJ-eg-jTT">
+                                <rect key="frame" x="335" y="9" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="CancelFilled"/>
+                                <connections>
+                                    <action selector="close:" destination="tAm-7j-98t" eventType="touchUpInside" id="UKF-uG-zeU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="radius" destination="3B2-yU-RvQ" id="vW1-aG-wJ7"/>
+                        <outlet property="status" destination="Wwf-hm-F3h" id="wQH-Vn-c3W"/>
+                        <outlet property="stepper" destination="1eD-5x-oQS" id="NYq-21-c3L"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BEi-09-oAZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="774" y="702"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Airspace" width="50" height="50"/>
         <image name="Back" width="13" height="21"/>
+        <image name="CancelFilled" width="40" height="40"/>
         <image name="Region" width="50" height="50"/>
         <image name="RegionSet" width="50" height="50"/>
         <image name="Safari" width="50" height="50"/>

@@ -71,14 +71,9 @@ open class WeatherModule {
     }
     
     private func startRegionSelection(at region: WeatherRegion) {
-        delegate.setStatus(text: "Select monitored region", color: .black)
-        
-        let annotation = RegionAnnotationView(region: region,
-                                              closed: self.endRegionSelection,
-                                              resized: self.showRegionSelection)
-        delegate.mapView.addAnnotation(annotation, forPoint: region.center, offset: CGPoint.zero)
-        
-        showRegionSelection(at: region)
+        let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "regionDrawer") as! RegionDrawerController
+        drawer.setup(region: region, closed: endRegionSelection, resized: showRegionSelection)
+        delegate.pulley.setDrawerContentViewController(controller: drawer)
     }
     
     private func showRegionSelection(at region: WeatherRegion) {
@@ -99,15 +94,21 @@ open class WeatherModule {
             if let key = markers.first, let components = self.delegate.mapView.addScreenMarkers(markers, desc: nil) {
                 self.delegate.addComponents(key: key, value: components)
             }
+            
+            if let drawer = self.delegate.pulley.drawerContentViewController as? RegionDrawerController {
+                drawer.status(text: "Found \(stations.count) stations")
+            }
+            
         }.catch { error in
-            self.delegate.setStatus(error: error)
+            if let drawer = self.delegate.pulley.drawerContentViewController as? RegionDrawerController {
+                drawer.status(text: error.localizedDescription)
+            }
         }
     }
     
     private func endRegionSelection(at region: WeatherRegion? = nil) {
         delegate.clearComponents(ofType: StationMarker.self)
         delegate.clearComponents(ofType: RegionSelection.self)
-        delegate.clearAnnotations(ofType: RegionAnnotationView.self)
         
         if region?.save() == true {
             weatherLayer.reposition(region: region!)
@@ -118,13 +119,14 @@ open class WeatherModule {
         }
     }
     
-    func configure(open: Bool, userLocation: MaplyCoordinate?) {
+    func configure(open: Bool) {
         delegate.clearComponents(ofType: ObservationMarker.self)
         self.weatherLayer.clean()
         
         if open {
-            let region = WeatherRegion.load() ?? WeatherRegion(center: userLocation ?? delegate.mapView.getPosition(),
-                                                               radius: 100)
+            let region = WeatherRegion.load() ??
+                WeatherRegion(center: LastLocation.load() ?? delegate.mapView.getPosition(),
+                              radius: 100)
             startRegionSelection(at: region)
         } else {
             endRegionSelection()
