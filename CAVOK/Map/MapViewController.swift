@@ -17,12 +17,6 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var buttonView: UIView!
     
-    @IBOutlet weak var region: UIButton!
-    
-    @IBOutlet weak var airspace: UIButton!
-    
-    @IBOutlet weak var webView: UIButton!
-
     @IBOutlet weak var legendView: UIView!
     
     @IBOutlet weak var legendText: UITextView!
@@ -45,21 +39,6 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        region.layer.borderWidth = 1
-        region.layer.borderColor = view.tintColor.cgColor
-        region.layer.cornerRadius = 5
-        region.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        
-        airspace.layer.borderWidth = 1
-        airspace.layer.borderColor = view.tintColor.cgColor
-        airspace.layer.cornerRadius = 5
-        airspace.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        
-        webView.layer.borderWidth = 1
-        webView.layer.borderColor = view.tintColor.cgColor
-        webView.layer.cornerRadius = 5
-        webView.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         
         mapView = WhirlyGlobeViewController()
         mapView.delegate = self
@@ -120,16 +99,14 @@ class MapViewController: UIViewController {
             moduleType.insertSegment(withTitle: title, at: index, animated: false)
         }
         moduleType.selectedSegmentIndex = 0
-        moduleTypeChanged()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let pulley = self.parent as? PulleyViewController {
-            drawer = pulley.drawerContentViewController as! DrawerViewController
-            drawer.setModule(module: module)
-        }
+        drawer = pulley.drawerContentViewController as! DrawerViewController
+        
+        moduleTypeChanged()
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,7 +123,7 @@ class MapViewController: UIViewController {
     }
 
     fileprivate func isFirstLoad() -> Bool {
-        return self.region.isSelected && WeatherRegion.load() == nil
+        return self.buttonView.isHidden && WeatherRegion.load() == nil
     }
     
     func userLocationChanged(coordinate: MaplyCoordinate) {
@@ -179,16 +156,9 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func resetRegion() {
-        let start = !region.isSelected
-        region.isSelected = start
-        if start {
-            animateModuleType(show: false)
-            
-            if let pulley = self.parent as? PulleyViewController {
-                pulley.setDrawerPosition(position: .closed)
-            }
-        }
-        module.configure(open: start, userLocation: nil)
+        buttonView.isHidden = true
+        animateModuleType(show: false)
+        module.configure(open: true, userLocation: nil)
     }
     
     fileprivate func animateModuleType(show: Bool) {
@@ -210,7 +180,9 @@ class MapViewController: UIViewController {
 extension MapViewController : MapDelegate {
 
     func setStatus(error: Error) {
-        drawer.setStatus(error: error)
+        DispatchQueue.main.async {
+            self.drawer.setStatus(error: error)
+        }
     }
     
     func setStatus(text: String?, color: UIColor = UIColor.red) {
@@ -221,17 +193,12 @@ extension MapViewController : MapDelegate {
     
     func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend) {
         DispatchQueue.main.async {
+            self.pulley.setDrawerContentViewController(controller: self.drawer)
             self.drawer.loaded(frame: frame, timeslots: timeslots, legend: legend)
-            
-            if let pulley = self.parent as? PulleyViewController {
-                pulley.setDrawerPosition(position: .collapsed)
-            }
+            self.pulley.setDrawerPosition(position: .collapsed)
             
             self.animateModuleType(show: frame != nil)
-            
-            // make sure region selection is canceled
-            self.region.isSelected = false
-            
+
             self.buttonView.isHidden = false
             
             self.legendText.text = legend.unit + "\n" + legend.titles.joined(separator: "\n")
@@ -271,6 +238,12 @@ extension MapViewController : MapDelegate {
             components.removeAll()
         }
     }
+    
+    var pulley: PulleyViewController! {
+        get {
+            return self.parent as! PulleyViewController
+        }
+    }
 }
 
 // MARK: - WhirlyGlobeViewControllerDelegate
@@ -285,7 +258,7 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
         
         view.clearAnnotations()
         
-        if self.region.isSelected {
+        if self.buttonView.isHidden {
             module.didTapAt(coord: coord)
             return
         }

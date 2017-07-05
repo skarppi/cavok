@@ -35,7 +35,6 @@
 		376550511D86BBD400610329 /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376550501D86BBD400610329 /* Modules.swift */; };
 		376550531D86C14A00610329 /* DebugTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376550521D86C14A00610329 /* DebugTileSource.swift */; };
 		3765505C1D86E6E500610329 /* RegionSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765505B1D86E6E500610329 /* RegionSelection.swift */; };
-		3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765505D1D86E72100610329 /* RegionAnnotationView.swift */; };
 		377123D91D7D92FB0010CA1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123D81D7D92FB0010CA1F /* CoreLocation.framework */; };
 		377123DB1D7D93110010CA1F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DA1D7D93110010CA1F /* libc++.tbd */; };
 		377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123DC1D7D931E0010CA1F /* libz.tbd */; };
@@ -77,6 +76,8 @@
 		C015BE311DAC070200C4B26A /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE301DAC070200C4B26A /* AwsService.swift */; };
 		C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE341DAC254B00C4B26A /* StationMarker.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
+		C087BA061EF5B55A00E58F19 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */; };
+		C087BA0B1F0D33CC00E58F19 /* RegionAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765505D1D86E72100610329 /* RegionAnnotationView.swift */; };
 		C0A8E8B11E94DD9400270F50 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B01E94DD9400270F50 /* Pulley.framework */; };
 		C0A8E8BB1E9BB41B00270F50 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; };
 		C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */; };
@@ -192,6 +193,7 @@
 		C015BE301DAC070200C4B26A /* AwsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AwsService.swift; path = Weather/Services/AwsService.swift; sourceTree = "<group>"; };
 		C015BE341DAC254B00C4B26A /* StationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationMarker.swift; path = Weather/Views/StationMarker.swift; sourceTree = "<group>"; };
 		C054D09E1D96D79200B71BF4 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observations.swift; path = Weather/Models/Observations.swift; sourceTree = "<group>"; };
+		C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Additions.swift"; path = "Extensions/UIView+Additions.swift"; sourceTree = "<group>"; };
 		C0A8E8B01E94DD9400270F50 /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
 		C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Web/WebViewController.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			children = (
 				37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */,
 				37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */,
+				C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -672,6 +675,7 @@
 				3765505C1D86E6E500610329 /* RegionSelection.swift in Sources */,
 				37B22BEE1D820658001AF5BA /* WeatherModule.swift in Sources */,
 				375B78181DF0C17E000A9199 /* DrawerDelegate.swift in Sources */,
+				C087BA061EF5B55A00E58F19 /* UIView+Additions.swift in Sources */,
 				374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */,
 				371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */,
 				C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */,
@@ -681,7 +685,6 @@
 				374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */,
 				378F1F191DE4747300B2314A /* AirspaceAttributes.swift in Sources */,
 				37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */,
-				3765505E1D86E72100610329 /* RegionAnnotationView.swift in Sources */,
 				C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */,
 				C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */,
 				37B22BE61D81E330001AF5BA /* Weather.swift in Sources */,
@@ -712,6 +715,7 @@
 				37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */,
 				37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */,
 				3765504D1D86BAD100610329 /* WeatherConfig.swift in Sources */,
+				C087BA0B1F0D33CC00E58F19 /* RegionAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YhK-Zv-ueq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YhK-Zv-ueq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -77,12 +77,26 @@
                                 <rect key="frame" x="326" y="56" width="33" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-XM-x3W">
+                                    <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-XM-x3W">
                                         <rect key="frame" x="0.0" y="0.0" width="33" height="33"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="Region"/>
                                         <state key="selected" image="RegionSet"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.2062930912" green="0.47134092449999998" blue="0.96651327610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="padding">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="resetRegion" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jg9-Jw-JFi"/>
                                         </connections>
@@ -93,6 +107,20 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="Safari"/>
                                         <state key="selected" image="Safari"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.2062930912" green="0.47134092449999998" blue="0.96651327610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="padding">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="openWebView" destination="BYZ-38-t0r" eventType="touchUpInside" id="vKP-O6-5X7"/>
                                         </connections>
@@ -102,6 +130,20 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="Airspace"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.2062930912" green="0.47134092449999998" blue="0.96651327610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="padding">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="airspaceLayers" destination="BYZ-38-t0r" eventType="touchUpInside" id="91P-w7-Gmq"/>
                                         </connections>
@@ -143,14 +185,11 @@
                         <color key="backgroundColor" red="0.84696906810000006" green="0.84711199999999998" blue="0.84694892170000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
-                        <outlet property="airspace" destination="y82-Ov-7or" id="amw-sl-ZSk"/>
                         <outlet property="buttonView" destination="XRG-OZ-0Vb" id="0Fm-Ub-23v"/>
                         <outlet property="legendGradient" destination="Etg-nY-Te6" id="VuM-lC-a9O"/>
                         <outlet property="legendText" destination="1Ev-NG-Jg3" id="33a-7h-goL"/>
                         <outlet property="legendView" destination="8T7-O4-mC4" id="HlT-PA-2Ts"/>
                         <outlet property="moduleType" destination="EAe-qi-deb" id="95T-eG-88J"/>
-                        <outlet property="region" destination="bjl-XM-x3W" id="bZy-vJ-vZI"/>
-                        <outlet property="webView" destination="sep-4y-nGV" id="CT7-zy-6na"/>
                         <segue destination="U9G-f2-9Ay" kind="presentation" identifier="OpenBrowser" id="RaL-Fk-TrO"/>
                     </connections>
                 </viewController>
@@ -241,6 +280,11 @@
                                         <rect key="frame" x="170" y="8" width="36" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.72941176470588232" green="0.72549019607843135" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Loading..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Iv-da-dXc" userLabel="Status">
                                         <rect key="frame" x="8" y="6" width="359" height="30"/>
@@ -269,7 +313,6 @@
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="wXz-ED-41p" id="nFN-dl-Ea9"/>
-                        <outlet property="gripperView" destination="rkw-V9-8i6" id="63R-vB-SlF"/>
                         <outlet property="status" destination="3Iv-da-dXc" id="MPn-bI-0pe"/>
                         <outlet property="timeslots" destination="Is0-9l-uIq" id="PMr-QG-592"/>
                     </connections>

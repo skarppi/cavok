@@ -9,8 +9,6 @@
 import Foundation
 
 class DrawerViewController: UIViewController {
-
-    @IBOutlet var gripperView: UIView!
     
     @IBOutlet weak var bottomView: UIView!
 
@@ -22,8 +20,6 @@ class DrawerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        gripperView.layer.cornerRadius = 2.5
     }
     
     func setModule(module: MapModule?) {

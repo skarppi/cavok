@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Pulley
 
 public struct Legend {
     var unit: String
@@ -25,6 +26,10 @@ public protocol MapDelegate: DrawerDelegate {
     func clearComponents(ofType: NSObject.Type?)
     
     var mapView: WhirlyGlobeViewController! {
+        get
+    }
+    
+    var pulley: PulleyViewController! {
         get
     }
 }
