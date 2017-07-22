@@ -65,7 +65,7 @@ final class AirspaceModule: MapModule {
             let rq = URLRequest(url: URL(string: url)!)
             URLSession.shared.dataTask(with: rq).then { data -> Void in
                 self.showVectors(key: key, data: data)
-            }.catch(execute: self.delegate.setStatus)
+            }.catch(execute: Messages.show)
         }
         UserDefaults.standard.setValue(airspaces, forKey: "airspaces")
     }
@@ -96,7 +96,7 @@ final class AirspaceModule: MapModule {
                     let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: date)!
                     return " until \(dateFormatter.string(from: yesterday))"
                 } ?? ""
-                self.delegate.setStatus(text: "From \(dateFormatter.string(from: validFrom))" + validUntil, color: UIColor.green)
+                Messages.show(text: "From \(dateFormatter.string(from: validFrom))" + validUntil)
             }
             
             vector.splitVectors().forEach {

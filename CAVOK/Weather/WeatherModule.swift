@@ -39,6 +39,8 @@ open class WeatherModule {
     
     private let weatherLayer: WeatherLayer
     
+    private let drawer: DrawerViewController!
+    
     public init(delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
         self.delegate = delegate
         
@@ -50,10 +52,14 @@ open class WeatherModule {
         let region = WeatherRegion.load()
         
         self.weatherLayer = WeatherLayer(mapView: delegate.mapView, ramp: ramp, observationValue: observationValue, region: region)
+    
+        drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! DrawerViewController
+        drawer.setModule(module: self as! MapModule)
         
         if region != nil {
             load(observations: weatherService.observations())
         }
+        
     }
     
     deinit {
@@ -74,6 +80,7 @@ open class WeatherModule {
         let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "regionDrawer") as! RegionDrawerController
         drawer.setup(region: region, closed: endRegionSelection, resized: showRegionSelection)
         delegate.pulley.setDrawerContentViewController(controller: drawer)
+        delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
     }
     
     private func showRegionSelection(at region: WeatherRegion) {
@@ -99,16 +106,14 @@ open class WeatherModule {
                 drawer.status(text: "Found \(stations.count) stations")
             }
             
-        }.catch { error in
-            if let drawer = self.delegate.pulley.drawerContentViewController as? RegionDrawerController {
-                drawer.status(text: error.localizedDescription)
-            }
-        }
+            }.catch(execute: Messages.show)
     }
     
     private func endRegionSelection(at region: WeatherRegion? = nil) {
         delegate.clearComponents(ofType: StationMarker.self)
         delegate.clearComponents(ofType: RegionSelection.self)
+        
+        delegate.pulley.setDrawerPosition(position: .closed, animated: true)
         
         if region?.save() == true {
             weatherLayer.reposition(region: region!)
@@ -136,37 +141,41 @@ open class WeatherModule {
     // MARK: - Observations
     
     func refresh() {
-        delegate.setStatus(text: "Refreshing observations...", color: .black)
+        Messages.show(text: "Refreshing observations...")
         
         weatherService.refreshObservations()
             .then(execute: load)
-            .catch(execute: { error -> Void in
-                self.delegate.setStatus(error: error)
-            })
+            .catch(execute: Messages.show)
     }
     
     private func refreshStations() {
-        delegate.setStatus(text: "Reloading stations...", color: .black)
+        Messages.show(text: "Reloading stations...")
         
         weatherService.refreshStations().then { stations -> Void in
-            self.delegate.setStatus(text: "Found \(stations.count) stations...", color: UIColor.black)
             self.refresh()
-        }.catch { error -> Void in
-            self.delegate.setStatus(error: error)
-        }
+        }.catch(execute: Messages.show)
     }
     
     private func load(observations: Observations) {
+        Messages.hide()
+        
         let groups = observations.group()
         
-        self.weatherLayer.load(groups: groups)
-        self.delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots, legend: ramp.legend())
-        self.render(frame: groups.selectedFrame)
+        if let frame = groups.selectedFrame {
+            delegate.pulley.setDrawerContentViewController(controller: drawer)
+            drawer.loaded(frame: frame, timeslots: groups.timeslots)
+            delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+            
+            weatherLayer.load(groups: groups)
+        }
+        
+        delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots, legend: ramp.legend())
+        render(frame: groups.selectedFrame)
     }
     
     func render(frame: Int?) {
         guard let frame = frame else {
-            delegate.setStatus(text: "No data, click to reload.", color: ColorRamp.color(for: .IFR))
+            Messages.show(text: "No data")
             return
         }
         
@@ -204,7 +213,7 @@ open class WeatherModule {
 
         let status = formatter.string(from: seconds)!
         
-        delegate.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
+        drawer.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView? {

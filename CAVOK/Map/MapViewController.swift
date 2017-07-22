@@ -35,11 +35,27 @@ class MapViewController: UIViewController {
     
     private var locationManager: LocationManager!
     
-    fileprivate var drawer: DrawerViewController!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupMapView()
+        
+        Messages.setup()
+        
+        setupObservers()
+        
+        setupLocationManager()
+
+        setupModules()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        moduleTypeChanged()
+    }
+    
+    func setupMapView() {
         mapView = WhirlyGlobeViewController()
         mapView.delegate = self
         
@@ -65,12 +81,35 @@ class MapViewController: UIViewController {
             TileJSONLayer().load(url: url).then { layer in
                 self.mapView.add(layer)
             }.catch { error in
-                self.setStatus(error: error)
+                Messages.show(error: error)
             }
         }
-        
+    }
+    
+    func setupLocationManager() {
+        locationManager = LocationManager(
+            fulfill: userLocationChanged,
+            reject: { error in
+                self.clearComponents(ofType: UserMarker.self)
+                
+                if self.isFirstLoad() {
+                    self.module.configure(open: true)
+                }
+        })
+        locationManager.requestLocation()
+    }
+    
+    func setupModules() {
         airspaceModule = AirspaceModule(delegate: self)
         
+        moduleType.removeAllSegments()
+        for (index, title) in modules.availableTitles().enumerated() {
+            moduleType.insertSegment(withTitle: title, at: index, animated: false)
+        }
+        moduleType.selectedSegmentIndex = 0
+    }
+    
+    func setupObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredBackground(notification:)),
                                                name: .UIApplicationDidEnterBackground,
@@ -82,36 +121,6 @@ class MapViewController: UIViewController {
                                                name: .UIApplicationWillEnterForeground,
                                                object: nil
         )
-        
-        locationManager = LocationManager(
-            fulfill: userLocationChanged,
-            reject: { error in
-                self.clearComponents(ofType: UserMarker.self)
-                
-                if self.isFirstLoad() {
-                    self.module.configure(open: true)
-                }
-            })
-        locationManager.requestLocation()
-        
-        moduleType.removeAllSegments()
-        for (index, title) in modules.availableTitles().enumerated() {
-            moduleType.insertSegment(withTitle: title, at: index, animated: false)
-        }
-        moduleType.selectedSegmentIndex = 0
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        drawer = pulley.drawerContentViewController as! DrawerViewController
-        
-        moduleTypeChanged()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func enteredBackground(notification: Notification) {
@@ -151,7 +160,6 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func openWebView() {
-        
         self.performSegue(withIdentifier: "OpenBrowser", sender: self)
     }
     
@@ -172,31 +180,14 @@ class MapViewController: UIViewController {
     @IBAction func moduleTypeChanged() {
         module = nil
         module = modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
-        drawer?.setModule(module: module)
     }
 }
 
 // MARK: - MapDelegate
 extension MapViewController : MapDelegate {
-
-    func setStatus(error: Error) {
-        DispatchQueue.main.async {
-            self.drawer.setStatus(error: error)
-        }
-    }
-    
-    func setStatus(text: String?, color: UIColor = UIColor.red) {
-        DispatchQueue.main.async {
-            self.drawer.setStatus(text: text, color: color)
-        }
-    }
     
     func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend) {
         DispatchQueue.main.async {
-            self.pulley.setDrawerContentViewController(controller: self.drawer)
-            self.drawer.loaded(frame: frame, timeslots: timeslots, legend: legend)
-            self.pulley.setDrawerPosition(position: .collapsed)
-            
             self.animateModuleType(show: frame != nil)
 
             self.buttonView.isHidden = false

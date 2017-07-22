@@ -76,7 +76,7 @@ class RegionDrawerController: UIViewController {
 
 extension RegionDrawerController: PulleyDrawerViewControllerDelegate {
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return PulleyPosition.all
+        return [.closed, .collapsed, .partiallyRevealed]
     }
     
     func collapsedDrawerHeight() -> CGFloat {

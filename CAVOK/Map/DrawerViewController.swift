@@ -30,17 +30,6 @@ class DrawerViewController: UIViewController {
         module?.render(frame: timeslots.selectedSegmentIndex)
     }
     
-    fileprivate func animateTimeslots(show: Bool) {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            let height: CGFloat = (show ? 80 : 40)
-            //self.bottomView.frame.origin = CGPoint(x: 0, y: self.view.bounds.height - height)
-        })
-    }
-}
-
-// MARK: - DrawerDelegate
-extension DrawerViewController : DrawerDelegate {
-    
     func setStatus(error: Error) {
         switch error {
         case let Weather.error(msg):
@@ -59,19 +48,13 @@ extension DrawerViewController : DrawerDelegate {
         }
     }
     
-    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend) {
-        if let frame = frame {
-            self.timeslots.removeAllSegments()
-            for (index, slot) in timeslots.enumerated() {
-                self.timeslots.insertSegment(with: slot, at: index, animated: true)
-            }
-            
-            animateTimeslots(show: true)
-            
-            self.timeslots.selectedSegmentIndex = frame
-        } else {
-            animateTimeslots(show: false)
+    func loaded(frame:Int, timeslots: [Timeslot]) {
+        self.timeslots.removeAllSegments()
+        for (index, slot) in timeslots.enumerated() {
+            self.timeslots.insertSegment(with: slot, at: index, animated: true)
         }
+        
+        self.timeslots.selectedSegmentIndex = frame
     }
 }
 
