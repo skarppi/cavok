@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MapModule {
+protocol MapModule: class {
     init(delegate: MapDelegate)
     
     func didTapAt(coord: MaplyCoordinate)

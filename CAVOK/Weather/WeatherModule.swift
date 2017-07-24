@@ -54,7 +54,8 @@ open class WeatherModule {
         self.weatherLayer = WeatherLayer(mapView: delegate.mapView, ramp: ramp, observationValue: observationValue, region: region)
     
         drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! DrawerViewController
-        drawer.setModule(module: self as! MapModule)
+        delegate.pulley.setDrawerContentViewController(controller: drawer)
+        drawer.setModule(module: self as? MapModule)
         
         if region != nil {
             load(observations: weatherService.observations())
@@ -162,7 +163,6 @@ open class WeatherModule {
         let groups = observations.group()
         
         if let frame = groups.selectedFrame {
-            delegate.pulley.setDrawerContentViewController(controller: drawer)
             drawer.loaded(frame: frame, timeslots: groups.timeslots)
             delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
             

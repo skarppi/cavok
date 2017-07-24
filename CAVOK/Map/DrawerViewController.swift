@@ -16,7 +16,7 @@ class DrawerViewController: UIViewController {
 
     @IBOutlet weak var timeslots: TimeslotView!
     
-    fileprivate var module: MapModule?
+    fileprivate weak var module: MapModule?
     
     override func viewDidLoad() {
         super.viewDidLoad()
