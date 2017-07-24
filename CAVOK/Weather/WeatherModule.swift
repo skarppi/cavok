@@ -39,7 +39,7 @@ open class WeatherModule {
     
     private let weatherLayer: WeatherLayer
     
-    private let drawer: TimeslotDrawerController!
+    private let timeslotDrawer: TimeslotDrawerController!
     
     public init(delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
         self.delegate = delegate
@@ -53,9 +53,9 @@ open class WeatherModule {
         
         self.weatherLayer = WeatherLayer(mapView: delegate.mapView, ramp: ramp, observationValue: observationValue, region: region)
     
-        drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
-        delegate.pulley.setDrawerContentViewController(controller: drawer)
-        drawer.setModule(module: self as? MapModule)
+        timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
+        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
+        timeslotDrawer.setModule(module: self as? MapModule)
         
         if region != nil {
             load(observations: weatherService.observations())
@@ -78,9 +78,9 @@ open class WeatherModule {
     }
     
     private func startRegionSelection(at region: WeatherRegion) {
-        let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "regionDrawer") as! RegionDrawerController
-        drawer.setup(region: region, closed: endRegionSelection, resized: showRegionSelection)
-        delegate.pulley.setDrawerContentViewController(controller: drawer)
+        let regionDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "regionDrawer") as! RegionDrawerController
+        regionDrawer.setup(region: region, closed: endRegionSelection, resized: showRegionSelection)
+        delegate.pulley.setDrawerContentViewController(controller: regionDrawer)
         delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
     }
     
@@ -114,6 +114,7 @@ open class WeatherModule {
         delegate.clearComponents(ofType: StationMarker.self)
         delegate.clearComponents(ofType: RegionSelection.self)
         
+        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
         delegate.pulley.setDrawerPosition(position: .closed, animated: true)
         
         if region?.save() == true {
@@ -163,7 +164,7 @@ open class WeatherModule {
         let groups = observations.group()
         
         if let frame = groups.selectedFrame {
-            drawer.loaded(frame: frame, timeslots: groups.timeslots)
+            timeslotDrawer.loaded(frame: frame, timeslots: groups.timeslots)
             delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
             
             weatherLayer.load(groups: groups)
@@ -213,7 +214,7 @@ open class WeatherModule {
 
         let status = formatter.string(from: seconds)!
         
-        drawer.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
+        timeslotDrawer.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView? {

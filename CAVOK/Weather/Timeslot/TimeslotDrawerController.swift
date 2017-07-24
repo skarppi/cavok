@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Pulley
 
 class TimeslotDrawerController: UIViewController {
     
@@ -65,5 +66,20 @@ extension TimeslotDrawerController: UITextFieldDelegate {
             module?.refresh()
         }
         return false
+    }
+}
+
+extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
+    
+    func supportedDrawerPositions() -> [PulleyPosition] {
+        return [.closed, .collapsed]
+    }
+    
+    func collapsedDrawerHeight() -> CGFloat {
+        return 70
+    }
+    
+    func partialRevealDrawerHeight() -> CGFloat {
+        return 150
     }
 }
