@@ -1,5 +1,5 @@
 //
-//  TimeslotView.swift
+//  TimeslotControl.swift
 //  CAVOK
 //
 //  Created by Juho Kolehmainen on 21.09.16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TimeslotView: UISegmentedControl {
+class TimeslotControl: UISegmentedControl {
     
     override var selectedSegmentIndex: Int {
         didSet {

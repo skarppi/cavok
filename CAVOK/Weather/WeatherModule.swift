@@ -39,7 +39,7 @@ open class WeatherModule {
     
     private let weatherLayer: WeatherLayer
     
-    private let drawer: DrawerViewController!
+    private let drawer: TimeslotDrawerController!
     
     public init(delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
         self.delegate = delegate
@@ -53,7 +53,7 @@ open class WeatherModule {
         
         self.weatherLayer = WeatherLayer(mapView: delegate.mapView, ramp: ramp, observationValue: observationValue, region: region)
     
-        drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! DrawerViewController
+        drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
         delegate.pulley.setDrawerContentViewController(controller: drawer)
         drawer.setModule(module: self as? MapModule)
         

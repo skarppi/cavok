@@ -260,10 +260,10 @@
             </objects>
             <point key="canvasLocation" x="1307.5" y="117.5"/>
         </scene>
-        <!--Drawer View Controller-->
+        <!--Timeslot Drawer Controller-->
         <scene sceneID="iY8-bx-7cs">
             <objects>
-                <viewController storyboardIdentifier="drawer" id="Z5g-T4-ndi" customClass="DrawerViewController" customModule="CAVOK" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="drawer" id="Z5g-T4-ndi" customClass="TimeslotDrawerController" customModule="CAVOK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bjV-qD-2Bz"/>
                         <viewControllerLayoutGuide type="bottom" id="iqn-we-9l8"/>
@@ -293,7 +293,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-9l-uIq" customClass="TimeslotView" customModule="CAVOK" customModuleProvider="target">
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-9l-uIq" customClass="TimeslotControl" customModule="CAVOK" customModuleProvider="target">
                                         <rect key="frame" x="8" y="36" width="359" height="29"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <segments>

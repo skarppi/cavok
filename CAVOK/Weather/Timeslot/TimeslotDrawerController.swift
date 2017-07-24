@@ -1,5 +1,5 @@
 //
-//  DrawerViewController.swift
+//  TimeslotDrawerController.swift
 //  CAVOK
 //
 //  Created by Juho Kolehmainen on 01.12.16.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-class DrawerViewController: UIViewController {
+class TimeslotDrawerController: UIViewController {
     
     @IBOutlet weak var bottomView: UIView!
 
     @IBOutlet weak var status: UITextField!
 
-    @IBOutlet weak var timeslots: TimeslotView!
+    @IBOutlet weak var timeslots: TimeslotControl!
     
     fileprivate weak var module: MapModule?
     
@@ -59,7 +59,7 @@ class DrawerViewController: UIViewController {
 }
 
 // MARK: - UITextFieldDelegate
-extension DrawerViewController: UITextFieldDelegate {
+extension TimeslotDrawerController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == self.status {
             module?.refresh()

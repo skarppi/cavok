@@ -25,8 +25,8 @@
 		374EC9D71D7CB5A90047B82B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374EC9D51D7CB5A90047B82B /* LaunchScreen.storyboard */; };
 		374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */; };
 		374EC9ED1D7CB5AA0047B82B /* CAVOKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */; };
-		375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375784DF1D9321220046A8A7 /* TimeslotView.swift */; };
-		375B78161DF09763000A9199 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B78151DF09763000A9199 /* DrawerViewController.swift */; };
+		375784E01D9321220046A8A7 /* TimeslotControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375784DF1D9321220046A8A7 /* TimeslotControl.swift */; };
+		375B78161DF09763000A9199 /* TimeslotDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375B78151DF09763000A9199 /* TimeslotDrawerController.swift */; };
 		376550471D86B9C100610329 /* HeatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376550461D86B9C100610329 /* HeatMap.swift */; };
 		3765504B1D86BAB000610329 /* WeatherTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504A1D86BAB000610329 /* WeatherTileSource.swift */; };
 		3765504D1D86BAD100610329 /* WeatherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765504C1D86BAD100610329 /* WeatherConfig.swift */; };
@@ -143,8 +143,8 @@
 		374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKUITests.swift; sourceTree = "<group>"; };
 		374EC9EE1D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		375784DF1D9321220046A8A7 /* TimeslotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeslotView.swift; path = Map/Views/TimeslotView.swift; sourceTree = "<group>"; };
-		375B78151DF09763000A9199 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawerViewController.swift; path = Map/DrawerViewController.swift; sourceTree = "<group>"; };
+		375784DF1D9321220046A8A7 /* TimeslotControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeslotControl.swift; path = Weather/Timeslot/TimeslotControl.swift; sourceTree = "<group>"; };
+		375B78151DF09763000A9199 /* TimeslotDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeslotDrawerController.swift; path = Weather/Timeslot/TimeslotDrawerController.swift; sourceTree = "<group>"; };
 		376550461D86B9C100610329 /* HeatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeatMap.swift; path = Weather/Layers/HeatMap.swift; sourceTree = "<group>"; };
 		3765504A1D86BAB000610329 /* WeatherTileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherTileSource.swift; path = Weather/Layers/WeatherTileSource.swift; sourceTree = "<group>"; };
 		3765504C1D86BAD100610329 /* WeatherConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherConfig.swift; path = Weather/Layers/WeatherConfig.swift; sourceTree = "<group>"; };
@@ -200,10 +200,10 @@
 		C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Web/WebViewController.swift; sourceTree = "<group>"; };
 		C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastLocation.swift; path = Map/Location/LastLocation.swift; sourceTree = "<group>"; };
-		C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LegendGradientView.swift; path = Map/Views/LegendGradientView.swift; sourceTree = "<group>"; };
+		C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LegendGradientView.swift; path = Weather/Legend/LegendGradientView.swift; sourceTree = "<group>"; };
 		C0BE7B641DA27207003888B9 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		C0F483671D99CDDB007A1404 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDelegate.swift; path = Map/MapDelegate.swift; sourceTree = "<group>"; };
-		C0F483691D99CDF9007A1404 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeslot.swift; path = Map/Timeslot.swift; sourceTree = "<group>"; };
+		C0F483691D99CDF9007A1404 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeslot.swift; path = Weather/Timeslot/Timeslot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,13 +345,12 @@
 			path = CAVOKUITests;
 			sourceTree = "<group>";
 		};
-		375784DC1D9320280046A8A7 /* Views */ = {
+		375784DC1D9320280046A8A7 /* Legend */ = {
 			isa = PBXGroup;
 			children = (
-				375784DF1D9321220046A8A7 /* TimeslotView.swift */,
 				C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */,
 			);
-			name = Views;
+			name = Legend;
 			sourceTree = "<group>";
 		};
 		376550431D86B9AA00610329 /* Layers */ = {
@@ -410,11 +409,9 @@
 				37B22BF11D82085F001AF5BA /* MapModule.swift */,
 				374EC9CE1D7CB5A90047B82B /* MapViewController.swift */,
 				376550501D86BBD400610329 /* Modules.swift */,
-				C0F483691D99CDF9007A1404 /* Timeslot.swift */,
 				C087BA181F1EABFF00E58F19 /* Messages.swift */,
 				37486F261D89ECF800357E11 /* Layers */,
 				37486F271D89ED2C00357E11 /* Location */,
-				375784DC1D9320280046A8A7 /* Views */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -442,13 +439,14 @@
 		37B7FDBA1D8064B8009307F0 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
-				375B78151DF09763000A9199 /* DrawerViewController.swift */,
 				37B22BED1D820658001AF5BA /* WeatherModule.swift */,
 				376550431D86B9AA00610329 /* Layers */,
+				375784DC1D9320280046A8A7 /* Legend */,
 				37B7FDBD1D8064CA009307F0 /* Models */,
 				376550581D86E6B100610329 /* Observation */,
 				C087BA091EF5D6D300E58F19 /* Region */,
 				37B22B651D81D75E001AF5BA /* Services */,
+				C087BA1D1F26805100E58F19 /* Timeslot */,
 			);
 			name = Weather;
 			sourceTree = "<group>";
@@ -476,6 +474,16 @@
 				37B22BE11D81DDE3001AF5BA /* WeatherRegion.swift */,
 			);
 			name = Region;
+			sourceTree = "<group>";
+		};
+		C087BA1D1F26805100E58F19 /* Timeslot */ = {
+			isa = PBXGroup;
+			children = (
+				375B78151DF09763000A9199 /* TimeslotDrawerController.swift */,
+				C0F483691D99CDF9007A1404 /* Timeslot.swift */,
+				375784DF1D9321220046A8A7 /* TimeslotControl.swift */,
+			);
+			name = Timeslot;
 			sourceTree = "<group>";
 		};
 		C0A8E8B31E9BB41500270F50 /* Products */ = {
@@ -720,10 +728,10 @@
 				377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */,
 				C03219181EE08E3300B8920D /* RegionDrawerController.swift in Sources */,
 				378F1F1B1DE474EB00B2314A /* AirspaceCalloutView.swift in Sources */,
-				375784E01D9321220046A8A7 /* TimeslotView.swift in Sources */,
+				375784E01D9321220046A8A7 /* TimeslotControl.swift in Sources */,
 				37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */,
 				37B7FDC31D8064E5009307F0 /* Station.swift in Sources */,
-				375B78161DF09763000A9199 /* DrawerViewController.swift in Sources */,
+				375B78161DF09763000A9199 /* TimeslotDrawerController.swift in Sources */,
 				C015BE191DA6D5C200C4B26A /* HeatMapGPU.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
 				37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */,
