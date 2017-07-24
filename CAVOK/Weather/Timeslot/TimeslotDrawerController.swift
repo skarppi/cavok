@@ -21,6 +21,8 @@ class TimeslotDrawerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        status.applyRestartButton()
     }
     
     func setModule(module: MapModule?) {
@@ -62,9 +64,7 @@ class TimeslotDrawerController: UIViewController {
 // MARK: - UITextFieldDelegate
 extension TimeslotDrawerController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == self.status {
-            module?.refresh()
-        }
+        module?.refresh()
         return false
     }
 }
@@ -81,5 +81,21 @@ extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     
     func partialRevealDrawerHeight() -> CGFloat {
         return 150
+    }
+}
+
+extension UITextField {
+    func applyRestartButton() {
+        clearButtonMode = .never
+        rightViewMode   = .always
+
+        let button = UIButton(frame: CGRect(x:0, y:0, width:16, height:16))
+        button.setImage(UIImage(named: "Restart")!, for: .normal)
+        
+        if let delegate = delegate {
+         button.addTarget(delegate, action: #selector(delegate.textFieldShouldBeginEditing(_:)), for: .touchUpInside)
+        }
+        
+        rightView = button
     }
 }
