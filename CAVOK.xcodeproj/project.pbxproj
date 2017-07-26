@@ -14,7 +14,6 @@
 		371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E0E3B1D7E11F700BE1846 /* UserMarker.swift */; };
 		371E0E3E1D7F4AC900BE1846 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E3D1D7F4AC800BE1846 /* Realm.framework */; };
 		372C04221D8FB4F400BEA8EB /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */; };
-		372C04261D8FB52A00BEA8EB /* ObservationCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372C04251D8FB52A00BEA8EB /* ObservationCalloutView.swift */; };
 		3737DA9E1D8E7D2400EB57A2 /* ColorRamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737DA9D1D8E7D2400EB57A2 /* ColorRamp.swift */; };
 		37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37486F221D89EA8300357E11 /* FrameChanger.swift */; };
 		374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */; };
@@ -79,6 +78,7 @@
 		C087BA061EF5B55A00E58F19 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */; };
 		C087BA171F0EE0EC00E58F19 /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */; };
 		C087BA191F1EABFF00E58F19 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA181F1EABFF00E58F19 /* Messages.swift */; };
+		C087BA211F27303700E58F19 /* ObservationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA201F27303700E58F19 /* ObservationDrawerController.swift */; };
 		C0A8E8B11E94DD9400270F50 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B01E94DD9400270F50 /* Pulley.framework */; };
 		C0A8E8BB1E9BB41B00270F50 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; };
 		C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */; };
@@ -125,7 +125,6 @@
 		371E0E3B1D7E11F700BE1846 /* UserMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMarker.swift; path = Map/Location/UserMarker.swift; sourceTree = "<group>"; };
 		371E0E3D1D7F4AC800BE1846 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationMarker.swift; path = Weather/Observation/ObservationMarker.swift; sourceTree = "<group>"; };
-		372C04251D8FB52A00BEA8EB /* ObservationCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationCalloutView.swift; path = Weather/Observation/ObservationCalloutView.swift; sourceTree = "<group>"; };
 		3737DA961D8DDDE600EB57A2 /* CAVOK.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CAVOK.template.plist; sourceTree = "<group>"; };
 		3737DA9D1D8E7D2400EB57A2 /* ColorRamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorRamp.swift; path = Weather/Layers/ColorRamp.swift; sourceTree = "<group>"; };
 		37486F221D89EA8300357E11 /* FrameChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameChanger.swift; path = Weather/Layers/FrameChanger.swift; sourceTree = "<group>"; };
@@ -196,6 +195,7 @@
 		C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Additions.swift"; path = "Extensions/UIView+Additions.swift"; sourceTree = "<group>"; };
 		C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftMessages.framework; path = Carthage/Build/iOS/SwiftMessages.framework; sourceTree = "<group>"; };
 		C087BA181F1EABFF00E58F19 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Messages.swift; path = Map/Messages.swift; sourceTree = "<group>"; };
+		C087BA201F27303700E58F19 /* ObservationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationDrawerController.swift; path = Weather/Observation/ObservationDrawerController.swift; sourceTree = "<group>"; };
 		C0A8E8B01E94DD9400270F50 /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
 		C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Web/WebViewController.swift; sourceTree = "<group>"; };
@@ -373,8 +373,8 @@
 		376550581D86E6B100610329 /* Observation */ = {
 			isa = PBXGroup;
 			children = (
-				372C04251D8FB52A00BEA8EB /* ObservationCalloutView.swift */,
 				372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */,
+				C087BA201F27303700E58F19 /* ObservationDrawerController.swift */,
 			);
 			name = Observation;
 			sourceTree = "<group>";
@@ -714,7 +714,7 @@
 				372C04221D8FB4F400BEA8EB /* ObservationMarker.swift in Sources */,
 				37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */,
 				378F1F1D1DE4751F00B2314A /* AirspaceModule.swift in Sources */,
-				372C04261D8FB52A00BEA8EB /* ObservationCalloutView.swift in Sources */,
+				C087BA211F27303700E58F19 /* ObservationDrawerController.swift in Sources */,
 				C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */,
 				376550511D86BBD400610329 /* Modules.swift in Sources */,
 				37A54FFD1D7FE15B002BADA0 /* LastSession.swift in Sources */,

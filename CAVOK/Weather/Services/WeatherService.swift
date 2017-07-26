@@ -112,4 +112,13 @@ public class WeatherServer {
 
         return Observations(metars: Array(metars), tafs: Array(tafs))
     }
+    
+    func observations(for identifier: String) -> Observations {
+        let realm = try! Realm()
+        
+        let metars = realm.objects(Metar.self).filter("identifier == '\(identifier)'").sorted(byProperty: "datetime")
+        let tafs = realm.objects(Taf.self).filter("identifier == '\(identifier)'").sorted(byProperty: "from")
+        
+        return Observations(metars: Array(metars), tafs: Array(tafs))
+    }
 }

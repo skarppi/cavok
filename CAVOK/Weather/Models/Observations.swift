@@ -22,8 +22,8 @@ struct ObservationGroups {
 
 class Observations {
     
-    private let metars: [Metar]
-    private let tafs: [Taf]
+    let metars: [Metar]
+    let tafs: [Taf]
     
     init(metars: [Metar], tafs: [Taf]) {
         self.metars = metars

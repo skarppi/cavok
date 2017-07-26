@@ -114,8 +114,7 @@ open class WeatherModule {
         delegate.clearComponents(ofType: StationMarker.self)
         delegate.clearComponents(ofType: RegionSelection.self)
         
-        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
-        delegate.pulley.setDrawerPosition(position: .closed, animated: true)
+        hideDrawers()
         
         if region?.save() == true {
             weatherLayer.reposition(region: region!)
@@ -124,6 +123,17 @@ open class WeatherModule {
         } else {
             load(observations: weatherService.observations())
         }
+    }
+    
+    private func hideDrawers() {
+        delegate.pulley.setDrawerPosition(position: .closed, animated: true)
+    }
+    
+    private func showTimeslotDrawer() {
+        hideDrawers()
+        
+        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
+        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
     }
     
     func configure(open: Bool) {
@@ -165,9 +175,9 @@ open class WeatherModule {
         
         if let frame = groups.selectedFrame {
             timeslotDrawer.loaded(frame: frame, timeslots: groups.timeslots)
-            delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
             
             weatherLayer.load(groups: groups)
+            showTimeslotDrawer()
         }
         
         delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots, legend: ramp.legend())
@@ -219,7 +229,19 @@ open class WeatherModule {
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView? {
         if let observation = object as? Observation, let value = observationValue(observation) {
-            return ObservationCalloutView(value: value, obs: observation, ramp: ramp, parentFrame: parentFrame)
+            
+            hideDrawers()
+
+            let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
+            delegate.pulley.setDrawerContentViewController(controller: observationDrawer)
+            
+            let all = weatherService.observations(for: observation.station?.identifier ?? "")
+            observationDrawer.setup(closed: showTimeslotDrawer, value: value, obs: observation, observations: all, ramp: ramp)
+        
+            delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
+            delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+            
+            return nil
         } else {
             return nil
         }
