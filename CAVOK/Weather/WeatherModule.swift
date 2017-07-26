@@ -127,6 +127,8 @@ open class WeatherModule {
     
     private func hideDrawers() {
         delegate.pulley.setDrawerPosition(position: .closed, animated: true)
+        
+        delegate.clearComponents(ofType: ObservationSelection.self)
     }
     
     private func showTimeslotDrawer() {
@@ -240,6 +242,11 @@ open class WeatherModule {
         
             delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
             delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+            
+            let marker = ObservationSelection(obs: observation)
+            if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {
+                delegate.addComponents(key: marker, value: components)
+            }
             
             return nil
         } else {

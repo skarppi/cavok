@@ -79,6 +79,7 @@
 		C087BA171F0EE0EC00E58F19 /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */; };
 		C087BA191F1EABFF00E58F19 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA181F1EABFF00E58F19 /* Messages.swift */; };
 		C087BA211F27303700E58F19 /* ObservationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA201F27303700E58F19 /* ObservationDrawerController.swift */; };
+		C0A0503D1F293A8B0037BEFB /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A0503C1F293A8B0037BEFB /* ObservationSelection.swift */; };
 		C0A8E8B11E94DD9400270F50 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B01E94DD9400270F50 /* Pulley.framework */; };
 		C0A8E8BB1E9BB41B00270F50 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; };
 		C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */; };
@@ -196,6 +197,7 @@
 		C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftMessages.framework; path = Carthage/Build/iOS/SwiftMessages.framework; sourceTree = "<group>"; };
 		C087BA181F1EABFF00E58F19 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Messages.swift; path = Map/Messages.swift; sourceTree = "<group>"; };
 		C087BA201F27303700E58F19 /* ObservationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationDrawerController.swift; path = Weather/Observation/ObservationDrawerController.swift; sourceTree = "<group>"; };
+		C0A0503C1F293A8B0037BEFB /* ObservationSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationSelection.swift; path = Weather/Observation/ObservationSelection.swift; sourceTree = "<group>"; };
 		C0A8E8B01E94DD9400270F50 /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
 		C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Web/WebViewController.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 			children = (
 				372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */,
 				C087BA201F27303700E58F19 /* ObservationDrawerController.swift */,
+				C0A0503C1F293A8B0037BEFB /* ObservationSelection.swift */,
 			);
 			name = Observation;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				37B22BEE1D820658001AF5BA /* WeatherModule.swift in Sources */,
 				C087BA061EF5B55A00E58F19 /* UIView+Additions.swift in Sources */,
 				374ACD0B1D7F4BB000C45A18 /* LocationManager.swift in Sources */,
+				C0A0503D1F293A8B0037BEFB /* ObservationSelection.swift in Sources */,
 				371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */,
 				C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */,
 				C015BE311DAC070200C4B26A /* AwsService.swift in Sources */,
