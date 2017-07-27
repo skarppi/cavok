@@ -18,8 +18,9 @@ public class Taf: Observation {
         
         let parser = Tokenizer(raw: self.raw)
         
-        // TAF
-        parser.next()
+        if parser.peek() == "TAF" {
+            parser.next()
+        }
         
         if let type = parser.peek()  {
             if type.contains(["COR", "AMD"]) {
