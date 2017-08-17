@@ -20,7 +20,7 @@ public class AddsService {
     
     class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
         return fetch(dataSource: "stations", at: region).then { doc -> [Station] in
-            NSLog("Found \(doc["response"]["data"].children.count) ADDS stations")
+            print("Found \(doc["response"]["data"].children.count) ADDS stations")
             
             return doc["response"]["data"]["Station"].all.map { station in
                 Station(
@@ -47,6 +47,11 @@ public class AddsService {
             print("Found \(count) ADDS \(source.rawValue)")
             guard count > 0 else {
                 return []
+            }
+            
+            let warnings = doc["response"]["warnings"]["warning"].all.flatMap { $0.element?.text }
+            if warnings.count > 0 {
+                print("ADDS warning: \(warnings.joined())")
             }
             
             let collection = doc["response"]["data"].children[0].element!.name
@@ -91,7 +96,7 @@ public class AddsService {
         components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
 
         let rq = URLRequest(url: components.url!)
-        NSLog("Fetching ADDS data from \(components.url!)")
+        print("Fetching ADDS data from \(components.url!)")
         
         return URLSession.shared.dataTask(with: rq).then { data -> XMLIndexer in
             let unzipped: Data = try {

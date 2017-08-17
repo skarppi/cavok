@@ -24,6 +24,12 @@ public class WeatherServer {
                 return region.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
 
             }
+        }.then { stations -> [Station] in
+            // remove duplicate identifiers
+            var result: [String: Station] = [:]
+            stations.forEach({ result[$0.identifier] = $0 })
+            return Array(result.values)
+            
         }.always {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
