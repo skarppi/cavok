@@ -14,21 +14,26 @@ class HeatMapGPU {
     
     private var outTexture: MTLTexture? = nil
     
+    static var device = MTLCreateSystemDefaultDevice()
+    
+    static var commandQueue = device?.makeCommandQueue()
+    
+    static var pipelineState: MTLComputePipelineState? = {
+        if let defaultLibrary = device?.newDefaultLibrary() {
+            let kernelFunction = defaultLibrary.makeFunction(name: "heatMapShader")
+            return try! device?.makeComputePipelineState(function: kernelFunction!)
+        } else {
+            return nil
+        }
+    }()
+    
     init(input: [HeatData], config: WeatherConfig, steps: [GridStep]) {
-        guard let device = MTLCreateSystemDefaultDevice(),
-            let defaultLibrary = device.newDefaultLibrary()
+        guard let device = HeatMapGPU.device,
+            let commandQueue = HeatMapGPU.commandQueue,
+            let pipelineState = HeatMapGPU.pipelineState
             else { return }
         
-        
-        let commandQueue = device.makeCommandQueue()
-        
-        let kernelFunction = defaultLibrary.makeFunction(name: "heatMapShader")
-        let pipelineState = try! device.makeComputePipelineState(function: kernelFunction!)
-        
-        let width = config.width
-        let height = config.height
-
-        let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: width, height: height, mipmapped: false)
+        let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: config.width, height: config.height, mipmapped: false)
         self.outTexture = device.makeTexture(descriptor: outTextureDescriptor)
         
         var arr = input.flatMap { i in [i.x, i.y, i.value] }
@@ -55,10 +60,13 @@ class HeatMapGPU {
         let stepsBuffer = device.makeBuffer(bytes: &stepsArray, length: MemoryLayout<Int32>.stride * stepsArray.count, options: .storageModeShared)
         commandEncoder.setBuffer(stepsBuffer, offset: 0, at: 3)
         
-        let threadGroupCount = MTLSizeMake(5, 5, 1)
-        let threadGroups = MTLSizeMake(width / threadGroupCount.width, height / threadGroupCount.height, 1)
+        let threadsPerThreadgroup = MTLSizeMake(20, 20, 1)
+        let threadGroupsPerGrid = MTLSizeMake(config.width / threadsPerThreadgroup.width, config.height / threadsPerThreadgroup.height, 1)
         
-        commandEncoder.dispatchThreadgroups(threadGroups, threadsPerThreadgroup: threadGroupCount)
+        assert(threadGroupsPerGrid.width > 0)
+        assert(threadGroupsPerGrid.height > 0)
+        
+        commandEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
         
         commandEncoder.endEncoding()
         commandBuffer.commit()
