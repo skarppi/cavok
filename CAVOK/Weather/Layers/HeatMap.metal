@@ -32,7 +32,7 @@ kernel void heatMapShader(
                           uint2 gid [[thread_position_in_grid]])
 {
     // find distances to all known points, and min/max distances
-    float allDistances[100];
+    float allDistances[1000];
     float minDistance = 100000.0f;
     float maxDistance = 0.0f;
     
