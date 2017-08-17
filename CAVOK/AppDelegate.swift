@@ -89,11 +89,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             [
                 realmURL,
                 realmURL.appendingPathExtension("lock"),
-                realmURL.appendingPathExtension("log_a"),
-                realmURL.appendingPathExtension("log_b"),
-                realmURL.appendingPathExtension("note")
+                realmURL.appendingPathExtension("note"),
+                realmURL.appendingPathExtension("management")
             ].forEach { url in
-                try! FileManager.default.removeItem(at: url)
+                try? FileManager.default.removeItem(at: url)
             }
             let realm = try! Realm()
             print(realm.configuration.fileURL)
