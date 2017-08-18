@@ -51,13 +51,17 @@ class TimeslotDrawerController: UIViewController {
         }
     }
     
-    func loaded(frame:Int, timeslots: [Timeslot]) {
-        self.timeslots.removeAllSegments()
-        for (index, slot) in timeslots.enumerated() {
-            self.timeslots.insertSegment(with: slot, at: index, animated: true)
+    func reset(timeslots toload: [Timeslot], selected frame: Int) {
+        timeslots.removeAllSegments()
+        for (index, slot) in toload.enumerated() {
+            timeslots.insertSegment(withTitle: slot.title, at: index, animated: true)
         }
         
-        self.timeslots.selectedSegmentIndex = frame
+        timeslots.selectedSegmentIndex = frame
+    }
+    
+    func update(color: UIColor, at segment: Int) {
+        timeslots.updateSegment(color: color, at: segment)
     }
 }
 

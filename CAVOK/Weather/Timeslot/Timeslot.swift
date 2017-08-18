@@ -10,13 +10,11 @@ import Foundation
 
 public struct Timeslot {
     let date: Date
-    let color: UIColor
     
     let title: String
     
-    init(date: Date, color: UIColor, title: String? = nil) {
+    init(date: Date, title: String? = nil) {
         self.date = date
-        self.color = color
         if let title = title {
             self.title = title
         } else {

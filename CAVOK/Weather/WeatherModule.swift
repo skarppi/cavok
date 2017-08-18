@@ -78,6 +78,8 @@ open class WeatherModule {
     }
     
     private func startRegionSelection(at region: WeatherRegion) {
+        hideDrawers()
+        
         let regionDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "regionDrawer") as! RegionDrawerController
         regionDrawer.setup(region: region, closed: endRegionSelection, resized: showRegionSelection)
         delegate.pulley.setDrawerContentViewController(controller: regionDrawer)
@@ -176,9 +178,14 @@ open class WeatherModule {
         let groups = observations.group()
         
         if let frame = groups.selectedFrame {
-            timeslotDrawer.loaded(frame: frame, timeslots: groups.timeslots)
+            timeslotDrawer.reset(timeslots: groups.timeslots, selected: frame)
             
-            weatherLayer.load(groups: groups)
+            let userLocation = LastLocation.load()
+            
+            weatherLayer.load(groups: groups, at: userLocation, loaded: { frame, color in
+                self.timeslotDrawer.update(color: color, at: frame)
+            })
+            
             showTimeslotDrawer()
         }
         

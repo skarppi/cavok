@@ -38,16 +38,27 @@ class WeatherLayer {
         config = WeatherConfig(region: region)
     }
     
-    func load(groups: ObservationGroups) {
-        guard let _ = config, let selected = groups.selectedFrame else {
+    func load(groups: ObservationGroups, at coordinate: MaplyCoordinate?, loaded: @escaping (Int, UIColor) -> Void) {
+        guard let config = config, let selected = groups.selectedFrame else {
             return
         }
         
         clean()
         
         // generate heatmaps in inverse order
-        let frames = groups.frames.enumerated().map { (frame, obs) in
-            return HeatMap(observations: obs, config: config!, observationValue: observationValue, ramp: ramp, frame: frame, priority: frame == groups.selectedFrame)
+        let frames = groups.frames.enumerated().map { index, obs in
+            return HeatMap(index: index, observations: obs, config: config, observationValue: observationValue)
+        }
+        
+        frames.reversed().forEach { frame in
+            let selected = frame.index == selected
+            frame.process(ramp: ramp, priority: selected).then { Void -> Void in
+                if let coordinate = coordinate {
+                    loaded((frame.index, frame.color(for: coordinate)))
+                }
+            }.catch(execute: { error in
+                print("Failed to generate heatmap \(frame.index) because of \(error)")
+            })
         }
         
         let layer = initLayer(frames: frames)
