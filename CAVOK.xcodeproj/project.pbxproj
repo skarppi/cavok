@@ -75,6 +75,7 @@
 		C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE341DAC254B00C4B26A /* StationMarker.swift */; };
 		C03219181EE08E3300B8920D /* RegionDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03219171EE08E3300B8920D /* RegionDrawerController.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
+		C0632DC01F48CDE6002C1EA3 /* SpinerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0632DBF1F48CDE6002C1EA3 /* SpinerLayer.swift */; };
 		C087BA061EF5B55A00E58F19 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */; };
 		C087BA171F0EE0EC00E58F19 /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */; };
 		C087BA191F1EABFF00E58F19 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA181F1EABFF00E58F19 /* Messages.swift */; };
@@ -193,6 +194,7 @@
 		C015BE341DAC254B00C4B26A /* StationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationMarker.swift; path = Weather/Region/StationMarker.swift; sourceTree = "<group>"; };
 		C03219171EE08E3300B8920D /* RegionDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegionDrawerController.swift; path = Weather/Region/RegionDrawerController.swift; sourceTree = "<group>"; };
 		C054D09E1D96D79200B71BF4 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observations.swift; path = Weather/Models/Observations.swift; sourceTree = "<group>"; };
+		C0632DBF1F48CDE6002C1EA3 /* SpinerLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpinerLayer.swift; path = Weather/Timeslot/SpinerLayer.swift; sourceTree = "<group>"; };
 		C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Additions.swift"; path = "Extensions/UIView+Additions.swift"; sourceTree = "<group>"; };
 		C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftMessages.framework; path = Carthage/Build/iOS/SwiftMessages.framework; sourceTree = "<group>"; };
 		C087BA181F1EABFF00E58F19 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Messages.swift; path = Map/Messages.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				375B78151DF09763000A9199 /* TimeslotDrawerController.swift */,
 				C0F483691D99CDF9007A1404 /* Timeslot.swift */,
 				375784DF1D9321220046A8A7 /* TimeslotControl.swift */,
+				C0632DBF1F48CDE6002C1EA3 /* SpinerLayer.swift */,
 			);
 			name = Timeslot;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				37B7FDC71D80654F009307F0 /* Metar.swift in Sources */,
 				37B22BF21D82085F001AF5BA /* MapModule.swift in Sources */,
 				377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */,
+				C0632DC01F48CDE6002C1EA3 /* SpinerLayer.swift in Sources */,
 				C03219181EE08E3300B8920D /* RegionDrawerController.swift in Sources */,
 				378F1F1B1DE474EB00B2314A /* AirspaceCalloutView.swift in Sources */,
 				375784E01D9321220046A8A7 /* TimeslotControl.swift in Sources */,

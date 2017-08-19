@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 class Ceiling: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
@@ -156,18 +157,18 @@ open class WeatherModule {
     
     // MARK: - Observations
     
-    func refresh() {
+    func refresh() -> Promise<Void> {
         Messages.show(text: "Refreshing observations...")
         
-        weatherService.refreshObservations()
+        return weatherService.refreshObservations()
             .then(execute: load)
             .catch(execute: Messages.show)
     }
     
-    private func refreshStations() {
+    private func refreshStations() -> Promise<Void> {
         Messages.show(text: "Reloading stations...")
         
-        weatherService.refreshStations().then { stations -> Void in
+        return weatherService.refreshStations().then { stations -> Promise<Void> in
             self.refresh()
         }.catch(execute: Messages.show)
     }

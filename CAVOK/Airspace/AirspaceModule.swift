@@ -39,7 +39,8 @@ final class AirspaceModule: MapModule {
     func didTapAt(coord: MaplyCoordinate) {
     }
     
-    func refresh() {
+    func refresh() -> Promise<Void> {
+        return Promise(value: ())
     }
     
     func configure(open: Bool) {

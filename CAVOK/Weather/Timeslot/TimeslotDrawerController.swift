@@ -67,8 +67,23 @@ class TimeslotDrawerController: UIViewController {
 
 // MARK: - UITextFieldDelegate
 extension TimeslotDrawerController: UITextFieldDelegate {
+    
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        module?.refresh()
+        if let button = status.rightView as? UIButton, !button.isSelected {
+            let spiner = button.layer.sublayers?.last as? SpinerLayer ?? {
+                let spiner = SpinerLayer(frame: button.frame)
+                button.layer.addSublayer(spiner)
+                return spiner
+            }()
+            
+            button.isSelected = true
+            spiner.animation()
+            
+            module?.refresh().always {
+                spiner.stopAnimation()
+                button.isSelected = false
+            }
+        }
         return false
     }
 }
@@ -94,10 +109,11 @@ extension UITextField {
         rightViewMode   = .always
 
         let button = UIButton(frame: CGRect(x:0, y:0, width:16, height:16))
-        button.setImage(UIImage(named: "Restart")!, for: .normal)
+        button.setImage(UIImage(named: "Restart"), for: .normal)
+        button.setImage(UIImage(), for: .selected)
         
         if let delegate = delegate {
-         button.addTarget(delegate, action: #selector(delegate.textFieldShouldBeginEditing(_:)), for: .touchUpInside)
+            button.addTarget(delegate, action: #selector(delegate.textFieldShouldBeginEditing(_:)), for: .touchUpInside)
         }
         
         rightView = button
