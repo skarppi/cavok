@@ -53,6 +53,7 @@ class WebViewController: UIViewController {
         
         webView = WKWebView(frame: containerView.bounds, configuration: configuration)
         webView.navigationDelegate = self
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.addSubview(webView)
     }
     
@@ -68,7 +69,17 @@ class WebViewController: UIViewController {
             urls.selectedSegmentIndex = 0
         }
         
+        urls.sizeToFit()
+        
         load()
+    }
+    
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+        if fromInterfaceOrientation.isPortrait {
+            topbar.frame.origin.y = -13
+        } else {
+            topbar.frame.origin.y = 0
+        }
     }
     
     @IBAction func close() {
@@ -135,7 +146,9 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        errorPage(msg: error.localizedDescription)
+        if !error.isCancelledError {
+            errorPage(msg: error.localizedDescription)
+        }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
