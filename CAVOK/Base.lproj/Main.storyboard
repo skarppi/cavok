@@ -457,12 +457,20 @@
                                     <action selector="close:" destination="3kt-Zb-VCd" eventType="touchUpInside" id="d6a-VF-V2r"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTK-rJ-qWc">
+                                <rect key="frame" x="16" y="72" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="metars" destination="UhV-F8-Z4x" id="d70-IQ-d8C"/>
                         <outlet property="observationLabel" destination="e0I-JG-cbY" id="tfk-hD-KBC"/>
+                        <outlet property="tafs" destination="uTK-rJ-qWc" id="sew-RI-Q4Y"/>
                         <outlet property="titleLabel" destination="Y7o-ia-Nw7" id="S6w-do-wQu"/>
                     </connections>
                 </viewController>

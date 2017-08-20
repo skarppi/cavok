@@ -11,8 +11,8 @@ import Foundation
 class WeatherLayer {
 
     private let mapView: WhirlyGlobeViewController
-    private let observationValue: (Observation) -> Int?
-    private let ramp: ColorRamp
+    
+    private let presentation: ObservationPresentation
     
     private var config: WeatherConfig?
     
@@ -20,10 +20,9 @@ class WeatherLayer {
     
     private var frameChanger: FrameChanger? = nil
     
-    init(mapView: WhirlyGlobeViewController, ramp: ColorRamp, observationValue: @escaping (Observation) -> Int?, region: WeatherRegion?) {
+    init(mapView: WhirlyGlobeViewController, presentation: ObservationPresentation, region: WeatherRegion?) {
         self.mapView = mapView
-        self.observationValue = observationValue
-        self.ramp = ramp
+        self.presentation = presentation
         
         if let region = region {
             reposition(region: region)
@@ -47,12 +46,12 @@ class WeatherLayer {
         
         // generate heatmaps in inverse order
         let frames = groups.frames.enumerated().map { index, obs in
-            return HeatMap(index: index, observations: obs, config: config, observationValue: observationValue)
+            return HeatMap(index: index, observations: obs, config: config, presentation: self.presentation)
         }
         
         frames.reversed().forEach { frame in
             let selected = frame.index == selected
-            frame.process(ramp: ramp, priority: selected).then { Void -> Void in
+            frame.process(priority: selected).then { Void -> Void in
                 if let coordinate = coordinate {
                     loaded((frame.index, frame.color(for: coordinate)))
                 }

@@ -12,9 +12,12 @@ import RealmSwift
 public class Metar: Observation {
     
     open let altimeter = RealmOptional<Int>()
-    open let dewPoint = RealmOptional<Int>()
     open dynamic var runwayVisualRange: String?
+    
+    open let dewPoint = RealmOptional<Int>()
     open let temperature = RealmOptional<Int>()
+    open dynamic var temperatureGroup: String?
+    
     
     // The cloud base can be estimated from surface measurements of air temperature and 
     // humidity by calculating the lifted condensation level.
@@ -64,9 +67,10 @@ public class Metar: Observation {
         if let vis = parseVisibility(value: parser.peek()) {
             self.visibility.value = vis
             
-            parser.next()
+            self.visibilityGroup = parser.pop()
         } else {
             self.visibility.value = nil
+            self.visibilityGroup = nil
         }
         
         self.weather = parser.loop { current in
@@ -83,7 +87,7 @@ public class Metar: Observation {
             self.temperature.value = temp
             self.dewPoint.value = dp
             
-            parser.next()
+            self.temperatureGroup = parser.pop()
         }
         
         if let alt = parseAltimeter(parser.peek()) {
@@ -98,6 +102,7 @@ public class Metar: Observation {
         
         if self.visibility.value == nil && isCavok() {
             self.visibility.value = 10000
+            self.visibilityGroup = "CAVOK"
         }
         
         self.condition = self.parseCondition().rawValue

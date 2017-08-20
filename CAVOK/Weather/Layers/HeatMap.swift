@@ -23,19 +23,22 @@ class HeatMap {
     
     let config: WeatherConfig
 
+    let presentation: ObservationPresentation
+    
     let group = DispatchGroup()
 
     var input: [HeatData] = []
     
     var output: CGImage? = nil
     
-    init(index: Int, observations: [Observation], config: WeatherConfig, observationValue: @escaping (Observation) -> Int?) {
+    init(index: Int, observations: [Observation], config: WeatherConfig, presentation: ObservationPresentation) {
         self.index = index
         self.observations = observations
         self.config = config
+        self.presentation = presentation
         
         self.input = observations.flatMap { obs in
-            guard let value = observationValue(obs) else {
+            guard let value = presentation.mapper(obs).value else {
                 return nil
             }
             
@@ -71,17 +74,17 @@ class HeatMap {
         return scaled * Float(config.height)
     }
     
-    func process(ramp: ColorRamp, priority: Bool) -> Promise<Void> {
+    func process(priority: Bool) -> Promise<Void> {
         let qos: DispatchQoS = (priority) ? .userInitiated : .background
         
         return DispatchQueue.global().promise(group: group, qos: qos) {
             self.timer("end frame \(self.index)") {
                 print("start frame \(self.index)")
                 
-                self.output = HeatMapGPU(input: self.input, config: self.config, steps: ramp.steps).render()
+                self.output = HeatMapGPU(input: self.input, config: self.config, steps: self.presentation.ramp.steps).render()
                 
                 if self.output == nil {
-                    self.output = HeatMapCPU(input: self.input, config: self.config, ramp: ramp).render()
+                    self.output = HeatMapCPU(input: self.input, config: self.config, ramp: self.presentation.ramp).render()
                 }
             }
         }

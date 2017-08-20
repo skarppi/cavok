@@ -21,34 +21,64 @@ class ObservationDrawerController: UIViewController {
     private var closed: (Void) -> Void = { Void -> Void in
     }
     
-    func setup(closed: @escaping (Void) -> Void, value: Int?, obs: Observation, observations: Observations, ramp: ColorRamp) {
+    func setup(closed: @escaping (Void) -> Void, presentation: ObservationPresentation, obs: Observation, observations: Observations) {
         self.closed = closed
         
-        let titleAttr = NSMutableAttributedString(string: "\(obs.station!.name) (");
+        func highlight(observation: Observation) -> NSAttributedString {
+            let attributed = NSMutableAttributedString(string: observation.raw)
+            
+            let mapped = presentation.mapper(observation)
+            if let value = mapped.value, let source = mapped.source {
+                let cgColor = presentation.ramp.color(for: Int32(value))
+                attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor(cgColor: cgColor), pattern: source)
+            }
+            return attributed
+        }
         
-        let title = value.map {String($0)} ?? "-"
-        
-        let cgColor = ramp.color(for: value.map { Int32($0) } ?? 0)
-        let attributes = [NSForegroundColorAttributeName : UIColor(cgColor: cgColor)]
-        titleAttr.append(NSAttributedString(string: title, attributes:attributes))
-        titleAttr.append(NSAttributedString(string: " \(ramp.unit))"))
-
-        titleLabel.attributedText = titleAttr
+        titleLabel.text = obs.station?.name ?? "-"
         titleLabel.sizeToFit()
         
-        observationLabel.frame.origin.y = titleLabel.frame.maxY + 8
-        observationLabel.text = obs.raw
-        observationLabel.sizeToFit()
+        add(header: nil, content: [highlight(observation: obs)], to: observationLabel, after: titleLabel)
         
-        let labels: [String] = observations.metars.map{ metar in
-            return metar.raw
+        let metarHistory = observations.metars.reversed().map{ metar in
+            return highlight(observation: metar)
+        }
+        if !metarHistory.isEmpty {
+            add(header: "METAR history", content: metarHistory, to: self.metars, after: observationLabel)
         }
 
-        metars.frame.origin.y = titleLabel.frame.maxY + 8
-        metars.text = labels.joined(separator: "\n")
-        metars.sizeToFit()
+        if obs as? Taf == nil {
+            let tafHistory = observations.tafs.reversed().map{ taf in
+                return highlight(observation: taf)
+            }
+            if !tafHistory.isEmpty {
+                add(header: "TAF", content: tafHistory, to: tafs, after: metars)
+            }
+        }
+    }
+    
+    private func add(header: String?, content: [NSAttributedString], to label: UILabel, after: UILabel) {
+        label.frame.origin.y = after.frame.maxY + 5
         
-        metars.frame.origin.y = observationLabel.frame.maxY + 8
+        let text = NSMutableAttributedString()
+        if let header = header {
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 5
+            
+            text.append(NSAttributedString(string: header + "\n", attributes: [
+                NSFontAttributeName: UIFont.systemFont(ofSize: 14),
+                NSParagraphStyleAttributeName: paragraphStyle
+                ]))
+        }
+        
+        content.forEach { str in
+            text.append(str)
+            text.append(NSAttributedString(string: "\n"))
+        }
+        
+        label.attributedText = text
+        label.sizeToFit()
     }
     
     @IBAction func close(_ button: UIButton) {
@@ -63,10 +93,10 @@ extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight() -> CGFloat {
-        return observationLabel.frame.maxY + 8
+        return observationLabel.frame.maxY
     }
     
     func partialRevealDrawerHeight() -> CGFloat {
-        return metars.frame.maxY + 8
+        return max(metars.frame.maxY, tafs.frame.maxY)
     }
 }

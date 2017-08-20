@@ -11,19 +11,22 @@ import PromiseKit
 
 class Ceiling: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
-        super.init(delegate: delegate, observationValue: { $0.cloudHeight.value })
+        super.init(delegate: delegate, mapper: { ($0.cloudHeight.value, $0.clouds) })
     }
 }
 
 class Visibility: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
-        super.init(delegate: delegate, observationValue: { $0.visibility.value })
+        super.init(delegate: delegate, mapper: { ($0.visibility.value, $0.visibilityGroup) })
     }
 }
 
 final class Temperature: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
-        super.init(delegate: delegate, observationValue: { ($0 as? Metar)?.spreadCeiling() })
+        super.init(delegate: delegate, mapper: {
+            let metar = $0 as? Metar
+            return (metar?.spreadCeiling(), metar?.temperatureGroup)
+        })
     }
 }
 
@@ -32,27 +35,23 @@ open class WeatherModule {
 
     private let delegate: MapDelegate
     
-    private let ramp: ColorRamp
-    
     private let weatherService = WeatherServer()
     
-    private let observationValue: (Observation) -> Int?
+    private let presentation: ObservationPresentation
     
     private let weatherLayer: WeatherLayer
     
     private let timeslotDrawer: TimeslotDrawerController!
     
-    public init(delegate: MapDelegate, observationValue: @escaping (Observation) -> Int?) {
+    public init(delegate: MapDelegate, mapper: @escaping (Observation) -> (value: Int?, source: String?)) {
         self.delegate = delegate
         
-        self.observationValue = observationValue
-        
-        let ramp = ColorRamp(module: type(of: self))
-        self.ramp = ramp
+        let ramp = ColorRamp(moduleType: type(of: self))
+        self.presentation = ObservationPresentation(mapper: mapper, ramp: ramp)
         
         let region = WeatherRegion.load()
         
-        self.weatherLayer = WeatherLayer(mapView: delegate.mapView, ramp: ramp, observationValue: observationValue, region: region)
+        self.weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
     
         timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
         delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
@@ -122,7 +121,7 @@ open class WeatherModule {
         if region?.save() == true {
             weatherLayer.reposition(region: region!)
             
-            refreshStations()
+            _ = refreshStations()
         } else {
             load(observations: weatherService.observations())
         }
@@ -190,7 +189,7 @@ open class WeatherModule {
             showTimeslotDrawer()
         }
         
-        delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots, legend: ramp.legend())
+        delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots, legend: presentation.ramp.legend())
         render(frame: groups.selectedFrame)
     }
     
@@ -238,7 +237,7 @@ open class WeatherModule {
     }
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView? {
-        if let observation = object as? Observation, let value = observationValue(observation) {
+        if let observation = object as? Observation {
             
             let drawerPosition = delegate.pulley.drawerPosition
             
@@ -248,7 +247,7 @@ open class WeatherModule {
             delegate.pulley.setDrawerContentViewController(controller: observationDrawer)
             
             let all = weatherService.observations(for: observation.station?.identifier ?? "")
-            observationDrawer.setup(closed: showTimeslotDrawer, value: value, obs: observation, observations: all, ramp: ramp)
+            observationDrawer.setup(closed: showTimeslotDrawer, presentation: presentation, obs: observation, observations: all)
         
             delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
             delegate.pulley.setDrawerPosition(position: drawerPosition, animated: true)

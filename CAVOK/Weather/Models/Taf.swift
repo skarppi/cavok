@@ -62,10 +62,10 @@ public class Taf: Observation {
         
         if let vis = parseVisibility(value: parser.peek()) {
             self.visibility.value = vis
-            
-            parser.next()
+            self.visibilityGroup = parser.pop()
         } else {
             self.visibility.value = nil
+            self.visibilityGroup = nil
         }
         
         self.weather = parser.loop { current in
