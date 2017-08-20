@@ -150,44 +150,15 @@
                                     </button>
                                 </subviews>
                             </view>
-                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8T7-O4-mC4" userLabel="Legend">
-                                <rect key="frame" x="326" y="240" width="47" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ev-NG-Jg3">
-                                        <rect key="frame" x="17" y="0.0" width="32" height="102"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" notEnabled="YES"/>
-                                        </accessibility>
-                                        <string key="text">1
-2 3 4 5 6</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="textContainer.lineFragmentPadding">
-                                                <integer key="value" value="0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="rect" keyPath="textContainerInset">
-                                                <rect key="value" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textView>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Etg-nY-Te6" customClass="LegendGradientView" customModule="CAVOK" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="12" width="15" height="90"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
+                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8T7-O4-mC4" userLabel="Legend" customClass="LegendView" customModule="CAVOK" customModuleProvider="target">
+                                <rect key="frame" x="16" y="56" width="47" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.84696906810000006" green="0.84711199999999998" blue="0.84694892170000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="buttonView" destination="XRG-OZ-0Vb" id="0Fm-Ub-23v"/>
-                        <outlet property="legendGradient" destination="Etg-nY-Te6" id="VuM-lC-a9O"/>
-                        <outlet property="legendText" destination="1Ev-NG-Jg3" id="33a-7h-goL"/>
                         <outlet property="legendView" destination="8T7-O4-mC4" id="HlT-PA-2Ts"/>
                         <outlet property="moduleType" destination="EAe-qi-deb" id="95T-eG-88J"/>
                         <segue destination="U9G-f2-9Ay" kind="presentation" identifier="OpenBrowser" id="RaL-Fk-TrO"/>
@@ -195,7 +166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="114" y="117"/>
+            <point key="canvasLocation" x="112.8" y="116.94152923538232"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="NtG-LO-eRl">

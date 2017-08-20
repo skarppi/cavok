@@ -85,7 +85,7 @@
 		C0A8E8BB1E9BB41B00270F50 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; };
 		C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */; };
 		C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */; };
-		C0B778EC1DB423DD00DBB1FB /* LegendGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */; };
+		C0B778EC1DB423DD00DBB1FB /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778EB1DB423DD00DBB1FB /* LegendView.swift */; };
 		C0BE7B651DA27207003888B9 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BE7B641DA27207003888B9 /* Metal.framework */; };
 		C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483671D99CDDB007A1404 /* MapDelegate.swift */; };
 		C0F4836A1D99CDF9007A1404 /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483691D99CDF9007A1404 /* Timeslot.swift */; };
@@ -204,7 +204,7 @@
 		C0A8E8B21E9BB41500270F50 /* WhirlyGlobeMaplyComponent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WhirlyGlobeMaplyComponent.xcodeproj; path = "libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/WhirlyGlobeMaplyComponent.xcodeproj"; sourceTree = "<group>"; };
 		C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Web/WebViewController.swift; sourceTree = "<group>"; };
 		C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastLocation.swift; path = Map/Location/LastLocation.swift; sourceTree = "<group>"; };
-		C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LegendGradientView.swift; path = Weather/Legend/LegendGradientView.swift; sourceTree = "<group>"; };
+		C0B778EB1DB423DD00DBB1FB /* LegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LegendView.swift; path = Weather/Legend/LegendView.swift; sourceTree = "<group>"; };
 		C0BE7B641DA27207003888B9 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		C0F483671D99CDDB007A1404 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDelegate.swift; path = Map/MapDelegate.swift; sourceTree = "<group>"; };
 		C0F483691D99CDF9007A1404 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeslot.swift; path = Weather/Timeslot/Timeslot.swift; sourceTree = "<group>"; };
@@ -352,7 +352,7 @@
 		375784DC1D9320280046A8A7 /* Legend */ = {
 			isa = PBXGroup;
 			children = (
-				C0B778EB1DB423DD00DBB1FB /* LegendGradientView.swift */,
+				C0B778EB1DB423DD00DBB1FB /* LegendView.swift */,
 			);
 			name = Legend;
 			sourceTree = "<group>";
@@ -708,7 +708,7 @@
 				371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */,
 				C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */,
 				C015BE311DAC070200C4B26A /* AwsService.swift in Sources */,
-				C0B778EC1DB423DD00DBB1FB /* LegendGradientView.swift in Sources */,
+				C0B778EC1DB423DD00DBB1FB /* LegendView.swift in Sources */,
 				37B7FDC21D8064E5009307F0 /* Tokenizer.swift in Sources */,
 				374EC9CF1D7CB5A90047B82B /* MapViewController.swift in Sources */,
 				378F1F191DE4747300B2314A /* AirspaceAttributes.swift in Sources */,

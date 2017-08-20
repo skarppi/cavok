@@ -189,7 +189,7 @@ open class WeatherModule {
             showTimeslotDrawer()
         }
         
-        delegate.loaded(frame: groups.selectedFrame, timeslots: groups.timeslots, legend: presentation.ramp.legend())
+        delegate.loaded(frame: groups.selectedFrame, legend: presentation.ramp.legend())
         render(frame: groups.selectedFrame)
     }
     

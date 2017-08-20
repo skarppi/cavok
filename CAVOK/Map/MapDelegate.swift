@@ -17,7 +17,7 @@ public struct Legend {
 
 public protocol MapDelegate {
     
-    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend)
+    func loaded(frame:Int?, legend: Legend)
     
     func clearAnnotations(ofType: MaplyAnnotation.Type?)
     

@@ -17,11 +17,7 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var buttonView: UIView!
     
-    @IBOutlet weak var legendView: UIView!
-    
-    @IBOutlet weak var legendText: UITextView!
-    
-    @IBOutlet weak var legendGradient: LegendGradientView!
+    @IBOutlet weak var legendView: LegendView!
     
     internal var mapView: WhirlyGlobeViewController!
     
@@ -163,6 +159,8 @@ class MapViewController: UIViewController {
     
     @IBAction func resetRegion() {
         buttonView.isHidden = true
+        legendView.isHidden = true
+        
         animateModuleType(show: false)
         module.configure(open: true)
     }
@@ -184,15 +182,14 @@ class MapViewController: UIViewController {
 // MARK: - MapDelegate
 extension MapViewController : MapDelegate {
     
-    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend) {
+    func loaded(frame:Int?, legend: Legend) {
         DispatchQueue.main.async {
-            self.animateModuleType(show: frame != nil)
-
             self.buttonView.isHidden = false
             
-            self.legendText.text = legend.unit + "\n" + legend.titles.joined(separator: "\n")
-            self.legendGradient.gradient(ramp: legend.gradient)
-            self.legendView.isHidden = false
+            if frame != nil {
+                self.legendView.loaded(legend: legend)
+                self.animateModuleType(show: frame != nil)
+            }
         }
     }
     
