@@ -24,8 +24,6 @@ class MapViewController: UIViewController {
     @IBOutlet weak var legendGradient: LegendGradientView!
     
     internal var mapView: WhirlyGlobeViewController!
-
-    fileprivate let modules = Modules()
     
     fileprivate var module: MapModule!
     
@@ -103,7 +101,7 @@ class MapViewController: UIViewController {
         airspaceModule = AirspaceModule(delegate: self)
         
         moduleType.removeAllSegments()
-        for (index, title) in modules.availableTitles().enumerated() {
+        for (index, title) in Modules.availableTitles().enumerated() {
             moduleType.insertSegment(withTitle: title, at: index, animated: false)
         }
         moduleType.selectedSegmentIndex = 0
@@ -179,7 +177,7 @@ class MapViewController: UIViewController {
     
     @IBAction func moduleTypeChanged() {
         module = nil
-        module = modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
+        module = Modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
     }
 }
 

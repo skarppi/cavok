@@ -10,21 +10,35 @@ import Foundation
 
 class Modules {
     
-    func availableTitles() -> [String] {
+    private class func modules() -> [[String: AnyObject]] {
         if let modules = UserDefaults.standard.array(forKey: "modules") as? [[String: AnyObject]] {
-            return modules.flatMap { $0["name"] as? String }
+            return modules
         } else {
             return []
         }
     }
     
-    func loadModule(index: Int, delegate: MapDelegate) -> MapModule {
-        let modules = UserDefaults.standard.array(forKey: "modules") as! [[String:AnyObject]]
-        
-        let module = modules[index]
+    class func availableTitles() -> [String] {
+        return modules().flatMap { module in
+            module["name"] as? String
+        }
+    }
+    
+    class func loadModule(index: Int, delegate: MapDelegate) -> MapModule {
+        let module = modules()[index]
         let className = module["class"] as! String
         
         let type = NSClassFromString("CAVOK.\(className)") as! MapModule.Type
         return type.init(delegate: delegate)
+    }
+    
+    class func configuration(module: AnyClass) -> [String: AnyObject]? {
+        let moduleClassName = String(describing: module)
+        
+        if let module = modules().first(where: { $0["class"] as? String == moduleClassName }) {
+            return module
+        } else {
+            return nil
+        }
     }
 }

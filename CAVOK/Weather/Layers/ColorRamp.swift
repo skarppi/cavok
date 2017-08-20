@@ -37,13 +37,9 @@ class ColorRamp {
     
     let titles: [String]
     
-    init(module: WeatherModule.Type) {
-        let moduleClassName = String(describing: module)
-        
-        let modules = UserDefaults.standard.array(forKey: "modules") as! [[String:AnyObject]]
-        
-        if let module = modules.first(where: { $0["class"] as? String == moduleClassName }),
-            let steps = module["steps"] as? [String:String] {
+    init(moduleType: WeatherModule.Type) {
+        if let module = Modules.configuration(module: moduleType) {
+            let steps = module["steps"] as? [String:String] ?? [:]
             
             self.unit = module["unit"] as? String ?? ""
             
