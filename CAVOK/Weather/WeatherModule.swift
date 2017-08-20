@@ -240,6 +240,8 @@ open class WeatherModule {
     func annotation(object: Any, parentFrame: CGRect) -> UIView? {
         if let observation = object as? Observation, let value = observationValue(observation) {
             
+            let drawerPosition = delegate.pulley.drawerPosition
+            
             hideDrawers()
 
             let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
@@ -249,7 +251,7 @@ open class WeatherModule {
             observationDrawer.setup(closed: showTimeslotDrawer, value: value, obs: observation, observations: all, ramp: ramp)
         
             delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
-            delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+            delegate.pulley.setDrawerPosition(position: drawerPosition, animated: true)
             
             let marker = ObservationSelection(obs: observation)
             if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {
