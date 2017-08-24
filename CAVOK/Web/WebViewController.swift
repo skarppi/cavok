@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import WebKit
+import PromiseKit
 
 class WebViewController: UIViewController {
     
@@ -72,6 +73,10 @@ class WebViewController: UIViewController {
         urls.sizeToFit()
         
         load()
+                
+        if UIDevice.current.orientation.isLandscape {
+            self.didRotate(from: .landscapeLeft)
+        }
     }
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
@@ -151,5 +156,30 @@ extension WebViewController: WKNavigationDelegate {
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+}
+
+class WebModule: MapModule {
+    required init(delegate: MapDelegate) {
+        if let controller = delegate as? UIViewController {
+            controller.performSegue(withIdentifier: "OpenBrowser", sender: self)
+        }
+    }
+    
+    func didTapAt(coord: MaplyCoordinate) {
+    }
+    
+    func refresh() -> Promise<Void> {
+        return Promise<Void>(value: ())
+    }
+    
+    func configure(open: Bool) {
+    }
+    
+    func render(frame: Int?) {
+    }
+    
+    func annotation(object: Any, parentFrame: CGRect) -> UIView? {
+        return nil
     }
 }

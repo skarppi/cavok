@@ -41,4 +41,12 @@ class Modules {
             return nil
         }
     }
+    
+    class func index(of module: AnyClass) -> Int? {
+        let moduleClassName = String(describing: module)
+        
+        return modules().flatMap { module in
+            module["class"] as? String
+        }.index(of: moduleClassName)
+    }
 }

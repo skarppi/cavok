@@ -153,10 +153,6 @@ class MapViewController: UIViewController {
         airspaceModule.render(frame: 0)
     }
     
-    @IBAction func openWebView() {
-        self.performSegue(withIdentifier: "OpenBrowser", sender: self)
-    }
-    
     @IBAction func resetRegion() {
         buttonView.isHidden = true
         legendView.isHidden = true
@@ -174,8 +170,15 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func moduleTypeChanged() {
+        let selectedIndex = moduleType.selectedSegmentIndex
+        
+        if selectedIndex == moduleType.numberOfSegments - 1 {
+            if let module = module, let previousIndex = Modules.index(of: type(of: module)) {
+                moduleType.selectedSegmentIndex = previousIndex
+            }
+        }
         module = nil
-        module = Modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
+        module = Modules.loadModule(index: selectedIndex, delegate: self)
     }
 }
 

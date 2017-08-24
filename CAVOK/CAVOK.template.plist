@@ -83,12 +83,18 @@
 				<string>050</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>class</key>
+			<string>WebModule</string>
+			<key>name</key>
+			<string>Web</string>
+		</dict>
 	</array>
 	<key>links</key>
 	<array>
 		<dict>
 			<key>title</key>
-			<string>fmi</string>
+			<string>ilmailusaa</string>
 			<key>url</key>
 			<string>https://ilmailusaa.fi/index.html#id=radar</string>
 			<key>blockElements</key>
@@ -96,11 +102,19 @@
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>mb</string>
+			<string>meteogram</string>
 			<key>url</key>
 			<string>https://www.meteoblue.com/en/weather/forecast/meteogramfive/{lat}{lon}</string>
 			<key>blockElements</key>
 			<string>.bloo form, .bloo .promotion, #meteomail, .app-promotion, .adsbygoogle</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>efhf</string>
+			<key>url</key>
+			<string>http://malmiairport.fi/webcam/image.php</string>
+			<key>blockElements</key>
+			<string></string>
 		</dict>
 	</array>
 </dict>
