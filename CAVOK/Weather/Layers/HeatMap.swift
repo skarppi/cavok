@@ -47,31 +47,15 @@ class HeatMap {
                 return nil
             }
             
-            let x = Int(round(coordToPixelsX(localCoord.x) - 0.5))
-            let y = Int(round(coordToPixelsY(localCoord.y) - 0.5))
+            let (x, y) = config.bounds.normalize(localCoord)
             
-            return HeatData(x: Int32(x), y: Int32(y), value: Int32(value))
+            return HeatData(x: Int32(round(x * Float(config.width) - 0.5)), y: Int32(round(y * Float(config.height) - 0.5)), value: Int32(value))
         }
 
     }
     
     deinit {
         print("Canceling heatmap")
-    }
-    
-    // local coordinate in radians to 0 - pixels
-    private func coordToPixelsX(_ rad: Float) -> Float {
-        let scaled = (rad - config.bounds.ll.x) / (config.bounds.ur.x - config.bounds.ll.x)
-        assert(0 <= scaled && scaled <= 1.0)
-        return scaled * Float(config.width)
-    }
-    
-    // local coordinate in radians to 0 - pixels
-    private func coordToPixelsY(_ rad: Float) -> Float {
-        let scaled = (rad - config.bounds.ll.y) / (config.bounds.ur.y - config.bounds.ll.y)
-        
-        assert(0 <= scaled && scaled <= 1.0)
-        return scaled * Float(config.height)
     }
     
     func process(priority: Bool) -> Promise<Void> {
@@ -99,13 +83,14 @@ class HeatMap {
         
         group.wait()
         
-        let x = coordToPixelsX(localCoord.x)
-        let y = coordToPixelsY(localCoord.y)
-        
         let pixelData = output!.dataProvider!.data
         let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
         
-        let pixelInfo = (config.width * (config.height - 1 - Int(y)) + Int(x)) * 4
+        let (nx, ny) = config.bounds.normalize(localCoord)
+        let x = Int(round(nx * Float(config.width)))
+        let y = Int(round(ny * Float(config.height)))
+        
+        let pixelInfo = (config.width * (config.height - 1 - y) + x) * 4
         
         let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
         let g = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
@@ -115,29 +100,56 @@ class HeatMap {
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
     
-    private func cropBox(_ bbox: MaplyBoundingBox) -> CGRect {
-        let lx = coordToPixelsX(bbox.ll.x)
-        let ly = coordToPixelsY(bbox.ll.y)
+    func crop(bounds: MaplyBoundingBox, box: MaplyBoundingBox, width originalWidth: Int, height originalHeight: Int) -> CGRect {
         
-        let ux = coordToPixelsX(bbox.ur.x)
-        let uy = coordToPixelsY(bbox.ur.y)
+        let ll = bounds.normalize(box.ll)
+        let ur = bounds.normalize(box.ur)
         
-        let width = Int(round(ux - lx))
-        let height = Int(round(uy - ly))
+        let x = Int(round(ll.x * Float(originalWidth)))
+        let y = originalHeight - Int(round(Float(originalHeight) * ur.y))
         
-        assert(width == height)
+        let width = Int(round(Float(originalWidth) * (ur.x - ll.x)))
+        let height = Int(round(Float(originalHeight) * (ur.y - ll.y)))
         
-        return CGRect(x: CGFloat(Int(round(lx))), y: CGFloat(config.height - Int(round(uy))), width: CGFloat(width), height: CGFloat(height))
+        
+        return CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
     }
     
     func render(_ tileID: MaplyTileID, bbox: MaplyBoundingBox, imageSize: Int) -> UIImage? {
         group.wait()
         
-        let crop = cropBox(bbox)
-        if let cropped = output?.cropping(to: crop) {
-            return UIImage(cgImage: cropped)
+        if tileID.level < Int32(config.maxZoom) {
+            
+            let minX = max(config.bounds.ll.x, bbox.ll.x)
+            let maxX = min(config.bounds.ur.x, bbox.ur.x)
+            
+            let minY = max(config.bounds.ll.y, bbox.ll.y)
+            let maxY = min(config.bounds.ur.y, bbox.ur.y)
+            
+            let boundsCropped = MaplyBoundingBox(ll: MaplyCoordinate(x: minX, y: minY),
+                                          ur: MaplyCoordinate(x: maxX, y: maxY))
+            
+            let crop = self.crop(bounds: config.bounds, box: boundsCropped, width: config.width, height: config.height)
+            
+            if let cropped = output?.cropping(to: crop) {
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: imageSize, height: imageSize), false, 0.0);
+                
+                let crop = self.crop(bounds: bbox, box: boundsCropped, width: imageSize, height: imageSize)
+                
+                UIImage(cgImage: cropped).draw(in: crop)
+                let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+                UIGraphicsEndImageContext()
+                return newImage
+            } else {
+                return nil
+            }
         } else {
-            return nil
+            let crop = self.crop(bounds: config.bounds, box: bbox, width: config.width, height: config.height)
+            if let cropped = output?.cropping(to: crop) {
+                return UIImage(cgImage: cropped)
+            } else {
+                return nil
+            }
         }
     }
     

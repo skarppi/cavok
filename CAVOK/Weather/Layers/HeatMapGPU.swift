@@ -60,7 +60,7 @@ class HeatMapGPU {
         let stepsBuffer = device.makeBuffer(bytes: &stepsArray, length: MemoryLayout<Int32>.stride * stepsArray.count, options: .storageModeShared)
         commandEncoder.setBuffer(stepsBuffer, offset: 0, at: 3)
         
-        let threadsPerThreadgroup = MTLSizeMake(20, 20, 1)
+        let threadsPerThreadgroup = MTLSizeMake(pipelineState.threadExecutionWidth, 1, 1)
         let threadGroupsPerGrid = MTLSizeMake(config.width / threadsPerThreadgroup.width, config.height / threadsPerThreadgroup.height, 1)
         
         assert(threadGroupsPerGrid.width > 0)

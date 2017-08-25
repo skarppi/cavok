@@ -98,7 +98,7 @@ class WeatherLayer {
     
     private func initLayer(frames: [HeatMap]) -> MaplyQuadImageTilesLayer {
         // for debugging tiles
-        //let tileSource = DebugTileSource(frames: frames, config: config)
+//        let tileSource = DebugTileSource(frames: frames, config: config!)
         
         let tileSource = WeatherTileSource(frames: frames, config: config!)
         

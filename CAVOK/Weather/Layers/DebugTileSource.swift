@@ -24,9 +24,9 @@ class DebugTileSource : WeatherTileSource {
     }
     
     override func fetchTile(layer: MaplyQuadImageTilesLayer, tileID: MaplyTileID, frame:Int32) -> Data? {
-        let b = layer.geoBounds(forTile: tileID)
+        let bbox = layer.geoBounds(forTile: tileID)
         
-        print("Fetched tile: %d: (%d,%d) = (%f-%f x %f-%f)",tileID.level,tileID.x,tileID.y, b.ll.deg.x, b.ur.deg.x, b.ll.deg.y, b.ur.deg.y)
+        print("Fetched frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
         
         let w = CGFloat(tileSize())
         
@@ -52,7 +52,7 @@ class DebugTileSource : WeatherTileSource {
         fillColor.setStroke()
         fillColor.setFill()
         ctx?.setTextDrawingMode(CGTextDrawingMode.fill)
-        let textStr = "\(tileID.level): (\(tileID.x),\(tileID.y)) = (\(b.ll.deg.y),\(b.ur.deg.y))"
+        let textStr = "\(tileID.level): (\(tileID.x),\(tileID.y)) = (\(bbox.ll.deg.x),\(bbox.ur.deg.x))"
         textStr.draw(in: CGRect(x: 0,y: 0,width: size.width,height: size.height), withAttributes:nil)
         
         // Grab the image and shut things down

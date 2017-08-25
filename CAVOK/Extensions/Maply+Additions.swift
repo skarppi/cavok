@@ -19,6 +19,26 @@ extension MaplyBoundingBox {
         
         return (ll: ll, ur: ur)
     }
+    
+    // local coordinate in radians to 0 - 1
+    func normalizeX(_ rad: Float) -> Float {
+        let scaled = (rad - ll.x) / (ur.x - ll.x)
+        assert(0 <= scaled && scaled <= 1.0)
+        return scaled
+    }
+    
+    // local coordinate in radians to 0 - 1
+    func normalizeY(_ rad: Float) -> Float {
+        let scaled = (rad - ll.y) / (ur.y - ll.y)
+        assert(0 <= scaled && scaled <= 1.0)
+        return scaled
+    }
+    
+    func normalize(_ coord: MaplyCoordinate) -> (x: Float, y: Float) {
+        let lon = normalizeX(coord.x)
+        let lat = normalizeY(coord.y)
+        return (x: lon, y: lat)
+    }
 }
 
 extension MaplyCoordinate {
