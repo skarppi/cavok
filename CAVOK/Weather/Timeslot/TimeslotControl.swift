@@ -32,8 +32,11 @@ class TimeslotControl: UISegmentedControl {
     }
     
     func updateSegment(color: UIColor, at segment: Int) {
-        let view = segments()[segment]
-        view.backgroundColor = color
+        let views = segments()
+        if segment < views.count {
+            let view = views[segment]
+            view.backgroundColor = color
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

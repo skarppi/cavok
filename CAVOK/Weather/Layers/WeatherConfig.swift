@@ -18,7 +18,7 @@ class WeatherConfig {
     let height: Int
     
     // padding in kilometers
-    let padding: Int
+    let padding: Float
     
     // radius of weather station in pixels
     let radius: Int

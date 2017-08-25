@@ -79,10 +79,12 @@ extension TimeslotDrawerController: UITextFieldDelegate {
             button.isSelected = true
             spiner.animation()
             
-            module?.refresh().always {
-                spiner.stopAnimation()
-                button.isSelected = false
-            }
+            module?.refresh()
+                .catch(execute: Messages.show)
+                .always {
+                    spiner.stopAnimation()
+                    button.isSelected = false
+                }
         }
         return false
     }

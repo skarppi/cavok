@@ -39,18 +39,17 @@ class RegionDrawerController: UIViewController {
         self.resized = resized
     }
     
-    func status(text: String) {
+    func status(text: String, color: UIColor = UIColor.blue) {
         status.text = text
+        status.textColor = color
     }
     
     @IBAction func radiusChanged(_ stepper: UIStepper) {
-        region.radius = Int(stepper.value)
+        region.radius = Float(stepper.value)
         
         radius.text = "Radius \(region.radius) km"
         
         if stepper.value >= 1000 {
-            stepper.stepValue = 500
-        } else if stepper.value >= 500 {
             stepper.stepValue = 200
         } else {
             stepper.stepValue = 100
@@ -64,7 +63,7 @@ class RegionDrawerController: UIViewController {
             region.center = location
             resized(region)
         } else {
-            status(text: "Unknown location")
+            status(text: "Unknown location", color: ColorRamp.color(for: .IFR, alpha: 1))
         }
     }
     

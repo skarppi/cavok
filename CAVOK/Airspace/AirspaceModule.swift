@@ -31,7 +31,7 @@ final class AirspaceModule: MapModule {
         
         if let airspaces = UserDefaults.standard.stringArray(forKey: "airspaces") {
             airspaces.forEach { airspace in
-                self.render(frame: frames.index(where: { String(describing: $0) ==  airspace}))
+                self.render(frame: frames.index(where: { String(describing: $0) == airspace})!)
             }
         }
     }
@@ -46,12 +46,8 @@ final class AirspaceModule: MapModule {
     func configure(open: Bool) {
     }
     
-    func render(frame: Int?) {
-        guard frame != nil else {
-            return
-        }
-        
-        let key = frames[frame!]
+    func render(frame: Int) {
+        let key = frames[frame]
         let current = String(describing: key)
         let url = UserDefaults.standard.string(forKey: "airspaceURL")! + "/" + current
         

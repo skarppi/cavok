@@ -9,8 +9,8 @@
 import Foundation
 
 extension MaplyBoundingBox {
-    func inside(_ c: MaplyCoordinate) -> Bool {
-        return ((self.ll.x < c.x) && (self.ll.y < c.y) && (c.x < self.ur.x) && (c.y < self.ur.y))
+    func inside(_ inner: MaplyCoordinate) -> Bool {
+        return ((self.ll.x < inner.x) && (self.ll.y < inner.y) && (inner.x < self.ur.x) && (inner.y < self.ur.y))
     }
     
     func tiles(zoom: Int32) -> (ll: MaplyTileID, ur: MaplyTileID) {
@@ -52,33 +52,29 @@ extension MaplyCoordinate {
         }
     }
     
-    func tile(offsetX: Int, offsetY: Int, zoom: Int32) -> MaplyTileID {
+    func tile(offsetX: Int32, offsetY: Int32, zoom: Int32) -> MaplyTileID {
         let scale = pow(2.0, Double(zoom))
         
         let lon = Double(self.x * MaplyCoordinate.kRadiansToDegrees)
         let x = Int32(floor((lon + 180.0) / 360.0 * scale))
     
         let lat = Double(self.y)
-        let y  = Int32(floor((1.0 - log( tan(lat) + 1.0 / cos(lat)) / M_PI) / 2.0 * scale))
+        let y  = Int32(floor((1.0 - log( tan(lat) + 1.0 / cos(lat)) / Double.pi) / 2.0 * scale))
         
         return MaplyTileID(x: x + offsetX, y: y + offsetY, level: zoom)
     }
     
     // finds a new location on a straight line towards a second location, given distance in kilometers.
-    func locationAt(distance:Int, direction:Int) -> MaplyCoordinate {
-        let lat1 = self.y
-        let lon1 = self.x
-        let dRad = Float(direction) * MaplyCoordinate.kDegreesToRadians
+    func locationAt(kilometers:Float, direction:Float) -> MaplyCoordinate {
+        let lat1 = Float.pi/2 - self.y
+        let dRad = direction * MaplyCoordinate.kDegreesToRadians
         
-        let nD = Float(distance) //distance travelled in km
-        let nC = nD / MaplyCoordinate.earthRadius
-        let nA = acosf(cosf(nC)*cosf(Float(M_PI/2) - lat1) + sinf(Float(M_PI/2) - lat1)*sinf(nC)*cosf(dRad))
+        let nC = kilometers / MaplyCoordinate.earthRadius
+        
+        let nA = acosf(cosf(nC)*cosf(lat1) + sinf(lat1)*sinf(nC)*cosf(dRad))
         let dLon = asin(sin(nC)*sin(dRad)/sin(nA))
         
-        let lat2 = (Float(M_PI/2) - nA)
-        let lon2 = (dLon + lon1)
-        
-        return MaplyCoordinateMake(lon2, lat2)
+        return MaplyCoordinateMake(dLon + self.x, Float.pi/2 - nA)
     }
 }
 
@@ -89,8 +85,8 @@ extension MaplyTileID {
         
         let lon = Double(x) / scale * 360.0 - 180.0
         
-        let n = M_PI - 2 * M_PI * Double(y) / scale
-        let lat = 180 / M_PI * atan(0.5*(exp(n) - exp(-n)))
+        let n = Double.pi - 2 * Double.pi * Double(y) / scale
+        let lat = 180 / Double.pi * atan(0.5*(exp(n) - exp(-n)))
         
         return MaplyCoordinateMakeWithDegrees(Float(lon), Float(lat))
     }

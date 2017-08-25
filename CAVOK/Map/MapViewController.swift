@@ -86,9 +86,7 @@ class MapViewController: UIViewController {
             reject: { error in
                 self.clearComponents(ofType: UserMarker.self)
                 
-                if self.isFirstLoad() {
-                    self.module.configure(open: true)
-                }
+                _ = self.ensureConfigured()
         })
         locationManager.requestLocation()
     }
@@ -125,8 +123,14 @@ class MapViewController: UIViewController {
         locationManager.requestLocation()
     }
 
-    fileprivate func isFirstLoad() -> Bool {
-        return self.buttonView.isHidden && WeatherRegion.load() == nil
+    fileprivate func ensureConfigured() -> Bool {
+        if WeatherRegion.load() == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                self.module.configure(open: true)
+            })
+            return false
+        }
+        return true
     }
     
     func userLocationChanged(coordinate: MaplyCoordinate) {
@@ -137,15 +141,14 @@ class MapViewController: UIViewController {
             addComponents(key: userLocation, value: objects)
         }
         
-        let height = LastSession.load()?.height
-        if height == nil || !mapView.getCurrentExtents().inside(coordinate) {
-            mapView.animate(toPosition: coordinate, height: height ?? 0.2, heading: 0, time: 0.5)
-        }
-        
-        if isFirstLoad() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.module.configure(open: true)
-            })
+        if ensureConfigured() {
+            let userMovedOutsideView = LastLocation.load().map { last -> Bool in
+                let extents = mapView.getCurrentExtents()
+                return extents.inside(last) && !extents.inside(coordinate)
+            }
+            if userMovedOutsideView ?? true {
+                mapView.animate(toPosition: coordinate, time: 0.5)
+            }
         }
     }
     
@@ -191,7 +194,10 @@ extension MapViewController : MapDelegate {
             
             if frame != nil {
                 self.legendView.loaded(legend: legend)
-                self.animateModuleType(show: frame != nil)
+                self.animateModuleType(show: true)
+            } else {
+                Messages.show(error: "No data")
+                self.resetRegion()
             }
         }
     }

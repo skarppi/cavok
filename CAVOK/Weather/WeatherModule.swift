@@ -60,7 +60,6 @@ open class WeatherModule {
         if region != nil {
             load(observations: weatherService.observations())
         }
-        
     }
     
     deinit {
@@ -69,6 +68,20 @@ open class WeatherModule {
     }
     
     // MARK: - Region selection
+    
+    func configure(open: Bool) {
+        delegate.clearComponents(ofType: ObservationMarker.self)
+        self.weatherLayer.clean()
+        
+        if open {
+            let region = WeatherRegion.load() ??
+                WeatherRegion(center: LastLocation.load() ?? delegate.mapView.getPosition(),
+                              radius: 100)
+            startRegionSelection(at: region)
+        } else {
+            endRegionSelection()
+        }
+    }
     
     func didTapAt(coord: MaplyCoordinate) {
         if let selection = delegate.findComponent(ofType: RegionSelection.self) as? RegionSelection {
@@ -81,18 +94,20 @@ open class WeatherModule {
         hideDrawers()
         
         let regionDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "regionDrawer") as! RegionDrawerController
-        regionDrawer.setup(region: region, closed: endRegionSelection, resized: showRegionSelection)
+        regionDrawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
         delegate.pulley.setDrawerContentViewController(controller: regionDrawer)
         delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
     }
     
-    private func showRegionSelection(at region: WeatherRegion) {
+    private func moveRegionSelection(at region: WeatherRegion) {
         delegate.clearComponents(ofType: RegionSelection.self)
         
         let selection = RegionSelection(region: region)
         if let stickers = delegate.mapView.addStickers([selection], desc: [kMaplyFade: 1.0]) {
             delegate.addComponents(key: selection, value: stickers)
         }
+        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: 100), pos: region.center)
+        delegate.mapView.animate(toPosition: region.center, height: height, heading: 0, time: 0.5)
         
         showStations(at: region)
     }
@@ -118,14 +133,23 @@ open class WeatherModule {
         
         hideDrawers()
         
-        if region?.save() == true {
-            weatherLayer.reposition(region: region!)
+        if let region = region, region.save() {
+            weatherLayer.reposition(region: region)
             
-            _ = refreshStations()
+            Messages.show(text: "Reloading stations...")
+            
+            weatherService.refreshStations().then { stations -> Promise<Void> in
+                self.refresh()
+            }.catch(execute: { err in
+                Messages.show(error: err)
+                self.load(observations: self.weatherService.observations())
+            })
         } else {
             load(observations: weatherService.observations())
         }
     }
+    
+    // MARK: - Drawers
     
     private func hideDrawers() {
         delegate.pulley.setDrawerPosition(position: .closed, animated: true)
@@ -140,36 +164,12 @@ open class WeatherModule {
         delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
     }
     
-    func configure(open: Bool) {
-        delegate.clearComponents(ofType: ObservationMarker.self)
-        self.weatherLayer.clean()
-        
-        if open {
-            let region = WeatherRegion.load() ??
-                WeatherRegion(center: LastLocation.load() ?? delegate.mapView.getPosition(),
-                              radius: 100)
-            startRegionSelection(at: region)
-        } else {
-            endRegionSelection()
-        }
-    }
-    
     // MARK: - Observations
     
     func refresh() -> Promise<Void> {
         Messages.show(text: "Refreshing observations...")
         
-        return weatherService.refreshObservations()
-            .then(execute: load)
-            .catch(execute: Messages.show)
-    }
-    
-    private func refreshStations() -> Promise<Void> {
-        Messages.show(text: "Reloading stations...")
-        
-        return weatherService.refreshStations().then { stations -> Promise<Void> in
-            self.refresh()
-        }.catch(execute: Messages.show)
+        return weatherService.refreshObservations().then(execute: load)
     }
     
     private func load(observations: Observations) {
@@ -187,18 +187,14 @@ open class WeatherModule {
             })
             
             showTimeslotDrawer()
+            
+            render(frame: frame)
         }
         
         delegate.loaded(frame: groups.selectedFrame, legend: presentation.ramp.legend())
-        render(frame: groups.selectedFrame)
     }
     
-    func render(frame: Int?) {
-        guard let frame = frame else {
-            Messages.show(text: "No data")
-            return
-        }
-        
+    func render(frame: Int) {
         delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
         

@@ -83,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // will automatically perform the migration
         do {
             let realm = try Realm()
-            print(realm.configuration.fileURL)
+            print(realm.configuration.fileURL ?? "No realm file")
         } catch {
             let realmURL = config.fileURL!
             [
@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try? FileManager.default.removeItem(at: url)
             }
             let realm = try! Realm()
-            print(realm.configuration.fileURL)
+            print(realm.configuration.fileURL ?? "No realm file")
         }
     }
 }

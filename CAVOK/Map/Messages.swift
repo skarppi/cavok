@@ -33,28 +33,33 @@ class Messages {
     class func show(text: String) {
         print("show message: \(text)")
         
-        SwiftMessages.hideAll()
-        
         let view = messageView()
         view.configureContent(body: text)
-        
-        SwiftMessages.show(view: view)
+
+        Messages.show(view: view, seconds: nil)
     }
     
     class func show(error: Error) {
-        
-        var config = SwiftMessages.defaultConfig
-        config.duration = .seconds(seconds: 5)
-        
-        let view = messageView(backgroundColor: UIColor.red.withAlphaComponent(0.5))
-        
         switch error {
         case let Weather.error(msg):
             print("show weather error: \(msg)")
-            view.configureContent(body: msg)
+            Messages.show(error: msg)
         default:
             print("show error: \(error)")
-            view.configureContent(body: error.localizedDescription)
+            Messages.show(error: error.localizedDescription)
+        }
+    }
+    
+    class func show(error: String) {
+        let view = messageView(backgroundColor: UIColor.red.withAlphaComponent(0.5))
+        view.configureContent(body: error)
+        Messages.show(view: view, seconds: 5)
+    }
+    
+    class func show(view: MessageView, seconds: Double?) {
+        var config = SwiftMessages.defaultConfig
+        if let seconds = seconds {
+            config.duration = .seconds(seconds: seconds)
         }
         
         SwiftMessages.hideAll()
