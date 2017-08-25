@@ -12,6 +12,8 @@ import PromiseKit
 protocol MapModule: class {
     init(delegate: MapDelegate)
     
+    func cleanup()
+    
     func didTapAt(coord: MaplyCoordinate)
     
     func refresh() -> Promise<Void>

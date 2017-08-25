@@ -62,7 +62,7 @@ open class WeatherModule {
         }
     }
     
-    deinit {
+    func cleanup() {
         delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
     }

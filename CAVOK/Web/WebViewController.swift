@@ -166,6 +166,9 @@ class WebModule: MapModule {
         }
     }
     
+    func cleanup() {
+    }
+    
     func didTapAt(coord: MaplyCoordinate) {
     }
     

@@ -180,7 +180,7 @@ class MapViewController: UIViewController {
                 moduleType.selectedSegmentIndex = previousIndex
             }
         }
-        module = nil
+        module?.cleanup()
         module = Modules.loadModule(index: selectedIndex, delegate: self)
     }
 }

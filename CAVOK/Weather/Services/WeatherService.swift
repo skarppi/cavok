@@ -113,8 +113,8 @@ public class WeatherServer {
     func observations() -> Observations {
         let realm = try! Realm()
         
-        let metars = realm.objects(Metar.self).sorted(byProperty: "datetime")
-        let tafs = realm.objects(Taf.self).sorted(byProperty: "from")
+        let metars = realm.objects(Metar.self).sorted(byKeyPath: "datetime")
+        let tafs = realm.objects(Taf.self).sorted(byKeyPath: "from")
 
         return Observations(metars: Array(metars), tafs: Array(tafs))
     }
@@ -122,8 +122,8 @@ public class WeatherServer {
     func observations(for identifier: String) -> Observations {
         let realm = try! Realm()
         
-        let metars = realm.objects(Metar.self).filter("identifier == '\(identifier)'").sorted(byProperty: "datetime")
-        let tafs = realm.objects(Taf.self).filter("identifier == '\(identifier)'").sorted(byProperty: "from")
+        let metars = realm.objects(Metar.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "datetime")
+        let tafs = realm.objects(Taf.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "from")
         
         return Observations(metars: Array(metars), tafs: Array(tafs))
     }
