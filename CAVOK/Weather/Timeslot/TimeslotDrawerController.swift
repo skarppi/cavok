@@ -23,6 +23,7 @@ class TimeslotDrawerController: UIViewController {
         super.viewDidLoad()
         
         status.applyRestartButton()
+        
     }
     
     func setModule(module: MapModule?) {

@@ -46,7 +46,9 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        moduleTypeChanged()
+        if module == nil {
+            moduleTypeChanged()   
+        }
     }
     
     func setupMapView() {
@@ -179,9 +181,11 @@ class MapViewController: UIViewController {
             if let module = module, let previousIndex = Modules.index(of: type(of: module)) {
                 moduleType.selectedSegmentIndex = previousIndex
             }
+            performSegue(withIdentifier: "OpenBrowser", sender: self)
+        } else {
+            module?.cleanup()
+            module = Modules.loadModule(index: selectedIndex, delegate: self)
         }
-        module?.cleanup()
-        module = Modules.loadModule(index: selectedIndex, delegate: self)
     }
 }
 

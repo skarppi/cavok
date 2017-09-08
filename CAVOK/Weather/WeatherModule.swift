@@ -93,9 +93,9 @@ open class WeatherModule {
     private func startRegionSelection(at region: WeatherRegion) {
         hideDrawers()
         
-        let regionDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "regionDrawer") as! RegionDrawerController
-        regionDrawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
-        delegate.pulley.setDrawerContentViewController(controller: regionDrawer)
+        let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
+        drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
+        delegate.pulley.setDrawerContentViewController(controller: drawer)
         delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
     }
     
@@ -106,8 +106,11 @@ open class WeatherModule {
         if let stickers = delegate.mapView.addStickers([selection], desc: [kMaplyFade: 1.0]) {
             delegate.addComponents(key: selection, value: stickers)
         }
-        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: 100), pos: region.center)
-        delegate.mapView.animate(toPosition: region.center, height: height, heading: 0, time: 0.5)
+        
+        let center = region.center.locationAt(kilometers: region.radius / 5, direction: 180)
+        
+        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: 100), pos: center)
+        delegate.mapView.animate(toPosition: center, height: height, heading: 0, time: 0.5)
         
         showStations(at: region)
     }
@@ -120,7 +123,7 @@ open class WeatherModule {
                 self.delegate.addComponents(key: key, value: components)
             }
             
-            if let drawer = self.delegate.pulley.drawerContentViewController as? RegionDrawerController {
+            if let drawer = self.delegate.pulley.drawerContentViewController as? ConfigDrawerController {
                 drawer.status(text: "Found \(stations.count) stations")
             }
             
