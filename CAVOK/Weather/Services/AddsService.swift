@@ -24,11 +24,11 @@ public class AddsService {
             
             return doc["response"]["data"]["Station"].all.map { station in
                 Station(
-                    identifier: station["station_id"].element!.text!,
-                    name: station["site"].element!.text!,
-                    latitude: Float(station["latitude"].element!.text!)!,
-                    longitude: Float(station["longitude"].element!.text!)!,
-                    elevation: Float(station["elevation_m"].element!.text!)!,
+                    identifier: station["station_id"].element!.text,
+                    name: station["site"].element!.text,
+                    latitude: Float(station["latitude"].element!.text)!,
+                    longitude: Float(station["longitude"].element!.text)!,
+                    elevation: Float(station["elevation_m"].element!.text)!,
                     hasMetar: station["site_type"]["METAR"].element != nil,
                     hasTaf: station["site_type"]["TAF"].element != nil
                 )

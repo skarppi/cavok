@@ -25,7 +25,7 @@ class Messages {
     }
     
     static func messageView(backgroundColor: UIColor = UIColor.clear) -> MessageView {
-        let status = MessageView.viewFromNib(layout: .StatusLine)
+        let status = MessageView.viewFromNib(layout: .statusLine)
         status.backgroundView.backgroundColor = backgroundColor
         return status
     }
