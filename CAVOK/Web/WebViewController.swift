@@ -13,8 +13,6 @@ import PromiseKit
 
 class WebViewController: UIViewController {
     
-    @IBOutlet weak var topbar: UIView! = nil
-    
     @IBOutlet weak var containerView : UIView! = nil
     
     @IBOutlet weak var urls : UISegmentedControl! = nil
@@ -25,10 +23,6 @@ class WebViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        
-        // default navigation bar color
-        let grey: CGFloat = 247.0/255.0
-        topbar.backgroundColor = UIColor(red: grey, green: grey, blue: grey, alpha: 1)
         
         links = Links.load()
         
@@ -58,18 +52,6 @@ class WebViewController: UIViewController {
         urls.sizeToFit()
         
         load()
-                
-        if UIDevice.current.orientation.isLandscape {
-            self.didRotate(from: .landscapeLeft)
-        }
-    }
-    
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        if fromInterfaceOrientation.isPortrait {
-            topbar.frame.origin.y = -13
-        } else {
-            topbar.frame.origin.y = 0
-        }
     }
     
     @IBAction func close() {

@@ -19,6 +19,7 @@ class LegendView : UIView {
         legendText.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         legendText.font = UIFont.systemFont(ofSize: 12)
         legendText.alpha = 0.7
+        legendText.backgroundColor = UIColor.clear
         self.addSubview(legendText)
         
         let gradientLayer = CAGradientLayer()
