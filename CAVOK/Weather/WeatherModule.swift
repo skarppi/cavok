@@ -43,6 +43,8 @@ open class WeatherModule {
     
     private let timeslotDrawer: TimeslotDrawerController!
     
+    fileprivate weak var timer: Timer?
+    
     public init(delegate: MapDelegate, mapper: @escaping (Observation) -> (value: Int?, source: String?)) {
         self.delegate = delegate
         
@@ -60,11 +62,19 @@ open class WeatherModule {
         if region != nil {
             load(observations: weatherService.observations())
         }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+            if self.timeslotDrawer.timeslots.selectedSegmentIndex != -1 {
+                self.render(frame: self.timeslotDrawer.timeslots.selectedSegmentIndex)
+            }
+        }
     }
     
     func cleanup() {
         delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
+        
+        timer?.invalidate()
     }
     
     // MARK: - Region selection
