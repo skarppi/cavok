@@ -40,6 +40,8 @@ class ConfigDrawerController: UIViewController {
         radiusChanged(stepper)
         
         links = Links.load()
+        
+        linksTable.isEditing = true
     }
     
     func setup(region: WeatherRegion, closed: @escaping (WeatherRegion) -> Void, resized: @escaping (WeatherRegion) -> Void) {
@@ -134,10 +136,16 @@ class ConfigDrawerController: UIViewController {
                 linksTable.insertRows(at: [newIndexPath], with: .automatic)
             }
             
-            Links.save(links)
+            if !Links.save(links) {
+                Messages.show(error: "Links cannot be saved")
+            }
+
+            if let pulley = parent as? PulleyViewController {
+                pulley.setNeedsSupportedDrawerPositionsUpdate()
+                pulley.setDrawerPosition(position: .partiallyRevealed, animated: false)
+            }
         }
     }
-
 }
 
 extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate  {
@@ -164,18 +172,57 @@ extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate  {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            links.remove(at: indexPath.row)
+            if Links.save(links) {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                if let pulley = parent as? PulleyViewController {
+                    pulley.setDrawerPosition(position: .collapsed, animated: false)
+                    pulley.setNeedsSupportedDrawerPositionsUpdate()
+                    pulley.setDrawerPosition(position: .partiallyRevealed, animated: false)
+                }
+            } else {
+                Messages.show(error: "Links cannot be saved")
+            }
+            
+        }
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedObject = links[sourceIndexPath.row]
+        links.remove(at: sourceIndexPath.row)
+        links.insert(movedObject, at: destinationIndexPath.row)
+    }
 }
 
 extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return [.closed, .partiallyRevealed, .open]
+        return [.closed, .collapsed, .partiallyRevealed]
     }
     
     func collapsedDrawerHeight() -> CGFloat {
-        return 75
+        return 175
     }
     
     func partialRevealDrawerHeight() -> CGFloat {
-        return 190
+        let tablePositionY = linksTable.frame.origin.y + (linksTable.superview?.frame.origin.y ?? 0)
+        
+        let drawerHeight = tablePositionY + linksTable.contentSize.height + 25
+        return min(drawerHeight, UIScreen.main.bounds.height - 50)
     }
 }

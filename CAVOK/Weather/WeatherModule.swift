@@ -91,12 +91,14 @@ open class WeatherModule {
     }
     
     private func startRegionSelection(at region: WeatherRegion) {
+        let position = delegate.pulley.drawerPosition != .closed ? delegate.pulley.drawerPosition : .collapsed
+        
         hideDrawers()
         
         let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
         drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
         delegate.pulley.setDrawerContentViewController(controller: drawer)
-        delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
+        delegate.pulley.setDrawerPosition(position: position, animated: true)
     }
     
     private func moveRegionSelection(at region: WeatherRegion) {
