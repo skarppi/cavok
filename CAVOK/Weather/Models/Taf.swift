@@ -18,8 +18,9 @@ public class Taf: Observation {
         
         let parser = Tokenizer(raw: self.raw)
         
-        // TAF
-        parser.next()
+        if parser.peek() == "TAF" {
+            parser.next()
+        }
         
         if let type = parser.peek()  {
             if type.contains(["COR", "AMD"]) {
@@ -44,6 +45,8 @@ public class Taf: Observation {
             }
             self.from = from
             self.to = to
+        } else {
+            print("No TAF validity for \(raw)")
         }
         
         if let wind = parseWind(value: parser.peek()) {
@@ -59,10 +62,10 @@ public class Taf: Observation {
         
         if let vis = parseVisibility(value: parser.peek()) {
             self.visibility.value = vis
-            
-            parser.next()
+            self.visibilityGroup = parser.pop()
         } else {
             self.visibility.value = nil
+            self.visibilityGroup = nil
         }
         
         self.weather = parser.loop { current in
@@ -87,7 +90,7 @@ public class Taf: Observation {
     }
     
     private func parse(validity: String?) -> (Date, Date)? {
-        if let validity = validity {
+        if let validity = validity, validity != "NIL" {
             let components = validity.components(separatedBy: "/").map { component -> Date in
                 if component.hasSuffix("24") {
                     let day = component.subString(0, length: 2)

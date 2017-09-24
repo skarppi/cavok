@@ -24,6 +24,12 @@ public class WeatherServer {
                 return region.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
 
             }
+        }.then { stations -> [Station] in
+            // remove duplicate identifiers
+            var result: [String: Station] = [:]
+            stations.forEach({ result[$0.identifier] = $0 })
+            return Array(result.values)
+            
         }.always {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
@@ -107,9 +113,18 @@ public class WeatherServer {
     func observations() -> Observations {
         let realm = try! Realm()
         
-        let metars = realm.objects(Metar.self).sorted(byProperty: "datetime")
-        let tafs = realm.objects(Taf.self).sorted(byProperty: "from")
+        let metars = realm.objects(Metar.self).sorted(byKeyPath: "datetime")
+        let tafs = realm.objects(Taf.self).sorted(byKeyPath: "from")
 
+        return Observations(metars: Array(metars), tafs: Array(tafs))
+    }
+    
+    func observations(for identifier: String) -> Observations {
+        let realm = try! Realm()
+        
+        let metars = realm.objects(Metar.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "datetime")
+        let tafs = realm.objects(Taf.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "from")
+        
         return Observations(metars: Array(metars), tafs: Array(tafs))
     }
 }

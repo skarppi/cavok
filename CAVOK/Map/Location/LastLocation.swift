@@ -21,13 +21,13 @@ class LastLocation {
     }
     
     class func save(location: MaplyCoordinate) {
-        let lastSession: [String : Any] = [
+        let lastLocation: [String : Any] = [
             "longitude" : location.deg.x,
             "latitude" : location.deg.y,
             "date": Date()
         ]
         let defaults = UserDefaults.standard
-        defaults.set(lastSession, forKey:"LastLocation")
+        defaults.set(lastLocation, forKey:"LastLocation")
         defaults.synchronize()
     }
 }

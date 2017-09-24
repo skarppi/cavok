@@ -31,7 +31,7 @@ final class AirspaceModule: MapModule {
         
         if let airspaces = UserDefaults.standard.stringArray(forKey: "airspaces") {
             airspaces.forEach { airspace in
-                self.render(frame: frames.index(where: { String(describing: $0) ==  airspace}))
+                self.render(frame: frames.index(where: { String(describing: $0) == airspace})!)
             }
         }
     }
@@ -39,18 +39,15 @@ final class AirspaceModule: MapModule {
     func didTapAt(coord: MaplyCoordinate) {
     }
     
-    func refresh() {
+    func refresh() -> Promise<Void> {
+        return Promise(value: ())
     }
     
-    func configure(open: Bool, userLocation: MaplyCoordinate?) {
+    func configure(open: Bool) {
     }
     
-    func render(frame: Int?) {
-        guard frame != nil else {
-            return
-        }
-        
-        let key = frames[frame!]
+    func render(frame: Int) {
+        let key = frames[frame]
         let current = String(describing: key)
         let url = UserDefaults.standard.string(forKey: "airspaceURL")! + "/" + current
         
@@ -65,7 +62,7 @@ final class AirspaceModule: MapModule {
             let rq = URLRequest(url: URL(string: url)!)
             URLSession.shared.dataTask(with: rq).then { data -> Void in
                 self.showVectors(key: key, data: data)
-            }.catch(execute: self.delegate.setStatus)
+            }.catch(execute: Messages.show)
         }
         UserDefaults.standard.setValue(airspaces, forKey: "airspaces")
     }
@@ -96,7 +93,7 @@ final class AirspaceModule: MapModule {
                     let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: date)!
                     return " until \(dateFormatter.string(from: yesterday))"
                 } ?? ""
-                self.delegate.setStatus(text: "From \(dateFormatter.string(from: validFrom))" + validUntil, color: UIColor.green)
+                Messages.show(text: "From \(dateFormatter.string(from: validFrom))" + validUntil)
             }
             
             vector.splitVectors().forEach {

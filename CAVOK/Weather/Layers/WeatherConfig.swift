@@ -18,7 +18,7 @@ class WeatherConfig {
     let height: Int
     
     // padding in kilometers
-    let padding: Int
+    let padding: Float
     
     // radius of weather station in pixels
     let radius: Int
@@ -26,12 +26,13 @@ class WeatherConfig {
     // local coordinates
     let bounds: MaplyBoundingBox
     
-    let zoom: Int = 5
+    let minZoom: Int = 3
+    
+    let maxZoom: Int = 6
     
     let tilesize = 256
     
-    let ll: MaplyTileID
-    let ur: MaplyTileID
+    let tiles: [(ll: MaplyTileID, ur: MaplyTileID)]
     
     init(region: WeatherRegion) {
         self.region = region
@@ -39,17 +40,21 @@ class WeatherConfig {
         self.padding = min(region.radius / 2, 300)
         
         let bbox = region.bbox(padding: padding)
-        let (ll, ur) = bbox.tiles(zoom: Int32(zoom))
-        self.ll = ll
-        self.ur = ur
+        let tiles = (0...maxZoom).map { zoom in
+            bbox.tiles(zoom: Int32(zoom))
+        }
+        self.tiles = tiles
         
-        self.bounds = coordSystem.geo(toLocalBox: MaplyBoundingBox(ll: ll.coordinate, ur: ur.coordinate))
+        let tile = tiles[maxZoom]
         
-        let resolution = 156543.03 * cos(region.center.y) / pow(2.0, Float(zoom)) //meters/pixel
+        let bounds = coordSystem.geo(toLocalBox: MaplyBoundingBox(ll: tile.ll.coordinate, ur: tile.ur.coordinate))
+        self.bounds = bounds
         
-        let scale = Double(tilesize) * pow(2.0, Double(zoom))
-        self.width = Int(round(Double(bounds.ur.x - bounds.ll.x) / (2 * M_PI) * scale))
-        self.height = Int(round(Double(bounds.ur.y - bounds.ll.y) / (2 * M_PI) * scale))
+        let resolution = 156543.03 * cos(region.center.y) / pow(2.0, Float(maxZoom)) //meters/pixel
+        
+        let scale = Double(tilesize) * pow(2.0, Double(maxZoom))
+        self.width = Int(round(Double(bounds.ur.x - bounds.ll.x) / (2 * Double.pi) * scale))
+        self.height = Int(round(Double(bounds.ur.y - bounds.ll.y) / (2 * Double.pi) * scale))
         self.radius = Int(round(Float(padding * 1000) / resolution))
     }
 }

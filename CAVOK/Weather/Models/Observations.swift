@@ -22,8 +22,8 @@ struct ObservationGroups {
 
 class Observations {
     
-    private let metars: [Metar]
-    private let tafs: [Taf]
+    let metars: [Metar]
+    let tafs: [Taf]
     
     init(metars: [Metar], tafs: [Taf]) {
         self.metars = metars
@@ -37,7 +37,7 @@ class Observations {
     }
     
     private func slot(date: Date, title: String? = nil) -> Timeslot {
-        return Timeslot(date: date, color: ColorRamp.color(for: date, alpha: 0.2), title: title)
+        return Timeslot(date: date, title: title)
     }
 
     // group metars into half hour time slots starting every 20 and 50 past

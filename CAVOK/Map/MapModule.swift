@@ -7,17 +7,20 @@
 //
 
 import Foundation
+import PromiseKit
 
-protocol MapModule {
+protocol MapModule: class {
     init(delegate: MapDelegate)
+    
+    func cleanup()
     
     func didTapAt(coord: MaplyCoordinate)
     
-    func refresh()
+    func refresh() -> Promise<Void>
     
-    func configure(open: Bool, userLocation: MaplyCoordinate?)
+    func configure(open: Bool)
     
-    func render(frame: Int?)
+    func render(frame: Int)
     
     func annotation(object: Any, parentFrame: CGRect) -> UIView?
 }

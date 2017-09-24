@@ -83,20 +83,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // will automatically perform the migration
         do {
             let realm = try Realm()
-            print(realm.configuration.fileURL)
+            print(realm.configuration.fileURL ?? "No realm file")
         } catch {
             let realmURL = config.fileURL!
             [
                 realmURL,
                 realmURL.appendingPathExtension("lock"),
-                realmURL.appendingPathExtension("log_a"),
-                realmURL.appendingPathExtension("log_b"),
-                realmURL.appendingPathExtension("note")
+                realmURL.appendingPathExtension("note"),
+                realmURL.appendingPathExtension("management")
             ].forEach { url in
-                try! FileManager.default.removeItem(at: url)
+                try? FileManager.default.removeItem(at: url)
             }
             let realm = try! Realm()
-            print(realm.configuration.fileURL)
+            print(realm.configuration.fileURL ?? "No realm file")
         }
     }
 }

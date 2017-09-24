@@ -1,5 +1,5 @@
 //
-//  TimeslotView.swift
+//  TimeslotControl.swift
 //  CAVOK
 //
 //  Created by Juho Kolehmainen on 21.09.16.
@@ -8,7 +8,9 @@
 
 import Foundation
 
-class TimeslotView: UISegmentedControl {
+class TimeslotControl: UISegmentedControl {
+    
+    private static let clearImage = image(color: UIColor.clear)
     
     override var selectedSegmentIndex: Int {
         didSet {
@@ -23,16 +25,18 @@ class TimeslotView: UISegmentedControl {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setBackgroundImage(image(color: UIColor.clear), for: .normal, barMetrics: .default)
-        setBackgroundImage(image(color: UIColor.clear), for: .selected, barMetrics: .default)
+        setBackgroundImage(TimeslotControl.clearImage, for: .normal, barMetrics: .default)
+        setBackgroundImage(TimeslotControl.clearImage, for: .selected, barMetrics: .default)
+        
+        setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: .selected)
     }
     
-    func insertSegment(with slot: Timeslot, at segment: Int, animated: Bool) {
-        
-        super.insertSegment(withTitle: slot.title, at: segment, animated: animated)
-        let view = segments()[segment]
-        
-        view.backgroundColor = slot.color
+    func updateSegment(color: UIColor, at segment: Int) {
+        let views = segments()
+        if segment < views.count {
+            let view = views[segment]
+            view.backgroundColor = color
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -61,7 +65,7 @@ class TimeslotView: UISegmentedControl {
         })
     }
     
-    private func image(color: UIColor) -> UIImage? {
+    private static func image(color: UIColor) -> UIImage? {
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         if let context = UIGraphicsGetCurrentContext() {

@@ -9,35 +9,17 @@
 import UIKit
 import CoreLocation
 import PromiseKit
+import Pulley
 
 class MapViewController: UIViewController {
     
-    @IBOutlet weak var bottomView: UIView!
-    
-    @IBOutlet weak var status: UITextField!
-
     @IBOutlet weak var moduleType: UISegmentedControl!
-    
-    @IBOutlet weak var timeslots: TimeslotView!
     
     @IBOutlet weak var buttonView: UIView!
     
-    @IBOutlet weak var region: UIButton!
-    
-    @IBOutlet weak var airspace: UIButton!
-    
-    @IBOutlet weak var webView: UIButton!
-
-    @IBOutlet weak var legendView: UIView!
-    
-    @IBOutlet weak var legendText: UITextView!
-    
-    @IBOutlet weak var legendGradient: LegendGradientView!
-    
+    @IBOutlet weak var legendView: LegendView!
     
     internal var mapView: WhirlyGlobeViewController!
-
-    fileprivate let modules = Modules()
     
     fileprivate var module: MapModule!
     
@@ -50,21 +32,26 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        region.layer.borderWidth = 1
-        region.layer.borderColor = view.tintColor.cgColor
-        region.layer.cornerRadius = 5
-        region.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        setupMapView()
         
-        airspace.layer.borderWidth = 1
-        airspace.layer.borderColor = view.tintColor.cgColor
-        airspace.layer.cornerRadius = 5
-        airspace.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        Messages.setup()
         
-        webView.layer.borderWidth = 1
-        webView.layer.borderColor = view.tintColor.cgColor
-        webView.layer.cornerRadius = 5
-        webView.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        setupObservers()
         
+        setupLocationManager()
+
+        setupModules()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if module == nil {
+            moduleTypeChanged()   
+        }
+    }
+    
+    func setupMapView() {
         mapView = WhirlyGlobeViewController()
         mapView.delegate = self
         
@@ -90,12 +77,33 @@ class MapViewController: UIViewController {
             TileJSONLayer().load(url: url).then { layer in
                 self.mapView.add(layer)
             }.catch { error in
-                self.setStatus(error: error)
+                Messages.show(error: error)
             }
         }
-        
+    }
+    
+    func setupLocationManager() {
+        locationManager = LocationManager(
+            fulfill: userLocationChanged,
+            reject: { error in
+                self.clearComponents(ofType: UserMarker.self)
+                
+                _ = self.ensureConfigured()
+        })
+        locationManager.requestLocation()
+    }
+    
+    func setupModules() {
         airspaceModule = AirspaceModule(delegate: self)
         
+        moduleType.removeAllSegments()
+        for (index, title) in Modules.availableTitles().enumerated() {
+            moduleType.insertSegment(withTitle: title, at: index, animated: false)
+        }
+        moduleType.selectedSegmentIndex = 0
+    }
+    
+    func setupObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredBackground(notification:)),
                                                name: .UIApplicationDidEnterBackground,
@@ -107,29 +115,6 @@ class MapViewController: UIViewController {
                                                name: .UIApplicationWillEnterForeground,
                                                object: nil
         )
-        
-        locationManager = LocationManager(
-            fulfill: userLocationChanged,
-            reject: { error in
-                self.clearComponents(ofType: UserMarker.self)
-                
-                if self.isFirstLoad() {
-                    self.module.configure(open: true, userLocation: nil)
-                }
-            })
-        locationManager.requestLocation()
-        
-        moduleType.removeAllSegments()
-        for (index, title) in modules.availableTitles().enumerated() {
-            moduleType.insertSegment(withTitle: title, at: index, animated: false)
-        }
-        moduleType.selectedSegmentIndex = 0
-        moduleTypeChanged()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func enteredBackground(notification: Notification) {
@@ -140,8 +125,14 @@ class MapViewController: UIViewController {
         locationManager.requestLocation()
     }
 
-    fileprivate func isFirstLoad() -> Bool {
-        return self.region.isSelected && WeatherRegion.load() == nil
+    fileprivate func ensureConfigured() -> Bool {
+        if WeatherRegion.load() == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                self.module.configure(open: true)
+            })
+            return false
+        }
+        return true
     }
     
     func userLocationChanged(coordinate: MaplyCoordinate) {
@@ -152,15 +143,14 @@ class MapViewController: UIViewController {
             addComponents(key: userLocation, value: objects)
         }
         
-        let height = LastSession.load()?.height
-        if height == nil || !mapView.getCurrentExtents().inside(coordinate) {
-            mapView.animate(toPosition: coordinate, height: height ?? 0.2, heading: 0, time: 0.5)
-        }
-        
-        if isFirstLoad() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { 
-                self.module.configure(open: true, userLocation: userLocation.loc)
-            })
+        if ensureConfigured() {
+            let userMovedOutsideView = LastLocation.load().map { last -> Bool in
+                let extents = mapView.getCurrentExtents()
+                return extents.inside(last) && !extents.inside(coordinate)
+            }
+            if userMovedOutsideView ?? true {
+                mapView.animate(toPosition: coordinate, time: 0.5)
+            }
         }
     }
     
@@ -168,19 +158,12 @@ class MapViewController: UIViewController {
         airspaceModule.render(frame: 0)
     }
     
-    @IBAction func openWebView() {
-        
-        self.performSegue(withIdentifier: "OpenBrowser", sender: self)
-    }
-    
     @IBAction func resetRegion() {
-        let start = !region.isSelected
-        region.isSelected = start
-        if start {
-            animateModuleType(show: false)
-            animateTimeslots(show: false)
-        }
-        module.configure(open: start, userLocation: nil)
+        buttonView.isHidden = true
+        legendView.isHidden = true
+        
+        animateModuleType(show: false)
+        module.configure(open: true)
     }
     
     fileprivate func animateModuleType(show: Bool) {
@@ -191,72 +174,35 @@ class MapViewController: UIViewController {
         })
     }
     
-    fileprivate func animateTimeslots(show: Bool) {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            let height: CGFloat = (show ? 80 : 40)
-            self.bottomView.frame.origin = CGPoint(x: 0, y: self.view.bounds.height - height)
-        })
-    }
-    
-    
     @IBAction func moduleTypeChanged() {
-        module = nil
-        module = modules.loadModule(index: moduleType.selectedSegmentIndex, delegate: self)
+        let selectedIndex = moduleType.selectedSegmentIndex
+        
+        if selectedIndex == moduleType.numberOfSegments - 1 {
+            if let module = module, let previousIndex = Modules.index(of: type(of: module)) {
+                moduleType.selectedSegmentIndex = previousIndex
+            }
+            performSegue(withIdentifier: "OpenBrowser", sender: self)
+        } else {
+            module?.cleanup()
+            module = Modules.loadModule(index: selectedIndex, delegate: self)
+        }
     }
-    
-    @IBAction func timeslotChanged() {
-        module.render(frame: timeslots.selectedSegmentIndex)
-    }
-    
 }
 
 // MARK: - MapDelegate
 extension MapViewController : MapDelegate {
-
-    func setStatus(error: Error) {
-        switch error {
-        case let Weather.error(msg):
-            setStatus(text: msg)
-        default:
-            print(error)
-            setStatus(text: error.localizedDescription)
-        }
-        
-    }
     
-    func setStatus(text: String?, color: UIColor = UIColor.red) {
-        if let text = text {
-            DispatchQueue.main.async {
-                self.status.textColor = color
-                self.status.text = "\(text)"
-            }
-        }
-    }
-    
-    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend) {
+    func loaded(frame:Int?, legend: Legend) {
         DispatchQueue.main.async {
-            if let frame = frame {
-                self.timeslots.removeAllSegments()
-                for (index, slot) in timeslots.enumerated() {
-                    self.timeslots.insertSegment(with: slot, at: index, animated: true)
-                }
-                
-                self.animateTimeslots(show: true)
-                self.animateModuleType(show: true)
-                
-                self.timeslots.selectedSegmentIndex = frame
-            } else {
-                self.animateTimeslots(show: false)
-                self.animateModuleType(show: false)
-            }
-            // make sure region selection is canceled
-            self.region.isSelected = false
-            
             self.buttonView.isHidden = false
             
-            self.legendText.text = legend.unit + "\n" + legend.titles.joined(separator: "\n")
-            self.legendGradient.gradient(ramp: legend.gradient)
-            self.legendView.isHidden = false
+            if frame != nil {
+                self.legendView.loaded(legend: legend)
+                self.animateModuleType(show: true)
+            } else {
+                Messages.show(error: "No data")
+                self.resetRegion()
+            }
         }
     }
     
@@ -291,15 +237,11 @@ extension MapViewController : MapDelegate {
             components.removeAll()
         }
     }
-}
-
-// MARK: - UITextFieldDelegate
-extension MapViewController: UITextFieldDelegate {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == self.status {
-            module.refresh()
+    
+    var pulley: PulleyViewController! {
+        get {
+            return self.parent as! PulleyViewController
         }
-        return false
     }
 }
 
@@ -315,7 +257,7 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
         
         view.clearAnnotations()
         
-        if self.region.isSelected {
+        if self.buttonView.isHidden {
             module.didTapAt(coord: coord)
             return
         }

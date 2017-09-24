@@ -9,50 +9,31 @@
 import Foundation
 import UIKit
 import WebKit
+import PromiseKit
 
 class WebViewController: UIViewController {
     
-    @IBOutlet var topbar: UIView! = nil
+    @IBOutlet weak var containerView : UIView! = nil
     
-    @IBOutlet var containerView : UIView! = nil
+    @IBOutlet weak var urls : UISegmentedControl! = nil
     
-    @IBOutlet var urls : UISegmentedControl! = nil
+    private var webView: WKWebView!
     
-    var webView: WKWebView!
-    
-    var links: [[String: String]] = []
-    
-    func contentBlockers() -> WKUserScript {
-        let selectors = links.flatMap { $0["blockElements"] }
-            .filter{ !$0.isEmpty }
-            .joined(separator: ",")
-        
-        let source = "var styleTag = document.createElement('style');" +
-            "styleTag.textContent = '\(selectors) { display:none!important; }';" +
-        "document.documentElement.appendChild(styleTag);"
-        
-        return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-    }
+    private var links: [Link] = []
     
     override func loadView() {
         super.loadView()
         
-        // default navigation bar color
-        let grey: CGFloat = 247.0/255.0
-        topbar.backgroundColor = UIColor(red: grey, green: grey, blue: grey, alpha: 1)
-        
-        if let links = UserDefaults.standard.array(forKey: "links") as? [[String: String]] {
-            self.links = links
-        }
+        links = Links.load()
         
         let userContentController = WKUserContentController()
-        userContentController.addUserScript(contentBlockers())
         
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = userContentController
         
         webView = WKWebView(frame: containerView.bounds, configuration: configuration)
         webView.navigationDelegate = self
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.addSubview(webView)
     }
     
@@ -61,12 +42,14 @@ class WebViewController: UIViewController {
         
         self.urls.removeAllSegments()
         links.enumerated().forEach { (index, link) in
-            self.urls.insertSegment(withTitle: link["title"], at: index, animated: true)
+            self.urls.insertSegment(withTitle: link.title, at: index, animated: true)
         }
         
         if links.count > 0 {
             urls.selectedSegmentIndex = 0
         }
+        
+        urls.sizeToFit()
         
         load()
     }
@@ -95,19 +78,32 @@ class WebViewController: UIViewController {
         }
     }
     
+    private func block(elements: String) -> WKUserScript {
+        let source = "var styleTag = document.createElement('style');" +
+            "styleTag.textContent = '\(elements) { display:none!important; }';" +
+        "document.documentElement.appendChild(styleTag);"
+        
+        return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+    }
+    
     @IBAction func load() {
         guard urls.selectedSegmentIndex != -1 else {
             return
         }
         
-        guard let link = links[urls.selectedSegmentIndex]["url"] else {
-            errorPage(msg: "No url configured for link index \(urls.selectedSegmentIndex)")
+        let link = links[urls.selectedSegmentIndex]
+        
+        guard let url = buildURL(link: link.url) else {
+            errorPage(msg: "Bad url for \(link)")
             return
         }
         
-        guard let url = buildURL(link: link) else {
-            errorPage(msg: "Bad url for \(link)")
-            return
+        let content = webView.configuration.userContentController
+        content.removeAllUserScripts()
+        
+        if let elements = link.blockElements {
+            let script = block(elements: elements)
+            content.addUserScript(script)
         }
         
         webView.load(URLRequest(url: url))
@@ -135,7 +131,9 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        errorPage(msg: error.localizedDescription)
+        if !error.isCancelledError {
+            errorPage(msg: error.localizedDescription)
+        }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }

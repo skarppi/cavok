@@ -21,13 +21,13 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
     
     /// @return Returns the minimum allowable zoom layer.  Ideally, this is 0.
     public func minZoom() -> Int32 {
-        return Int32(config.zoom)
+        return Int32(config.minZoom)
     }
     
     /// @return Returns the maximum allowable zoom layer.  Typically no more than 18,
     ///          but it depends on your implementation.
     public func maxZoom() -> Int32 {
-        return Int32(config.zoom)
+        return Int32(config.maxZoom)
     }
     
     /** @brief Number of pixels on the side of a single tile (e.g. 128, 256).
@@ -67,10 +67,12 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
      @return True if the tile is loadable, false if not.
      */
     public func validTile(_ tileID: MaplyTileID, bbox:MaplyBoundingBox) -> Bool {
-        // flip y
-        let y = (1<<tileID.level)-tileID.y-1
+        let y = (1<<tileID.level)-tileID.y-1 // flip
+        let x = tileID.x
         
-        if (tileID.x < config.ll.x || tileID.x >= config.ur.x || y >= config.ll.y || y < config.ur.y) {
+        let tile = config.tiles[Int(tileID.level)]
+        
+        if x >= tile.ur.x || (x + 1) <= tile.ll.x || (y + 1) <= tile.ur.y ||  y >= tile.ll.y {
             return false
         }
         return true

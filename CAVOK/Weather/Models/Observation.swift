@@ -21,6 +21,11 @@ public struct WindData {
     public var variability: String? = nil
 }
 
+struct ObservationPresentation {
+    var mapper: (Observation) -> (value: Int?, source: String?)
+    var ramp: ColorRamp
+}
+
 open class Observation: Object {
     
     open dynamic var type: String = ""
@@ -31,6 +36,7 @@ open class Observation: Object {
     public dynamic var raw: String = ""
     public dynamic var clouds: String?
     public dynamic var supplements: String?
+    public dynamic var visibilityGroup: String?
     public let visibility = RealmOptional<Int>()
     public dynamic var weather: String?
     private let windDirection = RealmOptional<Int>()

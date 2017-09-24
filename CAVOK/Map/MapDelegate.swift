@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Pulley
 
 public struct Legend {
     var unit: String
@@ -15,11 +16,8 @@ public struct Legend {
 }
 
 public protocol MapDelegate {
-    func setStatus(text: String?, color: UIColor)
     
-    func setStatus(error: Error)
-    
-    func loaded(frame:Int?, timeslots: [Timeslot], legend: Legend)
+    func loaded(frame:Int?, legend: Legend)
     
     func clearAnnotations(ofType: MaplyAnnotation.Type?)
     
@@ -30,6 +28,10 @@ public protocol MapDelegate {
     func clearComponents(ofType: NSObject.Type?)
     
     var mapView: WhirlyGlobeViewController! {
+        get
+    }
+    
+    var pulley: PulleyViewController! {
         get
     }
 }

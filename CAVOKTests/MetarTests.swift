@@ -99,6 +99,33 @@ class MetarTests : ObservationTestCase {
         XCTAssertEqual(metar.visibility.value!, 10000);
     }
     
+    func testNilValues() {
+        let date = getDateFor(27, 20, 40, monthOffset: true)
+        
+        let metar = Metar()
+        metar.parse(raw: "ILWD 272040Z AUTO /////KT //// // ////// 13/12 Q////=;")
+        
+        XCTAssertEqual(metar.type, "AUTO")
+        XCTAssertEqual(metar.datetime, date)
+        
+        let wind = metar.wind
+        XCTAssertNil(wind.direction)
+        XCTAssertNil(wind.speed)
+        XCTAssertNil(wind.gust)
+        XCTAssertNil(wind.variability)
+        
+        XCTAssertNil(metar.visibility.value)
+        XCTAssertNil(metar.runwayVisualRange)
+        XCTAssertEqual(metar.weather!, "")
+        XCTAssertEqual(metar.clouds!, "//// // //////")
+        
+        XCTAssertEqual(metar.temperature.value!, 13)
+        XCTAssertEqual(metar.dewPoint.value!, 12)
+        
+        XCTAssertNil(metar.altimeter.value)
+        XCTAssertEqual(metar.supplements!, "Q////=;")
+    }
+    
     func testNegativeTemperatures() {
         let metar = Metar()
         metar.parse(raw: "ILZU 012120Z 31009KT 9999 FEW036 03/M02")
