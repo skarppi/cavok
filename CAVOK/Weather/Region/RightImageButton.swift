@@ -8,20 +8,21 @@
 
 import Foundation
 
-class RightImageButton: UIButton {
+@IBDesignable class RightImageButton: UIButton {
+    
+    @IBInspectable var imageAlpha: CGFloat = 1 {
+        didSet {
+            if let imageView = imageView {
+                imageView.alpha = imageAlpha
+            }
+        }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if let imageSize = imageView?.intrinsicContentSize {
-            let width = imageSize.width - imageEdgeInsets.left - imageEdgeInsets.right
-            let height = imageSize.height - imageEdgeInsets.bottom - imageEdgeInsets.top
-            
-            imageView?.frame = CGRect(
-                x: round(bounds.width),
-                y: round(bounds.height/2 - height/2),
-                width: width,
-                height: height)
+        if let imageView = imageView {
+            imageView.alpha = imageAlpha
         }
     }
 }

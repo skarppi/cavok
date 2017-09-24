@@ -291,7 +291,7 @@
                                 <rect key="frame" x="0.0" y="16" width="375" height="641"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7kN-U0-8ta">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="143.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="147.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather region" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwf-7h-Pz8">
                                                 <rect key="frame" x="8" y="12" width="124" height="21.5"/>
@@ -299,8 +299,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="8br-Zx-9FN">
-                                                <rect key="frame" x="8" y="41.5" width="230" height="29"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="8br-Zx-9FN">
+                                                <rect key="frame" x="8" y="41.5" width="270" height="29"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVi-am-2v4">
                                                         <rect key="frame" x="0.0" y="0.0" width="44" height="29"/>
@@ -309,13 +309,16 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minimumValue="100" maximumValue="3000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="1eD-5x-oQS">
-                                                        <rect key="frame" x="74" y="0.0" width="94" height="29"/>
+                                                        <rect key="frame" x="80" y="0.0" width="94" height="29"/>
                                                         <connections>
                                                             <action selector="radiusChanged:" destination="tAm-7j-98t" eventType="valueChanged" id="cZM-Wm-x06"/>
                                                         </connections>
                                                     </stepper>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3B2-yU-RvQ">
-                                                        <rect key="frame" x="198" y="0.0" width="32" height="29"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 km" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3B2-yU-RvQ">
+                                                        <rect key="frame" x="210" y="0.0" width="60" height="29"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="UtY-UD-ZiC"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -328,22 +331,26 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwz-1I-4wc" customClass="RightImageButton" customModule="CAVOK" customModuleProvider="target">
-                                                <rect key="frame" x="8" y="103.5" width="230" height="32"/>
+                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwz-1I-4wc" customClass="RightImageButton" customModule="CAVOK" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="103.5" width="270" height="36"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="230" id="gs7-ql-a1o"/>
+                                                    <constraint firstAttribute="height" constant="36" id="3WX-fW-AQL"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="270" id="gs7-ql-a1o"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                                <state key="normal" title="Center Aroud My Location" image="Center">
-                                                    <color key="titleColor" red="0.20629309117794037" green="0.47134092450141907" blue="0.96651327610015869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
+                                                <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Center Aroud My Location" image="Center"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                         <color key="value" red="0.2062930912" green="0.47134092449999998" blue="0.96651327610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageAlpha">
+                                                        <real key="value" value="0.69999999999999996"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -354,10 +361,10 @@
                                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qy7-Bg-b0O">
-                                        <rect key="frame" x="0.0" y="143.5" width="375" height="497.5"/>
+                                        <rect key="frame" x="0.0" y="147.5" width="375" height="493.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="rel-sD-bjG">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="66.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="62.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Web links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjF-u7-PZV">
                                                         <rect key="frame" x="8" y="8" width="321" height="21.5"/>
@@ -378,7 +385,7 @@
                                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="0.0" right="6"/>
                                             </stackView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JOv-p6-Ocf">
-                                                <rect key="frame" x="0.0" y="74.5" width="375" height="423"/>
+                                                <rect key="frame" x="0.0" y="70.5" width="375" height="423"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LinkTableViewCell" selectionStyle="none" showsReorderControl="YES" accessoryType="disclosureIndicator" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="LinkTableViewCell" editingAccessoryType="disclosureIndicator" id="HGe-9v-UqA" customClass="LinkTableViewCell" customModule="CAVOK" customModuleProvider="target">
@@ -435,7 +442,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hJ-eg-jTT">
-                                <rect key="frame" x="325" y="8" width="40" height="40"/>
+                                <rect key="frame" x="338" y="8" width="22" height="22"/>
                                 <state key="normal" image="CancelFilled"/>
                                 <connections>
                                     <action selector="close:" destination="tAm-7j-98t" eventType="touchUpInside" id="UKF-uG-zeU"/>
@@ -444,7 +451,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="9hJ-eg-jTT" secondAttribute="trailing" constant="10" id="0Oe-xh-jiu"/>
+                            <constraint firstAttribute="trailing" secondItem="9hJ-eg-jTT" secondAttribute="trailing" constant="15" id="0Oe-xh-jiu"/>
                             <constraint firstItem="Vkp-e5-h9J" firstAttribute="top" secondItem="mRC-Ut-72G" secondAttribute="top" constant="16" id="4rF-O4-VTH"/>
                             <constraint firstAttribute="trailing" secondItem="Vkp-e5-h9J" secondAttribute="trailing" id="5X6-pw-bZd"/>
                             <constraint firstAttribute="bottom" secondItem="Vkp-e5-h9J" secondAttribute="bottom" constant="10" id="MeN-rK-Xgm"/>
@@ -685,8 +692,8 @@
     <resources>
         <image name="Airspace" width="50" height="50"/>
         <image name="Back" width="13" height="21"/>
-        <image name="CancelFilled" width="40" height="40"/>
-        <image name="Center" width="32" height="32"/>
+        <image name="CancelFilled" width="22" height="22"/>
+        <image name="Center" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IJk-WN-tDi"/>
