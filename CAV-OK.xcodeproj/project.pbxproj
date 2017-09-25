@@ -135,17 +135,17 @@
 		3737DA9D1D8E7D2400EB57A2 /* ColorRamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorRamp.swift; path = Weather/Layers/ColorRamp.swift; sourceTree = "<group>"; };
 		37486F221D89EA8300357E11 /* FrameChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameChanger.swift; path = Weather/Layers/FrameChanger.swift; sourceTree = "<group>"; };
 		374ACD0A1D7F4BB000C45A18 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationManager.swift; path = Map/Location/LocationManager.swift; sourceTree = "<group>"; };
-		374EC9C91D7CB5A90047B82B /* CAVOK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAVOK.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		374EC9C91D7CB5A90047B82B /* CAV-OK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CAV-OK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9CC1D7CB5A90047B82B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		374EC9CE1D7CB5A90047B82B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Map/MapViewController.swift; sourceTree = "<group>"; };
 		374EC9D11D7CB5A90047B82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		374EC9D31D7CB5A90047B82B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		374EC9D61D7CB5A90047B82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		374EC9D81D7CB5A90047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		374EC9DD1D7CB5AA0047B82B /* CAVOKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		374EC9DD1D7CB5AA0047B82B /* CAV-OKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CAV-OKTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKTests.swift; sourceTree = "<group>"; };
 		374EC9E31D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CAVOKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		374EC9E81D7CB5AA0047B82B /* CAV-OKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CAV-OKUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		374EC9EC1D7CB5AA0047B82B /* CAVOKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAVOKUITests.swift; sourceTree = "<group>"; };
 		374EC9EE1D7CB5AA0047B82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		375784DF1D9321220046A8A7 /* TimeslotControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeslotControl.swift; path = Weather/Timeslot/TimeslotControl.swift; sourceTree = "<group>"; };
@@ -310,9 +310,9 @@
 		374EC9CA1D7CB5A90047B82B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				374EC9C91D7CB5A90047B82B /* CAVOK.app */,
-				374EC9DD1D7CB5AA0047B82B /* CAVOKTests.xctest */,
-				374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */,
+				374EC9C91D7CB5A90047B82B /* CAV-OK.app */,
+				374EC9DD1D7CB5AA0047B82B /* CAV-OKTests.xctest */,
+				374EC9E81D7CB5AA0047B82B /* CAV-OKUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -524,9 +524,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		374EC9C81D7CB5A90047B82B /* CAVOK */ = {
+		374EC9C81D7CB5A90047B82B /* CAV-OK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 374EC9F11D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOK" */;
+			buildConfigurationList = 374EC9F11D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAV-OK" */;
 			buildPhases = (
 				374EC9C51D7CB5A90047B82B /* Sources */,
 				374EC9C61D7CB5A90047B82B /* Frameworks */,
@@ -537,14 +537,14 @@
 			);
 			dependencies = (
 			);
-			name = CAVOK;
+			name = "CAV-OK";
 			productName = CAVOK;
-			productReference = 374EC9C91D7CB5A90047B82B /* CAVOK.app */;
+			productReference = 374EC9C91D7CB5A90047B82B /* CAV-OK.app */;
 			productType = "com.apple.product-type.application";
 		};
-		374EC9DC1D7CB5AA0047B82B /* CAVOKTests */ = {
+		374EC9DC1D7CB5AA0047B82B /* CAV-OKTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 374EC9F41D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKTests" */;
+			buildConfigurationList = 374EC9F41D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAV-OKTests" */;
 			buildPhases = (
 				374EC9D91D7CB5AA0047B82B /* Sources */,
 				374EC9DA1D7CB5AA0047B82B /* Frameworks */,
@@ -555,14 +555,14 @@
 			dependencies = (
 				374EC9DF1D7CB5AA0047B82B /* PBXTargetDependency */,
 			);
-			name = CAVOKTests;
+			name = "CAV-OKTests";
 			productName = CAVOKTests;
-			productReference = 374EC9DD1D7CB5AA0047B82B /* CAVOKTests.xctest */;
+			productReference = 374EC9DD1D7CB5AA0047B82B /* CAV-OKTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		374EC9E71D7CB5AA0047B82B /* CAVOKUITests */ = {
+		374EC9E71D7CB5AA0047B82B /* CAV-OKUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 374EC9F71D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKUITests" */;
+			buildConfigurationList = 374EC9F71D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAV-OKUITests" */;
 			buildPhases = (
 				374EC9E41D7CB5AA0047B82B /* Sources */,
 				374EC9E51D7CB5AA0047B82B /* Frameworks */,
@@ -573,9 +573,9 @@
 			dependencies = (
 				374EC9EA1D7CB5AA0047B82B /* PBXTargetDependency */,
 			);
-			name = CAVOKUITests;
+			name = "CAV-OKUITests";
 			productName = CAVOKUITests;
-			productReference = 374EC9E81D7CB5AA0047B82B /* CAVOKUITests.xctest */;
+			productReference = 374EC9E81D7CB5AA0047B82B /* CAV-OKUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -605,7 +605,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 374EC9C41D7CB5A90047B82B /* Build configuration list for PBXProject "CAVOK" */;
+			buildConfigurationList = 374EC9C41D7CB5A90047B82B /* Build configuration list for PBXProject "CAV-OK" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -624,9 +624,9 @@
 			);
 			projectRoot = "";
 			targets = (
-				374EC9C81D7CB5A90047B82B /* CAVOK */,
-				374EC9DC1D7CB5AA0047B82B /* CAVOKTests */,
-				374EC9E71D7CB5AA0047B82B /* CAVOKUITests */,
+				374EC9C81D7CB5A90047B82B /* CAV-OK */,
+				374EC9DC1D7CB5AA0047B82B /* CAV-OKTests */,
+				374EC9E71D7CB5AA0047B82B /* CAV-OKUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -788,12 +788,12 @@
 /* Begin PBXTargetDependency section */
 		374EC9DF1D7CB5AA0047B82B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 374EC9C81D7CB5A90047B82B /* CAVOK */;
+			target = 374EC9C81D7CB5A90047B82B /* CAV-OK */;
 			targetProxy = 374EC9DE1D7CB5AA0047B82B /* PBXContainerItemProxy */;
 		};
 		374EC9EA1D7CB5AA0047B82B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 374EC9C81D7CB5A90047B82B /* CAVOK */;
+			target = 374EC9C81D7CB5A90047B82B /* CAV-OK */;
 			targetProxy = 374EC9E91D7CB5AA0047B82B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -963,7 +963,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAVOK.app/CAVOK";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAV-OK.app/CAV-OK";
 			};
 			name = Debug;
 		};
@@ -981,7 +981,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAVOK.app/CAVOK";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAV-OK.app/CAV-OK";
 			};
 			name = Release;
 		};
@@ -1014,7 +1014,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		374EC9C41D7CB5A90047B82B /* Build configuration list for PBXProject "CAVOK" */ = {
+		374EC9C41D7CB5A90047B82B /* Build configuration list for PBXProject "CAV-OK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				374EC9EF1D7CB5AA0047B82B /* Debug */,
@@ -1023,7 +1023,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		374EC9F11D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOK" */ = {
+		374EC9F11D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAV-OK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				374EC9F21D7CB5AA0047B82B /* Debug */,
@@ -1032,7 +1032,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		374EC9F41D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKTests" */ = {
+		374EC9F41D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAV-OKTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				374EC9F51D7CB5AA0047B82B /* Debug */,
@@ -1041,7 +1041,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		374EC9F71D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAVOKUITests" */ = {
+		374EC9F71D7CB5AA0047B82B /* Build configuration list for PBXNativeTarget "CAV-OKUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				374EC9F81D7CB5AA0047B82B /* Debug */,

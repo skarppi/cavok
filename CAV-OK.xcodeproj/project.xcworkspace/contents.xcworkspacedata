@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:CAVOK.xcodeproj">
+      location = "self:CAV-OK.xcodeproj">
    </FileRef>
 </Workspace>

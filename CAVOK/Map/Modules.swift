@@ -28,7 +28,7 @@ class Modules {
         let module = modules()[index]
         let className = module["class"] as! String
         
-        let type = NSClassFromString("CAVOK.\(className)") as! MapModule.Type
+        let type = NSClassFromString("CAV_OK.\(className)") as! MapModule.Type
         return type.init(delegate: delegate)
     }
     
