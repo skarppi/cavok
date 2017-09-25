@@ -64,7 +64,10 @@ open class WeatherModule {
         }
         
         timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
-            if self.timeslotDrawer.timeslots.selectedSegmentIndex != -1 {
+            let timeslotSelected = self.timeslotDrawer.timeslots.selectedSegmentIndex != -1
+            let notConfiguring = self.delegate.pulley.drawerContentViewController as? ConfigDrawerController == nil
+            
+            if timeslotSelected && notConfiguring {
                 self.render(frame: self.timeslotDrawer.timeslots.selectedSegmentIndex)
             }
         }
