@@ -8,7 +8,14 @@
 
 import Foundation
 
-class RegionSelection : MaplySticker {
+class RegionSelection: MaplyShapeCircle {
+    
+    let desc:[String:Any] = [
+        kMaplyFade: 1.0,
+        kMaplyColor: UIColor.blue.withAlphaComponent(0.2),
+        kMaplyZBufferRead: false,
+        kMaplyShapeSampleX : 100
+    ]
     
     var region: WeatherRegion {
         didSet {
@@ -18,37 +25,15 @@ class RegionSelection : MaplySticker {
     
     init(region: WeatherRegion) {
         self.region = region
+        
         super.init()
         
+        height = 0
         update()
-        
-        image = render()
     }
     
     func update() {
-        ll = MaplyCoordinateMakeWithDegrees(region.minLon, region.minLat)
-        ur = MaplyCoordinateMakeWithDegrees(region.maxLon, region.maxLat)
-    }
-    
-    func render() -> UIImage {
-        let radius = 512
-        
-        UIGraphicsBeginImageContext(CGSize(width: radius, height: radius))
-        
-        let context = UIGraphicsGetCurrentContext()
-        context?.setLineWidth(2)
-        
-        let blue = UIColor.blue
-        
-        context?.setFillColor(blue.withAlphaComponent(0.2).cgColor)
-        context?.setStrokeColor(blue.withAlphaComponent(0.7).cgColor)
-        context?.addEllipse(in: CGRect(x: 2, y: 2, width: radius-4, height: radius-4))
-        context?.drawPath(using: CGPathDrawingMode.fillStroke)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return image!
+        center = region.center
+        radius = (region.ur.y - region.ll.y ) / 2
     }
 }

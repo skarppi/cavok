@@ -117,7 +117,7 @@ open class WeatherModule {
         delegate.clearComponents(ofType: RegionSelection.self)
         
         let selection = RegionSelection(region: region)
-        if let stickers = delegate.mapView.addStickers([selection], desc: [kMaplyFade: 1.0]) {
+        if let stickers = delegate.mapView.addShapes([selection], desc: selection.desc) {
             delegate.addComponents(key: selection, value: stickers)
         }
         
