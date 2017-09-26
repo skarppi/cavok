@@ -22,5 +22,5 @@ protocol MapModule: class {
     
     func render(frame: Int)
     
-    func annotation(object: Any, parentFrame: CGRect) -> UIView?
+    func details(object: Any, parentFrame: CGRect)
 }

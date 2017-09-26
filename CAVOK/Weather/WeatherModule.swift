@@ -74,7 +74,6 @@ open class WeatherModule {
     }
     
     func cleanup() {
-        delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
         
         timer?.invalidate()
@@ -213,7 +212,6 @@ open class WeatherModule {
     }
     
     func render(frame: Int) {
-        delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
         
         let observations = weatherLayer.go(frame: frame)
@@ -250,30 +248,27 @@ open class WeatherModule {
         timeslotDrawer.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
     
-    func annotation(object: Any, parentFrame: CGRect) -> UIView? {
-        if let observation = object as? Observation {
-            
-            let drawerPosition = delegate.pulley.drawerPosition
-            
-            hideDrawers()
-
-            let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
-            delegate.pulley.setDrawerContentViewController(controller: observationDrawer)
-            
-            let all = weatherService.observations(for: observation.station?.identifier ?? "")
-            observationDrawer.setup(closed: showTimeslotDrawer, presentation: presentation, obs: observation, observations: all)
+    func details(object: Any, parentFrame: CGRect) {
+        guard let observation = object as? Observation else {
+            return
+        }
         
-            delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
-            delegate.pulley.setDrawerPosition(position: drawerPosition, animated: true)
-            
-            let marker = ObservationSelection(obs: observation)
-            if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {
-                delegate.addComponents(key: marker, value: components)
-            }
-            
-            return nil
-        } else {
-            return nil
+        let drawerPosition = delegate.pulley.drawerPosition
+        
+        hideDrawers()
+
+        let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
+        delegate.pulley.setDrawerContentViewController(controller: observationDrawer)
+        
+        let all = weatherService.observations(for: observation.station?.identifier ?? "")
+        observationDrawer.setup(closed: showTimeslotDrawer, presentation: presentation, obs: observation, observations: all)
+    
+        delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
+        delegate.pulley.setDrawerPosition(position: drawerPosition, animated: true)
+        
+        let marker = ObservationSelection(obs: observation)
+        if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {
+            delegate.addComponents(key: marker, value: components)
         }
     }
 }

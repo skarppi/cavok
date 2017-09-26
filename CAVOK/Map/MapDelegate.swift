@@ -19,8 +19,6 @@ public protocol MapDelegate {
     
     func loaded(frame:Int?, legend: Legend)
     
-    func clearAnnotations(ofType: MaplyAnnotation.Type?)
-    
     func findComponent(ofType: NSObject.Type) -> NSObject?
     
     func addComponents(key: NSObject, value: MaplyComponentObject)

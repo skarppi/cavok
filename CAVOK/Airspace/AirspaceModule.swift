@@ -37,6 +37,7 @@ final class AirspaceModule: MapModule {
     }
     
     func didTapAt(coord: MaplyCoordinate) {
+        delegate.mapView.clearAnnotations()
     }
     
     func refresh() -> Promise<Void> {
@@ -67,12 +68,13 @@ final class AirspaceModule: MapModule {
         UserDefaults.standard.setValue(airspaces, forKey: "airspaces")
     }
     
-    func annotation(object: Any, parentFrame: CGRect) -> UIView? {
-        if let attributes = object as? AirspaceAttributes {
-            return AirspaceCalloutView(attributes: attributes, parentFrame: parentFrame)
-        } else {
-            return nil
+    func details(object: Any, parentFrame: CGRect) {
+        guard let attributes = object as? AirspaceAttributes else {
+            return
         }
+        let annotation = MaplyAnnotation()
+        annotation.contentView = AirspaceCalloutView(attributes: attributes, parentFrame: parentFrame)
+        delegate.mapView.addAnnotation(annotation, forPoint: attributes.coordinate, offset: .zero)
     }
     
     private func showVectors(key: NSObject.Type, data: Data) {
@@ -116,8 +118,9 @@ final class AirspaceModule: MapModule {
     }
     
     func cleanup() -> Void {
-        delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: tma.self)
         delegate.clearComponents(ofType: ctr.self)
+        
+        delegate.mapView.clearAnnotations()
     }
 }

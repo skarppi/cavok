@@ -206,18 +206,6 @@ extension MapViewController : MapDelegate {
         }
     }
     
-    func clearAnnotations(ofType: MaplyAnnotation.Type?) {
-        if let ofType = ofType, let annotations = mapView.annotations() {
-            annotations.forEach { annotation in
-                if type(of: annotation) == ofType {
-                    mapView.removeAnnotation(annotation as! MaplyAnnotation)
-                }
-            }
-        } else {
-            mapView.clearAnnotations()
-        }
-    }
-
     func findComponent(ofType: NSObject.Type) -> NSObject? {
         return components.keys.filter { $0.isKind(of: ofType) }.first
     }
@@ -248,36 +236,20 @@ extension MapViewController : MapDelegate {
 // MARK: - WhirlyGlobeViewControllerDelegate
 extension MapViewController: WhirlyGlobeViewControllerDelegate {
     func globeViewController(_ view: WhirlyGlobeViewController, didTapAt coord: MaplyCoordinate) {
-        view.clearAnnotations()
-        
         module.didTapAt(coord: coord)
     }
     
     func globeViewController(_ view: WhirlyGlobeViewController, didSelect selected: NSObject, atLoc coord: MaplyCoordinate, onScreen screenPt: CGPoint) {
         
-        view.clearAnnotations()
-        
-        if self.buttonView.isHidden {
+        guard self.buttonView.isHidden == false else {
             module.didTapAt(coord: coord)
             return
         }
         
-        let location: MaplyCoordinate?
-        let contentView: UIView?
         if let marker = selected as? MaplyScreenMarker, let object = marker.userObject {
-            contentView = module.annotation(object: object, parentFrame: self.view.frame)
-            location = marker.loc
+            module.details(object: object, parentFrame: self.view.frame)
         } else if let object = (selected as? MaplyVectorObject)?.userObject {
-            contentView = airspaceModule.annotation(object: object, parentFrame: self.view.frame)
-            location = coord
-        } else {
-            return
-        }
-        
-        if let contentView = contentView, let location = location {
-            let annotation = MaplyAnnotation()
-            annotation.contentView = contentView
-            view.addAnnotation(annotation, forPoint: location, offset: .zero)
+            airspaceModule.details(object: object, parentFrame: self.view.frame)
         }
     }
 }
