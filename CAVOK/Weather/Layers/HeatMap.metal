@@ -90,8 +90,8 @@ kernel void heatMapShader(
     // start fading from the half radius
     float fadingDistance = radius / 2.0f;
     
-    float alpha = 0.75f - 0.75f / fadingDistance * (minDistance - fadingDistance);
+    float alpha = 0.55f - 0.55f / fadingDistance * (minDistance - fadingDistance);
     
-    float4 outColor = HSVtoRGB(float4(hue, 1.0f, 0.81f, clamp(alpha, 0.0f, 0.75f)));
+    float4 outColor = HSVtoRGB(float4(hue, 1.0f, 0.81f, clamp(alpha, 0.0f, 0.55f)));
     outTexture.write(outColor, gid);
 }
