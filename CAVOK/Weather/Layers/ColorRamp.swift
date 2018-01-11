@@ -75,7 +75,7 @@ class ColorRamp {
     }
     
     class func color(for date: Date, alpha: CGFloat = 1) -> UIColor {
-        let minutes = Int(date.timeIntervalSinceNow.negated() / 60)
+        let minutes = Int(-date.timeIntervalSinceNow / 60)
         return ColorRamp.color(forMinutes: minutes, alpha: alpha)
     }
     

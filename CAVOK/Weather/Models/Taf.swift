@@ -10,8 +10,8 @@ import Foundation
 
 public class Taf: Observation {
     
-    public dynamic var from: Date = Date()
-    public dynamic var to: Date = Date()
+    @objc public dynamic var from: Date = Date()
+    @objc public dynamic var to: Date = Date()
     
     override public func parse(raw: String) {
         super.parse(raw: raw)

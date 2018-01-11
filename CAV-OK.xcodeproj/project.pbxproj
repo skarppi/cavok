@@ -927,7 +927,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -945,7 +945,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

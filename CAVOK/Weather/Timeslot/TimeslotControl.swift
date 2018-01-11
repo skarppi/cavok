@@ -28,7 +28,7 @@ class TimeslotControl: UISegmentedControl {
         setBackgroundImage(TimeslotControl.clearImage, for: .normal, barMetrics: .default)
         setBackgroundImage(TimeslotControl.clearImage, for: .selected, barMetrics: .default)
         
-        setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: .selected)
+        setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.black], for: .selected)
     }
     
     func updateSegment(color: UIColor, at segment: Int) {

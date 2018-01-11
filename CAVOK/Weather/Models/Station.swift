@@ -11,14 +11,14 @@ import RealmSwift
 
 public class Station: Object {
     
-    dynamic var identifier: String = ""
-    dynamic var name: String = ""
-    dynamic var latitude: Float = 0
-    dynamic var longitude: Float = 0
-    dynamic var elevation: Float = 0
-    dynamic var hasMetar: Bool = false
-    dynamic var hasTaf: Bool = false
-    dynamic var timestamp: Date = Date()
+    @objc dynamic var identifier: String = ""
+    @objc dynamic var name: String = ""
+    @objc dynamic var latitude: Float = 0
+    @objc dynamic var longitude: Float = 0
+    @objc dynamic var elevation: Float = 0
+    @objc dynamic var hasMetar: Bool = false
+    @objc dynamic var hasTaf: Bool = false
+    @objc dynamic var timestamp: Date = Date()
     
     override open static func primaryKey() -> String? {
         return "identifier"

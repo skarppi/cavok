@@ -117,11 +117,11 @@ class MapViewController: UIViewController {
         )
     }
     
-    func enteredBackground(notification: Notification) {
+    @objc func enteredBackground(notification: Notification) {
         LastSession.save(center: mapView.getPosition(), height: mapView.getHeight())
     }
     
-    func enteredForeground(notification: Notification) {
+    @objc func enteredForeground(notification: Notification) {
         locationManager.requestLocation()
     }
 

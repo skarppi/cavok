@@ -53,7 +53,7 @@ class WeatherLayer {
             let selected = frame.index == selected
             frame.process(priority: selected).then { Void -> Void in
                 if let coordinate = coordinate {
-                    loaded((frame.index, frame.color(for: coordinate)))
+                    loaded(frame.index, frame.color(for: coordinate))
                 }
             }.catch(execute: { error in
                 print("Failed to generate heatmap \(frame.index) because of \(error)")

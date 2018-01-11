@@ -80,7 +80,7 @@ final class AirspaceModule: MapModule {
     private func showVectors(key: NSObject.Type, data: Data) {
         if let vector = MaplyVectorObject(fromGeoJSON: data) {
             
-            let attrs = JSON(data: data)
+            let attrs = try! JSON(data: data)
             
             let isoFormatter = DateFormatter()
             isoFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"

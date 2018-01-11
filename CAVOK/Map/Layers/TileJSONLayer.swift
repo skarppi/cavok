@@ -20,7 +20,7 @@ class TileJSONLayer {
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return URLSession.shared.dataTask(with: rq).then { (data) -> MaplyViewControllerLayer in
-            let json = JSON(data: data)
+            let json = try JSON(data: data)
             
             let tileSource = MaplyRemoteTileSource(tilespec: json.object as! [String : Any])!
             tileSource.cacheDir = self.cacheDir.absoluteString + "/" + json["id"].string!

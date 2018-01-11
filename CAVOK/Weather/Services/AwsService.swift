@@ -59,7 +59,7 @@ public class AwsService {
         print("Fetching AWS data from \(url)")
         let rq = URLRequest(url: url)
         return URLSession.shared.dataTask(with: rq).then { data -> JSON in
-            return JSON(data: data)
+            return try JSON(data: data)
         }
     }
 }

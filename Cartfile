@@ -1,8 +1,8 @@
-github "SwiftyJSON/SwiftyJSON" ~> 3.1.4
-github "PromiseKit/Foundation" ~> 1.0.7
-github "mxcl/PromiseKit" ~> 4.4.1
-github "realm/realm-cocoa" ~> 2.10.1
-github "drmohundro/SWXMLHash" ~> 4.2.1
-github "1024jp/GzipSwift" ~> 4.0.0
-github "52inc/Pulley" ~> 1.5.2
-github "SwiftKickMobile/SwiftMessages" ~> 4.0.0
+github "SwiftyJSON/SwiftyJSON" ~> 4.0.0
+github "PromiseKit/Foundation" "1.0.7"
+github "mxcl/PromiseKit" "4.5.1"
+github "realm/realm-cocoa" ~> 3.0.2
+github "drmohundro/SWXMLHash" ~> 4.2.5
+github "1024jp/GzipSwift" ~> 4.0.4
+github "52inc/Pulley" ~> 2.2.3
+github "SwiftKickMobile/SwiftMessages" ~> 4.1.0

@@ -85,9 +85,8 @@ public class WeatherServer {
                 realm.add(tafs, update: true)
             }
             return Observations(metars: metars, tafs: tafs)
-        }.always { observations in
+        }.always {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return observations
         }
     }
     

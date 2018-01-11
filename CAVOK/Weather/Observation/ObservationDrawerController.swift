@@ -18,10 +18,11 @@ class ObservationDrawerController: UIViewController {
     
     @IBOutlet weak var tafs: UILabel!
     
-    private var closed: (Void) -> Void = { Void -> Void in
+    private var closed: (() -> ()) = { () -> () in
+        
     }
     
-    func setup(closed: @escaping (Void) -> Void, presentation: ObservationPresentation, obs: Observation, observations: Observations) {
+    func setup(closed: @escaping (() -> ()), presentation: ObservationPresentation, obs: Observation, observations: Observations) {
         self.closed = closed
         
         func highlight(observation: Observation) -> NSAttributedString {
@@ -30,7 +31,7 @@ class ObservationDrawerController: UIViewController {
             let mapped = presentation.mapper(observation)
             if let value = mapped.value, let source = mapped.source {
                 let cgColor = presentation.ramp.color(for: Int32(value))
-                attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor(cgColor: cgColor), pattern: source)
+                attributed.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: UIColor(cgColor: cgColor), pattern: source)
             }
             return attributed
         }
@@ -67,8 +68,8 @@ class ObservationDrawerController: UIViewController {
             paragraphStyle.lineSpacing = 5
             
             text.append(NSAttributedString(string: header + "\n", attributes: [
-                NSFontAttributeName: UIFont.systemFont(ofSize: 14),
-                NSParagraphStyleAttributeName: paragraphStyle
+                NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
+                NSAttributedStringKey.paragraphStyle: paragraphStyle
                 ]))
         }
         
@@ -87,16 +88,15 @@ class ObservationDrawerController: UIViewController {
 }
 
 extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
-    
     func supportedDrawerPositions() -> [PulleyPosition] {
         return [.closed, .collapsed, .partiallyRevealed]
     }
     
-    func collapsedDrawerHeight() -> CGFloat {
+    func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         return observationLabel.frame.maxY
     }
     
-    func partialRevealDrawerHeight() -> CGFloat {
+    func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         return max(metars.frame.maxY, tafs.frame.maxY)
     }
 }
