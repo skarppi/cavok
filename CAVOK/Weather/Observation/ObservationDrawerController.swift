@@ -93,10 +93,10 @@ extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return observationLabel.frame.maxY
+        return observationLabel.frame.maxY + bottomSafeArea
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return max(metars.frame.maxY, tafs.frame.maxY)
+        return max(metars.frame.maxY, tafs.frame.maxY) + bottomSafeArea
     }
 }

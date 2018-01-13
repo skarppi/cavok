@@ -216,13 +216,13 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 175
+        return 175 + bottomSafeArea
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         let tablePositionY = linksTable.frame.origin.y + (linksTable.superview?.frame.origin.y ?? 0)
         
         let drawerHeight = tablePositionY + linksTable.contentSize.height + 25
-        return min(drawerHeight, UIScreen.main.bounds.height - 50)
+        return min(drawerHeight, UIScreen.main.bounds.height - 50)  + bottomSafeArea
     }
 }

@@ -16,7 +16,7 @@ In addition to map overlays CAVOK allows you to configure quick links to any web
 
 ## Requirements
 
-* [Xcode 8](https://developer.apple.com/xcode)
+* [Xcode 9.2](https://developer.apple.com/xcode)
 * [Carthage](https://github.com/Carthage/Carthage)
 
 ## Initial setup

@@ -98,11 +98,11 @@ extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 70
+        return 70 + bottomSafeArea
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 150
+        return 150 + bottomSafeArea
     }
 }
 
