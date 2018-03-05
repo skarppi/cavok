@@ -4,5 +4,5 @@ github "mxcl/PromiseKit" "4.5.1"
 github "realm/realm-cocoa" ~> 3.0.2
 github "drmohundro/SWXMLHash" ~> 4.2.5
 github "1024jp/GzipSwift" ~> 4.0.4
-github "52inc/Pulley" ~> 2.2.3
+github "52inc/Pulley" ~> 2.2.8
 github "SwiftKickMobile/SwiftMessages" ~> 4.1.0

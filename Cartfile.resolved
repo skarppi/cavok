@@ -1,5 +1,5 @@
 github "1024jp/GzipSwift" "4.0.4"
-github "52inc/Pulley" "2.2.3"
+github "52inc/Pulley" "2.2.8"
 github "PromiseKit/Foundation" "1.0.7"
 github "SwiftKickMobile/SwiftMessages" "4.1.0"
 github "SwiftyJSON/SwiftyJSON" "4.0.0"

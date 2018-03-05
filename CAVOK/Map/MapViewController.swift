@@ -46,6 +46,14 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if !UIApplication.withSafeAreas {
+            // add some margin between top of the screen and segmented control
+            additionalSafeAreaInsets.top = 10
+        }
+        
+        adjustPulleyPositioning(notification: Notification(name: .UIApplicationDidChangeStatusBarOrientation))
+        pulley.displayMode = .automatic
+        
         if module == nil {
             moduleTypeChanged()   
         }
@@ -107,14 +115,17 @@ class MapViewController: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredBackground(notification:)),
                                                name: .UIApplicationDidEnterBackground,
-                                               object: nil
-        )
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredForeground(notification:)),
                                                name: .UIApplicationWillEnterForeground,
-                                               object: nil
-        )
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MapViewController.adjustPulleyPositioning(notification:)),
+                                               name: .UIApplicationDidChangeStatusBarOrientation,
+                                               object: nil)
     }
     
     @objc func enteredBackground(notification: Notification) {
@@ -250,6 +261,22 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
             module.details(object: object, parentFrame: self.view.frame)
         } else if let object = (selected as? MaplyVectorObject)?.userObject {
             airspaceModule.details(object: object, parentFrame: self.view.frame)
+        }
+    }
+}
+
+extension MapViewController {
+    @objc func adjustPulleyPositioning(notification: Notification) {
+        if (UIApplication.withSafeAreas) {
+            // adjust position of the drawer on iPhoneX
+            
+            if (UIApplication.shared.statusBarOrientation == UIInterfaceOrientation.landscapeLeft) {
+                // no need for safe areas when notch is on the other side
+                pulley.panelInsetLeft = 10 - (UIApplication.shared.delegate?.window??.safeAreaInsets.left ?? 0)
+            } else {
+                // put closer to notch when on the same side
+                pulley.panelInsetLeft = -8
+            }
         }
     }
 }
