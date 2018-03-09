@@ -94,17 +94,28 @@ class ObservationDrawerController: UIViewController {
 }
 
 extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
+    
+    func bottomMargin(bottomSafeArea: CGFloat) -> CGFloat {
+        let pulley = parent as! PulleyViewController
+        if pulley.currentDisplayMode == .leftSide {
+            // add some space for gripper on the bottom
+            return 5
+        } else {
+            return bottomSafeArea
+        }
+    }
+    
     func supportedDrawerPositions() -> [PulleyPosition] {
         return [.closed, .collapsed, .partiallyRevealed]
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return observationLabel.frame.maxY + bottomSafeArea
+        return observationLabel.frame.maxY + bottomMargin(bottomSafeArea: bottomSafeArea)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         let maxAvailableHeight = parent!.view.frame.height - bottomSafeArea * 2
-        let currentContentHeight = scrollView.contentSize.height + bottomSafeArea
+        let currentContentHeight = scrollView.contentSize.height + bottomMargin(bottomSafeArea: bottomSafeArea)
         return min(maxAvailableHeight, currentContentHeight)
     }
 }
