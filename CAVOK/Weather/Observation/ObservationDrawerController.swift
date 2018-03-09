@@ -10,6 +10,9 @@ import Foundation
 import Pulley
 
 class ObservationDrawerController: UIViewController {
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var observationLabel: UILabel!
@@ -46,6 +49,7 @@ class ObservationDrawerController: UIViewController {
         }
         if !metarHistory.isEmpty {
             add(header: "METAR history", content: metarHistory, to: self.metars, after: observationLabel)
+            scrollView.contentSize.height = metars.frame.maxY
         }
 
         if obs as? Taf == nil {
@@ -54,8 +58,10 @@ class ObservationDrawerController: UIViewController {
             }
             if !tafHistory.isEmpty {
                 add(header: "TAF", content: tafHistory, to: tafs, after: metars)
+                scrollView.contentSize.height = tafs.frame.maxY
             }
         }
+        
     }
     
     private func add(header: String?, content: [NSAttributedString], to label: UILabel, after: UILabel) {
@@ -97,6 +103,8 @@ extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return max(metars.frame.maxY, tafs.frame.maxY) + bottomSafeArea
+        let maxAvailableHeight = parent!.view.frame.height - bottomSafeArea * 2
+        let currentContentHeight = scrollView.contentSize.height + bottomSafeArea
+        return min(maxAvailableHeight, currentContentHeight)
     }
 }
