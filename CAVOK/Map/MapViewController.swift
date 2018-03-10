@@ -237,12 +237,6 @@ extension MapViewController : MapDelegate {
             components.removeAll()
         }
     }
-    
-    var pulley: PulleyViewController! {
-        get {
-            return self.parent as! PulleyViewController
-        }
-    }
 }
 
 // MARK: - WhirlyGlobeViewControllerDelegate

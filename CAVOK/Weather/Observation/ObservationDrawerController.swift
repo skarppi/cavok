@@ -21,6 +21,8 @@ class ObservationDrawerController: UIViewController {
     
     @IBOutlet weak var tafs: UILabel!
     
+    @IBOutlet var gripperTopConstraint: NSLayoutConstraint!
+    
     private var closed: (() -> ()) = { () -> () in
         
     }
@@ -49,7 +51,6 @@ class ObservationDrawerController: UIViewController {
         }
         if !metarHistory.isEmpty {
             add(header: "METAR history", content: metarHistory, to: self.metars, after: observationLabel)
-            scrollView.contentSize.height = metars.frame.maxY
         }
 
         if obs as? Taf == nil {
@@ -58,10 +59,10 @@ class ObservationDrawerController: UIViewController {
             }
             if !tafHistory.isEmpty {
                 add(header: "TAF", content: tafHistory, to: tafs, after: metars)
-                scrollView.contentSize.height = tafs.frame.maxY
             }
         }
         
+        drawerDisplayModeDidChange(drawer: pulley)
     }
     
     private func add(header: String?, content: [NSAttributedString], to label: UILabel, after: UILabel) {
@@ -86,36 +87,37 @@ class ObservationDrawerController: UIViewController {
         
         label.attributedText = text
         label.sizeToFit()
+        
+        scrollView.contentSize.height = label.frame.maxY + 10
     }
     
     @IBAction func close(_ button: UIButton) {
         closed()
     }
+    
+    func drawerDisplayModeDidChange(drawer: PulleyViewController) {
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
+    }
 }
 
 extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
-    
-    func bottomMargin(bottomSafeArea: CGFloat) -> CGFloat {
-        let pulley = parent as! PulleyViewController
-        if pulley.currentDisplayMode == .leftSide {
-            // add some space for gripper on the bottom
-            return 5
-        } else {
-            return bottomSafeArea
-        }
-    }
     
     func supportedDrawerPositions() -> [PulleyPosition] {
         return [.closed, .collapsed, .partiallyRevealed]
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return observationLabel.frame.maxY + bottomMargin(bottomSafeArea: bottomSafeArea)
+        return observationLabel.frame.maxY + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 5)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        let maxAvailableHeight = parent!.view.frame.height - bottomSafeArea * 2
-        let currentContentHeight = scrollView.contentSize.height + bottomMargin(bottomSafeArea: bottomSafeArea)
-        return min(maxAvailableHeight, currentContentHeight)
+        let currentContentHeight = scrollView.contentSize.height
+        
+        let maxAvailableHeight = UIApplication.shared.keyWindow!.frame.height
+        if pulley.displayMode == .bottomDrawer {
+            return min(maxAvailableHeight - bottomSafeArea - pulley.topInset, currentContentHeight + bottomSafeArea)
+        } else {
+            return min(maxAvailableHeight - pulley.topInset * 2, currentContentHeight)
+        }
     }
 }

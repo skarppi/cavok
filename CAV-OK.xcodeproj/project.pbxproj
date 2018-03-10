@@ -91,6 +91,7 @@
 		C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */; };
 		C0B778EC1DB423DD00DBB1FB /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778EB1DB423DD00DBB1FB /* LegendView.swift */; };
 		C0BE7B651DA27207003888B9 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BE7B641DA27207003888B9 /* Metal.framework */; };
+		C0E53B9120543BB800805F19 /* Pulley+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E53B9020543BB800805F19 /* Pulley+Additions.swift */; };
 		C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483671D99CDDB007A1404 /* MapDelegate.swift */; };
 		C0F4836A1D99CDF9007A1404 /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483691D99CDF9007A1404 /* Timeslot.swift */; };
 /* End PBXBuildFile section */
@@ -214,6 +215,7 @@
 		C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LastLocation.swift; path = Map/Location/LastLocation.swift; sourceTree = "<group>"; };
 		C0B778EB1DB423DD00DBB1FB /* LegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LegendView.swift; path = Weather/Legend/LegendView.swift; sourceTree = "<group>"; };
 		C0BE7B641DA27207003888B9 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		C0E53B9020543BB800805F19 /* Pulley+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Pulley+Additions.swift"; path = "Extensions/Pulley+Additions.swift"; sourceTree = "<group>"; };
 		C0F483671D99CDDB007A1404 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDelegate.swift; path = Map/MapDelegate.swift; sourceTree = "<group>"; };
 		C0F483691D99CDF9007A1404 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeslot.swift; path = Weather/Timeslot/Timeslot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,6 +292,7 @@
 				37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */,
 				37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */,
 				C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */,
+				C0E53B9020543BB800805F19 /* Pulley+Additions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -757,6 +760,7 @@
 				C00BC3D61F597112003211C9 /* RightImageButton.swift in Sources */,
 				C015BE191DA6D5C200C4B26A /* HeatMapGPU.swift in Sources */,
 				C00BC3DE1F5BFC23003211C9 /* LinkEditController.swift in Sources */,
+				C0E53B9120543BB800805F19 /* Pulley+Additions.swift in Sources */,
 				374EC9CD1D7CB5A90047B82B /* AppDelegate.swift in Sources */,
 				37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */,
 				37DDEEAF1D7F58CE000A8FFC /* String+Additions.swift in Sources */,
