@@ -15,6 +15,8 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var moduleType: UISegmentedControl!
     
+    @IBOutlet var moduleTypeLeftConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var buttonView: UIView!
     
     @IBOutlet weak var legendView: LegendView!
@@ -52,7 +54,6 @@ class MapViewController: UIViewController {
         }
         
         adjustPulleyPositioning(notification: Notification(name: .UIApplicationDidChangeStatusBarOrientation))
-        pulley.displayMode = .automatic
         
         if module == nil {
             moduleTypeChanged()   
@@ -265,18 +266,32 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
     }
 }
 
-extension MapViewController {
+extension MapViewController: PulleyPrimaryContentControllerDelegate {
+    
     @objc func adjustPulleyPositioning(notification: Notification) {
-        if (UIApplication.withSafeAreas) {
+        
+        let window = UIApplication.shared.delegate!.window!!
+        
+        let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .leftSide : .bottomDrawer
+        
+        if window.safeAreaInsets != .zero {
             // adjust position of the drawer on iPhoneX
             
-            if (UIApplication.shared.statusBarOrientation == UIInterfaceOrientation.landscapeLeft) {
-                // no need for safe areas when notch is on the other side
-                pulley.panelInsetLeft = 10 - (UIApplication.shared.delegate?.window??.safeAreaInsets.left ?? 0)
-            } else {
-                // put closer to notch when on the same side
-                pulley.panelInsetLeft = -8
+            switch UIApplication.shared.statusBarOrientation {
+            case UIInterfaceOrientation.landscapeLeft:
+                // remove safe area when notch is on the other side
+                pulley.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left
+            case UIInterfaceOrientation.landscapeRight:
+                // decrease the margin to notch
+                pulley.additionalSafeAreaInsets.left = -15
+            default:
+                pulley.additionalSafeAreaInsets.left = 0
             }
         }
+
+        // when pulley is on the left, move segmented control out of the way
+        moduleTypeLeftConstraint.constant = displayMode == .leftSide ? pulley.panelWidth + 16*2 : 16
+        
+        pulley.displayMode = displayMode
     }
 }
