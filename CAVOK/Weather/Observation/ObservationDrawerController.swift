@@ -44,7 +44,7 @@ class ObservationDrawerController: UIViewController {
         titleLabel.text = obs.station?.name ?? "-"
         titleLabel.sizeToFit()
         
-        add(header: nil, content: [highlight(observation: obs)], to: observationLabel, after: titleLabel)
+        add(header: nil, content: [highlight(observation: obs)], to: observationLabel, after: nil)
         
         let metarHistory = observations.metars.reversed().map{ metar in
             return highlight(observation: metar)
@@ -65,8 +65,10 @@ class ObservationDrawerController: UIViewController {
         drawerDisplayModeDidChange(drawer: pulley)
     }
     
-    private func add(header: String?, content: [NSAttributedString], to label: UILabel, after: UILabel) {
-        label.frame.origin.y = after.frame.maxY + 5
+    private func add(header: String?, content: [NSAttributedString], to label: UILabel, after: UILabel?) {
+        if let after = after {
+            label.frame.origin.y = after.frame.maxY + 5
+        }
         
         let text = NSMutableAttributedString()
         if let header = header {
@@ -107,11 +109,11 @@ extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return observationLabel.frame.maxY + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 5)
+        return scrollView.frame.origin.y + observationLabel.frame.maxY + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 0)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        let currentContentHeight = scrollView.contentSize.height
+        let currentContentHeight = scrollView.frame.origin.y + scrollView.contentSize.height
         
         let maxAvailableHeight = UIApplication.shared.keyWindow!.frame.height
         if pulley.displayMode == .bottomDrawer {

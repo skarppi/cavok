@@ -223,7 +223,7 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 170 + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 5)
+        return 151 + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 5)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
