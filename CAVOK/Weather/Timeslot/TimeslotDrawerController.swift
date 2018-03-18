@@ -11,8 +11,6 @@ import Pulley
 
 class TimeslotDrawerController: UIViewController {
     
-    @IBOutlet weak var bottomView: UIView!
-
     @IBOutlet weak var status: UITextField!
 
     @IBOutlet weak var timeslots: TimeslotControl!
