@@ -14,13 +14,6 @@ class Messages {
     
     class func setup() {
         SwiftMessages.defaultConfig.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
-        SwiftMessages.defaultConfig.eventListeners.append({ event in
-            switch event {
-            case .willShow : UIApplication.shared.isStatusBarHidden = true
-            case .didHide: UIApplication.shared.isStatusBarHidden = false
-            default: break
-            }
-        })
         SwiftMessages.defaultConfig.duration = .forever
     }
     
