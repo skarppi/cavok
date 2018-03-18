@@ -8,6 +8,7 @@
 
 import Foundation
 import PromiseKit
+import Pulley
 
 class Ceiling: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
@@ -56,8 +57,8 @@ open class WeatherModule {
         self.weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
     
         timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
-        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
         timeslotDrawer.setModule(module: self as? MapModule)
+        showLoadingDrawer()
         
         if region != nil {
             load(observations: weatherService.observations())
@@ -103,9 +104,7 @@ open class WeatherModule {
     }
     
     private func startRegionSelection(at region: WeatherRegion) {
-        let position = delegate.pulley.drawerPosition != .closed ? delegate.pulley.drawerPosition : .collapsed
-        
-        hideDrawers()
+        let position = delegate.pulley.drawerPosition != .collapsed ? delegate.pulley.drawerPosition : .collapsed
         
         let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
         drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
@@ -148,7 +147,7 @@ open class WeatherModule {
         delegate.clearComponents(ofType: StationMarker.self)
         delegate.clearComponents(ofType: RegionSelection.self)
         
-        hideDrawers()
+        showLoadingDrawer()
         
         if let region = region, region.save() {
             weatherLayer.reposition(region: region)
@@ -168,17 +167,15 @@ open class WeatherModule {
     
     // MARK: - Drawers
     
-    private func hideDrawers() {
-        delegate.pulley.setDrawerPosition(position: .closed, animated: true)
-        
-        delegate.clearComponents(ofType: ObservationSelection.self)
-    }
-    
-    private func showTimeslotDrawer() {
-        hideDrawers()
-        
+    private func showLoadingDrawer() {
+        // collapsed shows loading indicator
         delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
         delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+    }
+
+    private func showTimeslotDrawer() {
+        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
+        delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
     }
     
     // MARK: - Observations
@@ -203,7 +200,7 @@ open class WeatherModule {
                 self.timeslotDrawer.update(color: color, at: frame)
             })
             
-            showTimeslotDrawer()
+            delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
             
             render(frame: frame)
         }
@@ -248,23 +245,30 @@ open class WeatherModule {
         timeslotDrawer.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
     
+    private func cleanDetails() {
+        delegate.clearComponents(ofType: ObservationSelection.self)
+    }
+    
+    private func quitDetails() {
+        cleanDetails()
+        showTimeslotDrawer()
+    }
+    
     func details(object: Any, parentFrame: CGRect) {
         guard let observation = object as? Observation else {
             return
         }
         
-        let drawerPosition = delegate.pulley.drawerPosition
+        cleanDetails()
         
-        hideDrawers()
-
         let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
         delegate.pulley.setDrawerContentViewController(controller: observationDrawer, animated: false)
         
         let all = weatherService.observations(for: observation.station?.identifier ?? "")
-        observationDrawer.setup(closed: showTimeslotDrawer, presentation: presentation, obs: observation, observations: all)
+        observationDrawer.setup(closed: quitDetails, presentation: presentation, obs: observation, observations: all)
     
         delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
-        delegate.pulley.setDrawerPosition(position: drawerPosition, animated: true)
+        delegate.pulley.setDrawerPosition(position: delegate.pulley.drawerPosition, animated: true)
         
         let marker = ObservationSelection(obs: observation)
         if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {

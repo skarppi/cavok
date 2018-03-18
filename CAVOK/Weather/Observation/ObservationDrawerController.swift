@@ -105,7 +105,7 @@ class ObservationDrawerController: UIViewController {
 extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
     
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return [.closed, .collapsed, .partiallyRevealed]
+        return [.collapsed, .partiallyRevealed]
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {

@@ -219,7 +219,7 @@ extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate  {
 extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
     
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return [.closed, .collapsed, .partiallyRevealed]
+        return [.collapsed, .partiallyRevealed]
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
