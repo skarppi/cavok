@@ -54,7 +54,9 @@ class MapViewController: UIViewController {
         }
         
         adjustPulleyPositioning(notification: Notification(name: .UIApplicationDidChangeStatusBarOrientation))
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if module == nil {
             moduleTypeChanged()   
         }
