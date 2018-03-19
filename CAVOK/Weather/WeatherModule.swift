@@ -76,6 +76,7 @@ open class WeatherModule {
     
     func cleanup() {
         delegate.clearComponents(ofType: ObservationMarker.self)
+        cleanDetails()
         
         timer?.invalidate()
     }

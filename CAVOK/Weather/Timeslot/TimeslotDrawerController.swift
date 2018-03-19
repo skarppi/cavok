@@ -99,7 +99,11 @@ extension TimeslotDrawerController: UITextFieldDelegate {
 extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return [.collapsed, .partiallyRevealed]
+        if timeslots.numberOfSegments > 0 {
+            return [.partiallyRevealed]
+        } else {
+            return [.collapsed, .partiallyRevealed]
+        }
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
