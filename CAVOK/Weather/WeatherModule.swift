@@ -137,7 +137,7 @@ open class WeatherModule {
     
     private func showStations(at region: WeatherRegion) {
         delegate.clearComponents(ofType: StationMarker.self)
-        weatherService.queryStations(at: region).then { stations -> Void in
+        weatherService.queryStations(at: region).done { stations in
             let markers = stations.map { station in StationMarker(station: station) }
             if let key = markers.first, let components = self.delegate.mapView.addScreenMarkers(markers, desc: nil) {
                 self.delegate.addComponents(key: key, value: components)
@@ -147,7 +147,7 @@ open class WeatherModule {
                 drawer.status(text: "Found \(stations.count) stations")
             }
             
-            }.catch(execute: Messages.show)
+            }.catch(Messages.show)
     }
     
     private func endRegionSelection(at region: WeatherRegion? = nil) {
@@ -163,10 +163,10 @@ open class WeatherModule {
             
             weatherService.refreshStations().then { stations -> Promise<Void> in
                 self.refresh()
-            }.catch(execute: { err in
+            }.catch { err in
                 Messages.show(error: err)
                 self.load(observations: self.weatherService.observations())
-            })
+            }
         } else {
             load(observations: weatherService.observations())
         }
@@ -190,7 +190,7 @@ open class WeatherModule {
     func refresh() -> Promise<Void> {
         Messages.show(text: "Refreshing observations...")
         
-        return weatherService.refreshObservations().then(execute: load)
+        return weatherService.refreshObservations().map(load)
     }
     
     private func load(observations: Observations) {

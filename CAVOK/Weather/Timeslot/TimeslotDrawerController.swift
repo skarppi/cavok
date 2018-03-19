@@ -89,8 +89,8 @@ extension TimeslotDrawerController: UITextFieldDelegate {
         startSpinning()
         
         module?.refresh()
-            .catch(execute: Messages.show)
-            .always(execute: stopSpinning)
+            .catch(Messages.show)
+            .finally(stopSpinning)
         
         return false
     }

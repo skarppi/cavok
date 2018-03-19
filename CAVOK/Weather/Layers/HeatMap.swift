@@ -61,7 +61,7 @@ class HeatMap {
     func process(priority: Bool) -> Promise<Void> {
         let qos: DispatchQoS = (priority) ? .userInitiated : .background
         
-        return DispatchQueue.global().promise(group: group, qos: qos) {
+        return DispatchQueue.global().async(.promise, group: group, qos: qos) {
             self.timer("end frame \(self.index)") {
                 print("start frame \(self.index)")
                 

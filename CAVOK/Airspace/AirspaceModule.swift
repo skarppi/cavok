@@ -41,7 +41,7 @@ final class AirspaceModule: MapModule {
     }
     
     func refresh() -> Promise<Void> {
-        return Promise(value: ())
+        return .value(())
     }
     
     func configure(open: Bool) {
@@ -61,9 +61,9 @@ final class AirspaceModule: MapModule {
             
             NSLog("Fetching airspace data from \(url)")
             let rq = URLRequest(url: URL(string: url)!)
-            URLSession.shared.dataTask(with: rq).then { data -> Void in
+            URLSession.shared.dataTask(.promise, with: rq).done { data, _ in
                 self.showVectors(key: key, data: data)
-            }.catch(execute: Messages.show)
+            }.catch(Messages.show)
         }
         UserDefaults.standard.setValue(airspaces, forKey: "airspaces")
     }

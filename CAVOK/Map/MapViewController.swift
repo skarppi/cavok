@@ -85,11 +85,9 @@ class MapViewController: UIViewController {
         }
         
         if let basemap = UserDefaults.standard.string(forKey: "basemapURL"), let url = URL(string: basemap) {
-            TileJSONLayer().load(url: url).then { layer in
+            TileJSONLayer().load(url: url).done { layer in
                 self.mapView.add(layer)
-            }.catch { error in
-                Messages.show(error: error)
-            }
+            }.catch(Messages.show)
         }
     }
     

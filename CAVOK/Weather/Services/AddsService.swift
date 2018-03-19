@@ -19,7 +19,7 @@ enum AddsSource: String {
 public class AddsService {
     
     class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
-        return fetch(dataSource: "stations", at: region).then { doc -> [Station] in
+        return fetch(dataSource: "stations", at: region).map { doc -> [Station] in
             print("Found \(doc["response"]["data"].children.count) ADDS stations")
             
             return doc["response"]["data"]["Station"].all.map { station in
@@ -42,7 +42,7 @@ public class AddsService {
             "mostRecentForEachStation": String(history == false),
             "fields": "raw_text"
         ]
-        return fetch(dataSource: source.rawValue, with: query, at: region).then { doc -> [String] in
+        return fetch(dataSource: source.rawValue, with: query, at: region).map { doc -> [String] in
             let count = doc["response"]["data"].children.count
             print("Found \(count) ADDS \(source.rawValue)")
             guard count > 0 else {
@@ -97,8 +97,7 @@ public class AddsService {
 
         let rq = URLRequest(url: components.url!)
         print("Fetching ADDS data from \(components.url!)")
-        
-        return URLSession.shared.dataTask(with: rq).then { data -> XMLIndexer in
+        return URLSession.shared.dataTask(.promise, with: rq).map { data, urlResponse -> XMLIndexer in
             let unzipped: Data = try {
                 if data.isGzipped {
                     return try data.gunzipped()
