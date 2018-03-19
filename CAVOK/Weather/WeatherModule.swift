@@ -105,12 +105,10 @@ open class WeatherModule {
     }
     
     private func startRegionSelection(at region: WeatherRegion) {
-        let position = delegate.pulley.drawerPosition != .collapsed ? delegate.pulley.drawerPosition : .collapsed
-        
         let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
         drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
         delegate.pulley.setDrawerContentViewController(controller: drawer)
-        delegate.pulley.setDrawerPosition(position: position, animated: true)
+        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
     }
     
     private func moveRegionSelection(at region: WeatherRegion) {
@@ -121,9 +119,17 @@ open class WeatherModule {
             delegate.addComponents(key: selection, value: stickers)
         }
         
-        let center = region.center.locationAt(kilometers: region.radius / 5, direction: 180)
+        // because drawer takes some space offset the region
+        let offset: (km: Float, dir: Float, padding: Float)
+        if delegate.pulley.currentDisplayMode == .bottomDrawer {
+            offset = (km: region.radius / 5, dir: 180, padding: region.radius / 40)
+        } else {
+            offset = (km: region.radius, dir: 270, padding: region.radius / 10)
+        }
         
-        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: 100), pos: center)
+        let center = region.center.locationAt(kilometers: offset.km, direction: offset.dir)
+        
+        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: offset.padding), pos: center)
         delegate.mapView.animate(toPosition: center, height: height, heading: 0, time: 0.5)
         
         showStations(at: region)

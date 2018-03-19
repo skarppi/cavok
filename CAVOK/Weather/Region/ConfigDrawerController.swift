@@ -150,10 +150,6 @@ class ConfigDrawerController: UIViewController {
             pulley.setDrawerPosition(position: .partiallyRevealed, animated: false)
         }
     }
-    
-    func drawerDisplayModeDidChange(drawer: PulleyViewController) {
-        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
-    }
 }
 
 extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate  {
@@ -223,7 +219,7 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 151 + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 5)
+        return 161 + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 5)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
@@ -237,5 +233,13 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
         } else {
             return min(maxAvailableHeight - pulley.topInset * 2, currentContentHeight)
         }        
+    }
+
+    func drawerDisplayModeDidChange(drawer: Pulley.PulleyViewController) {
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
+        
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            self.resized(self.region)
+        }
     }
 }
