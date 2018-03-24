@@ -12,11 +12,11 @@ import RealmSwift
 public class Metar: Observation {
     
     open let altimeter = RealmOptional<Int>()
-    open dynamic var runwayVisualRange: String?
+    @objc open dynamic var runwayVisualRange: String?
     
     open let dewPoint = RealmOptional<Int>()
     open let temperature = RealmOptional<Int>()
-    open dynamic var temperatureGroup: String?
+    @objc open dynamic var temperatureGroup: String?
     
     
     // The cloud base can be estimated from surface measurements of air temperature and 
@@ -127,7 +127,7 @@ public class Metar: Observation {
             if value.length < 4 {
                 return nil
             }
-            switch (value[0], value.substring(from: value.index(after: value.startIndex))) {
+            switch (value[0], value[value.index(after: value.startIndex)...]) {
             case ("Q", let qnh) : return Int(qnh)
             case ("A", let qnh) : return Int(qnh).map { Int(Double($0) * 0.3386) }
             default : return nil

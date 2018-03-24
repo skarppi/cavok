@@ -15,6 +15,8 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var moduleType: UISegmentedControl!
     
+    @IBOutlet var moduleTypeLeftConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var buttonView: UIView!
     
     @IBOutlet weak var legendView: LegendView!
@@ -46,6 +48,15 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if !UIApplication.withSafeAreas {
+            // add some margin between top of the screen and segmented control
+            additionalSafeAreaInsets.top = 10
+        }
+        
+        adjustPulleyPositioning(notification: Notification(name: .UIApplicationDidChangeStatusBarOrientation))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if module == nil {
             moduleTypeChanged()   
         }
@@ -74,11 +85,9 @@ class MapViewController: UIViewController {
         }
         
         if let basemap = UserDefaults.standard.string(forKey: "basemapURL"), let url = URL(string: basemap) {
-            TileJSONLayer().load(url: url).then { layer in
+            TileJSONLayer().load(url: url).done { layer in
                 self.mapView.add(layer)
-            }.catch { error in
-                Messages.show(error: error)
-            }
+            }.catch(Messages.show)
         }
     }
     
@@ -107,21 +116,24 @@ class MapViewController: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredBackground(notification:)),
                                                name: .UIApplicationDidEnterBackground,
-                                               object: nil
-        )
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredForeground(notification:)),
                                                name: .UIApplicationWillEnterForeground,
-                                               object: nil
-        )
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MapViewController.adjustPulleyPositioning(notification:)),
+                                               name: .UIApplicationDidChangeStatusBarOrientation,
+                                               object: nil)
     }
     
-    func enteredBackground(notification: Notification) {
+    @objc func enteredBackground(notification: Notification) {
         LastSession.save(center: mapView.getPosition(), height: mapView.getHeight())
     }
     
-    func enteredForeground(notification: Notification) {
+    @objc func enteredForeground(notification: Notification) {
         locationManager.requestLocation()
     }
 
@@ -206,18 +218,6 @@ extension MapViewController : MapDelegate {
         }
     }
     
-    func clearAnnotations(ofType: MaplyAnnotation.Type?) {
-        if let ofType = ofType, let annotations = mapView.annotations() {
-            annotations.forEach { annotation in
-                if type(of: annotation) == ofType {
-                    mapView.removeAnnotation(annotation as! MaplyAnnotation)
-                }
-            }
-        } else {
-            mapView.clearAnnotations()
-        }
-    }
-
     func findComponent(ofType: NSObject.Type) -> NSObject? {
         return components.keys.filter { $0.isKind(of: ofType) }.first
     }
@@ -237,47 +237,55 @@ extension MapViewController : MapDelegate {
             components.removeAll()
         }
     }
-    
-    var pulley: PulleyViewController! {
-        get {
-            return self.parent as! PulleyViewController
-        }
-    }
 }
 
 // MARK: - WhirlyGlobeViewControllerDelegate
 extension MapViewController: WhirlyGlobeViewControllerDelegate {
     func globeViewController(_ view: WhirlyGlobeViewController, didTapAt coord: MaplyCoordinate) {
-        view.clearAnnotations()
-        
         module.didTapAt(coord: coord)
     }
     
     func globeViewController(_ view: WhirlyGlobeViewController, didSelect selected: NSObject, atLoc coord: MaplyCoordinate, onScreen screenPt: CGPoint) {
         
-        view.clearAnnotations()
-        
-        if self.buttonView.isHidden {
+        guard self.buttonView.isHidden == false else {
             module.didTapAt(coord: coord)
             return
         }
         
-        let location: MaplyCoordinate?
-        let contentView: UIView?
         if let marker = selected as? MaplyScreenMarker, let object = marker.userObject {
-            contentView = module.annotation(object: object, parentFrame: self.view.frame)
-            location = marker.loc
+            module.details(object: object, parentFrame: self.view.frame)
         } else if let object = (selected as? MaplyVectorObject)?.userObject {
-            contentView = airspaceModule.annotation(object: object, parentFrame: self.view.frame)
-            location = coord
-        } else {
-            return
+            airspaceModule.details(object: object, parentFrame: self.view.frame)
         }
+    }
+}
+
+extension MapViewController: PulleyPrimaryContentControllerDelegate {
+    
+    @objc func adjustPulleyPositioning(notification: Notification) {
         
-        if let contentView = contentView, let location = location {
-            let annotation = MaplyAnnotation()
-            annotation.contentView = contentView
-            view.addAnnotation(annotation, forPoint: location, offset: .zero)
+        let window = UIApplication.shared.delegate!.window!!
+        
+        let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .leftSide : .bottomDrawer
+        
+        if window.safeAreaInsets != .zero {
+            // adjust position of the drawer on iPhoneX
+            
+            switch UIApplication.shared.statusBarOrientation {
+            case UIInterfaceOrientation.landscapeLeft:
+                // remove safe area when notch is on the other side
+                pulley.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left
+            case UIInterfaceOrientation.landscapeRight:
+                // decrease the margin to notch
+                pulley.additionalSafeAreaInsets.left = -15
+            default:
+                pulley.additionalSafeAreaInsets.left = 0
+            }
         }
+
+        // when pulley is on the left, move segmented control out of the way
+        moduleTypeLeftConstraint.constant = displayMode == .leftSide ? pulley.panelWidth + 16*2 : 16
+        
+        pulley.displayMode = displayMode
     }
 }

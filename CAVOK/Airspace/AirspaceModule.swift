@@ -37,10 +37,11 @@ final class AirspaceModule: MapModule {
     }
     
     func didTapAt(coord: MaplyCoordinate) {
+        delegate.mapView.clearAnnotations()
     }
     
     func refresh() -> Promise<Void> {
-        return Promise(value: ())
+        return .value(())
     }
     
     func configure(open: Bool) {
@@ -60,25 +61,26 @@ final class AirspaceModule: MapModule {
             
             NSLog("Fetching airspace data from \(url)")
             let rq = URLRequest(url: URL(string: url)!)
-            URLSession.shared.dataTask(with: rq).then { data -> Void in
+            URLSession.shared.dataTask(.promise, with: rq).done { data, _ in
                 self.showVectors(key: key, data: data)
-            }.catch(execute: Messages.show)
+            }.catch(Messages.show)
         }
         UserDefaults.standard.setValue(airspaces, forKey: "airspaces")
     }
     
-    func annotation(object: Any, parentFrame: CGRect) -> UIView? {
-        if let attributes = object as? AirspaceAttributes {
-            return AirspaceCalloutView(attributes: attributes, parentFrame: parentFrame)
-        } else {
-            return nil
+    func details(object: Any, parentFrame: CGRect) {
+        guard let attributes = object as? AirspaceAttributes else {
+            return
         }
+        let annotation = MaplyAnnotation()
+        annotation.contentView = AirspaceCalloutView(attributes: attributes, parentFrame: parentFrame)
+        delegate.mapView.addAnnotation(annotation, forPoint: attributes.coordinate, offset: .zero)
     }
     
     private func showVectors(key: NSObject.Type, data: Data) {
         if let vector = MaplyVectorObject(fromGeoJSON: data) {
             
-            let attrs = JSON(data: data)
+            let attrs = try! JSON(data: data)
             
             let isoFormatter = DateFormatter()
             isoFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -116,8 +118,9 @@ final class AirspaceModule: MapModule {
     }
     
     func cleanup() -> Void {
-        delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: tma.self)
         delegate.clearComponents(ofType: ctr.self)
+        
+        delegate.mapView.clearAnnotations()
     }
 }

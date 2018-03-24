@@ -131,7 +131,7 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        if !error.isCancelledError {
+        if !error.isCancelled {
             errorPage(msg: error.localizedDescription)
         }
         

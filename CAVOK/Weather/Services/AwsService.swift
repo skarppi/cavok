@@ -17,7 +17,7 @@ enum AwsSource: String {
 public class AwsService {
     
     class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
-        return fetch(dataSource: AwsSource.STATION, at: region).then { json -> [Station] in
+        return fetch(dataSource: AwsSource.STATION, at: region).map { json -> [Station] in
             let stations = json?.dictionaryValue.values.map { station -> Station in
                 return Station(
                     identifier: station["p1"].stringValue.subString(0, length: 4),
@@ -36,7 +36,7 @@ public class AwsService {
     }
     
     class func fetchObservations(at region: WeatherRegion) -> Promise<[String]> {
-        return fetch(dataSource: AwsSource.METAR, at: region).then { json -> [String] in
+        return fetch(dataSource: AwsSource.METAR, at: region).map { json -> [String] in
             let raws = json?["data"]["aws"]["finland"].dictionaryValue.values.flatMap { obs -> [String] in
                 return [obs["message"].stringValue] + obs["old_messages"].arrayValue.map { $0.stringValue }
             } ?? []
@@ -51,15 +51,15 @@ public class AwsService {
     private class func fetch(dataSource: AwsSource, at region: WeatherRegion) -> Promise<JSON?> {
         guard region.maxLat > 59 && region.minLat < 70 && region.maxLon > 19 && region.minLon < 30 else {
             print("Skipping AWS because out of bounds.")
-            return Promise(value: nil)
+            return .value(nil)
         }
             
         let url = URL(string: UserDefaults.standard.string(forKey: dataSource.rawValue)!)!
         
         print("Fetching AWS data from \(url)")
         let rq = URLRequest(url: url)
-        return URLSession.shared.dataTask(with: rq).then { data -> JSON in
-            return JSON(data: data)
+        return URLSession.shared.dataTask(.promise, with: rq).map { data, _ -> JSON in
+            return try JSON(data: data)
         }
     }
 }

@@ -16,14 +16,14 @@ class WeatherRegion {
     var minLon: Float
     var maxLon: Float
     
-    // radius of the circle
+    // radius of the circle in kilometers
     var radius: Float {
         didSet {
             let recalculated = WeatherRegion(center: center, radius: radius)
             copyBoundaries(from: recalculated)
         }
     }
-
+    
     // center of the circle
     var center: MaplyCoordinate {
         get {
@@ -35,6 +35,18 @@ class WeatherRegion {
         set {
             let recalculated = WeatherRegion(center: newValue, radius: radius)
             copyBoundaries(from: recalculated)
+        }
+    }
+    
+    var ll: MaplyCoordinate {
+        get {
+            return MaplyCoordinateMakeWithDegrees(minLon, minLat)
+        }
+    }
+    
+    var ur: MaplyCoordinate {
+        get {
+            return MaplyCoordinateMakeWithDegrees(maxLon, maxLat)
         }
     }
     
@@ -108,9 +120,9 @@ class WeatherRegion {
     }
     
     func bbox(padding kilometers: Float, offset_y: Float = 0) -> MaplyBoundingBox {
-        let ll = MaplyCoordinateMakeWithDegrees(minLon, minLat).locationAt(kilometers: kilometers, direction: 225)
-        let ur = MaplyCoordinateMakeWithDegrees(maxLon, maxLat).locationAt(kilometers: kilometers, direction: 45)
+        let llPadded = ll.locationAt(kilometers: kilometers, direction: 225)
+        let urPadded = ur.locationAt(kilometers: kilometers, direction: 45)
         
-        return MaplyBoundingBox(ll: ll, ur: ur)
+        return MaplyBoundingBox(ll: llPadded, ur: urPadded)
     }
 }

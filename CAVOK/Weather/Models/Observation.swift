@@ -28,23 +28,23 @@ struct ObservationPresentation {
 
 open class Observation: Object {
     
-    open dynamic var type: String = ""
-    public var identifier: String = ""
+    @objc open dynamic var type: String = ""
+    @objc public dynamic var identifier: String = ""
     public var cloudHeight = RealmOptional<Int>()
-    public dynamic var condition: Int16 = 0
-    public dynamic var datetime: Date = Date()
-    public dynamic var raw: String = ""
-    public dynamic var clouds: String?
-    public dynamic var supplements: String?
-    public dynamic var visibilityGroup: String?
+    @objc public dynamic var condition: Int16 = 0
+    @objc public dynamic var datetime: Date = Date()
+    @objc public dynamic var raw: String = ""
+    @objc public dynamic var clouds: String?
+    @objc public dynamic var supplements: String?
+    @objc public dynamic var visibilityGroup: String?
     public let visibility = RealmOptional<Int>()
-    public dynamic var weather: String?
+    @objc public dynamic var weather: String?
     private let windDirection = RealmOptional<Int>()
     private let windGust = RealmOptional<Int>()
     private let windSpeed = RealmOptional<Int>()
-    public dynamic var windVariability: String?
+    @objc public dynamic var windVariability: String?
     
-    public dynamic var station: Station?
+    @objc public dynamic var station: Station?
     
     public var conditionEnum: WeatherConditions {
         get { return WeatherConditions(rawValue: self.condition) ?? .NA }
@@ -106,10 +106,10 @@ open class Observation: Object {
     func parseWind(value: String?) -> WindData? {
         if let value = value, let match = value.getMatches("(\\d{3}|VRB)(\\d{2})(G(\\d{2}))*KT").first {
             var windData = WindData()
-            windData.direction = Int(value[match.rangeAt(1)])
-            windData.speed = Int(value[match.rangeAt(2)])
-            if match.rangeAt(4).length > 0 {
-                windData.gust = Int(value[match.rangeAt(4)])
+            windData.direction = Int(value[match.range(at: 1)])
+            windData.speed = Int(value[match.range(at: 2)])
+            if match.range(at: 4).length > 0 {
+                windData.gust = Int(value[match.range(at: 4)])
             }
             return windData
         }
@@ -127,7 +127,7 @@ open class Observation: Object {
     func verticalVisibility() -> Int? {
         if let clouds = self.clouds {
             return clouds.getMatches("VV(///|[0-9]{3})").flatMap { match -> Int? in
-                let value = clouds[match.rangeAt(1)]
+                let value = clouds[match.range(at: 1)]
                 if value == "///" {
                     return 100;
                 } else {
@@ -159,7 +159,7 @@ open class Observation: Object {
         if let clouds = self.clouds {
             let regex = "(" + layers.joined(separator: "|") + ")([0-9]{3})"
             return clouds.getMatches(regex).flatMap { match -> Int? in
-                let level = clouds[match.rangeAt(2)]
+                let level = clouds[match.range(at: 2)]
                 return Int(level).map { $0 * 100 }
             }.min()
         }
@@ -192,9 +192,9 @@ open class Observation: Object {
         if !self.isSkyCondition(field: value) {
             if let mileSeparator = value.range(of: "SM") {
                 
-                return Int(value.substring(to: mileSeparator.lowerBound)).map { $0*1609 }
+                return Int(value[..<mileSeparator.lowerBound]).map { $0*1609 }
             } else if value.length >= 4 {
-                return Int(value.substring(to: value.index(value.startIndex, offsetBy: 4)))
+                return Int(value[..<value.index(value.startIndex, offsetBy: 4)])
             }
         }
         return nil

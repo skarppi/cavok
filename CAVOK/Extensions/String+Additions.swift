@@ -12,7 +12,7 @@ import Foundation
 extension String {
     
     var length: Int {
-        return self.characters.count
+        return self.count
     }
     
     func trim() -> String {
@@ -37,26 +37,26 @@ extension String {
     }
     
     subscript (i: Int) -> Character {
-        let index = characters.index(startIndex, offsetBy: i)
-        return self[index]
+        let i = index(startIndex, offsetBy: i)
+        return self[i]
     }
-    
+
     subscript (nsr: NSRange) -> String {
-        let r = nsr.toRange()!
+        let r = Range(nsr)!
         return self[r]
     }
-    
+
     subscript (r: Range<Int>) -> String {
-        let startIndex = self.characters.index(self.startIndex, offsetBy: r.lowerBound)
-        let endIndex = self.characters.index(self.startIndex, offsetBy: r.upperBound)
-        
-        return self[(startIndex ..< endIndex)]
+        let startIndex = self.index(self.startIndex, offsetBy: r.lowerBound)
+        let endIndex = self.index(self.startIndex, offsetBy: r.upperBound)
+
+        return String(self[(startIndex ..< endIndex)])
     }
     
     func subString(_ startIndex: Int, length: Int) -> String {
-        let start = self.characters.index(self.startIndex, offsetBy: startIndex)
-        let end = self.characters.index(self.startIndex, offsetBy: startIndex + length)
-        return self.substring(with: (start ..< end))
+        let start = self.index(self.startIndex, offsetBy: startIndex)
+        let end = self.index(self.startIndex, offsetBy: startIndex + length)
+        return String(self[start ..< end])
     }
     
     func isMatch(_ regex: String, options: NSRegularExpression.Options = []) -> Bool {
@@ -83,7 +83,7 @@ extension String {
     func getMatches(_ regex: String, options: NSRegularExpression.Options = []) -> [NSTextCheckingResult] {
         do {
             let exp = try NSRegularExpression(pattern: regex, options: options)
-            return exp.matches(in: self, options: [], range: NSMakeRange(0, self.characters.count))
+            return exp.matches(in: self, options: [], range: NSMakeRange(0, self.count))
         } catch {
             print(error)
             return []
@@ -97,7 +97,7 @@ extension NSMutableAttributedString {
             let regex = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
             let range = NSRange(location: 0, length: self.string.utf16.count)
             for match in regex.matches(in: self.string, options: .withTransparentBounds, range: range) {
-                self.addAttribute(name, value: value, range: match.range)
+                self.addAttribute(NSAttributedStringKey(rawValue: name), value: value, range: match.range)
             }
         } catch {
             NSLog("Error creating regular expresion: \(error)")

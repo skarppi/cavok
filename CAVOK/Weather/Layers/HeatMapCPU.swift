@@ -14,7 +14,7 @@ class HeatMapCPU {
     
     let fadingDistance: Float
     
-    let maxAlpha: Float = 0.75
+    let maxAlpha: Float = 0.55
 
     init(input: [HeatData], config: WeatherConfig, ramp: ColorRamp) {
         fadingDistance = Float(config.radius) / 2

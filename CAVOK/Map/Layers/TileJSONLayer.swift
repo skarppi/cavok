@@ -19,8 +19,8 @@ class TileJSONLayer {
         let rq = URLRequest(url: url)
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        return URLSession.shared.dataTask(with: rq).then { (data) -> MaplyViewControllerLayer in
-            let json = JSON(data: data)
+        return URLSession.shared.dataTask(.promise, with: rq).map { data, _ -> MaplyViewControllerLayer in
+            let json = try JSON(data: data)
             
             let tileSource = MaplyRemoteTileSource(tilespec: json.object as! [String : Any])!
             tileSource.cacheDir = self.cacheDir.absoluteString + "/" + json["id"].string!
@@ -33,7 +33,7 @@ class TileJSONLayer {
             layer.singleLevelLoading = false
             
             return layer
-        }.always {
+        }.ensure {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }

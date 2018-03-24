@@ -19,7 +19,7 @@ class HeatMapGPU {
     static var commandQueue = device?.makeCommandQueue()
     
     static var pipelineState: MTLComputePipelineState? = {
-        if let defaultLibrary = device?.newDefaultLibrary() {
+        if let defaultLibrary = device?.makeDefaultLibrary() {
             let kernelFunction = defaultLibrary.makeFunction(name: "heatMapShader")
             return try! device?.makeComputePipelineState(function: kernelFunction!)
         } else {
@@ -41,40 +41,39 @@ class HeatMapGPU {
             return;
         }
         
-        let commandBuffer = commandQueue.makeCommandBuffer()
-        let commandEncoder = commandBuffer.makeComputeCommandEncoder()
-        
-        commandEncoder.setComputePipelineState(pipelineState)
-        commandEncoder.setTexture(self.outTexture, at: 0)
-        
-        var radius = config.radius
-        commandEncoder.setBytes(&radius, length: MemoryLayout<Int32>.stride, at: 0)
-        
-        var count = input.count
-        commandEncoder.setBytes(&count, length: MemoryLayout<Int32>.stride, at: 1)
-        
-        let dataBuffer = device.makeBuffer(bytes: &arr, length: MemoryLayout<Int32>.stride * arr.count, options: .storageModeShared)
-        commandEncoder.setBuffer(dataBuffer, offset: 0, at: 2)
-
-        var stepsArray = steps.flatMap { $0.int4() }
-        let stepsBuffer = device.makeBuffer(bytes: &stepsArray, length: MemoryLayout<Int32>.stride * stepsArray.count, options: .storageModeShared)
-        commandEncoder.setBuffer(stepsBuffer, offset: 0, at: 3)
-        
-        let threadsPerThreadgroup = MTLSizeMake(pipelineState.threadExecutionWidth, 1, 1)
-        let threadGroupsPerGrid = MTLSizeMake(config.width / threadsPerThreadgroup.width, config.height / threadsPerThreadgroup.height, 1)
-        
-        assert(threadGroupsPerGrid.width > 0)
-        assert(threadGroupsPerGrid.height > 0)
-        
-        commandEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
-        
-        commandEncoder.endEncoding()
-        commandBuffer.commit()
-        
-        commandBuffer.waitUntilCompleted()
-        
-        if let error = commandBuffer.error {
-            print("rendering failed with error: \(error) status: \(commandBuffer.status.rawValue)")
+        if let commandBuffer = commandQueue.makeCommandBuffer(), let commandEncoder = commandBuffer.makeComputeCommandEncoder() {
+            commandEncoder.setComputePipelineState(pipelineState)
+            commandEncoder.setTexture(self.outTexture, index: 0)
+            
+            var radius = config.radius
+            commandEncoder.setBytes(&radius, length: MemoryLayout<Int32>.stride, index: 0)
+            
+            var count = input.count
+            commandEncoder.setBytes(&count, length: MemoryLayout<Int32>.stride, index: 1)
+            
+            let dataBuffer = device.makeBuffer(bytes: &arr, length: MemoryLayout<Int32>.stride * arr.count, options: .storageModeShared)
+            commandEncoder.setBuffer(dataBuffer, offset: 0, index: 2)
+            
+            var stepsArray = steps.flatMap { $0.int4() }
+            let stepsBuffer = device.makeBuffer(bytes: &stepsArray, length: MemoryLayout<Int32>.stride * stepsArray.count, options: .storageModeShared)
+            commandEncoder.setBuffer(stepsBuffer, offset: 0, index: 3)
+            
+            let threadsPerThreadgroup = MTLSizeMake(pipelineState.threadExecutionWidth, 1, 1)
+            let threadGroupsPerGrid = MTLSizeMake(config.width / threadsPerThreadgroup.width, config.height / threadsPerThreadgroup.height, 1)
+            
+            assert(threadGroupsPerGrid.width > 0)
+            assert(threadGroupsPerGrid.height > 0)
+            
+            commandEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
+            
+            commandEncoder.endEncoding()
+            commandBuffer.commit()
+            
+            commandBuffer.waitUntilCompleted()
+            
+            if let error = commandBuffer.error {
+                print("rendering failed with error: \(error) status: \(commandBuffer.status.rawValue)")
+            }
         }
     }
     

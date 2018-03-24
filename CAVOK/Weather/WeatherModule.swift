@@ -8,6 +8,7 @@
 
 import Foundation
 import PromiseKit
+import Pulley
 
 class Ceiling: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
@@ -56,23 +57,26 @@ open class WeatherModule {
         self.weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
     
         timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
-        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
         timeslotDrawer.setModule(module: self as? MapModule)
+        showLoadingDrawer()
         
         if region != nil {
             load(observations: weatherService.observations())
         }
         
         timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
-            if self.timeslotDrawer.timeslots.selectedSegmentIndex != -1 {
+            let timeslotSelected = self.timeslotDrawer.timeslots.selectedSegmentIndex != -1
+            let notConfiguring = self.delegate.pulley.drawerContentViewController as? ConfigDrawerController == nil
+            
+            if timeslotSelected && notConfiguring {
                 self.render(frame: self.timeslotDrawer.timeslots.selectedSegmentIndex)
             }
         }
     }
     
     func cleanup() {
-        delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
+        cleanDetails()
         
         timer?.invalidate()
     }
@@ -101,27 +105,31 @@ open class WeatherModule {
     }
     
     private func startRegionSelection(at region: WeatherRegion) {
-        let position = delegate.pulley.drawerPosition != .closed ? delegate.pulley.drawerPosition : .collapsed
-        
-        hideDrawers()
-        
         let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
         drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
         delegate.pulley.setDrawerContentViewController(controller: drawer)
-        delegate.pulley.setDrawerPosition(position: position, animated: true)
+        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
     }
     
     private func moveRegionSelection(at region: WeatherRegion) {
         delegate.clearComponents(ofType: RegionSelection.self)
         
         let selection = RegionSelection(region: region)
-        if let stickers = delegate.mapView.addStickers([selection], desc: [kMaplyFade: 1.0]) {
+        if let stickers = delegate.mapView.addShapes([selection], desc: selection.desc) {
             delegate.addComponents(key: selection, value: stickers)
         }
         
-        let center = region.center.locationAt(kilometers: region.radius / 5, direction: 180)
+        // because drawer takes some space offset the region
+        let offset: (km: Float, dir: Float, padding: Float)
+        if delegate.pulley.currentDisplayMode == .bottomDrawer {
+            offset = (km: region.radius / 5, dir: 180, padding: region.radius / 40)
+        } else {
+            offset = (km: region.radius, dir: 270, padding: region.radius / 10)
+        }
         
-        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: 100), pos: center)
+        let center = region.center.locationAt(kilometers: offset.km, direction: offset.dir)
+        
+        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: offset.padding), pos: center)
         delegate.mapView.animate(toPosition: center, height: height, heading: 0, time: 0.5)
         
         showStations(at: region)
@@ -129,7 +137,7 @@ open class WeatherModule {
     
     private func showStations(at region: WeatherRegion) {
         delegate.clearComponents(ofType: StationMarker.self)
-        weatherService.queryStations(at: region).then { stations -> Void in
+        weatherService.queryStations(at: region).done { stations in
             let markers = stations.map { station in StationMarker(station: station) }
             if let key = markers.first, let components = self.delegate.mapView.addScreenMarkers(markers, desc: nil) {
                 self.delegate.addComponents(key: key, value: components)
@@ -139,14 +147,14 @@ open class WeatherModule {
                 drawer.status(text: "Found \(stations.count) stations")
             }
             
-            }.catch(execute: Messages.show)
+            }.catch(Messages.show)
     }
     
     private func endRegionSelection(at region: WeatherRegion? = nil) {
         delegate.clearComponents(ofType: StationMarker.self)
         delegate.clearComponents(ofType: RegionSelection.self)
         
-        hideDrawers()
+        showLoadingDrawer()
         
         if let region = region, region.save() {
             weatherLayer.reposition(region: region)
@@ -155,10 +163,10 @@ open class WeatherModule {
             
             weatherService.refreshStations().then { stations -> Promise<Void> in
                 self.refresh()
-            }.catch(execute: { err in
+            }.catch { err in
                 Messages.show(error: err)
                 self.load(observations: self.weatherService.observations())
-            })
+            }
         } else {
             load(observations: weatherService.observations())
         }
@@ -166,17 +174,15 @@ open class WeatherModule {
     
     // MARK: - Drawers
     
-    private func hideDrawers() {
-        delegate.pulley.setDrawerPosition(position: .closed, animated: true)
-        
-        delegate.clearComponents(ofType: ObservationSelection.self)
-    }
-    
-    private func showTimeslotDrawer() {
-        hideDrawers()
-        
+    private func showLoadingDrawer() {
+        // collapsed shows loading indicator
         delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
         delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+    }
+
+    private func showTimeslotDrawer() {
+        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
+        delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
     }
     
     // MARK: - Observations
@@ -184,7 +190,7 @@ open class WeatherModule {
     func refresh() -> Promise<Void> {
         Messages.show(text: "Refreshing observations...")
         
-        return weatherService.refreshObservations().then(execute: load)
+        return weatherService.refreshObservations().map(load)
     }
     
     private func load(observations: Observations) {
@@ -201,7 +207,7 @@ open class WeatherModule {
                 self.timeslotDrawer.update(color: color, at: frame)
             })
             
-            showTimeslotDrawer()
+            delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
             
             render(frame: frame)
         }
@@ -210,7 +216,6 @@ open class WeatherModule {
     }
     
     func render(frame: Int) {
-        delegate.clearAnnotations(ofType: nil)
         delegate.clearComponents(ofType: ObservationMarker.self)
         
         let observations = weatherLayer.go(frame: frame)
@@ -247,30 +252,34 @@ open class WeatherModule {
         timeslotDrawer.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
     
-    func annotation(object: Any, parentFrame: CGRect) -> UIView? {
-        if let observation = object as? Observation {
-            
-            let drawerPosition = delegate.pulley.drawerPosition
-            
-            hideDrawers()
-
-            let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
-            delegate.pulley.setDrawerContentViewController(controller: observationDrawer)
-            
-            let all = weatherService.observations(for: observation.station?.identifier ?? "")
-            observationDrawer.setup(closed: showTimeslotDrawer, presentation: presentation, obs: observation, observations: all)
+    private func cleanDetails() {
+        delegate.clearComponents(ofType: ObservationSelection.self)
+    }
+    
+    private func quitDetails() {
+        cleanDetails()
+        showTimeslotDrawer()
+    }
+    
+    func details(object: Any, parentFrame: CGRect) {
+        guard let observation = object as? Observation else {
+            return
+        }
         
-            delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
-            delegate.pulley.setDrawerPosition(position: drawerPosition, animated: true)
-            
-            let marker = ObservationSelection(obs: observation)
-            if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {
-                delegate.addComponents(key: marker, value: components)
-            }
-            
-            return nil
-        } else {
-            return nil
+        cleanDetails()
+        
+        let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
+        delegate.pulley.setDrawerContentViewController(controller: observationDrawer, animated: false)
+        
+        let all = weatherService.observations(for: observation.station?.identifier ?? "")
+        observationDrawer.setup(closed: quitDetails, presentation: presentation, obs: observation, observations: all)
+    
+        delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
+        delegate.pulley.setDrawerPosition(position: delegate.pulley.drawerPosition, animated: true)
+        
+        let marker = ObservationSelection(obs: observation)
+        if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {
+            delegate.addComponents(key: marker, value: components)
         }
     }
 }

@@ -28,7 +28,7 @@ class FrameChanger: MaplyActiveObject {
         self.targetFrame = Float(targetFrame)
     }
     
-    func hasUpdate() -> Bool {
+    @objc func hasUpdate() -> Bool {
         if let target = targetFrame {
             return layer.currentImage != target
         } else {
@@ -36,7 +36,7 @@ class FrameChanger: MaplyActiveObject {
         }
     }
     
-    func updateForFrame(_ frameInfo: AnyObject) {
+    @objc func updateForFrame(_ frameInfo: AnyObject) {
         if let start = startTime, let source = sourceFrame, let target = targetFrame {
             let now = CFAbsoluteTimeGetCurrent()
             

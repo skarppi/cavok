@@ -19,18 +19,18 @@ public class WeatherServer {
                 AddsService.fetchStations(at: region),
                  AwsService.fetchStations(at: region)
             )
-        }.then { (adds, aws) -> [Station] in
+        }.map { adds, aws in
             return (adds + aws).filter { station -> Bool in
                 return region.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
 
             }
-        }.then { stations -> [Station] in
+        }.map { stations in
             // remove duplicate identifiers
             var result: [String: Station] = [:]
             stations.forEach({ result[$0.identifier] = $0 })
             return Array(result.values)
             
-        }.always {
+        }.ensure {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
@@ -41,7 +41,7 @@ public class WeatherServer {
             return Promise(error: Weather.error(msg: "Region not set"))
         }
         
-        return queryStations(at: region).then { stations -> [Station] in
+        return queryStations(at: region).map { stations -> [Station] in
             let realm = try! Realm()
             try realm.write {
                 realm.deleteAll()
@@ -63,7 +63,7 @@ public class WeatherServer {
                  AddsService.fetchObservations(.TAF, history: false, at: region),
                  AwsService.fetchObservations(at: region)
             )
-        }.then { addsMetars, addsTafs, awsMetars -> Observations in
+        }.map { addsMetars, addsTafs, awsMetars in
             let realm = try! Realm()
             let oldMetars = realm.objects(Metar.self)
             let oldTafs = realm.objects(Taf.self)
@@ -85,9 +85,8 @@ public class WeatherServer {
                 realm.add(tafs, update: true)
             }
             return Observations(metars: metars, tafs: tafs)
-        }.always { observations in
+        }.ensure {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return observations
         }
     }
     

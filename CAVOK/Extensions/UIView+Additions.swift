@@ -49,3 +49,10 @@ extension UIButton {
         }
     }
 }
+
+
+extension UIApplication {
+    static var withSafeAreas: Bool {
+        return shared.delegate?.window??.safeAreaInsets != .zero
+    }
+}

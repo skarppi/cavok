@@ -22,6 +22,8 @@ class ConfigDrawerController: UIViewController {
     
     @IBOutlet weak var linksTable: UITableView!
     
+    @IBOutlet var gripperTopConstraint: NSLayoutConstraint!
+    
     fileprivate var links: [Link] = []
     
     private var region: WeatherRegion!
@@ -31,7 +33,7 @@ class ConfigDrawerController: UIViewController {
     
     private var closed: (WeatherRegion) -> Void = { (r: WeatherRegion) -> Void in
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +44,10 @@ class ConfigDrawerController: UIViewController {
         links = Links.load()
         
         linksTable.isEditing = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        drawerDisplayModeDidChange(drawer: pulley)
     }
     
     func setup(region: WeatherRegion, closed: @escaping (WeatherRegion) -> Void, resized: @escaping (WeatherRegion) -> Void) {
@@ -140,10 +146,8 @@ class ConfigDrawerController: UIViewController {
                 Messages.show(error: "Links cannot be saved")
             }
 
-            if let pulley = parent as? PulleyViewController {
-                pulley.setNeedsSupportedDrawerPositionsUpdate()
-                pulley.setDrawerPosition(position: .partiallyRevealed, animated: false)
-            }
+            pulley.setNeedsSupportedDrawerPositionsUpdate()
+            pulley.setDrawerPosition(position: .partiallyRevealed, animated: false)
         }
     }
 }
@@ -183,11 +187,9 @@ extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate  {
             if Links.save(links) {
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 
-                if let pulley = parent as? PulleyViewController {
-                    pulley.setDrawerPosition(position: .collapsed, animated: false)
-                    pulley.setNeedsSupportedDrawerPositionsUpdate()
-                    pulley.setDrawerPosition(position: .partiallyRevealed, animated: false)
-                }
+                pulley.setDrawerPosition(position: .collapsed, animated: false)
+                pulley.setNeedsSupportedDrawerPositionsUpdate()
+                pulley.setDrawerPosition(position: .partiallyRevealed, animated: false)
             } else {
                 Messages.show(error: "Links cannot be saved")
             }
@@ -211,18 +213,33 @@ extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate  {
 }
 
 extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
+    
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return [.closed, .collapsed, .partiallyRevealed]
+        return [.collapsed, .partiallyRevealed]
     }
     
-    func collapsedDrawerHeight() -> CGFloat {
-        return 175
+    func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
+        return 161 + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 5)
     }
     
-    func partialRevealDrawerHeight() -> CGFloat {
+    func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         let tablePositionY = linksTable.frame.origin.y + (linksTable.superview?.frame.origin.y ?? 0)
         
-        let drawerHeight = tablePositionY + linksTable.contentSize.height + 25
-        return min(drawerHeight, UIScreen.main.bounds.height - 50)
+        let currentContentHeight = tablePositionY + linksTable.contentSize.height
+        
+        let maxAvailableHeight = UIApplication.shared.keyWindow!.frame.height
+        if pulley.displayMode == .bottomDrawer {
+            return min(maxAvailableHeight - bottomSafeArea - pulley.topInset, currentContentHeight + bottomSafeArea)
+        } else {
+            return min(maxAvailableHeight - pulley.topInset * 2, currentContentHeight)
+        }        
+    }
+
+    func drawerDisplayModeDidChange(drawer: Pulley.PulleyViewController) {
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
+        
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            self.resized(self.region)
+        }
     }
 }

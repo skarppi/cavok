@@ -11,8 +11,6 @@ import Pulley
 
 class TimeslotDrawerController: UIViewController {
     
-    @IBOutlet weak var bottomView: UIView!
-
     @IBOutlet weak var status: UITextField!
 
     @IBOutlet weak var timeslots: TimeslotControl!
@@ -69,24 +67,31 @@ class TimeslotDrawerController: UIViewController {
 // MARK: - UITextFieldDelegate
 extension TimeslotDrawerController: UITextFieldDelegate {
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if let button = status.rightView as? UIButton, !button.isSelected {
-            let spiner = button.layer.sublayers?.last as? SpinerLayer ?? {
-                let spiner = SpinerLayer(frame: button.frame)
-                button.layer.addSublayer(spiner)
-                return spiner
-            }()
-            
+    func startSpinning() {
+        if let button = status.rightView as? UIButton,
+            let spiner = button.layer.sublayers?.last as? SpinerLayer,
+            !button.isSelected {
             button.isSelected = true
             spiner.animation()
-            
-            module?.refresh()
-                .catch(execute: Messages.show)
-                .always {
-                    spiner.stopAnimation()
-                    button.isSelected = false
-                }
         }
+    }
+    
+    func stopSpinning() {
+        if let button = status.rightView as? UIButton,
+            let spiner = button.layer.sublayers?.last as? SpinerLayer,
+            button.isSelected {
+            spiner.stopAnimation()
+            button.isSelected = false
+        }
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        startSpinning()
+        
+        module?.refresh()
+            .catch(Messages.show)
+            .finally(stopSpinning)
+        
         return false
     }
 }
@@ -94,15 +99,31 @@ extension TimeslotDrawerController: UITextFieldDelegate {
 extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return [.closed, .collapsed]
+        if timeslots.numberOfSegments > 0 {
+            return [.partiallyRevealed]
+        } else {
+            return [.collapsed, .partiallyRevealed]
+        }
     }
     
-    func collapsedDrawerHeight() -> CGFloat {
-        return 70
+    func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
+        return 20 + (pulley.currentDisplayMode == .bottomDrawer ? bottomSafeArea : 0)
     }
     
-    func partialRevealDrawerHeight() -> CGFloat {
-        return 150
+    func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
+        return 70 + (pulley.currentDisplayMode == .bottomDrawer ? bottomSafeArea : 0)
+    }
+    
+    func drawerPositionDidChange(drawer: PulleyViewController, bottomSafeArea: CGFloat) {
+        if drawer.drawerPosition == .collapsed {
+            timeslots.isHidden = true
+            setStatus(text: "Loading...", color: UIColor.gray)
+            startSpinning()
+            timeslots.removeAllSegments()
+        } else {
+            timeslots.isHidden = false
+            stopSpinning()
+        }
     }
 }
 
@@ -114,6 +135,9 @@ extension UITextField {
         let button = UIButton(frame: CGRect(x:0, y:0, width:16, height:16))
         button.setImage(UIImage(named: "Restart"), for: .normal)
         button.setImage(UIImage(), for: .selected)
+        
+        let spiner = SpinerLayer(frame: button.frame)
+        button.layer.addSublayer(spiner)
         
         if let delegate = delegate {
             button.addTarget(delegate, action: #selector(delegate.textFieldShouldBeginEditing(_:)), for: .touchUpInside)
