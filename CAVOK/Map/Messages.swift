@@ -13,7 +13,8 @@ import SwiftMessages
 class Messages {
     
     class func setup() {
-        SwiftMessages.defaultConfig.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
+        SwiftMessages.defaultConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+        
         SwiftMessages.defaultConfig.duration = .forever
     }
     
