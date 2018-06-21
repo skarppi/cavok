@@ -19,10 +19,10 @@ enum AddsSource: String {
 public class AddsService {
     
     class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
-        return fetch(dataSource: "stations", at: region).map { doc -> [Station] in
-            print("Found \(doc["response"]["data"].children.count) ADDS stations")
+        return fetch(dataSource: "stations", at: region).map { data -> [Station] in
+            print("Found \(data.children.count) ADDS stations")
             
-            return doc["response"]["data"]["Station"].all.map { station in
+            return data.children.map { station in
                 Station(
                     identifier: station["station_id"].element!.text,
                     name: station["site"].element!.text,
@@ -42,20 +42,11 @@ public class AddsService {
             "mostRecentForEachStation": String(history == false),
             "fields": "raw_text"
         ]
-        return fetch(dataSource: source.rawValue, with: query, at: region).map { doc -> [String] in
-            let count = doc["response"]["data"].children.count
+        return fetch(dataSource: source.rawValue, with: query, at: region).map { data -> [String] in
+            let count = data.children.count
             print("Found \(count) ADDS \(source.rawValue)")
-            guard count > 0 else {
-                return []
-            }
             
-            let warnings = doc["response"]["warnings"]["warning"].all.flatMap { $0.element?.text }
-            if warnings.count > 0 {
-                print("ADDS warning: \(warnings.joined())")
-            }
-            
-            let collection = doc["response"]["data"].children[0].element!.name
-            let raws = doc["response"]["data"][collection].all.flatMap { item in
+            let raws = data.children.compactMap { item in
                 item["raw_text"].element?.text
             }
             // remove possible duplicate entries
@@ -64,18 +55,25 @@ public class AddsService {
     }
     
     private class func parse(data: Data, expecting dataSource: String) throws -> XMLIndexer {
-        let doc = SWXMLHash.lazy(data)
-        
-        guard doc["response"]["data_source"].element?.attribute(by: "name")?.text == dataSource else {
+        let response = SWXMLHash.parse(data)["response"]
+    
+        guard response["data_source"].element?.attribute(by: "name")?.text == dataSource else {
             throw Weather.error(msg: "No data")
         }
         
-        guard doc["response"]["errors"].children.count == 0  else {
-            let errors = doc["response"]["errors"]["error"].all.flatMap { $0.element?.text }
-            throw Weather.error(msg: errors.joined(separator: ", "))
+        let errors = response["errors"]
+        guard errors.children.count == 0  else {
+            let msgs = errors["error"].all.compactMap { $0.element?.text }
+            throw Weather.error(msg: msgs.joined(separator: ", "))
         }
         
-        return doc
+        let warnings = response["warnings"]
+        if warnings.children.count > 0 {
+            let msgs = warnings["warning"].all.compactMap { $0.element?.text }
+            print("ADDS warning: \(msgs.joined())")
+        }
+        
+        return response["data"]
     }
     
     private class func fetch(dataSource: String, with: [String: String] = [:], at region: WeatherRegion) -> Promise<XMLIndexer> {

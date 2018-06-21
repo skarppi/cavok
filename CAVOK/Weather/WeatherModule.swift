@@ -147,7 +147,7 @@ open class WeatherModule {
                 drawer.status(text: "Found \(stations.count) stations")
             }
             
-            }.catch(Messages.show)
+        }.catch(Messages.show)
     }
     
     private func endRegionSelection(at region: WeatherRegion? = nil) {
