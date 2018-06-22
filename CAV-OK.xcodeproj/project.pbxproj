@@ -94,6 +94,8 @@
 		C0E53B9120543BB800805F19 /* Pulley+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E53B9020543BB800805F19 /* Pulley+Additions.swift */; };
 		C0F483681D99CDDB007A1404 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483671D99CDDB007A1404 /* MapDelegate.swift */; };
 		C0F4836A1D99CDF9007A1404 /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F483691D99CDF9007A1404 /* Timeslot.swift */; };
+		C0FC2B3C20DD85C20087D92B /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; };
+		C0FC2B3D20DD85C20087D92B /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +128,20 @@
 			remoteInfo = WhirlyGlobeMaplyComponentTests;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C0FC2B4020DD85C20087D92B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C0FC2B3D20DD85C20087D92B /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
@@ -239,6 +255,7 @@
 				377123E11D7D93300010CA1F /* libxml2.tbd in Frameworks */,
 				377123DF1D7D93280010CA1F /* libsqlite3.tbd in Frameworks */,
 				377123DD1D7D931E0010CA1F /* libz.tbd in Frameworks */,
+				C0FC2B3C20DD85C20087D92B /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
 				377123DB1D7D93110010CA1F /* libc++.tbd in Frameworks */,
 				377123D91D7D92FB0010CA1F /* CoreLocation.framework in Frameworks */,
 			);
@@ -535,6 +552,7 @@
 				374EC9C61D7CB5A90047B82B /* Frameworks */,
 				374EC9C71D7CB5A90047B82B /* Resources */,
 				3702222B1D7DF19F00984647 /* ShellScript */,
+				C0FC2B4020DD85C20087D92B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
