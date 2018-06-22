@@ -19,9 +19,7 @@ class TimeslotDrawerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        status.applyRestartButton()
-        
+        timeslots.removeAllSegments()
     }
     
     func setModule(module: MapModule?) {
@@ -57,6 +55,11 @@ class TimeslotDrawerController: UIViewController {
         }
         
         timeslots.selectedSegmentIndex = frame
+        
+        if status.rightView == nil {
+            // running on first time
+            status.applyRestartButton()
+        }
     }
     
     func update(color: UIColor, at segment: Int) {
@@ -117,11 +120,11 @@ extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     func drawerPositionDidChange(drawer: PulleyViewController, bottomSafeArea: CGFloat) {
         if drawer.drawerPosition == .collapsed {
             timeslots.isHidden = true
-            setStatus(text: "Loading...", color: UIColor.gray)
+//            setStatus(text: "...", color: UIColor.gray)
             startSpinning()
             timeslots.removeAllSegments()
         } else {
-            timeslots.isHidden = false
+            timeslots.isHidden = timeslots.numberOfSegments == 0
             stopSpinning()
         }
     }
