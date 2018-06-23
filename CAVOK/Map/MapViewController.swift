@@ -212,7 +212,6 @@ extension MapViewController : MapDelegate {
                 self.legendView.loaded(legend: legend)
                 self.animateModuleType(show: true)
             } else {
-                Messages.show(error: "No data")
                 self.resetRegion()
             }
         }

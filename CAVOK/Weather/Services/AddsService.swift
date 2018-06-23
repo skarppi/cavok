@@ -54,13 +54,9 @@ public class AddsService {
         }
     }
     
-    private class func parse(data: Data, expecting dataSource: String) throws -> XMLIndexer {
+    private class func parse(data: Data) throws -> XMLIndexer {
         let response = SWXMLHash.parse(data)["response"]
     
-        guard response["data_source"].element?.attribute(by: "name")?.text == dataSource else {
-            throw Weather.error(msg: "No data")
-        }
-        
         let errors = response["errors"]
         guard errors.children.count == 0  else {
             let msgs = errors["error"].all.compactMap { $0.element?.text }
@@ -81,7 +77,7 @@ public class AddsService {
             "dataSource": dataSource,
             "requestType": "retrieve",
             "format": "xml",
-            "compression": "gzip",
+//            "compression": "gzip",
             "minLat": String(region.minLat),
             "minLon": String(region.minLon),
             "maxLat": String(region.maxLat),
@@ -94,7 +90,11 @@ public class AddsService {
         components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
 
         let rq = URLRequest(url: components.url!)
-        print("Fetching ADDS data from \(components.url!)")
+        return execute(rq, retries: 0)
+    }
+    
+    private class func execute(_ rq: URLRequest, retries: Int = 0) -> Promise<XMLIndexer> {
+        print("Fetching ADDS data from \(rq.url!)")
         return URLSession.shared.dataTask(.promise, with: rq).map { data, urlResponse -> XMLIndexer in
             let unzipped: Data = try {
                 if data.isGzipped {
@@ -103,9 +103,22 @@ public class AddsService {
                     return data
                 }
             }()
-            
-            
-            return try self.parse(data: unzipped, expecting: dataSource)
+            return try self.parse(data: unzipped)
+        }.recover { error -> Promise<XMLIndexer> in
+            switch error {
+            case let Weather.error(msg) where msg.contains("Invalid field name(s) found: raw_text"):
+                if retries > 0 {
+                    return after(.seconds(1)).then { () -> Promise<XMLIndexer> in
+                        print("Retrying ADDS query still \(retries - 1) times")
+                        return execute(rq, retries: retries - 1)
+                    }
+                } else {
+                    throw Weather.error(msg: "ADDS temporarily unavailable")
+                }
+                
+            default:
+                throw error
+            }
         }
     }
 }
