@@ -39,8 +39,8 @@ public class AddsService {
     class func fetchObservations(_ source: AddsSource, history: Bool, at region: WeatherRegion) -> Promise<[String]> {
         let query = [
             "hoursBeforeNow": "3",
-            "mostRecentForEachStation": String(history == false),
-            "fields": "raw_text"
+            "mostRecentForEachStation": String(history == false)
+//            "fields": "raw_text"
         ]
         return fetch(dataSource: source.rawValue, with: query, at: region).map { data -> [String] in
             let count = data.children.count
@@ -77,7 +77,7 @@ public class AddsService {
             "dataSource": dataSource,
             "requestType": "retrieve",
             "format": "xml",
-//            "compression": "gzip",
+            "compression": "gzip",
             "minLat": String(region.minLat),
             "minLon": String(region.minLon),
             "maxLat": String(region.maxLat),
