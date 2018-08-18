@@ -97,9 +97,6 @@ class ObservationDrawerController: UIViewController {
         closed()
     }
     
-    func drawerDisplayModeDidChange(drawer: PulleyViewController) {
-        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
-    }
 }
 
 extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
@@ -121,5 +118,9 @@ extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
         } else {
             return min(maxAvailableHeight - pulley.topInset * 2, currentContentHeight)
         }
+    }
+    
+    func drawerDisplayModeDidChange(drawer: PulleyViewController) {
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
     }
 }

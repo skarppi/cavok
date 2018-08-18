@@ -175,14 +175,14 @@ open class WeatherModule {
     // MARK: - Drawers
     
     private func showLoadingDrawer() {
-        // collapsed shows loading indicator
+        delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
         delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
-        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+        timeslotDrawer.startSpinning()
     }
 
     private func showTimeslotDrawer() {
-        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
         delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
+        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
     }
     
     // MARK: - Observations

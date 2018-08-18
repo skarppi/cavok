@@ -9,17 +9,29 @@
 import Foundation
 import Pulley
 
-class TimeslotDrawerController: UIViewController {
+class TimeslotDrawerController: UITableViewController {
     
-    @IBOutlet weak var status: UITextField!
+    @IBOutlet weak var status: UILabel!
 
-    @IBOutlet weak var timeslots: TimeslotControl!
+    @IBOutlet weak var timeslots: TimeslotControl! {
+        didSet {
+            timeslots.removeAllSegments()
+        }
+    }
+    
+    @IBOutlet var gripper: UIView!
+    
+    @IBOutlet var gripperTopConstraint: NSLayoutConstraint!
     
     fileprivate weak var module: MapModule?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        timeslots.removeAllSegments()
+    override func viewWillAppear(_ animated: Bool) {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
+        refreshControl.bounds = refreshControl.bounds.offsetBy(dx: 0, dy: -10)
+        tableView.alwaysBounceVertical = false
+        
+        self.refreshControl = refreshControl
     }
     
     func setModule(module: MapModule?) {
@@ -56,57 +68,44 @@ class TimeslotDrawerController: UIViewController {
         
         timeslots.selectedSegmentIndex = frame
         
-        if status.rightView == nil {
-            // running on first time
-            status.applyRestartButton()
-        }
+        stopSpinning()
     }
     
     func update(color: UIColor, at segment: Int) {
         timeslots.updateSegment(color: color, at: segment)
     }
-}
-
-// MARK: - UITextFieldDelegate
-extension TimeslotDrawerController: UITextFieldDelegate {
     
-    func startSpinning() {
-        if let button = status.rightView as? UIButton,
-            let spiner = button.layer.sublayers?.last as? SpinerLayer,
-            !button.isSelected {
-            button.isSelected = true
-            spiner.animation()
-        }
-    }
-    
-    func stopSpinning() {
-        if let button = status.rightView as? UIButton,
-            let spiner = button.layer.sublayers?.last as? SpinerLayer,
-            button.isSelected {
-            spiner.stopAnimation()
-            button.isSelected = false
-        }
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        startSpinning()
+    @objc func refresh() {
+        setControls(hidden: true)
         
         module?.refresh()
             .catch(Messages.show)
             .finally(stopSpinning)
+    }
+    
+    func startSpinning() {
+        setControls(hidden: true)
         
-        return false
+        self.refreshControl?.beginRefreshing()
+    }
+    
+    private func setControls(hidden: Bool) {
+        status.isHidden = hidden
+        timeslots.isHidden = hidden
+        gripper.isHidden = hidden
+    }
+    
+    func stopSpinning() {
+        refreshControl?.endRefreshing()
+        setControls(hidden: false)
+        tableView.contentOffset.y = 0
     }
 }
 
 extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     
     func supportedDrawerPositions() -> [PulleyPosition] {
-        if timeslots.numberOfSegments > 0 {
-            return [.partiallyRevealed]
-        } else {
-            return [.collapsed, .partiallyRevealed]
-        }
+        return [.partiallyRevealed]
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
@@ -114,38 +113,10 @@ extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 70 + (pulley.currentDisplayMode == .bottomDrawer ? bottomSafeArea : 0)
+        return 80 + (pulley.currentDisplayMode == .bottomDrawer ? bottomSafeArea : 0)
     }
     
-    func drawerPositionDidChange(drawer: PulleyViewController, bottomSafeArea: CGFloat) {
-        if drawer.drawerPosition == .collapsed {
-            timeslots.isHidden = true
-//            setStatus(text: "...", color: UIColor.gray)
-            startSpinning()
-            timeslots.removeAllSegments()
-        } else {
-            timeslots.isHidden = timeslots.numberOfSegments == 0
-            stopSpinning()
-        }
-    }
-}
-
-extension UITextField {
-    func applyRestartButton() {
-        clearButtonMode = .never
-        rightViewMode   = .always
-
-        let button = UIButton(frame: CGRect(x:0, y:0, width:16, height:16))
-        button.setImage(UIImage(named: "Restart"), for: .normal)
-        button.setImage(UIImage(), for: .selected)
-        
-        let spiner = SpinerLayer(frame: button.frame)
-        button.layer.addSublayer(spiner)
-        
-        if let delegate = delegate {
-            button.addTarget(delegate, action: #selector(delegate.textFieldShouldBeginEditing(_:)), for: .touchUpInside)
-        }
-        
-        rightView = button
+    func drawerDisplayModeDidChange(drawer: PulleyViewController) {
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
     }
 }
