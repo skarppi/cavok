@@ -25,6 +25,8 @@ class TimeslotDrawerController: UITableViewController {
     
     fileprivate weak var module: MapModule?
     
+    private var scrollingLocked: Bool = true
+    
     override func viewWillAppear(_ animated: Bool) {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
@@ -32,6 +34,27 @@ class TimeslotDrawerController: UITableViewController {
         tableView.alwaysBounceVertical = false
         
         self.refreshControl = refreshControl
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !scrollingLocked && scrollView.contentOffset.y < -40 {
+            // when pulling down trigger refresh earlier
+            if !refreshControl!.isRefreshing {
+                refreshControl!.beginRefreshing()
+                refresh()
+            }
+        } else if (scrollView.contentOffset.y >= 0) {
+            // prevent bounce up
+            scrollView.setContentOffset(CGPoint(x: scrollView.contentOffset.x, y: 0), animated: false)
+        }
+    }
+    
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        scrollingLocked = true
+    }
+    
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+        scrollingLocked = false
     }
     
     func setModule(module: MapModule?) {
@@ -99,6 +122,7 @@ class TimeslotDrawerController: UITableViewController {
         refreshControl?.endRefreshing()
         setControls(hidden: false)
         tableView.contentOffset.y = 0
+        scrollingLocked = false
     }
 }
 
