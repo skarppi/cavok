@@ -50,11 +50,11 @@ open class WeatherModule {
         self.delegate = delegate
         
         let ramp = ColorRamp(moduleType: type(of: self))
-        self.presentation = ObservationPresentation(mapper: mapper, ramp: ramp)
+        presentation = ObservationPresentation(mapper: mapper, ramp: ramp)
         
         let region = WeatherRegion.load()
         
-        self.weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
+        weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
     
         timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
         timeslotDrawer.setModule(module: self as? MapModule)
@@ -63,13 +63,14 @@ open class WeatherModule {
         if region != nil {
             load(observations: weatherService.observations())
         }
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
-            let timeslotSelected = self.timeslotDrawer.timeslots.selectedSegmentIndex != -1
-            let notConfiguring = self.delegate.pulley.drawerContentViewController as? ConfigDrawerController == nil
-            
-            if timeslotSelected && notConfiguring {
-                self.render(frame: self.timeslotDrawer.timeslots.selectedSegmentIndex)
+    }
+    
+    func initTimer() {
+        if timer == nil {
+            timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+                if self.timeslotDrawer.timeslots.selectedSegmentIndex > 0 {
+                    self.render(frame: self.timeslotDrawer.timeslots.selectedSegmentIndex)
+                }
             }
         }
     }
@@ -79,13 +80,15 @@ open class WeatherModule {
         cleanDetails()
         
         timer?.invalidate()
+        timer = nil
+        
+        weatherLayer.clean()
     }
     
     // MARK: - Region selection
     
     func configure(open: Bool) {
-        delegate.clearComponents(ofType: ObservationMarker.self)
-        self.weatherLayer.clean()
+        cleanup()
         
         if open {
             let region = WeatherRegion.load() ??
@@ -175,13 +178,13 @@ open class WeatherModule {
     // MARK: - Drawers
     
     private func showLoadingDrawer() {
-        delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
+        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
         delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
         timeslotDrawer.startSpinning()
     }
 
     private func showTimeslotDrawer() {
-        delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
+        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
         delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
     }
     
@@ -207,12 +210,13 @@ open class WeatherModule {
                 self.timeslotDrawer.update(color: color, at: frame)
             })
             
-            delegate.pulley.setDrawerPosition(position: .partiallyRevealed, animated: true)
             
             render(frame: frame)
         }
         
         delegate.loaded(frame: groups.selectedFrame, legend: presentation.ramp.legend())
+        
+        initTimer()
     }
     
     func render(frame: Int) {

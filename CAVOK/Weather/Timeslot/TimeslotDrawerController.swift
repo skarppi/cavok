@@ -27,13 +27,18 @@ class TimeslotDrawerController: UITableViewController {
     
     private var scrollingLocked: Bool = true
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
         refreshControl.bounds = refreshControl.bounds.offsetBy(dx: 0, dy: -10)
-        tableView.alwaysBounceVertical = false
         
         self.refreshControl = refreshControl
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        drawerDisplayModeDidChange(drawer: pulley)
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -108,8 +113,9 @@ class TimeslotDrawerController: UITableViewController {
     
     func startSpinning() {
         setControls(hidden: true)
-        
-        self.refreshControl?.beginRefreshing()
+        tableView.setContentOffset(CGPoint(x:0, y:tableView.contentOffset.y - refreshControl!.frame.size.height), animated: false)
+
+        refreshControl?.beginRefreshing()
     }
     
     private func setControls(hidden: Bool) {
@@ -129,15 +135,15 @@ class TimeslotDrawerController: UITableViewController {
 extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     
     func supportedDrawerPositions() -> [PulleyPosition] {
-        return [.partiallyRevealed]
+        return [.collapsed]
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 20 + (pulley.currentDisplayMode == .bottomDrawer ? bottomSafeArea : 0)
+        return 70 + bottomSafeArea + (pulley.currentDisplayMode == .bottomDrawer ? 10 : 0)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 80 + (pulley.currentDisplayMode == .bottomDrawer ? bottomSafeArea : 0)
+        return 0
     }
     
     func drawerDisplayModeDidChange(drawer: PulleyViewController) {

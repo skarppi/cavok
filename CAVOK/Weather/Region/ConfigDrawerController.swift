@@ -220,7 +220,7 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         // on leftSide display mode add extra space to show web links header
-        return 161 + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 30)
+        return 190 + bottomSafeArea + (pulley.displayMode == .bottomDrawer ? 10 : 0)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
