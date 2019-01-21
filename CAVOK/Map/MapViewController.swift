@@ -265,7 +265,7 @@ extension MapViewController: PulleyPrimaryContentControllerDelegate {
         
         let window = UIApplication.shared.delegate!.window!!
         
-        let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .leftSide : .bottomDrawer
+        let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .panel : .drawer
         
         if window.safeAreaInsets != .zero {
             // adjust position of the drawer on iPhoneX
@@ -283,7 +283,7 @@ extension MapViewController: PulleyPrimaryContentControllerDelegate {
         }
 
         // when pulley is on the left, move segmented control out of the way
-        moduleTypeLeftConstraint.constant = displayMode == .leftSide ? pulley.panelWidth + 16*2 : 16
+        moduleTypeLeftConstraint.constant = displayMode == .panel ? pulley.panelWidth + 16*2 : 16
         
         pulley.displayMode = displayMode
     }

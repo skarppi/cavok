@@ -952,6 +952,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -971,6 +972,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -124,7 +124,7 @@ open class WeatherModule {
         
         // because drawer takes some space offset the region
         let offset: (km: Float, dir: Float, padding: Float)
-        if delegate.pulley.currentDisplayMode == .bottomDrawer {
+        if delegate.pulley.currentDisplayMode == .drawer {
             offset = (km: region.radius / 5, dir: 180, padding: region.radius / 40)
         } else {
             offset = (km: region.radius, dir: 270, padding: region.radius / 10)

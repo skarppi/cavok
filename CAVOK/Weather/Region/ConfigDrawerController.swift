@@ -220,7 +220,7 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         // on leftSide display mode add extra space to show web links header
-        return 190 + bottomSafeArea + (pulley.displayMode == .bottomDrawer ? 10 : 0)
+        return 190 + bottomSafeArea + (pulley.displayMode == .drawer ? 10 : 0)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
@@ -229,15 +229,15 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
         let currentContentHeight = tablePositionY + linksTable.contentSize.height
         
         let maxAvailableHeight = UIApplication.shared.keyWindow!.frame.height
-        if pulley.displayMode == .bottomDrawer {
-            return min(maxAvailableHeight - bottomSafeArea - pulley.topInset, currentContentHeight + bottomSafeArea)
+        if pulley.displayMode == .drawer {
+            return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, currentContentHeight + bottomSafeArea)
         } else {
-            return min(maxAvailableHeight - pulley.topInset * 2, currentContentHeight)
+            return min(maxAvailableHeight - pulley.drawerTopInset * 2, currentContentHeight)
         }        
     }
 
     func drawerDisplayModeDidChange(drawer: Pulley.PulleyViewController) {
-        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .drawer
         
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
             self.resized(self.region)

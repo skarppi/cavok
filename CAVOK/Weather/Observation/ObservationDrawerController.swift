@@ -106,21 +106,21 @@ extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return scrollView.frame.origin.y + observationLabel.frame.maxY + (pulley.displayMode == .bottomDrawer ? bottomSafeArea : 0)
+        return scrollView.frame.origin.y + observationLabel.frame.maxY + (pulley.displayMode == .drawer ? bottomSafeArea : 0)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         let currentContentHeight = scrollView.frame.origin.y + scrollView.contentSize.height
         
         let maxAvailableHeight = UIApplication.shared.keyWindow!.frame.height
-        if pulley.displayMode == .bottomDrawer {
-            return min(maxAvailableHeight - bottomSafeArea - pulley.topInset, currentContentHeight + bottomSafeArea)
+        if pulley.displayMode == .drawer {
+            return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, currentContentHeight + bottomSafeArea)
         } else {
-            return min(maxAvailableHeight - pulley.topInset * 2, currentContentHeight)
+            return min(maxAvailableHeight - pulley.drawerTopInset * 2, currentContentHeight)
         }
     }
     
     func drawerDisplayModeDidChange(drawer: PulleyViewController) {
-        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .drawer
     }
 }

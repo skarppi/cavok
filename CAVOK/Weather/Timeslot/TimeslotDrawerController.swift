@@ -139,7 +139,7 @@ extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 70 + bottomSafeArea + (pulley.currentDisplayMode == .bottomDrawer ? 10 : 0)
+        return 70 + bottomSafeArea + (pulley.currentDisplayMode == .drawer ? 10 : 0)
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
@@ -147,6 +147,6 @@ extension TimeslotDrawerController: PulleyDrawerViewControllerDelegate {
     }
     
     func drawerDisplayModeDidChange(drawer: PulleyViewController) {
-        gripperTopConstraint.isActive = drawer.currentDisplayMode == .bottomDrawer
+        gripperTopConstraint.isActive = drawer.currentDisplayMode == .drawer
     }
 }
