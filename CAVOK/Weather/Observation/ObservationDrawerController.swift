@@ -30,24 +30,12 @@ class ObservationDrawerController: UIViewController {
     func setup(closed: @escaping (() -> ()), presentation: ObservationPresentation, obs: Observation, observations: Observations) {
         self.closed = closed
         
-        func highlight(observation: Observation) -> NSAttributedString {
-            let attributed = NSMutableAttributedString(string: observation.raw)
-            
-            let mapped = presentation.mapper(observation)
-            if let value = mapped.value, let source = mapped.source {
-                let cgColor = presentation.ramp.color(for: Int32(value))
-                attributed.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: UIColor(cgColor: cgColor), pattern: source)
-            }
-            return attributed
-        }
-        
         titleLabel.text = obs.station?.name ?? "-"
-        titleLabel.sizeToFit()
         
-        add(header: nil, content: [highlight(observation: obs)], to: observationLabel, after: nil)
+        add(header: nil, content: [presentation.highlight(observation: obs)], to: observationLabel, after: nil)
         
         let metarHistory = observations.metars.reversed().map{ metar in
-            return highlight(observation: metar)
+            return presentation.highlight(observation: metar)
         }
         if !metarHistory.isEmpty {
             add(header: "METAR history", content: metarHistory, to: self.metars, after: observationLabel)
@@ -55,7 +43,7 @@ class ObservationDrawerController: UIViewController {
 
         if obs as? Taf == nil {
             let tafHistory = observations.tafs.reversed().map{ taf in
-                return highlight(observation: taf)
+                return presentation.highlight(observation: taf)
             }
             if !tafHistory.isEmpty {
                 add(header: "TAF", content: tafHistory, to: tafs, after: metars)

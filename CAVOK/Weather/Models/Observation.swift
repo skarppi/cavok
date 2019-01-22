@@ -24,6 +24,17 @@ public struct WindData {
 struct ObservationPresentation {
     var mapper: (Observation) -> (value: Int?, source: String?)
     var ramp: ColorRamp
+    
+    func highlight(observation: Observation) -> NSAttributedString {
+        let attributed = NSMutableAttributedString(string: observation.raw)
+        
+        let mapped = self.mapper(observation)
+        if let value = mapped.value, let source = mapped.source {
+            let cgColor = self.ramp.color(for: Int32(value))
+            attributed.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: UIColor(cgColor: cgColor), pattern: source)
+        }
+        return attributed
+    }
 }
 
 open class Observation: Object {
