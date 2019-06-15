@@ -8,12 +8,12 @@
 
 import Foundation
 import XCTest
-import CAVOK
+@testable import CAV_OK
 
 class MetarTests : ObservationTestCase {
     
     func testAwsMetar() {
-        let date = getDateFor(01, 20, 20, monthOffset: true)
+        let date = getDateFor(01, 20, 20)
         
         let metar = Metar()
         metar.parse(raw: "ILZU 012020Z AUTO 31009KT 9999 FEW036 03/02 Q1012 RMK QFE1011 NOCBANALYSIS=")
@@ -37,7 +37,7 @@ class MetarTests : ObservationTestCase {
     }
     
     func testSwedenMetar() {
-        let date = getDateFor(01, 10, 20, monthOffset: true)
+        let date = getDateFor(01, 10, 20)
         
         let metar = Metar()
         metar.parse(raw: "ESNN 011020Z AUTO 35002KT 9999NDV BKN089/// 03/02 Q0999 R16/19//81")
@@ -100,7 +100,7 @@ class MetarTests : ObservationTestCase {
     }
     
     func testNilValues() {
-        let date = getDateFor(27, 20, 40, monthOffset: true)
+        let date = getDateFor(27, 20, 40)
         
         let metar = Metar()
         metar.parse(raw: "ILWD 272040Z AUTO /////KT //// // ////// 13/12 Q////=;")

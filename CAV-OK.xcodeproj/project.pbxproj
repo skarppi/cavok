@@ -40,8 +40,6 @@
 		377123E11D7D93300010CA1F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E01D7D93300010CA1F /* libxml2.tbd */; };
 		377123E41D7D944B0010CA1F /* TileJSONLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377123E31D7D944B0010CA1F /* TileJSONLayer.swift */; };
 		377123E71D7D94F50010CA1F /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = 377123E61D7D94F50010CA1F /* CAVOK.plist */; };
-		378AE5F81D80B56D008492D5 /* TafTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE5F71D80B56D008492D5 /* TafTests.swift */; };
-		378AE5FC1D80BB35008492D5 /* ObservationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */; };
 		378F1F191DE4747300B2314A /* AirspaceAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F1F181DE4747300B2314A /* AirspaceAttributes.swift */; };
 		378F1F1B1DE474EB00B2314A /* AirspaceCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F1F1A1DE474EB00B2314A /* AirspaceCalloutView.swift */; };
 		378F1F1D1DE4751F00B2314A /* AirspaceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F1F1C1DE4751F00B2314A /* AirspaceModule.swift */; };
@@ -59,7 +57,6 @@
 		37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDBE1D8064E5009307F0 /* Observation.swift */; };
 		37B7FDC21D8064E5009307F0 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */; };
 		37B7FDC31D8064E5009307F0 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC01D8064E5009307F0 /* Station.swift */; };
-		37B7FDC51D806523009307F0 /* MetarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC41D806523009307F0 /* MetarTests.swift */; };
 		37B7FDC71D80654F009307F0 /* Metar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC61D80654F009307F0 /* Metar.swift */; };
 		37B7FDC91D8065BD009307F0 /* Taf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDC81D8065BD009307F0 /* Taf.swift */; };
 		37B7FDCA1D806B54009307F0 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E3D1D7F4AC800BE1846 /* Realm.framework */; };
@@ -78,6 +75,9 @@
 		C015BE311DAC070200C4B26A /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE301DAC070200C4B26A /* AwsService.swift */; };
 		C015BE351DAC254B00C4B26A /* StationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015BE341DAC254B00C4B26A /* StationMarker.swift */; };
 		C03219181EE08E3300B8920D /* ConfigDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03219171EE08E3300B8920D /* ConfigDrawerController.swift */; };
+		C04CE86522B2F09300A9B0D9 /* MetarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04CE86322B2F06C00A9B0D9 /* MetarTests.swift */; };
+		C04CE86D22B2F0BE00A9B0D9 /* TafTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04CE86722B2F0B400A9B0D9 /* TafTests.swift */; };
+		C04CE86E22B2F0C100A9B0D9 /* ObservationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04CE86622B2F0B400A9B0D9 /* ObservationTestCase.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
 		C087BA061EF5B55A00E58F19 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */; };
 		C087BA171F0EE0EC00E58F19 /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */; };
@@ -185,8 +185,6 @@
 		377123EC1D7D967F0010CA1F /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		377123EE1D7D96880010CA1F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		377123F31D7DB06D0010CA1F /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
-		378AE5F71D80B56D008492D5 /* TafTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TafTests.swift; sourceTree = "<group>"; };
-		378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTestCase.swift; sourceTree = "<group>"; };
 		378F1F181DE4747300B2314A /* AirspaceAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AirspaceAttributes.swift; path = Airspace/AirspaceAttributes.swift; sourceTree = "<group>"; };
 		378F1F1A1DE474EB00B2314A /* AirspaceCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AirspaceCalloutView.swift; path = Airspace/AirspaceCalloutView.swift; sourceTree = "<group>"; };
 		378F1F1C1DE4751F00B2314A /* AirspaceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AirspaceModule.swift; path = Airspace/AirspaceModule.swift; sourceTree = "<group>"; };
@@ -203,7 +201,6 @@
 		37B7FDBE1D8064E5009307F0 /* Observation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observation.swift; path = Weather/Models/Observation.swift; sourceTree = "<group>"; };
 		37B7FDBF1D8064E5009307F0 /* Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tokenizer.swift; path = Weather/Models/Tokenizer.swift; sourceTree = "<group>"; };
 		37B7FDC01D8064E5009307F0 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Station.swift; path = Weather/Models/Station.swift; sourceTree = "<group>"; };
-		37B7FDC41D806523009307F0 /* MetarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetarTests.swift; sourceTree = "<group>"; };
 		37B7FDC61D80654F009307F0 /* Metar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Metar.swift; path = Weather/Models/Metar.swift; sourceTree = "<group>"; };
 		37B7FDC81D8065BD009307F0 /* Taf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Taf.swift; path = Weather/Models/Taf.swift; sourceTree = "<group>"; };
 		37DDEEAE1D7F58CE000A8FFC /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
@@ -217,6 +214,9 @@
 		C015BE301DAC070200C4B26A /* AwsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AwsService.swift; path = Weather/Services/AwsService.swift; sourceTree = "<group>"; };
 		C015BE341DAC254B00C4B26A /* StationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationMarker.swift; path = Weather/Region/StationMarker.swift; sourceTree = "<group>"; };
 		C03219171EE08E3300B8920D /* ConfigDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigDrawerController.swift; path = Weather/Region/ConfigDrawerController.swift; sourceTree = "<group>"; };
+		C04CE86322B2F06C00A9B0D9 /* MetarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetarTests.swift; sourceTree = "<group>"; };
+		C04CE86622B2F0B400A9B0D9 /* ObservationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTestCase.swift; sourceTree = "<group>"; };
+		C04CE86722B2F0B400A9B0D9 /* TafTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TafTests.swift; sourceTree = "<group>"; };
 		C054D09E1D96D79200B71BF4 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observations.swift; path = Weather/Models/Observations.swift; sourceTree = "<group>"; };
 		C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Additions.swift"; path = "Extensions/UIView+Additions.swift"; sourceTree = "<group>"; };
 		C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftMessages.framework; path = Carthage/Build/iOS/SwiftMessages.framework; sourceTree = "<group>"; };
@@ -357,10 +357,10 @@
 		374EC9E01D7CB5AA0047B82B /* CAVOKTests */ = {
 			isa = PBXGroup;
 			children = (
+				C04CE86622B2F0B400A9B0D9 /* ObservationTestCase.swift */,
+				C04CE86722B2F0B400A9B0D9 /* TafTests.swift */,
+				C04CE86322B2F06C00A9B0D9 /* MetarTests.swift */,
 				374EC9E11D7CB5AA0047B82B /* CAVOKTests.swift */,
-				378AE5FB1D80BB35008492D5 /* ObservationTestCase.swift */,
-				37B7FDC41D806523009307F0 /* MetarTests.swift */,
-				378AE5F71D80B56D008492D5 /* TafTests.swift */,
 				374EC9E31D7CB5AA0047B82B /* Info.plist */,
 			);
 			path = CAVOKTests;
@@ -787,10 +787,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				378AE5F81D80B56D008492D5 /* TafTests.swift in Sources */,
 				374EC9E21D7CB5AA0047B82B /* CAVOKTests.swift in Sources */,
-				37B7FDC51D806523009307F0 /* MetarTests.swift in Sources */,
-				378AE5FC1D80BB35008492D5 /* ObservationTestCase.swift in Sources */,
+				C04CE86522B2F09300A9B0D9 /* MetarTests.swift in Sources */,
+				C04CE86E22B2F0C100A9B0D9 /* ObservationTestCase.swift in Sources */,
+				C04CE86D22B2F0BE00A9B0D9 /* TafTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -950,6 +950,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -970,6 +971,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -991,14 +993,18 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEFINES_MODULE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAV-OK.app/CAV-OK";
 			};
@@ -1009,14 +1015,18 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEFINES_MODULE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CAV-OK.app/CAV-OK";
 			};

@@ -8,7 +8,7 @@
 
 import Foundation
 import XCTest
-import CAVOK
+@testable import CAV_OK
 
 class TafTests : ObservationTestCase {
     
@@ -144,6 +144,6 @@ class TafTests : ObservationTestCase {
         
         XCTAssertEqual(taf.datetime, getDateFor(27, 17, 00))
         XCTAssertEqual(taf.from, taf.datetime)
-        XCTAssertEqual(taf.to, getDateFor(28, 18, 00))
+        XCTAssertEqual(taf.to, getDateFor(28, 17, 00))
     }
 }

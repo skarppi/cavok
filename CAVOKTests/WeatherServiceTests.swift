@@ -10,12 +10,12 @@ import Foundation
 
 import UIKit
 import XCTest
-import CAVOK
+@testable import CAV_OK
 import PromiseKit
 
 class WeatherServiceTests: XCTestCase {
     
-    let weatherServer = WeatherService()
+    let weatherServer = WeatherServer()
     
     override func setUp() {
         super.setUp()

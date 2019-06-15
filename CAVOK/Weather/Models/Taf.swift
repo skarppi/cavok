@@ -47,6 +47,8 @@ public class Taf: Observation {
             self.to = to
         } else {
             print("No TAF validity for \(raw)")
+            self.from = self.datetime
+            self.to = NSCalendar.current.date(byAdding: .hour, value: 24, to: self.datetime)!
         }
         
         if let wind = parseWind(value: parser.peek()) {
