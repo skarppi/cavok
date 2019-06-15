@@ -53,7 +53,7 @@ class MapViewController: UIViewController {
             additionalSafeAreaInsets.top = 10
         }
         
-        adjustPulleyPositioning(notification: Notification(name: .UIApplicationDidChangeStatusBarOrientation))
+        adjustPulleyPositioning(notification: Notification(name: UIApplication.didChangeStatusBarOrientationNotification))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,7 +68,7 @@ class MapViewController: UIViewController {
         
         view.insertSubview(mapView.view, at: 0)
         mapView.view.frame = view.bounds
-        addChildViewController(mapView)
+        addChild(mapView)
         
         mapView.keepNorthUp = true
         mapView.frameInterval = 2 // 30fps
@@ -115,17 +115,17 @@ class MapViewController: UIViewController {
     func setupObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredBackground(notification:)),
-                                               name: .UIApplicationDidEnterBackground,
+                                               name: UIApplication.didEnterBackgroundNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.enteredForeground(notification:)),
-                                               name: .UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MapViewController.adjustPulleyPositioning(notification:)),
-                                               name: .UIApplicationDidChangeStatusBarOrientation,
+                                               name: UIApplication.didChangeStatusBarOrientationNotification,
                                                object: nil)
     }
     
@@ -229,7 +229,7 @@ extension MapViewController : MapDelegate {
         if let ofType = ofType {
             let matching = components
                 .filter { type(of: $0.key) == ofType }
-                .flatMap { components.removeValue(forKey: $0.key) }
+                .compactMap { components.removeValue(forKey: $0.key) }
             mapView.remove(matching)
         } else {
             mapView.remove([MaplyComponentObject](components.values))

@@ -28,7 +28,7 @@ class TimeslotControl: UISegmentedControl {
         setBackgroundImage(TimeslotControl.clearImage, for: .normal, barMetrics: .default)
         setBackgroundImage(TimeslotControl.clearImage, for: .selected, barMetrics: .default)
         
-        setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.black], for: .selected)
+        setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
     }
     
     func updateSegment(color: UIColor, at segment: Int) {
@@ -47,7 +47,7 @@ class TimeslotControl: UISegmentedControl {
         if let touch = touches.first {
             let location = touch.location(in: self)
             
-            if let index = segments().index(where: { $0.frame.contains(location)}) {
+            if let index = segments().firstIndex(where: { $0.frame.contains(location)}) {
                 if index != self.selectedSegmentIndex {
                     self.selectedSegmentIndex = index
                     sendActions(for: .valueChanged)

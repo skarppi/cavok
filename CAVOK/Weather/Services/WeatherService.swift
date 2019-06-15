@@ -68,12 +68,12 @@ public class WeatherServer {
             let oldMetars = realm.objects(Metar.self)
             let oldTafs = realm.objects(Taf.self)
             
-            let metars = (addsMetars + awsMetars).flatMap { metar in
+            let metars = (addsMetars + awsMetars).compactMap { metar in
                 self.parseObservation(Metar(), raw: metar, realm: realm)
             }.sorted { a, b in
                 a.datetime < b.datetime
             }
-            let tafs = addsTafs.flatMap { taf in
+            let tafs = addsTafs.compactMap { taf in
                 self.parseObservation(Taf(), raw: taf, realm: realm)
             }.sorted { a, b in
                 a.from < b.from
@@ -81,8 +81,8 @@ public class WeatherServer {
             try realm.write {
                 realm.delete(oldMetars)
                 realm.delete(oldTafs)
-                realm.add(metars, update: true)
-                realm.add(tafs, update: true)
+                realm.add(metars, update: .all)
+                realm.add(tafs, update: .all)
             }
             return Observations(metars: metars, tafs: tafs)
         }.ensure {

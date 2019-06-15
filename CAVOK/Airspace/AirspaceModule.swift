@@ -31,7 +31,7 @@ final class AirspaceModule: MapModule {
         
         if let airspaces = UserDefaults.standard.stringArray(forKey: "airspaces") {
             airspaces.forEach { airspace in
-                self.render(frame: frames.index(where: { String(describing: $0) == airspace})!)
+                self.render(frame: frames.firstIndex(where: { String(describing: $0) == airspace})!)
             }
         }
     }
@@ -53,7 +53,7 @@ final class AirspaceModule: MapModule {
         let url = UserDefaults.standard.string(forKey: "airspaceURL")! + "/" + current
         
         var airspaces = UserDefaults.standard.stringArray(forKey: "airspaces") ?? []
-        if let index = airspaces.index(of: current) {
+        if let index = airspaces.firstIndex(of: current) {
             self.delegate.clearComponents(ofType: key)
             airspaces.remove(at: index)
         } else {
@@ -99,7 +99,7 @@ final class AirspaceModule: MapModule {
             }
             
             vector.splitVectors().forEach {
-                let vector = $0 as! MaplyVectorObject
+                let vector = $0 
                 let attributes = AirspaceAttributes(coordinate: vector.centroid(), attributes: vector.attributes as! [String: AnyObject])
                 vector.userObject = attributes
                 

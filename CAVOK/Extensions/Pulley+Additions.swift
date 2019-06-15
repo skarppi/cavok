@@ -13,7 +13,7 @@ extension UIViewController {
     
     var pulley: PulleyViewController! {
         get {
-            return self.parent as! PulleyViewController
+            return self.parent as? PulleyViewController
         }
     }
 }

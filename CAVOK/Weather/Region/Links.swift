@@ -18,7 +18,7 @@ class Links {
     
     class func load() -> [Link] {
         if let links = UserDefaults.standard.array(forKey: "links") as? [[String: String]] {
-            return links.flatMap { link in
+            return links.compactMap { link in
                 guard let title = link["title"], let url = link["url"] else {
                     return nil
                 }

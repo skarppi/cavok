@@ -65,8 +65,8 @@ class ObservationDrawerController: UIViewController {
             paragraphStyle.lineSpacing = 5
             
             text.append(NSAttributedString(string: header + "\n", attributes: [
-                NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
-                NSAttributedStringKey.paragraphStyle: paragraphStyle
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
+                NSAttributedString.Key.paragraphStyle: paragraphStyle
                 ]))
         }
         

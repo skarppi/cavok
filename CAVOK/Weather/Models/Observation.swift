@@ -31,7 +31,7 @@ struct ObservationPresentation {
         let mapped = self.mapper(observation)
         if let value = mapped.value, let source = mapped.source {
             let cgColor = self.ramp.color(for: Int32(value))
-            attributed.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: UIColor(cgColor: cgColor), pattern: source)
+            attributed.addAttribute(NSAttributedString.Key.foregroundColor.rawValue, value: UIColor(cgColor: cgColor), pattern: source)
         }
         return attributed
     }
@@ -62,7 +62,7 @@ open class Observation: Object {
         set { self.condition = newValue.rawValue }
     }
     
-    override open static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "raw"
     }
     
@@ -137,7 +137,7 @@ open class Observation: Object {
     // Clouds cannot be seen because of fog or heavy precipitation, so vertical visibility is given instead.
     func verticalVisibility() -> Int? {
         if let clouds = self.clouds {
-            return clouds.getMatches("VV(///|[0-9]{3})").flatMap { match -> Int? in
+            return clouds.getMatches("VV(///|[0-9]{3})").compactMap { match -> Int? in
                 let value = clouds[match.range(at: 1)]
                 if value == "///" {
                     return 100;
@@ -169,7 +169,7 @@ open class Observation: Object {
     private func cloudLevel(layers: [String]) -> Int? {
         if let clouds = self.clouds {
             let regex = "(" + layers.joined(separator: "|") + ")([0-9]{3})"
-            return clouds.getMatches(regex).flatMap { match -> Int? in
+            return clouds.getMatches(regex).compactMap { match -> Int? in
                 let level = clouds[match.range(at: 2)]
                 return Int(level).map { $0 * 100 }
             }.min()
@@ -228,7 +228,7 @@ open class Observation: Object {
             self.getCloudBase(),
             self.verticalVisibility(),
             self.weatherLevel()
-        ].flatMap { $0 }.min()
+        ].compactMap { $0 }.min()
     }
     
     // MARK: - General conditions
@@ -237,7 +237,7 @@ open class Observation: Object {
         let ceiling: Int = [
             self.getCeiling(),
             self.verticalVisibility()
-        ].flatMap { $0 }.min() ?? 5000
+        ].compactMap { $0 }.min() ?? 5000
         
         //let ceiling = ceilingOpt ?? -1
         let vis = self.visibility.value ?? -1

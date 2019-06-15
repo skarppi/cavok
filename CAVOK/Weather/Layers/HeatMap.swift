@@ -37,7 +37,7 @@ class HeatMap {
         self.config = config
         self.presentation = presentation
         
-        self.input = observations.flatMap { obs in
+        self.input = observations.compactMap { obs in
             guard let value = presentation.mapper(obs).value else {
                 return nil
             }

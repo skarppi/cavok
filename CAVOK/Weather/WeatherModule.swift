@@ -56,7 +56,7 @@ open class WeatherModule {
         
         weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
     
-        timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as! TimeslotDrawerController
+        timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as? TimeslotDrawerController
         timeslotDrawer.setModule(module: self as? MapModule)
         showLoadingDrawer()
         

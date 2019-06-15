@@ -20,7 +20,7 @@ class DebugTileSource : WeatherTileSource {
     }
     
     class func save(_ tileID: MaplyTileID, image: CGImage) {
-        save(tileID, data: UIImagePNGRepresentation(UIImage(cgImage: image)))
+        save(tileID, data: UIImage(cgImage: image).pngData())
     }
     
     override func fetchTile(layer: MaplyQuadImageTilesLayer, tileID: MaplyTileID, frame:Int32) -> Data? {
@@ -57,7 +57,7 @@ class DebugTileSource : WeatherTileSource {
         
         // Grab the image and shut things down
         let retImage = UIGraphicsGetImageFromCurrentImageContext()
-        let imgData = UIImagePNGRepresentation(retImage!)
+        let imgData = retImage!.pngData()
         UIGraphicsEndImageContext()
         
         return imgData;

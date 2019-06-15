@@ -97,7 +97,7 @@ extension NSMutableAttributedString {
             let regex = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
             let range = NSRange(location: 0, length: self.string.utf16.count)
             for match in regex.matches(in: self.string, options: .withTransparentBounds, range: range) {
-                self.addAttribute(NSAttributedStringKey(rawValue: name), value: value, range: match.range)
+                self.addAttribute(NSAttributedString.Key(rawValue: name), value: value, range: match.range)
             }
         } catch {
             NSLog("Error creating regular expresion: \(error)")

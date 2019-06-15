@@ -20,7 +20,7 @@ public class Station: Object {
     @objc dynamic var hasTaf: Bool = false
     @objc dynamic var timestamp: Date = Date()
     
-    override open static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "identifier"
     }
     

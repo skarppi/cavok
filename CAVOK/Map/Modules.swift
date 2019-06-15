@@ -19,7 +19,7 @@ class Modules {
     }
     
     class func availableTitles() -> [String] {
-        return modules().flatMap { module in
+        return modules().compactMap { module in
             module["name"] as? String
         }
     }
@@ -45,8 +45,8 @@ class Modules {
     class func index(of module: AnyClass) -> Int? {
         let moduleClassName = String(describing: module)
         
-        return modules().flatMap { module in
+        return modules().compactMap { module in
             module["class"] as? String
-        }.index(of: moduleClassName)
+        }.firstIndex(of: moduleClassName)
     }
 }

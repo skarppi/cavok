@@ -86,7 +86,7 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
 //        layer.bounds(forTile: tileID, bbox: &bbox)
         
         if let image = frames[Int(frame)].render(tileID, bbox: localBox, imageSize: config.tilesize) {
-            let data = UIImagePNGRepresentation(image)
+            let data = image.pngData()
             //DebugTileSource.save(tileID, data: data)
             return data
         } else {
@@ -98,10 +98,10 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
         DispatchQueue.global().async {
             if let layer = layer as? MaplyQuadImageTilesLayer {
                 let frames = Int32(layer.imageDepth) - 1
-                let images = (0...frames).flatMap { (frame) -> Data? in
+                let images = (0...frames).compactMap { (frame) -> Data? in
                     self.fetchTile(layer: layer, tileID: tileID, frame:frame)
                 }
-                layer.loadedImages(MaplyImageTile(pnGorJPEGDataArray: images), forTile: tileID)
+                layer.loadedImages(MaplyImageTile(pnGorJPEGDataArray: images)!, forTile: tileID)
             }
         }
     }
@@ -109,7 +109,7 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
     public func startFetchLayer(_ layer: Any, tile tileID: MaplyTileID, frame: Int32) {
         DispatchQueue.global().async {
             if let layer = layer as? MaplyQuadImageTilesLayer, let image = self.fetchTile(layer: layer, tileID: tileID, frame:frame) {
-                layer.loadedImages(MaplyImageTile(pnGorJPEGData: image), forTile: tileID, frame: frame)
+                layer.loadedImages(MaplyImageTile(pnGorJPEGData: image)!, forTile: tileID, frame: frame)
             }
         }
     }

@@ -11,11 +11,11 @@ import RealmSwift
 
 public class Metar: Observation {
     
-    open let altimeter = RealmOptional<Int>()
+    public let altimeter = RealmOptional<Int>()
     @objc open dynamic var runwayVisualRange: String?
     
-    open let dewPoint = RealmOptional<Int>()
-    open let temperature = RealmOptional<Int>()
+    public let dewPoint = RealmOptional<Int>()
+    public let temperature = RealmOptional<Int>()
     @objc open dynamic var temperatureGroup: String?
     
     
