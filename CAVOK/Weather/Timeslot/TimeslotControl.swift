@@ -42,11 +42,11 @@ class TimeslotControl: UISegmentedControl {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesMoved(touches, with: event)
     }
-    
+
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
-            
+
             if let index = segments().firstIndex(where: { $0.frame.contains(location)}) {
                 if index != self.selectedSegmentIndex {
                     self.selectedSegmentIndex = index
@@ -55,12 +55,14 @@ class TimeslotControl: UISegmentedControl {
             }
         }
     }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
-    
+
     private func segments() -> [UIView] {
-        return subviews.sorted(by: {(a, b) in
+        return subviews
+            .filter { String(describing: type(of: $0)) == "UISegment" }
+            .sorted(by: {(a, b) in
             return a.frame.origin.x < b.frame.origin.x
         })
     }
