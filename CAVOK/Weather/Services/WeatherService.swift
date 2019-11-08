@@ -13,7 +13,6 @@ public class WeatherServer {
     
     // query stations available
     func queryStations(at region: WeatherRegion) -> Promise<[Station]> {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
             when(fulfilled:
                 AddsService.fetchStations(at: region),
@@ -29,9 +28,6 @@ public class WeatherServer {
             var result: [String: Station] = [:]
             stations.forEach({ result[$0.identifier] = $0 })
             return Array(result.values)
-            
-        }.ensure {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
@@ -56,7 +52,6 @@ public class WeatherServer {
             return Promise(error: Weather.error(msg: "Region not set"))
         }
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return firstly {
             when(fulfilled:
                 AddsService.fetchObservations(.METAR, history: true, at: region),
@@ -85,8 +80,6 @@ public class WeatherServer {
                 realm.add(tafs, update: .all)
             }
             return Observations(metars: metars, tafs: tafs)
-        }.ensure {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     

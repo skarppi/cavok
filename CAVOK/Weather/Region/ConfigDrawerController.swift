@@ -229,7 +229,7 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
         
         let currentContentHeight = tablePositionY + linksTable.contentSize.height
         
-        let maxAvailableHeight = UIApplication.shared.keyWindow!.frame.height
+        let maxAvailableHeight = UIApplication.shared.windows.first {$0.isKeyWindow}!.frame.height
         if pulley.displayMode == .drawer {
             return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, currentContentHeight + bottomSafeArea)
         } else {

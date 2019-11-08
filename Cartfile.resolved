@@ -1,8 +1,13 @@
 github "1024jp/GzipSwift" "4.1.0"
 github "52inc/Pulley" "2.7.0"
-github "PromiseKit/Foundation" "3.3.2"
+github "PromiseKit/Foundation" "3.3.3"
 github "SwiftKickMobile/SwiftMessages" "4.1.4"
 github "SwiftyJSON/SwiftyJSON" "4.3.0"
 github "drmohundro/SWXMLHash" "4.9.0"
+<<<<<<< HEAD
 github "mxcl/PromiseKit" "6.8.5"
 github "realm/realm-cocoa" "v3.16.2"
+=======
+github "mxcl/PromiseKit" "6.11.0"
+github "realm/realm-cocoa" "v3.19.0"
+>>>>>>> 4850d47... Fix deprecations.

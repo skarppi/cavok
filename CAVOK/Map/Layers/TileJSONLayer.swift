@@ -18,7 +18,6 @@ class TileJSONLayer {
     func load(url: URL) -> Promise<MaplyViewControllerLayer> {
         let rq = URLRequest(url: url)
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         return URLSession.shared.dataTask(.promise, with: rq).map { data, _ -> MaplyViewControllerLayer in
             let json = try JSON(data: data)
             
@@ -33,8 +32,6 @@ class TileJSONLayer {
             layer.singleLevelLoading = false
             
             return layer
-        }.ensure {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
 }

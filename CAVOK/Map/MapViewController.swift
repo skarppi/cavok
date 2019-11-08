@@ -53,7 +53,7 @@ class MapViewController: UIViewController {
             additionalSafeAreaInsets.top = 10
         }
         
-        adjustPulleyPositioning(notification: Notification(name: UIApplication.didChangeStatusBarOrientationNotification))
+        adjustPulleyPositioning()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -124,7 +124,7 @@ class MapViewController: UIViewController {
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(MapViewController.adjustPulleyPositioning(notification:)),
+                                               selector: #selector(MapViewController.adjustPulleyPositioning),
                                                name: UIApplication.didChangeStatusBarOrientationNotification,
                                                object: nil)
     }
@@ -136,7 +136,7 @@ class MapViewController: UIViewController {
     @objc func enteredForeground(notification: Notification) {
         locationManager.requestLocation()
     }
-
+    
     fileprivate func ensureConfigured() -> Bool {
         if WeatherRegion.load() == nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
@@ -261,7 +261,7 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
 
 extension MapViewController: PulleyPrimaryContentControllerDelegate {
     
-    @objc func adjustPulleyPositioning(notification: Notification) {
+    @objc func adjustPulleyPositioning() {
         
         let window = UIApplication.shared.delegate!.window!!
         
