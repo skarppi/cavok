@@ -19,6 +19,7 @@ class TimeslotControl: UISegmentedControl {
                 segments[oldValue].layer.borderWidth = 0
             }
             segments[selectedSegmentIndex].layer.borderWidth = 3
+            segments[selectedSegmentIndex].layer.borderColor = UIColor.link.cgColor
         }
     }
     
@@ -28,7 +29,7 @@ class TimeslotControl: UISegmentedControl {
         setBackgroundImage(TimeslotControl.clearImage, for: .normal, barMetrics: .default)
         setBackgroundImage(TimeslotControl.clearImage, for: .selected, barMetrics: .default)
         
-        setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+        setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.link], for: .selected)
     }
     
     func updateSegment(color: UIColor, at segment: Int) {
