@@ -11,6 +11,8 @@ import UIKit
 import WebKit
 import PromiseKit
 
+var myContext = 0
+
 class WebViewController: UIViewController {
     
     @IBOutlet weak var containerView : UIView! = nil
@@ -18,6 +20,8 @@ class WebViewController: UIViewController {
     @IBOutlet weak var urls : UISegmentedControl! = nil
     
     private var webView: WKWebView!
+    
+    fileprivate var progressView: UIProgressView!
     
     private var links: [Link] = []
     
@@ -35,6 +39,12 @@ class WebViewController: UIViewController {
         webView.navigationDelegate = self
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.addSubview(webView)
+        
+        progressView = UIProgressView(progressViewStyle: .bar)
+        progressView.autoresizingMask = [.flexibleWidth]
+        progressView.tintColor = #colorLiteral(red: 0.6576176882, green: 0.7789518833, blue: 0.2271372974, alpha: 1)
+        progressView.frame = CGRect(x: 0, y: 0, width: containerView.bounds.size.width, height: 50)
+        containerView.addSubview(progressView)
     }
     
     override func viewDidLoad() {
@@ -51,7 +61,26 @@ class WebViewController: UIViewController {
         
         urls.sizeToFit()
         
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: &myContext)
+        
         load()
+    }
+    
+    //observer
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        guard let change = change else { return }
+        if context != &myContext {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+        
+        if keyPath == "estimatedProgress" {
+            if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
+                progressView.progress = progress;
+            }
+            return
+        }
     }
     
     @IBAction func close() {
@@ -123,11 +152,11 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        progressView.isHidden = false
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        progressView.isHidden = true
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -135,6 +164,6 @@ extension WebViewController: WKNavigationDelegate {
             errorPage(msg: error.localizedDescription)
         }
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        progressView.isHidden = true
     }
 }
