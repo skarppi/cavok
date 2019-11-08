@@ -100,7 +100,7 @@ extension ObservationDrawerController: PulleyDrawerViewControllerDelegate {
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
         let currentContentHeight = scrollView.frame.origin.y + scrollView.contentSize.height
         
-        let maxAvailableHeight = UIApplication.shared.keyWindow!.frame.height
+        let maxAvailableHeight = UIApplication.shared.windows.first {$0.isKeyWindow}!.frame.height
         if pulley.displayMode == .drawer {
             return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, currentContentHeight + bottomSafeArea)
         } else {
