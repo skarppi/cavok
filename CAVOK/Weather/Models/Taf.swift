@@ -10,8 +10,8 @@ import Foundation
 
 public class Taf: Observation {
     
-    @objc public dynamic var from: Date = Date()
-    @objc public dynamic var to: Date = Date()
+    @objc public dynamic var from = Date()
+    @objc public dynamic var to = Date()
     
     override public func parse(raw: String) {
         super.parse(raw: raw)
@@ -48,7 +48,7 @@ public class Taf: Observation {
         } else {
             print("No TAF validity for \(raw)")
             self.from = self.datetime
-            self.to = NSCalendar.current.date(byAdding: .hour, value: 24, to: self.datetime)!
+            self.to = zuluCalendar().date(byAdding: .hour, value: 24, to: self.datetime)!
         }
         
         if let wind = parseWind(value: parser.peek()) {
@@ -92,7 +92,7 @@ public class Taf: Observation {
     }
     
     private func parse(validity: String?) -> (Date, Date)? {
-        if let validity = validity, validity != "NIL" {
+        if let validity = validity, validity != "NIL", !validity.hasSuffix("Z") {
             let components = validity.components(separatedBy: "/").map { component -> Date in
                 if component.hasSuffix("24") {
                     let day = component.subString(0, length: 2)

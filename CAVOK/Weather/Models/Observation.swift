@@ -38,7 +38,9 @@ struct ObservationPresentation {
 }
 
 open class Observation: Object {
-    
+    // current date, will be used to parse dates
+    var now: Date = Date()
+
     @objc open dynamic var type: String = ""
     @objc public dynamic var identifier: String = ""
     public var cloudHeight = RealmOptional<Int>()
@@ -87,26 +89,35 @@ open class Observation: Object {
     
     // MARK: - Date format
     
+    // calendar without any daylight savings issues
+    func zuluCalendar() -> Calendar {
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = TimeZone.init(secondsFromGMT: 0)!
+        return cal
+    }
+    
     // 041600Z indicates the day of the month (the 4th) followed by the time of day (1600 Zulu time).
     func parseDate(value: String?, dayOffset: Int = 0) -> Date? {
-        if let value = value {
-            let cal = Calendar.current
-            let now = Date()
-            let today = cal.dateComponents([.day, .month, .year], from: now)
+        if let value = value,
+            let day = Int(value.subString(0, length: 2)),
+            let hour = Int(value.subString(2, length: 2)),
+            let minute = Int(value.subString(4, length: 2)) {
             
-            let dateInput = "\(today.year!)-\(today.month!)-\(value)"
+            let cal = zuluCalendar()
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-ddHHmmZ"
-            if let date = dateFormatter.date(from: dateInput) {
+            // date components
+            var components = cal.dateComponents([.day, .month, .year], from: now)
 
-                let corrected = cal.date(byAdding: .day, value: dayOffset, to: date)!
-                
-                if date > now {
-                    return cal.date(byAdding: .month, value: -1, to: corrected)!
-                }
-                return corrected
+            if components.day! < day {
+                // date is in the future, so must be from previous month
+                components.month = components.month! - 1
             }
+            
+            components.day = day + dayOffset
+            components.hour = hour
+            components.minute = minute
+
+            return cal.date(from: components)
         }
         return nil
     }
