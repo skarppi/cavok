@@ -3,16 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		370222281D7DF07800984647 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123F31D7DB06D0010CA1F /* PMKFoundation.framework */; };
-		370222291D7DF07800984647 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E81D7D961A0010CA1F /* PromiseKit.framework */; };
-		3702222A1D7DF07800984647 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E91D7D961A0010CA1F /* SwiftyJSON.framework */; };
-		371E0E321D7E0DAE00BE1846 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */; };
+		370222281D7DF07800984647 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123F31D7DB06D0010CA1F /* PMKFoundation.framework */; platformFilter = ios; };
+		370222291D7DF07800984647 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E81D7D961A0010CA1F /* PromiseKit.framework */; platformFilter = ios; };
+		3702222A1D7DF07800984647 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377123E91D7D961A0010CA1F /* SwiftyJSON.framework */; platformFilter = ios; };
+		371E0E321D7E0DAE00BE1846 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E311D7E0DAE00BE1846 /* RealmSwift.framework */; platformFilter = ios; };
 		371E0E3C1D7E11F700BE1846 /* UserMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E0E3B1D7E11F700BE1846 /* UserMarker.swift */; };
-		371E0E3E1D7F4AC900BE1846 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E3D1D7F4AC800BE1846 /* Realm.framework */; };
+		371E0E3E1D7F4AC900BE1846 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371E0E3D1D7F4AC800BE1846 /* Realm.framework */; platformFilter = ios; };
 		372C04221D8FB4F400BEA8EB /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372C04211D8FB4F400BEA8EB /* ObservationMarker.swift */; };
 		3737DA9E1D8E7D2400EB57A2 /* ColorRamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737DA9D1D8E7D2400EB57A2 /* ColorRamp.swift */; };
 		37486F231D89EA8300357E11 /* FrameChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37486F221D89EA8300357E11 /* FrameChanger.swift */; };
@@ -47,11 +47,11 @@
 		37A54FFF1D7FE9F6002BADA0 /* Maply+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A54FFE1D7FE9F6002BADA0 /* Maply+Additions.swift */; };
 		37B22B671D81D78B001AF5BA /* AddsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22B661D81D78B001AF5BA /* AddsService.swift */; };
 		37B22BDF1D81DC40001AF5BA /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B22BDE1D81DC40001AF5BA /* SWXMLHash.framework */; };
-		37B22BE01D81DC5B001AF5BA /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B22BDE1D81DC40001AF5BA /* SWXMLHash.framework */; };
+		37B22BE01D81DC5B001AF5BA /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B22BDE1D81DC40001AF5BA /* SWXMLHash.framework */; platformFilter = ios; };
 		37B22BE21D81DDE3001AF5BA /* WeatherRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22BE11D81DDE3001AF5BA /* WeatherRegion.swift */; };
 		37B22BE41D81E067001AF5BA /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22BE31D81E067001AF5BA /* WeatherService.swift */; };
 		37B22BE61D81E330001AF5BA /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22BE51D81E330001AF5BA /* Weather.swift */; };
-		37B22BEA1D81E7A3001AF5BA /* Gzip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B22BE91D81E7A3001AF5BA /* Gzip.framework */; };
+		37B22BEA1D81E7A3001AF5BA /* Gzip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B22BE91D81E7A3001AF5BA /* Gzip.framework */; platformFilter = ios; };
 		37B22BEE1D820658001AF5BA /* WeatherModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22BED1D820658001AF5BA /* WeatherModule.swift */; };
 		37B22BF21D82085F001AF5BA /* MapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B22BF11D82085F001AF5BA /* MapModule.swift */; };
 		37B7FDC11D8064E5009307F0 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7FDBE1D8064E5009307F0 /* Observation.swift */; };
@@ -80,11 +80,11 @@
 		C04CE86E22B2F0C100A9B0D9 /* ObservationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04CE86622B2F0B400A9B0D9 /* ObservationTestCase.swift */; };
 		C054D09F1D96D79200B71BF4 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054D09E1D96D79200B71BF4 /* Observations.swift */; };
 		C087BA061EF5B55A00E58F19 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA051EF5B55A00E58F19 /* UIView+Additions.swift */; };
-		C087BA171F0EE0EC00E58F19 /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */; };
+		C087BA171F0EE0EC00E58F19 /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C087BA161F0EE0EC00E58F19 /* SwiftMessages.framework */; platformFilter = ios; };
 		C087BA191F1EABFF00E58F19 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA181F1EABFF00E58F19 /* Messages.swift */; };
 		C087BA211F27303700E58F19 /* ObservationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C087BA201F27303700E58F19 /* ObservationDrawerController.swift */; };
 		C0A0503D1F293A8B0037BEFB /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A0503C1F293A8B0037BEFB /* ObservationSelection.swift */; };
-		C0A8E8B11E94DD9400270F50 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B01E94DD9400270F50 /* Pulley.framework */; };
+		C0A8E8B11E94DD9400270F50 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B01E94DD9400270F50 /* Pulley.framework */; platformFilter = ios; };
 		C0A8E8BB1E9BB41B00270F50 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E8B81E9BB41500270F50 /* WhirlyGlobeMaplyComponent.framework */; };
 		C0B778D81DAFDF1900DBB1FB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778D71DAFDF1900DBB1FB /* WebViewController.swift */; };
 		C0B778E01DB250FE00DBB1FB /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B778DF1DB250FE00DBB1FB /* LastLocation.swift */; };
@@ -231,6 +231,7 @@
 		C0E53B9020543BB800805F19 /* Pulley+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Pulley+Additions.swift"; path = "Extensions/Pulley+Additions.swift"; sourceTree = "<group>"; };
 		C0F483671D99CDDB007A1404 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDelegate.swift; path = Map/MapDelegate.swift; sourceTree = "<group>"; };
 		C0F483691D99CDF9007A1404 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeslot.swift; path = Weather/Timeslot/Timeslot.swift; sourceTree = "<group>"; };
+		C0FAA8BB2368C6D300CEFFB8 /* CAV-OK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CAV-OK.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +314,7 @@
 		374EC9C01D7CB5A90047B82B = {
 			isa = PBXGroup;
 			children = (
+				C0FAA8BB2368C6D300CEFFB8 /* CAV-OK.entitlements */,
 				377123EE1D7D96880010CA1F /* README.md */,
 				377123EC1D7D967F0010CA1F /* Cartfile */,
 				374EC9CB1D7CB5A90047B82B /* CAVOK */,
@@ -886,6 +888,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -941,9 +944,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -954,7 +959,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK.entitlements";
 				DEFINES_MODULE = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -963,9 +970,14 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -975,7 +987,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK.entitlements";
 				DEFINES_MODULE = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -984,9 +998,14 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1005,7 +1024,11 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
@@ -1027,7 +1050,11 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/MaplyBridge.h";
@@ -1041,7 +1068,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = CAVOKUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1054,7 +1085,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = CAVOKUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tusina.CAVOKUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
