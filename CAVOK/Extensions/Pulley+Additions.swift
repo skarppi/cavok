@@ -8,6 +8,7 @@
 
 import Foundation
 import Pulley
+import SwiftUI
 
 extension UIViewController {
     
@@ -15,5 +16,13 @@ extension UIViewController {
         get {
             return self.parent as? PulleyViewController
         }
+    }
+}
+
+extension PulleyViewController {
+    
+    public func setDrawerContent<Content: View>(view: Content, animated: Bool = true) {
+        setDrawerContentViewController(controller: UIHostingController(rootView: view), animated: animated)
+        
     }
 }

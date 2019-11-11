@@ -33,11 +33,40 @@ struct ObservationPresentation {
             let cgColor = self.ramp.color(for: Int32(value))
             attributed.addAttribute(NSAttributedString.Key.foregroundColor.rawValue, value: UIColor(cgColor: cgColor), pattern: source)
         }
+        attributed.addAttribute(
+            NSAttributedString.Key.font,
+            value: UIFont.systemFont(ofSize: UIFont.systemFontSize),
+            range: NSRange(location: 0, length: attributed.length))
         return attributed
+    }
+    
+    func split(observation: Observation) -> ObservationPresentationData {
+        let str = observation.raw
+        let mapped = self.mapper(observation)
+        
+        if let value = mapped.value, let source = mapped.source {
+            if let range = str.range(of: source) {
+                let cgColor = self.ramp.color(for: Int32(value))
+                return ObservationPresentationData(
+                    start: String(str[..<range.lowerBound]),
+                    highlighted: String(str[range]),
+                    end: String(str[range.upperBound...]),
+                    color: UIColor(cgColor: cgColor)
+                )
+            }
+        }
+        return ObservationPresentationData(start: str)
     }
 }
 
-open class Observation: Object {
+struct ObservationPresentationData {
+    var start: String
+    var highlighted: String = ""
+    var end: String = ""
+    var color: UIColor = UIColor.systemBackground
+}
+
+open class Observation: Object, Identifiable {
     // current date, will be used to parse dates
     var now: Date = Date()
 
@@ -62,6 +91,11 @@ open class Observation: Object {
     public var conditionEnum: WeatherConditions {
         get { return WeatherConditions(rawValue: self.condition) ?? .NA }
         set { self.condition = newValue.rawValue }
+    }
+    
+    public var id: String { get {
+            return raw
+        }
     }
     
     override public static func primaryKey() -> String? {

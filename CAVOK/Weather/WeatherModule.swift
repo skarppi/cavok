@@ -6,6 +6,7 @@
 //  Copyright © 2016 Juho Kolehmainen. All rights reserved.
 //
 
+import SwiftUI
 import Foundation
 import PromiseKit
 import Pulley
@@ -260,11 +261,6 @@ open class WeatherModule {
         delegate.clearComponents(ofType: ObservationSelection.self)
     }
     
-    private func quitDetails() {
-        cleanDetails()
-        showTimeslotDrawer()
-    }
-    
     func details(object: Any, parentFrame: CGRect) {
         guard let observation = object as? Observation else {
             return
@@ -272,11 +268,13 @@ open class WeatherModule {
         
         cleanDetails()
         
-        let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
-        delegate.pulley.setDrawerContentViewController(controller: observationDrawer, animated: false)
-        
         let all = weatherService.observations(for: observation.station?.identifier ?? "")
-        observationDrawer.setup(closed: quitDetails, presentation: presentation, obs: observation, observations: all)
+        
+        let observationDrawer = ObservationDrawerView(presentation: presentation, obs: observation, observations: all) { () in
+            self.cleanDetails()
+            self.showTimeslotDrawer()
+        }
+        delegate.pulley.setDrawerContent(view: observationDrawer, animated: false)
     
         delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
         delegate.pulley.setDrawerPosition(position: delegate.pulley.drawerPosition, animated: true)
