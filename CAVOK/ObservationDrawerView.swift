@@ -8,40 +8,65 @@
 
 import SwiftUI
 import UIKit
+import Pulley
+
+public class PulleySizes {
+    var collapsedHeight: CGFloat = 0
+    var fullHeight: CGFloat = 0
+}
+
 
 struct ObservationDrawerView: View {
     var presentation: ObservationPresentation
     var obs: Observation
     var observations: Observations
+    
+    var sizes = PulleySizes()
+    
     var closedAction: (() -> Void)
         
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Text(obs.station?.name ?? "-")
-                    .font(Font.system(size: 22))
-                Spacer()
-                Button(action: closedAction) {
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .padding()
-                }
-            }.padding(.leading)
+           VStack(alignment: .leading) {
+               HStack {
+                   Text(self.obs.station?.name ?? "-")
+                       .font(Font.system(size: 22))
+                    .padding(.leading)
+                   Spacer()
+                   Button(action: self.closedAction) {
+                       Image(systemName: "xmark.circle.fill")
+                           .resizable()
+                           .frame(width: 20, height: 20)
+                           .padding()
+                   }
+               }
+               
+                AttributedText(obs: obs, presentation: presentation)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+           }.background(GeometryReader { proxy -> Color in
+               self.sizes.collapsedHeight = proxy.frame(in: .local).maxY
+               return Color.clear
+           })
+
+            List(observations.metars.reversed()) { metar in
+                AttributedText(obs: metar, presentation: self.presentation)
+            }.fixedSize(horizontal: false, vertical: true)
             
-            AttributedText(data: self.presentation.split(observation: obs))
-                .padding()
+           ObservationList(
+               title: "Metar history",
+               observations: observations.metars,
+               presentation: presentation)
+           
+           ObservationList(
+               title: "Taf",
+               observations: observations.tafs,
+               presentation: presentation)
             
-            ObservationList(
-                title: "Metar history",
-                observations: observations.metars,
-                presentation: presentation)
-            
-            ObservationList(
-                title: "Taf",
-                observations: observations.tafs,
-                presentation: presentation)
-        }
+        }.background(GeometryReader { proxy -> Color in
+            self.sizes.fullHeight = proxy.frame(in: .local).maxY
+            return Color.clear
+        })
     }
 }
 
@@ -51,32 +76,31 @@ struct ObservationList: View {
     var presentation: ObservationPresentation
     
     var body: some View {
-        Group {
-            if !observations.isEmpty {
-                Text(title)
-                    .font(Font.system(.headline))
-                    .padding(.leading)
+//        Group {
+//            if !observations.isEmpty {
+//                Text(title)
+//                    .font(Font.system(.headline))
+//                    .padding(.leading)
                 List(observations.reversed()) { metar in
-                    AttributedText(data: self.presentation.split(observation: metar))
+                    AttributedText(obs: metar, presentation: self.presentation)
                 }
-            }
-        }
+//            }
+//        }
     }
 }
 
 struct AttributedText: View {
-    var data: ObservationPresentationData
+    var obs: Observation
+    var presentation: ObservationPresentation
+    
+    var data: ObservationPresentationData {
+        presentation.split(observation: obs)
+    }
     
     var body: some View {
-        Group {
-            Text(data.start)
-                .font(.system(.callout))
-            + Text(data.highlighted)
-                .font(.system(.callout))
-                .foregroundColor(Color(data.color))
+        Text(data.start)
+            + Text(data.highlighted).foregroundColor(Color(data.color))
             + Text(data.end)
-                .font(.system(.callout))
-        }
     }
 }
 
@@ -103,8 +127,8 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         ObservationDrawerView(presentation: presentation,
                               obs: observations.metars[0],
                               observations: observations,
+                              sizes: PulleySizes(),
                               closedAction: { () in print("Closed")})
-            .frame(height: 200)
     }
     
     static func metar(_ raw: String) -> Metar {

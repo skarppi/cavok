@@ -269,13 +269,13 @@ open class WeatherModule {
         cleanDetails()
         
         let all = weatherService.observations(for: observation.station?.identifier ?? "")
-        
         let observationDrawer = ObservationDrawerView(presentation: presentation, obs: observation, observations: all) { () in
             self.cleanDetails()
             self.showTimeslotDrawer()
         }
-        delegate.pulley.setDrawerContent(view: observationDrawer, animated: false)
-    
+        
+        delegate.pulley.setDrawerContent(view: observationDrawer, sizes: observationDrawer.sizes, animated: false)
+            
         delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
         delegate.pulley.setDrawerPosition(position: delegate.pulley.drawerPosition, animated: true)
         
