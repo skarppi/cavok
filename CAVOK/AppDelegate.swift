@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Pulley
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,12 +19,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
         if let url = Bundle.main.url(forResource: "CAVOK", withExtension: "plist"),
             let plist = NSDictionary(contentsOf: url) as? [String : Any] {
             UserDefaults.standard.register(defaults: plist)
         }
         
         initRealms()
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainContentVC = storyboard.instantiateViewController(withIdentifier: "map")
+        let drawerContentVC = storyboard.instantiateViewController(withIdentifier: "drawer")
+
+        window?.rootViewController = PulleyViewController(contentViewController: mainContentVC, drawerViewController: drawerContentVC)
+        
+        window?.makeKeyAndVisible()
         
         return true
     }
