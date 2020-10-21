@@ -34,6 +34,7 @@ class HeatMapGPU {
             else { return }
         
         let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: config.width, height: config.height, mipmapped: false)
+        outTextureDescriptor.usage = [.shaderRead, .shaderWrite]
         self.outTexture = device.makeTexture(descriptor: outTextureDescriptor)
         
         var arr = input.flatMap { i in [i.x, i.y, i.value] }

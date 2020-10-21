@@ -25,15 +25,15 @@ public extension Date {
      - parameter years: number of years to add
      - returns: the NSDate computed
      */
-    public func add(_ seconds:Int=0, minutes:Int = 0, hours:Int = 0, days:Int = 0, weeks:Int = 0, months:Int = 0, years:Int = 0) -> Date {
+    func add(_ seconds:Int=0, minutes:Int = 0, hours:Int = 0, days:Int = 0, weeks:Int = 0, months:Int = 0, years:Int = 0) -> Date {
         let calendar = Calendar.current
-        var date = calendar.date(byAdding: .second, value: seconds, to: self, options: []) as Date!
-        date = calendar.date(byAdding: .minute, value: minutes, to: date, options: [])
-        date = calendar.date(byAdding: .firstWeekday, value: days, to: date, options: [])
-        date = calendar.date(byAdding: .hour, value: hours, to: date, options: [])
-        date = calendar.date(byAdding: .weekOfMonth, value: weeks, to: date, options: [])
-        date = calendar.date(byAdding: .monthSymbols, value: months, to: date, options: [])
-        date = calendar.date(byAdding: .year, value: years, to: date, options: [])
+        var date = calendar.date(byAdding: .second, value: seconds, to: self)!
+        date = calendar.date(byAdding: .minute, value: minutes, to: date)!
+        date = calendar.date(byAdding: .day, value: days, to: date)!
+        date = calendar.date(byAdding: .hour, value: hours, to: date)!
+        date = calendar.date(byAdding: .weekOfYear, value: weeks, to: date)!
+        date = calendar.date(byAdding: .month, value: months, to: date)!
+        date = calendar.date(byAdding: .year, value: years, to: date)!
         return date
     }
     
@@ -43,7 +43,7 @@ public extension Date {
      - parameter seconds: number of seconds to add
      - returns: the NSDate computed
      */
-    public func addSeconds (_ seconds: Int) -> Date {
+    func addSeconds (_ seconds: Int) -> Date {
         return add(seconds)
     }
     
@@ -53,7 +53,7 @@ public extension Date {
      - parameter minutes: number of minutes to add
      - returns: the NSDate computed
      */
-    public func addMinutes (_ minutes: Int) -> Date {
+    func addMinutes (_ minutes: Int) -> Date {
         return add(minutes: minutes)
     }
     
@@ -63,16 +63,16 @@ public extension Date {
      - parameter hours: number of hours to add
      - returns: the NSDate computed
      */
-    public func addHours(_ hours: Int) -> Date {
+    func addHours(_ hours: Int) -> Date {
         return add(hours: hours)
     }
     
     /**
      Date minuts
      */
-    public var minutes : Int {
+    var minutes : Int {
         get {
-            return getComponent(.minute)
+            return getComponent(Calendar.Component.minute)
         }
     }
     
@@ -82,7 +82,7 @@ public extension Date {
      :param: component NSCalendarUnit
      :returns: the value of the component
      */
-    public func getComponent(_ component: Calendar) -> Int {
+    func getComponent(_ component: Calendar.Component) -> Int {
         let calendar = NSCalendar.current
         return calendar.component(component, from: self)
     }
@@ -93,7 +93,7 @@ public extension Date {
      - parameter date: NSDate to compare
      - returns: True if self is after the input NSDate, false otherwise
      */
-    public func isAfter(_ date: Date) -> Bool{
+    func isAfter(_ date: Date) -> Bool{
         return (self.compare(date) == ComparisonResult.orderedDescending)
     }
     
@@ -103,7 +103,7 @@ public extension Date {
      - parameter date: NSDate to compare
      - returns: True if self is before the input NSDate, false otherwise
      */
-    public func isBefore(_ date: Date) -> Bool{
+    func isBefore(_ date: Date) -> Bool{
         return (self.compare(date) == ComparisonResult.orderedAscending)
     }
     
@@ -114,11 +114,11 @@ public extension Date {
      - parameter exclusiveMax: self must be less than NSDate
      - returns: True if self is between NSDates, false otherwise
      */
-    public func isBetween(_ inclusiveMin: Date, exclusiveMax: Date) -> Bool{
+    func isBetween(_ inclusiveMin: Date, exclusiveMax: Date) -> Bool{
         return !isBefore(inclusiveMin) && isBefore(exclusiveMax)
     }
     
-    public func isInFuture() -> Bool {
+    func isInFuture() -> Bool {
         return self.isAfter(Date())
     }
 }

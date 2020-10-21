@@ -140,7 +140,7 @@ class MapViewController: UIViewController {
     fileprivate func ensureConfigured() -> Bool {
         if WeatherRegion.load() == nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.module.configure(open: true)
+                self.module?.configure(open: true)
             })
             return false
         }
@@ -247,7 +247,7 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
     func globeViewController(_ view: WhirlyGlobeViewController, didSelect selected: NSObject, atLoc coord: MaplyCoordinate, onScreen screenPt: CGPoint) {
         
         guard self.buttonView.isHidden == false else {
-            module.didTapAt(coord: coord)
+            module?.didTapAt(coord: coord)
             return
         }
         
@@ -263,28 +263,29 @@ extension MapViewController: PulleyPrimaryContentControllerDelegate {
     
     @objc func adjustPulleyPositioning() {
         
-        let window = UIApplication.shared.delegate!.window!!
-        
-        let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .panel : .drawer
-        
-        if window.safeAreaInsets != .zero {
-            // adjust position of the drawer on iPhoneX
+        if let window = UIApplication.shared.windows.first {$0.isKeyWindow} {
+            let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .panel : .drawer
             
-            switch UIApplication.shared.statusBarOrientation {
-            case UIInterfaceOrientation.landscapeLeft:
-                // remove safe area when notch is on the other side
-                pulley.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left
-            case UIInterfaceOrientation.landscapeRight:
-                // decrease the margin to notch
-                pulley.additionalSafeAreaInsets.left = -15
-            default:
-                pulley.additionalSafeAreaInsets.left = 0
+            if window.safeAreaInsets != .zero {
+                // adjust position of the drawer on iPhoneX
+                
+                switch UIApplication.shared.statusBarOrientation {
+                case UIInterfaceOrientation.landscapeLeft:
+                    // remove safe area when notch is on the other side
+                    pulley.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left
+                case UIInterfaceOrientation.landscapeRight:
+                    // decrease the margin to notch
+                    pulley.additionalSafeAreaInsets.left = -15
+                default:
+                    pulley.additionalSafeAreaInsets.left = 0
+                }
             }
-        }
 
-        // when pulley is on the left, move segmented control out of the way
-        moduleTypeLeftConstraint.constant = displayMode == .panel ? pulley.panelWidth + 16*2 : 16
-        
-        pulley.displayMode = displayMode
+            // when pulley is on the left, move segmented control out of the way
+            moduleTypeLeftConstraint.constant = displayMode == .panel ? pulley.panelWidth + 16*2 : 16
+            
+            pulley.displayMode = displayMode
+
+        }
     }
 }
