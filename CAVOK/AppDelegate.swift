@@ -28,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initRealms()
         
+        // ignre whirlyglobe analytics
+        UserDefaults.standard.setValue("dummy", forKey: "wgmaplyanalyticuser")
+        UserDefaults.standard.setValue(CFAbsoluteTimeGetCurrent(), forKey: "wgmaplyanalytictime")
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainContentVC = storyboard.instantiateViewController(withIdentifier: "map")
         let drawerContentVC = storyboard.instantiateViewController(withIdentifier: "drawer")
