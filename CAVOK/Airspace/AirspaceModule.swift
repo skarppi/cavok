@@ -69,12 +69,13 @@ final class AirspaceModule: MapModule {
     }
     
     func details(object: Any, parentFrame: CGRect) {
-        guard let attributes = object as? AirspaceAttributes else {
+        guard let vector = object as? MaplyVectorObject,
+              let attributes = vector.attributes as? [String: String] else {
             return
         }
         let annotation = MaplyAnnotation()
-        annotation.contentView = AirspaceCalloutView(attributes: attributes, parentFrame: parentFrame)
-        delegate.mapView.addAnnotation(annotation, forPoint: attributes.coordinate, offset: .zero)
+        annotation.contentView = AirspaceCalloutView(name: attributes["name"]!, description: attributes["description"]!, parentFrame: parentFrame)
+        delegate.mapView.addAnnotation(annotation, forPoint: vector.centroid(), offset: .zero)
     }
     
     private func showVectors(key: NSObject.Type, data: Data) {
@@ -100,9 +101,9 @@ final class AirspaceModule: MapModule {
             
             vector.splitVectors().forEach {
                 let vector = $0 
-                let attributes = AirspaceAttributes(coordinate: vector.centroid(), attributes: vector.attributes as! [String: AnyObject])
-                vector.userObject = attributes
-                
+                let attributes = AirspaceAttributes(attributes: vector.attributes as! [String: AnyObject])
+                vector.attributes.setValue(attributes.name, forKey: "name")
+                vector.attributes.setValue(attributes.description, forKey: "description")
                 vector.attributes.setValue(attributes.lowerLimit ?? 0, forKey: kMaplyDrawPriority)
                 
                 if let objects = self.delegate.mapView.addVectors([vector], desc: [

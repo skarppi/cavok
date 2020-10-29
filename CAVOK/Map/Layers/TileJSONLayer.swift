@@ -7,31 +7,28 @@
 //
 
 import Foundation
-import PromiseKit
-import PMKFoundation
-import SwiftyJSON
 
 class TileJSONLayer {
     
     let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
 
-    func load(url: URL) -> Promise<MaplyViewControllerLayer> {
-        let rq = URLRequest(url: url)
+    func load(url: String, globeVC: WhirlyGlobeViewController) {
+        let tileInfo = MaplyRemoteTileInfoNew(baseURL: url,
+                                              minZoom: 0,
+                                              maxZoom: 22)
+        tileInfo.cacheDir = cacheDir.absoluteString
         
-        return URLSession.shared.dataTask(.promise, with: rq).map { data, _ -> MaplyViewControllerLayer in
-            let json = try JSON(data: data)
-            
-            let tileSource = MaplyRemoteTileSource(tilespec: json.object as! [String : Any])!
-            tileSource.cacheDir = self.cacheDir.absoluteString + "/" + json["id"].string!
-            
-            let layer = MaplyQuadImageTilesLayer(coordSystem:tileSource.coordSys, tileSource:tileSource)!
-            layer.handleEdges = true
-            layer.coverPoles = true
-            layer.waitLoad = false
-            layer.drawPriority = kMaplyImageLayerDrawPriorityDefault
-            layer.singleLevelLoading = false
-            
-            return layer
-        }
+        let sampleParams = MaplySamplingParams()
+        sampleParams.coordSys = MaplySphericalMercator(webStandard: ())
+        sampleParams.coverPoles = true
+        sampleParams.edgeMatching = true
+        sampleParams.minZoom = tileInfo.minZoom()
+        sampleParams.maxZoom = tileInfo.maxZoom()
+        sampleParams.singleLevel = false
+        sampleParams.minImportance = 1024.0 * 1024.0 / 2.0
+        
+        MaplyQuadImageLoader(params: sampleParams, tileInfo: tileInfo, viewC: globeVC)
+        
+        print("Loaded map to \(cacheDir)")
     }
 }

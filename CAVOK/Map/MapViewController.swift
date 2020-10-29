@@ -71,8 +71,8 @@ class MapViewController: UIViewController {
         addChild(mapView)
         
         mapView.keepNorthUp = true
-        mapView.frameInterval = 2 // 30fps
-        mapView.threadPerLayer = true
+        mapView.frameInterval = 1 // 60fps
+        mapView.performanceOutput = true
         mapView.autoMoveToTap = false
         mapView.clearColor = view.backgroundColor
         
@@ -84,10 +84,8 @@ class MapViewController: UIViewController {
             mapView.setPosition(MaplyCoordinateMakeWithDegrees(10, 50))
         }
         
-        if let basemap = UserDefaults.standard.string(forKey: "basemapURL"), let url = URL(string: basemap) {
-            TileJSONLayer().load(url: url).done { layer in
-                self.mapView.add(layer)
-            }.catch(Messages.show)
+        if let basemap = UserDefaults.standard.string(forKey: "basemapURL") {
+            TileJSONLayer().load(url: basemap, globeVC: mapView)
         }
     }
     
@@ -253,7 +251,7 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
         
         if let marker = selected as? MaplyScreenMarker, let object = marker.userObject {
             module.details(object: object, parentFrame: self.view.frame)
-        } else if let object = (selected as? MaplyVectorObject)?.userObject {
+        } else if let object = selected as? MaplyVectorObject {
             airspaceModule.details(object: object, parentFrame: self.view.frame)
         }
     }

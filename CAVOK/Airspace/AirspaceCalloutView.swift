@@ -10,7 +10,7 @@ import Foundation
 
 class AirspaceCalloutView: UIView {
     
-    init(attributes: AirspaceAttributes, parentFrame: CGRect) {
+    init(name: String, description: String, parentFrame: CGRect) {
         
         let maxWidth = min(parentFrame.size.width - 100, 500)
         let frame = CGSize(width: maxWidth, height: 100);
@@ -19,14 +19,14 @@ class AirspaceCalloutView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 17)
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
-        titleLabel.text = attributes.name
+        titleLabel.text = name
         titleLabel.sizeToFit()
         
         let label = UILabel(frame:CGRect(origin: CGPoint(x: 0, y: titleLabel.frame.size.height + 5), size: frame))
         label.font = UIFont.systemFont(ofSize: 12)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.text = attributes.description
+        label.text = description
         label.sizeToFit()
         
         super.init(frame: CGRect(x: 0, y: 0, width: maxWidth, height: titleLabel.frame.size.height + label.frame.size.height))

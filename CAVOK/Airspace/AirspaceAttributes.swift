@@ -9,8 +9,6 @@
 import Foundation
 
 class AirspaceAttributes {
-    let coordinate: MaplyCoordinate
-    
     let name: String
     
     let upperLimit: Int?
@@ -48,9 +46,7 @@ class AirspaceAttributes {
         }
     }
     
-    init(coordinate: MaplyCoordinate, attributes: [String: AnyObject]) {
-        self.coordinate = coordinate
-        
+    init(attributes: [String: AnyObject]) {
         self.name = attributes["designation"] as! String
         
         let upperLimitStr = attributes["upperVerticalLimit"] as? String
@@ -65,4 +61,6 @@ class AirspaceAttributes {
             return u + l
         }()
     }
+    
+    
 }
