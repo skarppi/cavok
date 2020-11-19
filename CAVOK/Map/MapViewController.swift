@@ -31,15 +31,17 @@ class MapViewController: UIViewController {
     
     private var locationManager: LocationManager!
     
+    private var backgroundLoader: MaplyQuadImageLoader?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupMapView()
         
         Messages.setup()
-        
+
         setupObservers()
-        
+
         setupLocationManager()
 
         setupModules()
@@ -72,7 +74,7 @@ class MapViewController: UIViewController {
         
         mapView.keepNorthUp = true
         mapView.frameInterval = 1 // 60fps
-        mapView.performanceOutput = true
+        mapView.performanceOutput = false
         mapView.autoMoveToTap = false
         mapView.clearColor = view.backgroundColor
         
@@ -85,7 +87,7 @@ class MapViewController: UIViewController {
         }
         
         if let basemap = UserDefaults.standard.string(forKey: "basemapURL") {
-            TileJSONLayer().load(url: basemap, globeVC: mapView)
+            backgroundLoader = TileJSONLayer().load(url: basemap, globeVC: mapView)
         }
     }
     
@@ -132,7 +134,7 @@ class MapViewController: UIViewController {
     }
     
     @objc func enteredForeground(notification: Notification) {
-        locationManager.requestLocation()
+        locationManager?.requestLocation()
     }
     
     fileprivate func ensureConfigured() -> Bool {

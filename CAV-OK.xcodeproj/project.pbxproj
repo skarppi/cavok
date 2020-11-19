@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; };
+		C076EC7E2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */; };
 		C09D66322540BCBE00FB3D39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */; };
 		C09D66342540BCBE00FB3D39 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66332540BCBE00FB3D39 /* ContentView.swift */; };
@@ -15,7 +17,6 @@
 		C09D663C2540BCC100FB3D39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */; };
 		C09D66472540BCC200FB3D39 /* CAVOKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66462540BCC200FB3D39 /* CAVOKTests.swift */; };
 		C09D66522540BCC200FB3D39 /* CAVOKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66512540BCC200FB3D39 /* CAVOKUITests.swift */; };
-		C09D66892540C52B00FB3D39 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; };
 		C09D669A2540CAB800FB3D39 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D668E2540CAB800FB3D39 /* Messages.swift */; };
 		C09D669B2540CAB800FB3D39 /* TileJSONLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66902540CAB800FB3D39 /* TileJSONLayer.swift */; };
 		C09D669C2540CAB800FB3D39 /* LastSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66922540CAB800FB3D39 /* LastSession.swift */; };
@@ -117,6 +118,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C076EC7F2572E54500470190 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C076EC7E2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		C09D662C2540BCBE00FB3D39 /* CAV-OK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CAV-OK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -205,11 +220,11 @@
 				C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */,
 				C09D67232540CCED00FB3D39 /* PMKFoundation in Frameworks */,
 				C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */,
-				C09D66892540C52B00FB3D39 /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
 				C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
 				C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */,
 				C09D67172540CC1E00FB3D39 /* Pulley in Frameworks */,
+				C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +507,7 @@
 				C09D66282540BCBE00FB3D39 /* Sources */,
 				C09D66292540BCBE00FB3D39 /* Frameworks */,
 				C09D662A2540BCBE00FB3D39 /* Resources */,
+				C076EC7F2572E54500470190 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

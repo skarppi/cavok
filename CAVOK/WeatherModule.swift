@@ -233,10 +233,11 @@ open class WeatherModule {
             delegate.addComponents(key: key, value: components)
         }
         
-        if let tafs = observations as? [Taf] {
-            renderTimestamp(date: tafs.map { $0.to }.max()!, suffix: "forecast")
-        } else {
-            renderTimestamp(date: observations.map { $0.datetime }.min()!, suffix: "ago")
+        if let tafs = observations as? [Taf],
+           let latest = tafs.map({ $0.to }).max() {
+            renderTimestamp(date: latest, suffix: "forecast")
+        } else if let min = observations.map({ $0.datetime }).min() {
+            renderTimestamp(date: min, suffix: "ago")
         }
     }
     
