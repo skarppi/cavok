@@ -1,5 +1,5 @@
 //
-//  WeatherTileSource.swift
+//  WeatherTileFetcher.swift
 //  CAVOK
 //
 //  Created by Juho Kolehmainen on 08.03.16.
@@ -8,28 +8,21 @@
 
 import Foundation
 
-open class WeatherTileSource : NSObject, MaplyTileSource {
+open class WeatherTileFetcher : MaplySimpleTileFetcher {
     
     let frames: [HeatMap]
     
     let config: WeatherConfig
     
-    init(frames: [HeatMap], config: WeatherConfig) {
+    var loader: MaplyQuadImageLoader? = nil
+    
+    init?(frames: [HeatMap], config: WeatherConfig) {
         self.frames = frames
         self.config = config
+        
+        super.init(name: "", minZoom: Int32(config.minZoom), maxZoom: Int32(config.maxZoom))
     }
-    
-    /// @return Returns the minimum allowable zoom layer.  Ideally, this is 0.
-    public func minZoom() -> Int32 {
-        return Int32(config.minZoom)
-    }
-    
-    /// @return Returns the maximum allowable zoom layer.  Typically no more than 18,
-    ///          but it depends on your implementation.
-    public func maxZoom() -> Int32 {
-        return Int32(config.maxZoom)
-    }
-    
+        
     /** @brief Number of pixels on the side of a single tile (e.g. 128, 256).
      @details We use this for screen space calculation, so you don't have to
      return the exact number of pixels in the imageForTile calls.  It's
@@ -38,14 +31,6 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
      */
     public func tileSize() -> Int32 {
         return Int32(config.tilesize)
-    }
-    
-    /** @brief Can the given tile be fetched locally or do we need a network call?
-     @details We may ask the tile source if the tile is local or needs to be fetched over the network.  This is a hint for the loader.  Don't return true in error, though, that'll hold up the paging.
-     @return Return true for local tile sources or if you have the tile cached.
-     */
-    public func tileIsLocal(_ tileID: MaplyTileID, frame: Int32) -> Bool {
-        return true
     }
     
     /** @brief The coordinate system the image pyramid is in.
@@ -66,21 +51,35 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
      @details bbox The bounding box of the tile we're asking about, for convenience.
      @return True if the tile is loadable, false if not.
      */
-    public func validTile(_ tileID: MaplyTileID, bbox:MaplyBoundingBox) -> Bool {
+    func validTile(_ tileID: MaplyTileID, bbox:MaplyBoundingBox) -> Bool {
         let y = (1<<tileID.level)-tileID.y-1 // flip
         let x = tileID.x
         
         let tile = config.tiles[Int(tileID.level)]
-        
+                
         if x >= tile.ur.x || (x + 1) <= tile.ll.x || (y + 1) <= tile.ur.y ||  y >= tile.ll.y {
+//        if x >= tile.ur.x || (x + 1) <= tile.ll.x || y >= tile.ur.y || (y + 1) <= tile.ll.y {
             return false
         }
+        
+        // || y >= tile.ur.y ||  (y + 1) <= tile.ll.y
+        
+        print("Fetched frame tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x ?? 0) x \(bbox.ll.deg.y ?? 0) ur = \(bbox.ur.deg.x ?? 0) x \(bbox.ur.deg.y ?? 0)")
+
+        
         return true
     }
-    
-    open func fetchTile(layer: MaplyQuadImageTilesLayer, tileID: MaplyTileID, frame:Int32) -> Data? {
-        let bbox = tileID.bbox
-//        print("Fetched frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
+
+    open override func data(forTile fetchInfo: Any, tileID: MaplyTileID) -> Any? {
+//    open func fetchTile(layer: MaplyQuadImageTilesLayer, tileID: MaplyTileID, frame:Int32) -> Data? {
+        let bbox = tileID.bboxFlip
+        
+        guard validTile(tileID, bbox:bbox) else {
+            return nil
+        }
+        
+        let frame = 0
+        print("Fetching frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
         
         let localBox = config.coordSystem.geo(toLocalBox: bbox)
 //        layer.bounds(forTile: tileID, bbox: &bbox)
@@ -93,24 +92,24 @@ open class WeatherTileSource : NSObject, MaplyTileSource {
             return nil
         }
     }
-    
-    public func startFetchLayer(_ layer: Any, tile tileID: MaplyTileID) {
-        DispatchQueue.global().async {
-            if let layer = layer as? MaplyQuadImageTilesLayer {
-                let frames = Int32(layer.imageDepth) - 1
-                let images = (0...frames).compactMap { (frame) -> Data? in
-                    self.fetchTile(layer: layer, tileID: tileID, frame:frame)
-                }
-                layer.loadedImages(MaplyImageTile(pnGorJPEGDataArray: images)!, forTile: tileID)
-            }
-        }
-    }
-    
-    public func startFetchLayer(_ layer: Any, tile tileID: MaplyTileID, frame: Int32) {
-        DispatchQueue.global().async {
-            if let layer = layer as? MaplyQuadImageTilesLayer, let image = self.fetchTile(layer: layer, tileID: tileID, frame:frame) {
-                layer.loadedImages(MaplyImageTile(pnGorJPEGData: image)!, forTile: tileID, frame: frame)
-            }
-        }
-    }
+//    
+//    public func startFetchLayer(_ layer: Any, tile tileID: MaplyTileID) {
+//        DispatchQueue.global().async {
+//            if let layer = layer as? MaplyQuadImageTilesLayer {
+//                let frames = Int32(layer.imageDepth) - 1
+//                let images = (0...frames).compactMap { (frame) -> Data? in
+//                    self.fetchTile(layer: layer, tileID: tileID, frame:frame)
+//                }
+//                layer.loadedImages(MaplyImageTile(pnGorJPEGDataArray: images)!, forTile: tileID)
+//            }
+//        }
+//    }
+//    
+//    public func startFetchLayer(_ layer: Any, tile tileID: MaplyTileID, frame: Int32) {
+//        DispatchQueue.global().async {
+//            if let layer = layer as? MaplyQuadImageTilesLayer, let image = self.fetchTile(layer: layer, tileID: tileID, frame:frame) {
+//                layer.loadedImages(MaplyImageTile(pnGorJPEGData: image)!, forTile: tileID, frame: frame)
+//            }
+//        }
+//    }
 }

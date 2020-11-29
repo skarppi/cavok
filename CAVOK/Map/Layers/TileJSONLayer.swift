@@ -15,7 +15,7 @@ class TileJSONLayer {
     func load(url: String, globeVC: WhirlyGlobeViewController) -> MaplyQuadImageLoader? {
         let tileInfo = MaplyRemoteTileInfoNew(baseURL: url,
                                               minZoom: 0,
-                                              maxZoom: 16)
+                                              maxZoom: 22)
         tileInfo.cacheDir = "\(cacheDir.absoluteString)\(abs(url.hash))"
         
         let sampleParams = MaplySamplingParams()
@@ -25,7 +25,7 @@ class TileJSONLayer {
         sampleParams.minZoom = tileInfo.minZoom()
         sampleParams.maxZoom = tileInfo.maxZoom()
         sampleParams.singleLevel = true
-//        sampleParams.minImportance = 1024.0 * 1024.0 / 2.0
+        sampleParams.minImportance = 1024.0 * 1024.0 / 2.0
         
         guard let imageLoader = MaplyQuadImageLoader(params: sampleParams, tileInfo: tileInfo, viewC: globeVC) else {
             return nil

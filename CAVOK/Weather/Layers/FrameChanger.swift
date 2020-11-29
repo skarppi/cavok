@@ -9,45 +9,46 @@
 import Foundation
 
 class FrameChanger: MaplyActiveObject {
-    let layer: MaplyQuadImageTilesLayer
+    let loader: MaplyQuadImageLoader
     
     let period: Double = 1
     
     var startTime: TimeInterval?
-    var sourceFrame: Float?
-    var targetFrame: Float?
+    var sourceFrame: Double?
+    var targetFrame: Double?
     
-    init(layer: MaplyQuadImageTilesLayer) {
-        self.layer = layer
+    init(loader: MaplyQuadImageLoader) {
+        self.loader = loader
         super.init()
     }
-    
+
     func go(_ targetFrame: Int) {
         self.startTime = CFAbsoluteTimeGetCurrent()
-        self.sourceFrame = layer.currentImage
-        self.targetFrame = Float(targetFrame)
+//        self.sourceFrame = loader.getCurrentImage()
+        self.targetFrame = Double(targetFrame)
     }
     
-    @objc func hasUpdate() -> Bool {
+    @objc override func hasUpdate() -> Bool {
         if let target = targetFrame {
-            return layer.currentImage != target
+//            return loader.getCurrentImage() != target
+            return true
         } else {
             return false
         }
     }
     
-    @objc func updateForFrame(_ frameInfo: AnyObject) {
+    @objc func updateForFrame(forFrame frameInfo: AnyObject) {
         if let start = startTime, let source = sourceFrame, let target = targetFrame {
             let now = CFAbsoluteTimeGetCurrent()
             
             let pos = (now - start) / period
             if pos >= 1 {
-                layer.currentImage = target
+//                loader.setCurrentImage(target)
                 startTime = nil
                 sourceFrame = nil
                 targetFrame = nil
             } else {
-                layer.currentImage = source + Float(pos) * (target - source)
+//                loader.setCurrentImage(source + Double(pos) * (target - source))
             }
         }
     }

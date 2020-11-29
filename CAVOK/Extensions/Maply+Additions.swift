@@ -45,7 +45,7 @@ extension MaplyCoordinate {
     static let kRadiansToDegrees: Float = 180.0 / .pi
     static let kDegreesToRadians: Float = .pi / 180.0
     static let earthRadius = Float(6371.01) // Earth's radius in Kilometers
-    
+        
     var deg : MaplyCoordinate {
         get {
             return MaplyCoordinate(x: self.x * MaplyCoordinate.kRadiansToDegrees, y: self.y * MaplyCoordinate.kRadiansToDegrees)
@@ -102,6 +102,16 @@ extension MaplyTileID {
             return MaplyBoundingBox(
                 ll: MaplyTileID.coord(x: self.x, y: self.y + 1, z: self.level),
                 ur: MaplyTileID.coord(x: self.x + 1, y: self.y, z: self.level)
+            )
+        }
+    }
+    
+    var bboxFlip: MaplyBoundingBox {
+        get {
+            let yFlip = (1<<self.level)-self.y-1
+            return MaplyBoundingBox(
+                ll: MaplyTileID.coord(x: self.x, y: yFlip + 1, z: self.level),
+                ur: MaplyTileID.coord(x: self.x + 1, y: yFlip, z: self.level)
             )
         }
     }

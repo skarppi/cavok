@@ -1,5 +1,5 @@
 //
-//  DebugTileSource.swift
+//  DebugTileFetcher.swift
 //  CAVOK
 //
 //  Created by Juho Kolehmainen on 27.05.16.
@@ -8,9 +8,13 @@
 
 import Foundation
 
-class DebugTileSource : WeatherTileSource {
+class DebugTileFetcher : WeatherTileFetcher {
     
     let debugColors: [Int] = [0x86812D, 0x5EB9C9, 0x2A7E3E, 0x4F256F, 0xD89CDE, 0x773B28, 0x333D99, 0x862D52, 0xC2C653, 0xB8583D]
+    
+//    init(mapView: WhirlyGlobeViewController, presentation: ObservationPresentation, region: WeatherRegion?) {
+//        super.init(mapView, presentation, region)
+//    }
     
     class func save(_ tileID: MaplyTileID, data: Data?) {
         if let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first {
@@ -23,10 +27,12 @@ class DebugTileSource : WeatherTileSource {
         save(tileID, data: UIImage(cgImage: image).pngData())
     }
     
-    override func fetchTile(layer: MaplyQuadImageTilesLayer, tileID: MaplyTileID, frame:Int32) -> Data? {
-        let bbox = layer.geoBounds(forTile: tileID)
+    override func data(forTile fetchInfo: Any, tileID: MaplyTileID) -> Any? {
+//    func fetchTile(layer: MaplyQuadImageLoader, tileID: MaplyTileID, frame:Int32) -> Data? {
         
-        print("Fetched frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
+        let bbox = loader?.geoBounds(forTile: tileID)
+        
+        //print("Fetched frame \(fetchInfo) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox?.ll.deg.x ?? 0) x \(bbox?.ll.deg.y ?? 0) ur = \(bbox?.ur.deg.x ?? 0) x \(bbox?.ur.deg.y ?? 0)")
         
         let w = CGFloat(tileSize())
         
@@ -38,8 +44,12 @@ class DebugTileSource : WeatherTileSource {
         let red = CGFloat(((hexColor) >> 16) & 0xFF)/255.0
         let green = CGFloat(((hexColor) >> 8) & 0xFF)/255.0
         let blue = CGFloat(((hexColor) >> 0) & 0xFF)/255.0
-        let backColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        let fillColor = UIColor(red: red, green: green, blue: blue, alpha: 0.5)
+        
+        let valid: CGFloat = validTile(tileID, bbox:bbox!) ? 0.5 : 0.1
+
+        let backColor = UIColor(red: 0, green: 0, blue: 0, alpha: valid)
+                
+        let fillColor = UIColor(red: red, green: green, blue: blue, alpha: valid)
         let ctx = UIGraphicsGetCurrentContext()
         
         // Draw a rectangle around the edges for testing
@@ -52,7 +62,7 @@ class DebugTileSource : WeatherTileSource {
         fillColor.setStroke()
         fillColor.setFill()
         ctx?.setTextDrawingMode(CGTextDrawingMode.fill)
-        let textStr = "\(tileID.level): (\(tileID.x),\(tileID.y)) = (\(bbox.ll.deg.x),\(bbox.ur.deg.x))"
+        let textStr = "\(tileID.level): (\(tileID.x),\(tileID.y)) \(valid) = (\(bbox?.ll.deg.x ?? 0),\(bbox?.ll.deg.y ?? 0))"
         textStr.draw(in: CGRect(x: 0,y: 0,width: size.width,height: size.height), withAttributes:nil)
         
         // Grab the image and shut things down

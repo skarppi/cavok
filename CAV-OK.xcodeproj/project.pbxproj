@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */; };
 		C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; };
 		C076EC7E2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */; };
@@ -36,14 +37,13 @@
 		C09D66E12540CACA00FB3D39 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B12540CACA00FB3D39 /* LegendView.swift */; };
 		C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B32540CACA00FB3D39 /* WeatherConfig.swift */; };
 		C09D66E32540CACA00FB3D39 /* HeatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B42540CACA00FB3D39 /* HeatMap.swift */; };
-		C09D66E42540CACA00FB3D39 /* DebugTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B52540CACA00FB3D39 /* DebugTileSource.swift */; };
+		C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B52540CACA00FB3D39 /* DebugTileFetcher.swift */; };
 		C09D66E52540CACA00FB3D39 /* HeatMapCPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B62540CACA00FB3D39 /* HeatMapCPU.swift */; };
 		C09D66E62540CACA00FB3D39 /* ColorRamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B72540CACA00FB3D39 /* ColorRamp.swift */; };
 		C09D66E72540CACA00FB3D39 /* FrameChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B82540CACA00FB3D39 /* FrameChanger.swift */; };
 		C09D66E82540CACA00FB3D39 /* HeatMap.metal in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B92540CACA00FB3D39 /* HeatMap.metal */; };
 		C09D66E92540CACA00FB3D39 /* WeatherLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BA2540CACA00FB3D39 /* WeatherLayer.swift */; };
 		C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BB2540CACA00FB3D39 /* HeatMapGPU.swift */; };
-		C09D66EB2540CACA00FB3D39 /* WeatherTileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BC2540CACA00FB3D39 /* WeatherTileSource.swift */; };
 		C09D66EC2540CACA00FB3D39 /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BE2540CACA00FB3D39 /* Observations.swift */; };
 		C09D66ED2540CACA00FB3D39 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BF2540CACA00FB3D39 /* Tokenizer.swift */; };
 		C09D66EE2540CACA00FB3D39 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C02540CACA00FB3D39 /* Station.swift */; };
@@ -133,6 +133,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTileFetcher.swift; sourceTree = "<group>"; };
 		C09D662C2540BCBE00FB3D39 /* CAV-OK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CAV-OK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -167,14 +168,13 @@
 		C09D66B12540CACA00FB3D39 /* LegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		C09D66B32540CACA00FB3D39 /* WeatherConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherConfig.swift; sourceTree = "<group>"; };
 		C09D66B42540CACA00FB3D39 /* HeatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatMap.swift; sourceTree = "<group>"; };
-		C09D66B52540CACA00FB3D39 /* DebugTileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTileSource.swift; sourceTree = "<group>"; };
+		C09D66B52540CACA00FB3D39 /* DebugTileFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTileFetcher.swift; sourceTree = "<group>"; };
 		C09D66B62540CACA00FB3D39 /* HeatMapCPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatMapCPU.swift; sourceTree = "<group>"; };
 		C09D66B72540CACA00FB3D39 /* ColorRamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorRamp.swift; sourceTree = "<group>"; };
 		C09D66B82540CACA00FB3D39 /* FrameChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameChanger.swift; sourceTree = "<group>"; };
 		C09D66B92540CACA00FB3D39 /* HeatMap.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HeatMap.metal; sourceTree = "<group>"; };
 		C09D66BA2540CACA00FB3D39 /* WeatherLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherLayer.swift; sourceTree = "<group>"; };
 		C09D66BB2540CACA00FB3D39 /* HeatMapGPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatMapGPU.swift; sourceTree = "<group>"; };
-		C09D66BC2540CACA00FB3D39 /* WeatherTileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTileSource.swift; sourceTree = "<group>"; };
 		C09D66BE2540CACA00FB3D39 /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observations.swift; sourceTree = "<group>"; };
 		C09D66BF2540CACA00FB3D39 /* Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		C09D66C02540CACA00FB3D39 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -413,16 +413,16 @@
 		C09D66B22540CACA00FB3D39 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
+				C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */,
 				C09D66B32540CACA00FB3D39 /* WeatherConfig.swift */,
 				C09D66B42540CACA00FB3D39 /* HeatMap.swift */,
-				C09D66B52540CACA00FB3D39 /* DebugTileSource.swift */,
+				C09D66B52540CACA00FB3D39 /* DebugTileFetcher.swift */,
 				C09D66B62540CACA00FB3D39 /* HeatMapCPU.swift */,
 				C09D66B72540CACA00FB3D39 /* ColorRamp.swift */,
 				C09D66B82540CACA00FB3D39 /* FrameChanger.swift */,
 				C09D66B92540CACA00FB3D39 /* HeatMap.metal */,
 				C09D66BA2540CACA00FB3D39 /* WeatherLayer.swift */,
 				C09D66BB2540CACA00FB3D39 /* HeatMapGPU.swift */,
-				C09D66BC2540CACA00FB3D39 /* WeatherTileSource.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -694,7 +694,7 @@
 				C09D66F62540CACA00FB3D39 /* RightImageButton.swift in Sources */,
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,
 				C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */,
-				C09D66E42540CACA00FB3D39 /* DebugTileSource.swift in Sources */,
+				C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */,
 				C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */,
 				C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */,
 				C09D66F52540CACA00FB3D39 /* Links.swift in Sources */,
@@ -705,7 +705,6 @@
 				C09D66A12540CAB800FB3D39 /* MapModule.swift in Sources */,
 				C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */,
 				C09D670D2540CADD00FB3D39 /* AirspaceCalloutView.swift in Sources */,
-				C09D66EB2540CACA00FB3D39 /* WeatherTileSource.swift in Sources */,
 				C09D66FC2540CACA00FB3D39 /* TimeslotControl.swift in Sources */,
 				C09D669A2540CAB800FB3D39 /* Messages.swift in Sources */,
 				C09D66E62540CACA00FB3D39 /* ColorRamp.swift in Sources */,
@@ -719,6 +718,7 @@
 				C09D66EC2540CACA00FB3D39 /* Observations.swift in Sources */,
 				C09D66E82540CACA00FB3D39 /* HeatMap.metal in Sources */,
 				C09D66E02540CACA00FB3D39 /* String+Additions.swift in Sources */,
+				C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */,
 				C09D66F02540CACA00FB3D39 /* Observation.swift in Sources */,
 				C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */,
 				C09D66E12540CACA00FB3D39 /* LegendView.swift in Sources */,

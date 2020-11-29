@@ -26,7 +26,7 @@ class WeatherConfig {
     // local coordinates
     let bounds: MaplyBoundingBox
     
-    let minZoom: Int = 3
+    let minZoom: Int = 4
     
     let maxZoom: Int = 6
     
