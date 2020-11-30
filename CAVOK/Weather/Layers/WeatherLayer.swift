@@ -16,9 +16,9 @@ class WeatherLayer {
     
     private var config: WeatherConfig?
     
-    var loader: MaplyQuadImageLoader? = nil
+    var loader: MaplyQuadImageFrameLoader? = nil
     
-    var fetcher: WeatherTileFetcher? = nil
+    var fetchers: [WeatherTileFetcher] = []
     
     private var frameChanger: FrameChanger? = nil
     
@@ -41,7 +41,7 @@ class WeatherLayer {
     }
     
     func load(groups: ObservationGroups, at coordinate: MaplyCoordinate?, loaded: @escaping (Int, UIColor) -> Void) {
-        guard let config = config, let selected = groups.selectedFrame else {
+        guard let selected = groups.selectedFrame else {
             return
         }
         
@@ -49,7 +49,7 @@ class WeatherLayer {
         
         // generate heatmaps in inverse order
         let frames = groups.frames.enumerated().map { index, obs in
-            return HeatMap(index: index, observations: obs, config: config, presentation: self.presentation)
+            return HeatMap(index: ind   ex, observations: obs, config: config!, presentation: self.presentation)
         }
         
         frames.reversed().forEach { frame in
@@ -76,8 +76,9 @@ class WeatherLayer {
             frameChanger.go(frame)
         }
         
-        if let tileSource = fetcher {
-            return tileSource.frames[frame].observations
+        if frame < fetchers.count {
+            let tileSource = fetchers[frame]
+            return tileSource.frame.observations
         } else {
             return []
         }
@@ -90,48 +91,45 @@ class WeatherLayer {
         loader?.shutdown()
         loader = nil
         
-        fetcher?.shutdown()
-        fetcher = nil
+//        fetcher?.shutdown()
+//        fetcher = nil
 
     }
     
-    private func initLoader(frames: [HeatMap]) -> MaplyQuadImageLoader? {
+    private func initLoader(frames: [HeatMap]) -> MaplyQuadImageFrameLoader? {
 //        // for debugging tiles
-//        guard let fetcher = DebugTileFetcher(frames: frames, config: config!) else {
         
-        guard let fetcher = WeatherTileFetcher(frames: frames, config: config!) else {
-            return nil
+        self.fetchers = frames.compactMap { frame in
+            DebugTileFetcher(frame: frame, config: config!)
+//            WeatherTileFetcher(frame: frame, config: config!)
         }
-        self.fetcher = fetcher
         
         let params = MaplySamplingParams()
         params.coverPoles = true
         params.edgeMatching = true
-        params.minZoom = fetcher.minZoom()
-        params.maxZoom = fetcher.maxZoom()
+        params.minZoom = Int32(config!.minZoom)
+        params.maxZoom = Int32(config!.maxZoom)
         params.coordSys = MaplySphericalMercator(webStandard: ())
         params.singleLevel = true
         
 //        let layer = MaplyQuadImageTilesLayer(coordSystem:tileSource.coordSys(), tileSource:tileSource)!
-//        layer.waitLoad = false
-//        layer.flipY = false
-//        layer.drawPriority = kMaplyImageLayerDrawPriorityDefault + 10
-//        layer.singleLevelLoading = false
 //        layer.imageDepth = UInt32(frames.count)
 //        layer.currentImage = Float(frames.count - 1)
 //        layer.allowFrameLoading = true
 //
-        //        mapView.add(layer)
-        
-//        guard let loader = MaplyQuadImageFrameLoader(params: params, tileInfos: [fetcher.tileInfo()!], viewC: mapView) else {
-        guard let loader = MaplyQuadImageLoader(params: params, tileInfo: fetcher.tileInfo(), viewC: mapView) else {
+        guard let loader = MaplyQuadImageFrameLoader(params: params, tileInfos: fetchers.compactMap({$0.tileInfo()}), viewC: mapView) else {
+//        guard let loader = MaplyQuadImageLoader(params: params, tileInfo: fetcher.tileInfo(), viewC: mapView) else {
             print("ERR: Failed to load weather layer")
             return nil
         }
-        loader.setTileFetcher(fetcher)
+//        loader.setCurrentImage(Double(frames.count - 1))
+        
+        loader.setTileFetcher(fetchers[0])
         loader.baseDrawPriority = kMaplyImageLayerDrawPriorityDefault + 10
         
-        fetcher.loader = loader
+        fetchers.forEach { fetcher in
+            fetcher.loader = loader
+        }
         
         // load selected frame first and then others in reverse order
 //        var priorities: [Int] = Array(0...groups.count - 1)

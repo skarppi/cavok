@@ -62,7 +62,7 @@ class DebugTileFetcher : WeatherTileFetcher {
         fillColor.setStroke()
         fillColor.setFill()
         ctx?.setTextDrawingMode(CGTextDrawingMode.fill)
-        let textStr = "\(tileID.level): (\(tileID.x),\(tileID.y)) \(valid) = (\(bbox?.ll.deg.x ?? 0),\(bbox?.ll.deg.y ?? 0))"
+        let textStr = "\(tileID.level) \(frame.index): (\(tileID.x),\(tileID.y)) \(valid) = (\(bbox?.ll.deg.x ?? 0),\(bbox?.ll.deg.y ?? 0))"
         textStr.draw(in: CGRect(x: 0,y: 0,width: size.width,height: size.height), withAttributes:nil)
         
         // Grab the image and shut things down

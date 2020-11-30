@@ -9,7 +9,7 @@
 import Foundation
 
 class FrameChanger: MaplyActiveObject {
-    let loader: MaplyQuadImageLoader
+    let loader: MaplyQuadImageFrameLoader
     
     let period: Double = 1
     
@@ -17,38 +17,37 @@ class FrameChanger: MaplyActiveObject {
     var sourceFrame: Double?
     var targetFrame: Double?
     
-    init(loader: MaplyQuadImageLoader) {
+    init(loader: MaplyQuadImageFrameLoader) {
         self.loader = loader
         super.init()
     }
 
     func go(_ targetFrame: Int) {
         self.startTime = CFAbsoluteTimeGetCurrent()
-//        self.sourceFrame = loader.getCurrentImage()
+        self.sourceFrame = loader.getCurrentImage()
         self.targetFrame = Double(targetFrame)
     }
     
     @objc override func hasUpdate() -> Bool {
         if let target = targetFrame {
-//            return loader.getCurrentImage() != target
-            return true
+            return loader.getCurrentImage() != target
         } else {
             return false
         }
     }
     
-    @objc func updateForFrame(forFrame frameInfo: AnyObject) {
+    override func update(forFrame frameInfo: UnsafeMutableRawPointer) {
         if let start = startTime, let source = sourceFrame, let target = targetFrame {
             let now = CFAbsoluteTimeGetCurrent()
             
             let pos = (now - start) / period
             if pos >= 1 {
-//                loader.setCurrentImage(target)
+                loader.setCurrentImage(target)
                 startTime = nil
                 sourceFrame = nil
                 targetFrame = nil
             } else {
-//                loader.setCurrentImage(source + Double(pos) * (target - source))
+                loader.setCurrentImage(source + Double(pos) * (target - source))
             }
         }
     }

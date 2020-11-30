@@ -10,14 +10,14 @@ import Foundation
 
 open class WeatherTileFetcher : MaplySimpleTileFetcher {
     
-    let frames: [HeatMap]
+    let frame: HeatMap
     
     let config: WeatherConfig
     
-    var loader: MaplyQuadImageLoader? = nil
+    var loader: MaplyQuadImageFrameLoader? = nil
     
-    init?(frames: [HeatMap], config: WeatherConfig) {
-        self.frames = frames
+    init?(frame: HeatMap, config: WeatherConfig) {
+        self.frame = frame
         self.config = config
         
         super.init(name: "", minZoom: Int32(config.minZoom), maxZoom: Int32(config.maxZoom))
@@ -58,33 +58,24 @@ open class WeatherTileFetcher : MaplySimpleTileFetcher {
         let tile = config.tiles[Int(tileID.level)]
                 
         if x >= tile.ur.x || (x + 1) <= tile.ll.x || (y + 1) <= tile.ur.y ||  y >= tile.ll.y {
-//        if x >= tile.ur.x || (x + 1) <= tile.ll.x || y >= tile.ur.y || (y + 1) <= tile.ll.y {
             return false
         }
-        
-        // || y >= tile.ur.y ||  (y + 1) <= tile.ll.y
-        
-        print("Fetched frame tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x ?? 0) x \(bbox.ll.deg.y ?? 0) ur = \(bbox.ur.deg.x ?? 0) x \(bbox.ur.deg.y ?? 0)")
-
         
         return true
     }
 
     open override func data(forTile fetchInfo: Any, tileID: MaplyTileID) -> Any? {
-//    open func fetchTile(layer: MaplyQuadImageTilesLayer, tileID: MaplyTileID, frame:Int32) -> Data? {
         let bbox = tileID.bboxFlip
         
         guard validTile(tileID, bbox:bbox) else {
             return nil
         }
         
-        let frame = 0
-        print("Fetching frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
+        print("Fetching frame \(frame.index) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
         
         let localBox = config.coordSystem.geo(toLocalBox: bbox)
-//        layer.bounds(forTile: tileID, bbox: &bbox)
         
-        if let image = frames[Int(frame)].render(tileID, bbox: localBox, imageSize: config.tilesize) {
+        if let image = frame.render(tileID, bbox: localBox, imageSize: config.tilesize) {
             let data = image.pngData()
             //DebugTileSource.save(tileID, data: data)
             return data
@@ -92,24 +83,4 @@ open class WeatherTileFetcher : MaplySimpleTileFetcher {
             return nil
         }
     }
-//    
-//    public func startFetchLayer(_ layer: Any, tile tileID: MaplyTileID) {
-//        DispatchQueue.global().async {
-//            if let layer = layer as? MaplyQuadImageTilesLayer {
-//                let frames = Int32(layer.imageDepth) - 1
-//                let images = (0...frames).compactMap { (frame) -> Data? in
-//                    self.fetchTile(layer: layer, tileID: tileID, frame:frame)
-//                }
-//                layer.loadedImages(MaplyImageTile(pnGorJPEGDataArray: images)!, forTile: tileID)
-//            }
-//        }
-//    }
-//    
-//    public func startFetchLayer(_ layer: Any, tile tileID: MaplyTileID, frame: Int32) {
-//        DispatchQueue.global().async {
-//            if let layer = layer as? MaplyQuadImageTilesLayer, let image = self.fetchTile(layer: layer, tileID: tileID, frame:frame) {
-//                layer.loadedImages(MaplyImageTile(pnGorJPEGData: image)!, forTile: tileID, frame: frame)
-//            }
-//        }
-//    }
 }
