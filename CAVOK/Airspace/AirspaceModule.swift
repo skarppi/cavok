@@ -102,9 +102,9 @@ final class AirspaceModule: MapModule {
             vector.splitVectors().forEach {
                 let vector = $0 
                 let attributes = AirspaceAttributes(attributes: vector.attributes as! [String: AnyObject])
-                vector.attributes?.setValue(attributes.name, forKey: "name")
-                vector.attributes?.setValue(attributes.description, forKey: "description")
-                vector.attributes?.setValue(attributes.lowerLimit ?? 0, forKey: kMaplyDrawPriority)
+                vector.attributes.setValue(attributes.name, forKey: "name")
+                vector.attributes.setValue(attributes.description, forKey: "description")
+                vector.attributes.setValue(attributes.lowerLimit ?? 0, forKey: kMaplyDrawPriority)
                 
                 if let objects = self.delegate.mapView.addVectors([vector], desc: [
                     kMaplyColor: attributes.color,

@@ -49,7 +49,7 @@ class WeatherLayer {
         
         // generate heatmaps in inverse order
         let frames = groups.frames.enumerated().map { index, obs in
-            return HeatMap(index: ind   ex, observations: obs, config: config!, presentation: self.presentation)
+            return HeatMap(index: index, observations: obs, config: config!, presentation: self.presentation)
         }
         
         frames.reversed().forEach { frame in
@@ -100,14 +100,13 @@ class WeatherLayer {
 //        // for debugging tiles
         
         self.fetchers = frames.compactMap { frame in
-            DebugTileFetcher(frame: frame, config: config!)
-//            WeatherTileFetcher(frame: frame, config: config!)
+//            DebugTileFetcher(frame: frame, config: config!)
+            WeatherTileFetcher(frame: frame, config: config!)
         }
         
         let params = MaplySamplingParams()
         params.coverPoles = true
         params.edgeMatching = true
-        params.minZoom = Int32(config!.minZoom)
         params.maxZoom = Int32(config!.maxZoom)
         params.coordSys = MaplySphericalMercator(webStandard: ())
         params.singleLevel = true
@@ -125,7 +124,7 @@ class WeatherLayer {
 //        loader.setCurrentImage(Double(frames.count - 1))
         
         loader.setTileFetcher(fetchers[0])
-        loader.baseDrawPriority = kMaplyImageLayerDrawPriorityDefault + 10
+        loader.baseDrawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
         
         fetchers.forEach { fetcher in
             fetcher.loader = loader
@@ -178,7 +177,6 @@ class WeatherLayer {
         sampleParams.coordSys = MaplySphericalMercator(webStandard: ())
         sampleParams.coverPoles = false
         sampleParams.edgeMatching = false
-        sampleParams.minZoom = 0
         sampleParams.maxZoom = 6
         sampleParams.singleLevel = true
         sampleParams.minImportance = 1024.0*1024.0
@@ -198,7 +196,7 @@ class WeatherLayer {
         guard let rampTex = baseVC.addTexture(UIImage.init(named: "colorramp.png")!, desc: nil, mode: .current) else {
             return
         }
-        shader.setTexture(rampTex, for: 0, viewC: baseVC)
+        shader.setTexture(rampTex, for: 0)
         
         // Animator
         imageAnimator = MaplyQuadImageFrameAnimator(frameLoader: imageLayer!, viewC: baseVC)

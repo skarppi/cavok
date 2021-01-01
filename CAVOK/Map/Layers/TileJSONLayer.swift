@@ -22,7 +22,6 @@ class TileJSONLayer {
         sampleParams.coordSys = MaplySphericalMercator(webStandard: ())
         sampleParams.coverPoles = true
         sampleParams.edgeMatching = true
-        sampleParams.minZoom = tileInfo.minZoom()
         sampleParams.maxZoom = tileInfo.maxZoom()
         sampleParams.singleLevel = true
         sampleParams.minImportance = 1024.0 * 1024.0 / 2.0
