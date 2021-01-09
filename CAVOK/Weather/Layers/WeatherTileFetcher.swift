@@ -8,19 +8,17 @@
 
 import Foundation
 
-open class WeatherTileFetcher : MaplySimpleTileFetcher {
+open class WeatherTileFetcher : WeatherSimpleTileFetcher {
     
-    let frame: HeatMap
+    let frames: [HeatMap]
     
     let config: WeatherConfig
     
-    var loader: MaplyQuadImageFrameLoader? = nil
-    
-    init?(frame: HeatMap, config: WeatherConfig) {
-        self.frame = frame
+    init?(frames: [HeatMap], config: WeatherConfig) {
+        self.frames = frames
         self.config = config
         
-        super.init(name: "", minZoom: Int32(config.minZoom), maxZoom: Int32(config.maxZoom))
+        super.init(name: "weather")
     }
         
     /** @brief Number of pixels on the side of a single tile (e.g. 128, 256).
@@ -44,34 +42,21 @@ open class WeatherTileFetcher : MaplySimpleTileFetcher {
         return config.coordSystem
     }
     
-    /** @brief Check if we should even try to load a given tile.
-     @details Tile pyramids can be sparse.  If you know where your pyramid is sparse, you can short circuit the fetch and simply return false here.
-     @details If this method isn't filled in, everything defaults to true.
-     @details tileID The tile we're asking about.
-     @details bbox The bounding box of the tile we're asking about, for convenience.
-     @return True if the tile is loadable, false if not.
-     */
-    func validTile(_ tileID: MaplyTileID, bbox:MaplyBoundingBox) -> Bool {
-        let y = (1<<tileID.level)-tileID.y-1 // flip
-        let x = tileID.x
-        
-        let tile = config.tiles[Int(tileID.level)]
-                
-        if x >= tile.ur.x || (x + 1) <= tile.ll.x || (y + 1) <= tile.ur.y ||  y >= tile.ll.y {
-            return false
-        }
-        
-        return true
-    }
-
     open override func data(forTile fetchInfo: Any, tileID: MaplyTileID) -> Any? {
         let bbox = tileID.bboxFlip
         
-        guard validTile(tileID, bbox:bbox) else {
+        guard tileID.validTile(config: config) else {
             return nil
         }
         
-        print("Fetching frame \(frame.index) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
+        guard let info = fetchInfo as? WeatherTileFetchInfo else {
+            return nil
+        }
+        let index = info.frame
+        
+        let frame = frames[index]
+        
+        print("Fetching frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
         
         let localBox = config.coordSystem.geo(toLocalBox: bbox)
         

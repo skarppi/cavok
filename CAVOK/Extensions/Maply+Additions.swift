@@ -115,6 +115,26 @@ extension MaplyTileID {
             )
         }
     }
+    
+    /** @brief Check if we should even try to load a given tile.
+     @details Tile pyramids can be sparse.  If you know where your pyramid is sparse, you can short circuit the fetch and simply return false here.
+     @details If this method isn't filled in, everything defaults to true.
+     @details tileID The tile we're asking about.
+     @details bbox The bounding box of the tile we're asking about, for convenience.
+     @return True if the tile is loadable, false if not.
+     */
+    func validTile(config: WeatherConfig) -> Bool {
+        let y = (1<<self.level)-self.y-1 // flip
+        let x = self.x
+        
+        let tile = config.tiles[Int(self.level)]
+                
+        if x >= tile.ur.x || (x + 1) <= tile.ll.x || (y + 1) <= tile.ur.y ||  y >= tile.ll.y {
+            return false
+        }
+        
+        return true
+    }
 }
 
 extension MaplySphericalMercator {

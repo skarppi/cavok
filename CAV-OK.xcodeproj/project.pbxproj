@@ -85,6 +85,8 @@
 		C09D67552540D94800FB3D39 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C09D67542540D94700FB3D39 /* README.md */; };
 		C09D675B2540DAB100FB3D39 /* CAVOK.template.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09D67592540DAB100FB3D39 /* CAVOK.template.plist */; };
 		C09D675C2540DAB100FB3D39 /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09D675A2540DAB100FB3D39 /* CAVOK.plist */; };
+		C0C8855A25A127D800B2F2EA /* colorramp.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C8855725A127D800B2F2EA /* colorramp.png */; };
+		C0C8855E25A1B09B00B2F2EA /* WeatherSimpleTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C8855D25A1B09B00B2F2EA /* WeatherSimpleTileFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +211,8 @@
 		C09D67542540D94700FB3D39 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C09D67592540DAB100FB3D39 /* CAVOK.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CAVOK.template.plist; path = CAVOK/CAVOK.template.plist; sourceTree = "<group>"; };
 		C09D675A2540DAB100FB3D39 /* CAVOK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CAVOK.plist; path = CAVOK/CAVOK.plist; sourceTree = "<group>"; };
+		C0C8855725A127D800B2F2EA /* colorramp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorramp.png; sourceTree = "<group>"; };
+		C0C8855D25A1B09B00B2F2EA /* WeatherSimpleTileFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSimpleTileFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +277,7 @@
 		C09D662E2540BCBE00FB3D39 /* CAVOK */ = {
 			isa = PBXGroup;
 			children = (
+				C0C8855725A127D800B2F2EA /* colorramp.png */,
 				C09D67082540CADD00FB3D39 /* Airspace */,
 				C09D66A92540CACA00FB3D39 /* Extensions */,
 				C09D668D2540CAB800FB3D39 /* Map */,
@@ -413,6 +418,7 @@
 		C09D66B22540CACA00FB3D39 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
+				C0C8855D25A1B09B00B2F2EA /* WeatherSimpleTileFetcher.swift */,
 				C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */,
 				C09D66B32540CACA00FB3D39 /* WeatherConfig.swift */,
 				C09D66B42540CACA00FB3D39 /* HeatMap.swift */,
@@ -651,6 +657,7 @@
 				C09D66362540BCC100FB3D39 /* Assets.xcassets in Resources */,
 				C09D675B2540DAB100FB3D39 /* CAVOK.template.plist in Resources */,
 				C09D674F2540D1CD00FB3D39 /* Main.storyboard in Resources */,
+				C0C8855A25A127D800B2F2EA /* colorramp.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +682,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0C8855E25A1B09B00B2F2EA /* WeatherSimpleTileFetcher.swift in Sources */,
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
 				C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */,
 				C09D66F82540CACA00FB3D39 /* ConfigDrawerController.swift in Sources */,

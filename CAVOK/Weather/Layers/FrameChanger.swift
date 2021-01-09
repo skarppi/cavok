@@ -11,6 +11,7 @@ import Foundation
 class FrameChanger: MaplyActiveObject {
     let loader: MaplyQuadImageFrameLoader
     
+    // How long to animate from start to finish.
     let period: Double = 1
     
     var startTime: TimeInterval?
@@ -41,7 +42,7 @@ class FrameChanger: MaplyActiveObject {
             let now = CFAbsoluteTimeGetCurrent()
             
             let pos = (now - start) / period
-            if pos >= 1 {
+            if pos >= period {
                 loader.setCurrentImage(target)
                 startTime = nil
                 sourceFrame = nil
