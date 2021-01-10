@@ -77,7 +77,8 @@ class WeatherLayer {
         
         if let fetcher = fetcher, frame < fetcher.frames.count {
             let tileSource = fetcher.frames[frame]
-            return tileSource.observations
+            // when reloading data the observations might get deleted
+            return tileSource.observations.filter({!$0.isInvalidated})
         } else {
             return []
         }
