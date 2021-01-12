@@ -207,24 +207,24 @@ open class WeatherModule {
             
             let userLocation = LastLocation.load()
             
-            weatherLayer.load(groups: groups, at: userLocation, loaded: { frame, color in
-                self.timeslotDrawer.update(color: color, at: frame)
+            weatherLayer.load(groups: groups, at: userLocation, loaded: { index, color in
+                self.timeslotDrawer.update(color: color, at: index)
+                
+                if (index == frame) {
+                    self.render(frame: frame)
+                    
+                    self.delegate.loaded(frame: frame, legend: self.presentation.ramp.legend())
+                    self.initTimer()
+                }
             })
-            
-            
-            render(frame: frame)
         }
-        
-        delegate.loaded(frame: groups.selectedFrame, legend: presentation.ramp.legend())
-        
-        initTimer()
     }
     
     func render(frame: Int) {
         delegate.clearComponents(ofType: ObservationMarker.self)
         
         let observations = weatherLayer.go(frame: frame)
-        
+                
         let markers = observations.map { obs in
             return ObservationMarker(obs: obs)
         }
