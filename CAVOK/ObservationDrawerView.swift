@@ -27,42 +27,38 @@ struct ObservationDrawerView: View {
         
     var body: some View {
         VStack(alignment: .leading) {
-           VStack(alignment: .leading) {
-               HStack {
-                   Text(self.obs.station?.name ?? "-")
-                       .font(Font.system(size: 22))
-                    .padding(.leading)
-                   Spacer()
-                   Button(action: self.closedAction) {
-                       Image(systemName: "xmark.circle.fill")
-                           .resizable()
-                           .frame(width: 20, height: 20)
-                           .padding()
-                   }
-               }
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(self.obs.station?.name ?? "-")
+                        .font(Font.system(size: 22))
+                        .padding(.leading)
+                    Spacer()
+                    Button(action: self.closedAction) {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding()
+                    }
+                }
                
                 AttributedText(obs: obs, presentation: presentation)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding()
-           }.background(GeometryReader { proxy -> Color in
-               self.sizes.collapsedHeight = proxy.frame(in: .local).maxY
-               return Color.clear
-           })
+            }.background(GeometryReader { proxy -> Color in
+                self.sizes.collapsedHeight = proxy.frame(in: .local).maxY
+                return Color.clear
+            })
 
-            List(observations.metars.reversed()) { metar in
-                AttributedText(obs: metar, presentation: self.presentation)
-            }.fixedSize(horizontal: false, vertical: true)
-            
-           ObservationList(
-               title: "Metar history",
-               observations: observations.metars,
-               presentation: presentation)
+            ObservationList(
+                title: "Metar history",
+                observations: observations.metars,
+                presentation: presentation)
            
-           ObservationList(
-               title: "Taf",
-               observations: observations.tafs,
-               presentation: presentation)
-            
+            ObservationList(
+                title: "Taf",
+                observations: observations.tafs,
+                presentation: presentation)
+
         }.background(GeometryReader { proxy -> Color in
             self.sizes.fullHeight = proxy.frame(in: .local).maxY
             return Color.clear
@@ -76,16 +72,19 @@ struct ObservationList: View {
     var presentation: ObservationPresentation
     
     var body: some View {
-//        Group {
-//            if !observations.isEmpty {
-//                Text(title)
-//                    .font(Font.system(.headline))
-//                    .padding(.leading)
-                List(observations.reversed()) { metar in
-                    AttributedText(obs: metar, presentation: self.presentation)
+        Group {
+            if !observations.isEmpty {
+                Text(title)
+                    .font(Font.system(.headline))
+                    .padding(.leading)
+                
+                ScrollView {
+                    ForEach(observations.reversed(), id: \.self) { metar in
+                        AttributedText(obs: metar, presentation: self.presentation)
+                    }
                 }
-//            }
-//        }
+            }
+        }
     }
 }
 

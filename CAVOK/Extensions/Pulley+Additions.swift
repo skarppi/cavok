@@ -39,20 +39,20 @@ class PulleyUIHostingController<Content>: UIHostingController<Content>, PulleyDr
     }
 
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        print("collapsed \(pulleySizes.collapsedHeight)")
-
         return pulleySizes.collapsedHeight + (pulley.displayMode == .drawer ? bottomSafeArea : 0)
     }
 
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-
-        print("full \(pulleySizes.fullHeight)")
-
         let maxAvailableHeight = UIApplication.shared.windows.first {$0.isKeyWindow}!.frame.height
+        guard pulleySizes.fullHeight > 0 else {
+            return maxAvailableHeight
+        }
+    
+        let height = pulleySizes.fullHeight
         if pulley.displayMode == .drawer {
-            return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, pulleySizes.fullHeight + bottomSafeArea)
+            return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, height + bottomSafeArea)
         } else {
-            return min(maxAvailableHeight - pulley.drawerTopInset * 2, pulleySizes.fullHeight)
+            return min(maxAvailableHeight - pulley.drawerTopInset * 2, height)
         }
     }
 }
