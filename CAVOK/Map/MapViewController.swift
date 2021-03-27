@@ -24,9 +24,7 @@ class MapViewController: UIViewController {
     internal var mapView: WhirlyGlobeViewController!
     
     fileprivate var module: MapModule!
-    
-    fileprivate var airspaceModule: AirspaceModule!
-    
+        
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]
     
     private var locationManager: LocationManager!
@@ -64,6 +62,11 @@ class MapViewController: UIViewController {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+            super.viewWillTransition(to: size, with: coordinator)
+        adjustPulleyPositioning()
+    }
+    
     func setupMapView() {
         mapView = WhirlyGlobeViewController()
         mapView.delegate = self
@@ -99,12 +102,9 @@ class MapViewController: UIViewController {
                 
                 _ = self.ensureConfigured()
         })
-        locationManager.requestLocation()
     }
     
     func setupModules() {
-        airspaceModule = AirspaceModule(delegate: self)
-        
         moduleType.removeAllSegments()
         for (index, title) in Modules.availableTitles().enumerated() {
             moduleType.insertSegment(withTitle: title, at: index, animated: false)
@@ -122,11 +122,6 @@ class MapViewController: UIViewController {
                                                selector: #selector(MapViewController.enteredForeground(notification:)),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(MapViewController.adjustPulleyPositioning),
-                                               name: UIApplication.didChangeStatusBarOrientationNotification,
-                                               object: nil)
     }
     
     @objc func enteredBackground(notification: Notification) {
@@ -135,7 +130,7 @@ class MapViewController: UIViewController {
     
     @objc func enteredForeground(notification: Notification) {
         locationManager?.requestLocation()
-    }
+    }    
     
     fileprivate func ensureConfigured() -> Bool {
         if WeatherRegion.load() == nil {
@@ -165,11 +160,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
-    @IBAction func airspaceLayers() {
-        airspaceModule.render(frame: 0)
-    }
-    
+
     @IBAction func resetRegion() {
         buttonView.isHidden = true
         legendView.isHidden = true
@@ -254,7 +245,7 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
         if let marker = selected as? MaplyScreenMarker, let object = marker.userObject {
             module.details(object: object, parentFrame: self.view.frame)
         } else if let object = selected as? MaplyVectorObject {
-            airspaceModule.details(object: object, parentFrame: self.view.frame)
+            module.details(object: object, parentFrame: self.view.frame)
         }
     }
 }
@@ -263,17 +254,17 @@ extension MapViewController: PulleyPrimaryContentControllerDelegate {
     
     @objc func adjustPulleyPositioning() {
         
-        if let window = UIApplication.shared.windows.first {$0.isKeyWindow} {
+        if let window = UIApplication.shared.windows.first(where: {$0.isKeyWindow}) {
             let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .panel : .drawer
             
             if window.safeAreaInsets != .zero {
                 // adjust position of the drawer on iPhoneX
                 
-                switch UIApplication.shared.statusBarOrientation {
-                case UIInterfaceOrientation.landscapeLeft:
+                switch window.windowScene?.interfaceOrientation {
+                case .landscapeLeft:
                     // remove safe area when notch is on the other side
                     pulley.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left
-                case UIInterfaceOrientation.landscapeRight:
+                case .landscapeRight:
                     // decrease the margin to notch
                     pulley.additionalSafeAreaInsets.left = -15
                 default:

@@ -12,7 +12,6 @@
 		C076EC7E2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */; };
 		C09D66322540BCBE00FB3D39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */; };
-		C09D66342540BCBE00FB3D39 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66332540BCBE00FB3D39 /* ContentView.swift */; };
 		C09D66362540BCC100FB3D39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C09D66352540BCC100FB3D39 /* Assets.xcassets */; };
 		C09D66392540BCC100FB3D39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C09D66382540BCC100FB3D39 /* Preview Assets.xcassets */; };
 		C09D663C2540BCC100FB3D39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */; };
@@ -69,9 +68,6 @@
 		C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */; };
 		C09D67032540CACA00FB3D39 /* ObservationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D92540CACA00FB3D39 /* ObservationDrawerController.swift */; };
 		C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */; };
-		C09D670C2540CADD00FB3D39 /* AirspaceAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D67092540CADD00FB3D39 /* AirspaceAttributes.swift */; };
-		C09D670D2540CADD00FB3D39 /* AirspaceCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D670A2540CADD00FB3D39 /* AirspaceCalloutView.swift */; };
-		C09D670E2540CADD00FB3D39 /* AirspaceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D670B2540CADD00FB3D39 /* AirspaceModule.swift */; };
 		C09D67172540CC1E00FB3D39 /* Pulley in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67162540CC1E00FB3D39 /* Pulley */; };
 		C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = C09D671C2540CC7C00FB3D39 /* PromiseKit */; };
 		C09D67232540CCED00FB3D39 /* PMKFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67222540CCED00FB3D39 /* PMKFoundation */; };
@@ -139,7 +135,6 @@
 		C09D662C2540BCBE00FB3D39 /* CAV-OK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CAV-OK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C09D66332540BCBE00FB3D39 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C09D66352540BCC100FB3D39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C09D66382540BCC100FB3D39 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C09D663B2540BCC100FB3D39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -202,9 +197,6 @@
 		C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationSelection.swift; sourceTree = "<group>"; };
 		C09D66D92540CACA00FB3D39 /* ObservationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDrawerController.swift; sourceTree = "<group>"; };
 		C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationMarker.swift; sourceTree = "<group>"; };
-		C09D67092540CADD00FB3D39 /* AirspaceAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirspaceAttributes.swift; sourceTree = "<group>"; };
-		C09D670A2540CADD00FB3D39 /* AirspaceCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirspaceCalloutView.swift; sourceTree = "<group>"; };
-		C09D670B2540CADD00FB3D39 /* AirspaceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirspaceModule.swift; sourceTree = "<group>"; };
 		C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDrawerView.swift; sourceTree = "<group>"; };
 		C09D674E2540D1CD00FB3D39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C09D67532540D94700FB3D39 /* CAV-OK.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "CAV-OK.entitlements"; sourceTree = "<group>"; };
@@ -278,7 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				C0C8855725A127D800B2F2EA /* colorramp.png */,
-				C09D67082540CADD00FB3D39 /* Airspace */,
 				C09D66A92540CACA00FB3D39 /* Extensions */,
 				C09D668D2540CAB800FB3D39 /* Map */,
 				C09D66AF2540CACA00FB3D39 /* Weather */,
@@ -287,7 +278,6 @@
 				C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */,
 				C09D674D2540D1CD00FB3D39 /* Main.storyboard */,
 				C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */,
-				C09D66332540BCBE00FB3D39 /* ContentView.swift */,
 				C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */,
 				C09D66352540BCC100FB3D39 /* Assets.xcassets */,
 				C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */,
@@ -491,17 +481,6 @@
 			);
 			path = Observation;
 			sourceTree = "<group>";
-		};
-		C09D67082540CADD00FB3D39 /* Airspace */ = {
-			isa = PBXGroup;
-			children = (
-				C09D67092540CADD00FB3D39 /* AirspaceAttributes.swift */,
-				C09D670A2540CADD00FB3D39 /* AirspaceCalloutView.swift */,
-				C09D670B2540CADD00FB3D39 /* AirspaceModule.swift */,
-			);
-			name = Airspace;
-			path = CAVOK/Airspace;
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -712,12 +691,10 @@
 				C09D669C2540CAB800FB3D39 /* LastSession.swift in Sources */,
 				C09D66A12540CAB800FB3D39 /* MapModule.swift in Sources */,
 				C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */,
-				C09D670D2540CADD00FB3D39 /* AirspaceCalloutView.swift in Sources */,
 				C09D66FC2540CACA00FB3D39 /* TimeslotControl.swift in Sources */,
 				C09D669A2540CAB800FB3D39 /* Messages.swift in Sources */,
 				C09D66E62540CACA00FB3D39 /* ColorRamp.swift in Sources */,
 				C09D66F92540CACA00FB3D39 /* LinkTableViewCell.swift in Sources */,
-				C09D670C2540CADD00FB3D39 /* AirspaceAttributes.swift in Sources */,
 				C09D67462540D03100FB3D39 /* ObservationDrawerView.swift in Sources */,
 				C09D67002540CACA00FB3D39 /* WeatherService.swift in Sources */,
 				C09D66FB2540CACA00FB3D39 /* TimeslotDrawerController.swift in Sources */,
@@ -736,10 +713,8 @@
 				C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */,
 				C09D66E52540CACA00FB3D39 /* HeatMapCPU.swift in Sources */,
 				C09D66FD2540CACA00FB3D39 /* Timeslot.swift in Sources */,
-				C09D66342540BCBE00FB3D39 /* ContentView.swift in Sources */,
 				C09D66DB2540CACA00FB3D39 /* WebViewController.swift in Sources */,
 				C09D669F2540CAB800FB3D39 /* LocationManager.swift in Sources */,
-				C09D670E2540CADD00FB3D39 /* AirspaceModule.swift in Sources */,
 				C09D66E92540CACA00FB3D39 /* WeatherLayer.swift in Sources */,
 				C09D66A32540CAB800FB3D39 /* MapDelegate.swift in Sources */,
 			);

@@ -26,28 +26,26 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             manager.delegate = self;
             manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
             
-            if CLLocationManager.authorizationStatus() == .notDetermined {
-                manager.requestWhenInUseAuthorization()
-            } else {
-                manager.requestLocation()
-            }
+            manager.requestWhenInUseAuthorization()
+            manager.requestLocation()
+
             print("Location requested")
         } else {
             reject("Location not enabled")
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case CLAuthorizationStatus.restricted:
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .restricted:
             print("Restricted Access to location")
-        case CLAuthorizationStatus.denied:
+        case .denied:
             print("User denied access to location")
             reject("Location not allowed")
-        case CLAuthorizationStatus.notDetermined:
+        case .notDetermined:
             print("Status not determined")
         default:
-            print("Looking for location with status \(status)")
+            print("Looking for location with status \(manager.authorizationStatus)")
             manager.requestLocation()
         }
     }

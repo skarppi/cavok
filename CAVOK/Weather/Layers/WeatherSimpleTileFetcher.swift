@@ -124,7 +124,7 @@ open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
         }
     }
     
-    public func updateTileFetch(_ request: Any, priority: Int32, importance: Double) -> Any {
+    public func updateTileFetch(_ request: Any, priority: Int32, importance: Double) -> Any? {
         guard active else {
             return Optional<Any>.none as Any
         }
