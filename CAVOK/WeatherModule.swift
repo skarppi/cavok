@@ -274,13 +274,8 @@ open class WeatherModule {
         
         cleanDetails()
         
-//        let observationDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "observationDrawer") as! ObservationDrawerController
-//        delegate.pulley.setDrawerContentViewController(controller: observationDrawer, animated: false)
-        
         let all = weatherService.observations(for: observation.station?.identifier ?? "")
         
-//        observationDrawer.setup(closed: quitDetails, presentation: presentation, obs: observation, observations: all)
-
         let observationDrawer = ObservationDrawerView(presentation: presentation, obs: observation, observations: all) { () in
             self.cleanDetails()
             self.showTimeslotDrawer()

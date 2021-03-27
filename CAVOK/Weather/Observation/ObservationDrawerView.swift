@@ -54,10 +54,6 @@ struct ObservationDrawerView: View {
             
         }
         .edgesIgnoringSafeArea(.all)
-        .background(GeometryReader { proxy -> Color in
-            self.sizes.fullHeight = proxy.frame(in: .local).maxY
-            return Color.clear
-        })
     }
 }
 

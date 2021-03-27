@@ -66,7 +66,6 @@
 		C09D67002540CACA00FB3D39 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D52540CACA00FB3D39 /* WeatherService.swift */; };
 		C09D67012540CACA00FB3D39 /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D62540CACA00FB3D39 /* AwsService.swift */; };
 		C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */; };
-		C09D67032540CACA00FB3D39 /* ObservationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D92540CACA00FB3D39 /* ObservationDrawerController.swift */; };
 		C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */; };
 		C09D67172540CC1E00FB3D39 /* Pulley in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67162540CC1E00FB3D39 /* Pulley */; };
 		C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = C09D671C2540CC7C00FB3D39 /* PromiseKit */; };
@@ -195,7 +194,6 @@
 		C09D66D52540CACA00FB3D39 /* WeatherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		C09D66D62540CACA00FB3D39 /* AwsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwsService.swift; sourceTree = "<group>"; };
 		C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationSelection.swift; sourceTree = "<group>"; };
-		C09D66D92540CACA00FB3D39 /* ObservationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDrawerController.swift; sourceTree = "<group>"; };
 		C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationMarker.swift; sourceTree = "<group>"; };
 		C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDrawerView.swift; sourceTree = "<group>"; };
 		C09D674E2540D1CD00FB3D39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -278,7 +276,6 @@
 				C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */,
 				C09D674D2540D1CD00FB3D39 /* Main.storyboard */,
 				C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */,
-				C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */,
 				C09D66352540BCC100FB3D39 /* Assets.xcassets */,
 				C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */,
 				C09D663D2540BCC100FB3D39 /* Info.plist */,
@@ -475,8 +472,8 @@
 		C09D66D72540CACA00FB3D39 /* Observation */ = {
 			isa = PBXGroup;
 			children = (
+				C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */,
 				C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */,
-				C09D66D92540CACA00FB3D39 /* ObservationDrawerController.swift */,
 				C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */,
 			);
 			path = Observation;
@@ -665,7 +662,6 @@
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
 				C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */,
 				C09D66F82540CACA00FB3D39 /* ConfigDrawerController.swift in Sources */,
-				C09D67032540CACA00FB3D39 /* ObservationDrawerController.swift in Sources */,
 				C09D66F72540CACA00FB3D39 /* LinkEditController.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
