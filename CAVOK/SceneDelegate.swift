@@ -24,9 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let mainContentVC = storyboard.instantiateViewController(withIdentifier: "map")
-            let drawerContentVC = storyboard.instantiateViewController(withIdentifier: "drawer")
 
-            window.rootViewController = PulleyViewController(contentViewController: mainContentVC, drawerViewController: drawerContentVC)
+            window.rootViewController = PulleyViewController(contentViewController: mainContentVC, drawerViewController: UIViewController())
 
             self.window = window
             window.makeKeyAndVisible()

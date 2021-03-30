@@ -59,18 +59,18 @@ class ColorRamp {
     }
     
     func legend() -> Legend {
-        return Legend(unit: unit, gradient: steps.map { step in color(for: step.lower)}, titles: titles)
+        return Legend(unit: unit, gradient: steps.map { step in color(for: step.lower).cgColor}, titles: titles)
     }
     
-    func color(for value: Int32, alpha: CGFloat = 1) -> CGColor {
+    func color(for value: Int32, alpha: CGFloat = 1) -> UIColor {
         if let step = steps.reversed().first(where: { value >= $0.lower}) {
             // Point-Slope Equation of a Line: y - y1 = m(x - x1)
             let slope = CGFloat(step.toHue - step.fromHue) / CGFloat(step.upper - step.lower)
             let hue = slope * CGFloat(value - step.lower) + CGFloat(step.fromHue)
             
-            return UIColor(hue:hue/360, saturation:1, brightness:brightness, alpha:alpha).cgColor
+            return UIColor(hue:hue/360, saturation:1, brightness:brightness, alpha:alpha)
         } else {
-            return UIColor.black.cgColor
+            return UIColor.black
         }
     }
     

@@ -10,6 +10,7 @@ import SwiftUI
 import Foundation
 import PromiseKit
 import Pulley
+import Combine
 
 class Ceiling: WeatherModule, MapModule {
     required init(delegate: MapDelegate) {
@@ -42,10 +43,12 @@ open class WeatherModule {
     private let presentation: ObservationPresentation
     
     private let weatherLayer: WeatherLayer
-    
-    private let timeslotDrawer: TimeslotDrawerController!
+        
+    private var timeslots = TimeslotState()
     
     fileprivate weak var timer: Timer?
+    
+    private var cancellable: AnyCancellable?
     
     public init(delegate: MapDelegate, mapper: @escaping (Observation) -> (value: Int?, source: String?)) {
         self.delegate = delegate
@@ -56,21 +59,27 @@ open class WeatherModule {
         let region = WeatherRegion.load()
         
         weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
-    
-        timeslotDrawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "drawer") as? TimeslotDrawerController
-        timeslotDrawer.setModule(module: self as? MapModule)
-        showLoadingDrawer()
+            
+        showTimeslotDrawer()
         
+        cancellable = timeslots.$selectedIndex.sink(receiveValue: { frame in
+            self.render(frame: frame)
+        })
+                
         if region != nil {
             load(observations: weatherService.observations())
         }
     }
     
+    deinit {
+        cancellable?.cancel()
+    }
+    
     func initTimer() {
         if timer == nil {
             timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
-                if self.timeslotDrawer.timeslots.selectedSegmentIndex > 0 {
-                    self.render(frame: self.timeslotDrawer.timeslots.selectedSegmentIndex)
+                if self.timeslots.selectedIndex > 0 {
+                    self.render(frame: self.timeslots.selectedIndex)
                 }
             }
         }
@@ -158,7 +167,8 @@ open class WeatherModule {
         delegate.clearComponents(ofType: StationMarker.self)
         delegate.clearComponents(ofType: RegionSelection.self)
         
-        showLoadingDrawer()
+        showTimeslotDrawer()
+        timeslots.startSpinning()
         
         if let region = region, region.save() {
             weatherLayer.reposition(region: region)
@@ -178,15 +188,14 @@ open class WeatherModule {
     
     // MARK: - Drawers
     
-    private func showLoadingDrawer() {
-        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
-        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
-        timeslotDrawer.startSpinning()
-    }
-
     private func showTimeslotDrawer() {
         delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
-        delegate.pulley.setDrawerContentViewController(controller: timeslotDrawer)
+        
+        let timeline = TimeslotDrawerView {
+            self.refresh()
+        }
+        
+        delegate.pulley.setDrawerContent(view: timeline.environmentObject(timeslots), sizes: PulleySizes(collapsed: 80, partial: nil, full: false), animated: false)
     }
     
     // MARK: - Observations
@@ -203,12 +212,12 @@ open class WeatherModule {
         let groups = observations.group()
         
         if let frame = groups.selectedFrame {
-            timeslotDrawer.reset(timeslots: groups.timeslots, selected: frame)
+            timeslots.reset(slots: groups.timeslots, selected: frame)
             
             let userLocation = LastLocation.load()
             
             weatherLayer.load(groups: groups, at: userLocation, loaded: { index, color in
-                self.timeslotDrawer.update(color: color, at: index)
+                self.timeslots.update(color: color, at: index)
                 
                 if (index == frame) {
                     self.render(frame: frame)
@@ -255,7 +264,7 @@ open class WeatherModule {
 
         let status = formatter.string(from: seconds)!
         
-        timeslotDrawer.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
+        timeslots.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
     
     private func cleanDetails() {
@@ -281,8 +290,6 @@ open class WeatherModule {
             self.showTimeslotDrawer()
         }
         delegate.pulley.setDrawerContent(view: observationDrawer, sizes: observationDrawer.sizes, animated: false)
-            
-        //delegate.pulley.setNeedsSupportedDrawerPositionsUpdate()
         delegate.pulley.setDrawerPosition(position: delegate.pulley.drawerPosition, animated: true)
         
         let marker = ObservationSelection(obs: observation)

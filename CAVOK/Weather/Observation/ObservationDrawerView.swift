@@ -7,21 +7,13 @@
 //
 
 import SwiftUI
-import UIKit
-import Pulley
-
-public class PulleySizes {
-    var collapsedHeight: CGFloat = 0
-    var fullHeight: CGFloat = 0
-}
-
 
 struct ObservationDrawerView: View {
     var presentation: ObservationPresentation
     var obs: Observation
     var observations: Observations
     
-    var sizes = PulleySizes()
+    var sizes = PulleySizes(collapsed: 0, partial: 0, full: true)
     
     var closedAction: (() -> Void)
         
@@ -139,7 +131,7 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         ObservationDrawerView(presentation: presentation,
                               obs: observations.metars[0],
                               observations: observations,
-                              sizes: PulleySizes(),
+                              sizes: PulleySizes(collapsed: 0, partial: 0, full: false),
                               closedAction: { () in print("Closed")})
     }
     

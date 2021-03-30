@@ -54,6 +54,8 @@ struct PullToRefreshView<Content>: View where Content : View {
                     }
                     VStack {
                         content()
+                            // prevent bounce up
+                            .offset(y: scrollOffset < 0 ? -scrollOffset : 0)
                     }
                     .offset(y: isLoading ? 40 : 0)  // offset the content to allow the progress indicator to show when loading
                 }
@@ -64,8 +66,8 @@ struct PullToRefreshView<Content>: View where Content : View {
                 // get scroll position
                 scrollOffset = value
                 // set arrow angle for the user
-                if value > 30 {
-                    arrowAngle = Double((value - 30) * 1.7)
+                if value > 10 {
+                    arrowAngle = Double((value - 10) * 10)
                 }
                 // indicate the user has pulled all the way
                 if arrowAngle > 180 {
@@ -79,9 +81,6 @@ struct PullToRefreshView<Content>: View where Content : View {
                     hasPulled = false
                 }
                 // complete the action supplied
-                if value == 0 {
-                    action()
-                }
             }
         }
     }
@@ -105,6 +104,7 @@ struct PullToRefreshView<Content>: View where Content : View {
                     // show an arrow that lets the user know they can drag the view
                     Image(systemName: "arrow.down")
                         .rotationEffect(Angle(degrees: arrowAngle < 180 ? arrowAngle : 180))
+                        .opacity(arrowAngle > 45 ? (arrowAngle - 45) / 180: 0)
                 }
             }
             .frame(height: 40)

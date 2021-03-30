@@ -29,7 +29,7 @@ class HeatMapCPU {
                 let interp = getInterpValue(x: x, y: y, input: input)
                 
                 let color = ramp.color(for: Int32(interp.val), alpha: CGFloat(interp.alpha))
-                let comps = color.components!
+                let comps = color.cgColor.components!
                 let alpha = comps[3] * 255
                 bitmapData[i*4 + 0] = UInt8(comps[0] * alpha)
                 bitmapData[i*4 + 1] = UInt8(comps[1] * alpha)
