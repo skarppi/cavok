@@ -15,9 +15,7 @@ protocol MapModule: class {
     func cleanup()
     
     func didTapAt(coord: MaplyCoordinate)
-    
-    func refresh() -> Promise<Void>
-    
+        
     func configure(open: Bool)
     
     func render(frame: Int)

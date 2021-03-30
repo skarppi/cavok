@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 // Our observable object class
 class TimeslotState: ObservableObject {
@@ -18,6 +19,8 @@ class TimeslotState: ObservableObject {
     @Published var statusColor = Color.primary
     
     @Published var isLoading = false
+    
+    let refreshRequested = ObservableObjectPublisher()
     
     func reset(slots: [Timeslot], selected: Int) {
         self.slots = slots
@@ -128,11 +131,8 @@ struct TimeslotDrawerView: View {
     private func refreshAction() {
         //        setControls(hidden: true)
         state.startSpinning()
-
-//        module?.refresh()
-//            .catch(Messages.show)
-//            .finally(state.stopSpinning)
-    }    
+        state.refreshRequested.send()
+    }
 }
 
 struct TimeslotDraverView_Previews: PreviewProvider {

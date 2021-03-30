@@ -48,7 +48,7 @@ open class WeatherModule {
     
     fileprivate weak var timer: Timer?
     
-    private var cancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
     
     public init(delegate: MapDelegate, mapper: @escaping (Observation) -> (value: Int?, source: String?)) {
         self.delegate = delegate
@@ -62,17 +62,17 @@ open class WeatherModule {
             
         showTimeslotDrawer()
         
-        cancellable = timeslots.$selectedIndex.sink(receiveValue: { frame in
-            self.render(frame: frame)
-        })
+        timeslots.$selectedIndex
+            .sink(receiveValue: render(frame:))
+            .store(in: &cancellables)
+        
+        timeslots.refreshRequested
+            .sink { self.refresh().catch(Messages.show)}
+            .store(in: &cancellables)
                 
         if region != nil {
             load(observations: weatherService.observations())
         }
-    }
-    
-    deinit {
-        cancellable?.cancel()
     }
     
     func initTimer() {
@@ -192,7 +192,7 @@ open class WeatherModule {
         delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
         
         let timeline = TimeslotDrawerView {
-            self.refresh()
+            _ = self.refresh()
         }
         
         delegate.pulley.setDrawerContent(view: timeline.environmentObject(timeslots), sizes: PulleySizes(collapsed: 80, partial: nil, full: false), animated: false)
@@ -216,7 +216,7 @@ open class WeatherModule {
             
             let userLocation = LastLocation.load()
             
-            weatherLayer.load(groups: groups, at: userLocation, loaded: { index, color in
+            weatherLayer.load(groups: groups, at: userLocation) { index, color in
                 self.timeslots.update(color: color, at: index)
                 
                 if (index == frame) {
@@ -225,7 +225,7 @@ open class WeatherModule {
                     self.delegate.loaded(frame: frame, legend: self.presentation.ramp.legend())
                     self.initTimer()
                 }
-            })
+            }
         }
     }
     

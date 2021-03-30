@@ -53,9 +53,12 @@ struct PullToRefreshView<Content>: View where Content : View {
                         Color.clear.preference(key: ViewOffsetKey.self, value: offset)
                     }
                     VStack {
-                        content()
-                            // prevent bounce up
-                            .offset(y: scrollOffset < 0 ? -scrollOffset : 0)
+                        if !isLoading {
+                            content()
+                                // prevent bounce up
+                                .offset(y: scrollOffset < 0 ? -scrollOffset : 0)
+                                .opacity(1 - arrowAngle / 180)
+                        }
                     }
                     .offset(y: isLoading ? 40 : 0)  // offset the content to allow the progress indicator to show when loading
                 }
