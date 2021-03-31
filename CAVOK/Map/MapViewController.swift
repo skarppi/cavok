@@ -24,7 +24,7 @@ class MapViewController: UIViewController {
     internal var mapView: WhirlyGlobeViewController!
     
     fileprivate var module: MapModule!
-        
+    
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]
     
     private var locationManager: LocationManager!
@@ -37,11 +37,11 @@ class MapViewController: UIViewController {
         setupMapView()
         
         Messages.setup()
-
+        
         setupObservers()
-
+        
         setupLocationManager()
-
+        
         setupModules()
     }
     
@@ -53,18 +53,13 @@ class MapViewController: UIViewController {
             additionalSafeAreaInsets.top = 10
         }
         
-        adjustPulleyPositioning()
+        drawerDisplayModeDidChange(drawer: pulley)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if module == nil {
             moduleTypeChanged()   
         }
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-            super.viewWillTransition(to: size, with: coordinator)
-        adjustPulleyPositioning()
     }
     
     func setupMapView() {
@@ -101,7 +96,7 @@ class MapViewController: UIViewController {
                 self.clearComponents(ofType: UserMarker.self)
                 
                 _ = self.ensureConfigured()
-        })
+            })
     }
     
     func setupModules() {
@@ -160,7 +155,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-
+    
     @IBAction func resetRegion() {
         buttonView.isHidden = true
         legendView.isHidden = true
@@ -252,31 +247,29 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
 
 extension MapViewController: PulleyPrimaryContentControllerDelegate {
     
-    @objc func adjustPulleyPositioning() {
+    func drawerDisplayModeDidChange(drawer: PulleyViewController) {
         
         if let window = UIApplication.shared.windows.first(where: {$0.isKeyWindow}) {
-            let displayMode: PulleyDisplayMode = (window.bounds.width >= 600.0 || self.traitCollection.horizontalSizeClass == .regular) ? .panel : .drawer
             
             if window.safeAreaInsets != .zero {
                 // adjust position of the drawer on iPhoneX
-                
                 switch window.windowScene?.interfaceOrientation {
                 case .landscapeLeft:
-                    // remove safe area when notch is on the other side
-                    pulley.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left
+                    print("left")
+                    // reduce safe area when notch is on the other side
+                    drawer.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left / 2
                 case .landscapeRight:
+                    print("right")
                     // decrease the margin to notch
-                    pulley.additionalSafeAreaInsets.left = -15
+                    drawer.additionalSafeAreaInsets.left = -15
                 default:
-                    pulley.additionalSafeAreaInsets.left = 0
+                    print("default")
+                    drawer.additionalSafeAreaInsets.left = 0
                 }
             }
-
-            // when pulley is on the left, move segmented control out of the way
-            moduleTypeLeftConstraint.constant = displayMode == .panel ? pulley.panelWidth + 16*2 : 16
             
-            pulley.displayMode = displayMode
-
+            // when pulley is on the left, move segmented control out of the way
+            moduleTypeLeftConstraint.constant = drawer.currentDisplayMode == .panel ? pulley.panelWidth + 16*2 : 16
         }
     }
 }

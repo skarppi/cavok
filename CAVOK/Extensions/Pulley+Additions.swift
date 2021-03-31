@@ -53,7 +53,7 @@ class PulleyUIHostingController<Content>: UIHostingController<Content>, PulleyDr
     }
 
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return sizes.collapsedHeight! + (pulley.displayMode == .drawer ? bottomSafeArea : 0)
+        return sizes.collapsedHeight! + (pulley.currentDisplayMode == .drawer ? bottomSafeArea : 0)
     }
 
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
@@ -63,7 +63,7 @@ class PulleyUIHostingController<Content>: UIHostingController<Content>, PulleyDr
         }
     
         let height = sizes.partialHeight!
-        if pulley.displayMode == .drawer {
+        if pulley.currentDisplayMode == .drawer {
             return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, height + bottomSafeArea)
         } else {
             return min(maxAvailableHeight - pulley.drawerTopInset * 2, height)
