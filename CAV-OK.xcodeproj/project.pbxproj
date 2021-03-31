@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B64D83C126150316003AE228 /* TimeslotState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C026150316003AE228 /* TimeslotState.swift */; };
 		B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */; };
 		B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */; };
 		C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */; };
@@ -130,6 +131,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B64D83C026150316003AE228 /* TimeslotState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotState.swift; sourceTree = "<group>"; };
 		B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotDraverView.swift; sourceTree = "<group>"; };
 		B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
 		C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTileFetcher.swift; sourceTree = "<group>"; };
@@ -271,7 +273,6 @@
 				C09D66A92540CACA00FB3D39 /* Extensions */,
 				C09D668D2540CAB800FB3D39 /* Map */,
 				C09D66AF2540CACA00FB3D39 /* Weather */,
-				C09D66D22540CACA00FB3D39 /* WeatherModule.swift */,
 				C09D66A72540CACA00FB3D39 /* Web */,
 				C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */,
 				C09D674D2540D1CD00FB3D39 /* Main.storyboard */,
@@ -383,6 +384,7 @@
 		C09D66AF2540CACA00FB3D39 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				C09D66D22540CACA00FB3D39 /* WeatherModule.swift */,
 				C09D66B02540CACA00FB3D39 /* Legend */,
 				C09D66B22540CACA00FB3D39 /* Layers */,
 				C09D66BD2540CACA00FB3D39 /* Models */,
@@ -455,6 +457,7 @@
 				B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */,
 				C09D66D12540CACA00FB3D39 /* Timeslot.swift */,
 				B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */,
+				B64D83C026150316003AE228 /* TimeslotState.swift */,
 			);
 			path = Timeslot;
 			sourceTree = "<group>";
@@ -674,6 +677,7 @@
 				C09D66ED2540CACA00FB3D39 /* Tokenizer.swift in Sources */,
 				C09D669B2540CAB800FB3D39 /* TileJSONLayer.swift in Sources */,
 				C09D66EF2540CACA00FB3D39 /* Taf.swift in Sources */,
+				B64D83C126150316003AE228 /* TimeslotState.swift in Sources */,
 				C09D66E72540CACA00FB3D39 /* FrameChanger.swift in Sources */,
 				C09D66F62540CACA00FB3D39 /* RightImageButton.swift in Sources */,
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,

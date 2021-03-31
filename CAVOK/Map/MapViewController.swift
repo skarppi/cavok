@@ -146,11 +146,8 @@ class MapViewController: UIViewController {
         }
         
         if ensureConfigured() {
-            let userMovedOutsideView = LastLocation.load().map { last -> Bool in
-                let extents = mapView.getCurrentExtents()
-                return extents.inside(last) && !extents.inside(coordinate)
-            }
-            if userMovedOutsideView ?? true {
+            let extents = mapView.getCurrentExtents()
+            if !extents.inside(coordinate) {
                 mapView.animate(toPosition: coordinate, time: 0.5)
             }
         }

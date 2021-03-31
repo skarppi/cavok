@@ -83,7 +83,6 @@ struct PullToRefreshView<Content>: View where Content : View {
                     withAnimation(.spring()) { isLoading = true }
                     hasPulled = false
                 }
-                // complete the action supplied
             }
         }
     }
