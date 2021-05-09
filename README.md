@@ -17,12 +17,12 @@ In addition to map overlays CAVOK allows you to configure quick links to any web
 ## Requirements
 
 * [Xcode 11](https://developer.apple.com/xcode)
-* [Carthage](https://github.com/Carthage/Carthage)
+* [SwiftLint](https://github.com/realm/SwiftLint)
 
 ## Initial setup
 
 ```sh
-carthage bootstrap --platform iOS --no-use-binaries
+brew install swiftlint
 
 git submodule update --init
 

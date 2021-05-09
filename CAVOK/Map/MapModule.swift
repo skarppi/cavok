@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol MapModule: class {
+protocol MapModule: AnyObject {
     init(delegate: MapDelegate)
     
     func cleanup()
