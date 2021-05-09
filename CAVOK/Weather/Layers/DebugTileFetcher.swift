@@ -14,9 +14,9 @@ class DebugTileFetcher: WeatherTileFetcher {
 
     var loader: MaplyQuadImageFrameLoader?
 
-//    init(mapView: WhirlyGlobeViewController, presentation: ObservationPresentation, region: WeatherRegion?) {
-//        super.init(mapView, presentation, region)
-//    }
+    //    init(mapView: WhirlyGlobeViewController, presentation: ObservationPresentation, region: WeatherRegion?) {
+    //        super.init(mapView, presentation, region)
+    //    }
 
     class func save(_ tileID: MaplyTileID, frame: Int, data: Data?) {
         if let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first {
@@ -30,7 +30,7 @@ class DebugTileFetcher: WeatherTileFetcher {
     }
 
     override func data(forTile fetchInfo: Any, tileID: MaplyTileID) -> Any? {
-//    func fetchTile(layer: MaplyQuadImageLoader, tileID: MaplyTileID, frame:Int32) -> Data? {
+        //    func fetchTile(layer: MaplyQuadImageLoader, tileID: MaplyTileID, frame:Int32) -> Data? {
 
         let info = fetchInfo as? WeatherTileFetchInfo
 

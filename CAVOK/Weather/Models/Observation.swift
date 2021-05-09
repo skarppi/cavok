@@ -94,8 +94,8 @@ open class Observation: Object, Identifiable {
     }
 
     public var id: String { get {
-            return raw
-        }
+        return raw
+    }
     }
 
     override public static func primaryKey() -> String? {
@@ -133,9 +133,9 @@ open class Observation: Object, Identifiable {
     // 041600Z indicates the day of the month (the 4th) followed by the time of day (1600 Zulu time).
     func parseDate(value: String?, dayOffset: Int = 0) -> Date? {
         if let value = value,
-            let day = Int(value.subString(0, length: 2)),
-            let hour = Int(value.subString(2, length: 2)),
-            let minute = Int(value.subString(4, length: 2)) {
+           let day = Int(value.subString(0, length: 2)),
+           let hour = Int(value.subString(2, length: 2)),
+           let minute = Int(value.subString(4, length: 2)) {
 
             let cal = zuluCalendar()
 

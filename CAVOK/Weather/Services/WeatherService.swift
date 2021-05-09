@@ -15,7 +15,7 @@ public class WeatherServer {
     func queryStations(at region: WeatherRegion) -> Promise<[Station]> {
         return firstly {
             when(fulfilled:
-                AddsService.fetchStations(at: region),
+                    AddsService.fetchStations(at: region),
                  AwsService.fetchStations(at: region)
             )
         }.map { adds, aws in
@@ -54,7 +54,7 @@ public class WeatherServer {
 
         return firstly {
             when(fulfilled:
-                AddsService.fetchObservations(.METAR, history: true, at: region),
+                    AddsService.fetchObservations(.METAR, history: true, at: region),
                  AddsService.fetchObservations(.TAF, history: false, at: region),
                  AwsService.fetchObservations(at: region)
             )

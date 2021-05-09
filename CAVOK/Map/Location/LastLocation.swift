@@ -13,7 +13,7 @@ class LastLocation {
     class func load() -> MaplyCoordinate? {
         if let location = UserDefaults.standard.dictionary(forKey: "LastLocation") {
             if let longitude = location["longitude"] as? Float,
-                let latitude = location["latitude"] as? Float {
+               let latitude = location["latitude"] as? Float {
                 return MaplyCoordinateMakeWithDegrees(longitude, latitude)
             }
         }

@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         if let url = Bundle.main.url(forResource: "CAVOK", withExtension: "plist"),
-            let plist = NSDictionary(contentsOf: url) as? [String: Any] {
+           let plist = NSDictionary(contentsOf: url) as? [String: Any] {
             UserDefaults.standard.register(defaults: plist)
         }
 

@@ -15,7 +15,7 @@ public extension Date {
 
     /**
      Returns a new NSDate object representing the date calculated by adding the amount specified to self date
-     
+
      - parameter seconds: number of seconds to add
      - parameter minutes: number of minutes to add
      - parameter hours: number of hours to add
@@ -39,7 +39,7 @@ public extension Date {
 
     /**
      Returns a new NSDate object representing the date calculated by adding an amount of seconds to self date
-     
+
      - parameter seconds: number of seconds to add
      - returns: the NSDate computed
      */
@@ -49,7 +49,7 @@ public extension Date {
 
     /**
      Returns a new NSDate object representing the date calculated by adding an amount of minutes to self date
-     
+
      - parameter minutes: number of minutes to add
      - returns: the NSDate computed
      */
@@ -59,7 +59,7 @@ public extension Date {
 
     /**
      Returns a new NSDate object representing the date calculated by adding an amount of hours to self date
-     
+
      - parameter hours: number of hours to add
      - returns: the NSDate computed
      */
@@ -78,7 +78,7 @@ public extension Date {
 
     /**
      Returns the value of the NSDate component
-     
+
      :param: component NSCalendarUnit
      :returns: the value of the component
      */
@@ -89,7 +89,7 @@ public extension Date {
 
     /**
      Checks if self is after input NSDate
-     
+
      - parameter date: NSDate to compare
      - returns: True if self is after the input NSDate, false otherwise
      */
@@ -99,7 +99,7 @@ public extension Date {
 
     /**
      Checks if self is before input NSDate
-     
+
      - parameter date: NSDate to compare
      - returns: True if self is before the input NSDate, false otherwise
      */
@@ -109,7 +109,7 @@ public extension Date {
 
     /**
      Checks if self is between two NSDates
-     
+
      - parameter inclusiveMin: self must be greater or equal NSDate
      - parameter exclusiveMax: self must be less than NSDate
      - returns: True if self is between NSDates, false otherwise

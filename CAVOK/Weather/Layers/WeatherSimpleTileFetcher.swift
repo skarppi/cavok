@@ -66,17 +66,17 @@ struct TileInfo: Hashable {
     // Specific fetchInfo from the fetch request.
     var fetchInfo: WeatherTileFetchInfo
 
-//    /// Comparison based on importance, tile source, then x,y,level
-//    bool operator < (const TileInfo &that) const
-//    {
-//        if (this->priority == that.priority) {
-//            if (this->importance == that.importance) {
-//                return this->request < that.request;
-//            }
-//            return this->importance < that.importance;
-//        }
-//        return this->priority > that.priority;
-//    }
+    //    /// Comparison based on importance, tile source, then x,y,level
+    //    bool operator < (const TileInfo &that) const
+    //    {
+    //        if (this->priority == that.priority) {
+    //            if (this->importance == that.importance) {
+    //                return this->request < that.request;
+    //            }
+    //            return this->importance < that.importance;
+    //        }
+    //        return this->priority > that.priority;
+    //    }
 }
 
 // Similar to SimpleTileFetcher but supports frames

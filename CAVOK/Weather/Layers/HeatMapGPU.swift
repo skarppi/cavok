@@ -29,9 +29,9 @@ class HeatMapGPU {
 
     init(input: [HeatData], config: WeatherConfig, steps: [GridStep]) {
         guard let device = HeatMapGPU.device,
-            let commandQueue = HeatMapGPU.commandQueue,
-            let pipelineState = HeatMapGPU.pipelineState
-            else { return }
+              let commandQueue = HeatMapGPU.commandQueue,
+              let pipelineState = HeatMapGPU.pipelineState
+        else { return }
 
         let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: config.width, height: config.height, mipmapped: false)
         outTextureDescriptor.usage = [.shaderRead, .shaderWrite]

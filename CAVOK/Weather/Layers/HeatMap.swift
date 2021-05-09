@@ -126,7 +126,7 @@ class HeatMap {
             let maxY = min(config.bounds.ur.y, bbox.ur.y)
 
             let boundsCropped = MaplyBoundingBox(ll: MaplyCoordinate(x: minX, y: minY),
-                                          ur: MaplyCoordinate(x: maxX, y: maxY))
+                                                 ur: MaplyCoordinate(x: maxX, y: maxY))
 
             let crop = self.crop(bounds: config.bounds, box: boundsCropped, width: config.width, height: config.height)
 

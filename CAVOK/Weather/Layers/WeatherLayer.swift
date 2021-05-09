@@ -89,18 +89,18 @@ class WeatherLayer {
         loader?.shutdown()
         loader = nil
 
-//        fetcher?.shutdown()
-//        fetcher = nil
+        //        fetcher?.shutdown()
+        //        fetcher = nil
 
     }
 
     private func initLoader(frames: [HeatMap]) -> MaplyQuadImageFrameLoader? {
-//        // for debugging tiles
+        //        // for debugging tiles
 
         self.fetcher = // frames.compactMap { frame in
-//            DebugTileFetcher(frames: frames, config: config!)
+            //            DebugTileFetcher(frames: frames, config: config!)
             WeatherTileFetcher(frames: frames, config: config!)
-//        }
+        //        }
 
         let params = MaplySamplingParams()
         params.coverPoles = false
@@ -109,15 +109,15 @@ class WeatherLayer {
         params.coordSys = MaplySphericalMercator(webStandard: ())
         params.singleLevel = true
 
-//        let layer = MaplyQuadImageTilesLayer(coordSystem:tileSource.coordSys(), tileSource:tileSource)!
-//        layer.imageDepth = UInt32(frames.count)
-//        layer.currentImage = Float(frames.count - 1)
-//        layer.allowFrameLoading = true
-//
+        //        let layer = MaplyQuadImageTilesLayer(coordSystem:tileSource.coordSys(), tileSource:tileSource)!
+        //        layer.imageDepth = UInt32(frames.count)
+        //        layer.currentImage = Float(frames.count - 1)
+        //        layer.allowFrameLoading = true
+        //
         for i in 0...4 {
             let precipSource = MaplyRemoteTileInfoNew(baseURL: "http://a.tiles.mapbox.com/v3/mousebird.precip-example-layer\(i)/{z}/{x}/{y}.png",
-                minZoom: 0,
-                maxZoom: 6)
+                                                      minZoom: 0,
+                                                      maxZoom: 6)
             precipSource.cacheDir = "\(cacheDir)/forecast_io_weather_layer\(i)/"
             tileSources.append(precipSource)
         }
@@ -127,18 +127,18 @@ class WeatherLayer {
         }
 
         //        let customTileSources2 = frames.map { frame in
-//            fetcher.
-//        }
+        //            fetcher.
+        //        }
 
         // Set up a variable target for two pass rendering
-//        varTarget = MaplyVariableTarget(type: .imageIntRGBA, viewC: mapView)
-//        varTarget?.setScale(0.5)
-//        varTarget?.clearEveryFrame = true
-//        varTarget?.drawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
+        //        varTarget = MaplyVariableTarget(type: .imageIntRGBA, viewC: mapView)
+        //        varTarget?.setScale(0.5)
+        //        varTarget?.clearEveryFrame = true
+        //        varTarget?.drawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
 
         guard let loader = MaplyQuadImageFrameLoader(params: params, tileInfos:
-//                                                        tileSources
-                                                     customTilerSources, viewC: mapView) else {
+                                                        //                                                        tileSources
+                                                        customTilerSources, viewC: mapView) else {
             print("ERR: Failed to load weather layer")
             return nil
         }
@@ -148,31 +148,31 @@ class WeatherLayer {
         loader.baseDrawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
         loader.setTileFetcher(self.fetcher!)
 
-//
-//        if let varTarget = varTarget {
-//            loader.setRenderTarget(varTarget.renderTarget)
-//        }
-//
-//        guard let shader = mapView.getShaderByName(kMaplyShaderDefaultTriMultiTexRamp) else {
-//            return nil
-//        }
-//        loader.setShader(shader)
-//
-//        // Assign the ramp texture to the first entry in the texture lookup slot
-//        guard let rampTex = mapView.addTexture(UIImage.init(named: "colorramp.png")!, desc: nil, mode: .current) else {
-//            return nil
-//        }
-//        shader.setTexture(rampTex, for: 0)
-//
+        //
+        //        if let varTarget = varTarget {
+        //            loader.setRenderTarget(varTarget.renderTarget)
+        //        }
+        //
+        //        guard let shader = mapView.getShaderByName(kMaplyShaderDefaultTriMultiTexRamp) else {
+        //            return nil
+        //        }
+        //        loader.setShader(shader)
+        //
+        //        // Assign the ramp texture to the first entry in the texture lookup slot
+        //        guard let rampTex = mapView.addTexture(UIImage.init(named: "colorramp.png")!, desc: nil, mode: .current) else {
+        //            return nil
+        //        }
+        //        shader.setTexture(rampTex, for: 0)
+        //
         if let debugTileFetcher = fetcher as? DebugTileFetcher {
             debugTileFetcher.loader = loader
         }
 
         // load selected frame first and then others in reverse order
-//        var priorities: [Int] = Array(0...groups.count - 1)
-//        priorities.remove(at: selected)
-//        priorities.append(selected)
-//        loader.setFrameLoadingPriority(priorities.reversed())
+        //        var priorities: [Int] = Array(0...groups.count - 1)
+        //        priorities.remove(at: selected)
+        //        priorities.append(selected)
+        //        loader.setFrameLoadingPriority(priorities.reversed())
 
         let frameChanger = FrameChanger(loader: loader)
         mapView.add(frameChanger)
@@ -196,17 +196,17 @@ class WeatherLayer {
     func setupLoader(_ baseVC: MaplyBaseViewController) {
         for i in 0...4 {
             let precipSource = MaplyRemoteTileInfoNew(baseURL: "http://a.tiles.mapbox.com/v3/mousebird.precip-example-layer\(i)/{z}/{x}/{y}.png",
-                minZoom: 0,
-                maxZoom: 6)
+                                                      minZoom: 0,
+                                                      maxZoom: 6)
             precipSource.cacheDir = "\(cacheDir)/forecast_io_weather_layer\(i)/"
             tileSources.append(precipSource)
         }
 
-//        // Set up a variable target for two pass rendering
-//        varTarget = MaplyVariableTarget(type: .imageIntRGBA, viewC: baseVC)
-//        varTarget?.setScale(0.5)
-//        varTarget?.clearEveryFrame = true
-//        varTarget?.drawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
+        //        // Set up a variable target for two pass rendering
+        //        varTarget = MaplyVariableTarget(type: .imageIntRGBA, viewC: baseVC)
+        //        varTarget?.setScale(0.5)
+        //        varTarget?.clearEveryFrame = true
+        //        varTarget?.drawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
 
         // Parameters describing how we want a globe broken down
         let sampleParams = MaplySamplingParams()
@@ -219,21 +219,21 @@ class WeatherLayer {
 
         imageLayer = MaplyQuadImageFrameLoader(params: sampleParams, tileInfos: tileSources, viewC: baseVC)
         imageLayer?.baseDrawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
-//        imageLayer?.debugMode = true;
-//        if let varTarget = varTarget {
-//            imageLayer?.setRenderTarget(varTarget.renderTarget)
-//        }
+        //        imageLayer?.debugMode = true;
+        //        if let varTarget = varTarget {
+        //            imageLayer?.setRenderTarget(varTarget.renderTarget)
+        //        }
 
-//        guard let shader = baseVC.getShaderByName(kMaplyShaderDefaultTriMultiTexRamp) else {
-//            return
-//        }
-//        imageLayer?.setShader(shader)
-//
-//        // Assign the ramp texture to the first entry in the texture lookup slot
-//        guard let rampTex = baseVC.addTexture(UIImage.init(named: "colorramp.png")!, desc: nil, mode: .current) else {
-//            return
-//        }
-//        shader.setTexture(rampTex, for: 0)
+        //        guard let shader = baseVC.getShaderByName(kMaplyShaderDefaultTriMultiTexRamp) else {
+        //            return
+        //        }
+        //        imageLayer?.setShader(shader)
+        //
+        //        // Assign the ramp texture to the first entry in the texture lookup slot
+        //        guard let rampTex = baseVC.addTexture(UIImage.init(named: "colorramp.png")!, desc: nil, mode: .current) else {
+        //            return
+        //        }
+        //        shader.setTexture(rampTex, for: 0)
 
         // Animator
         imageAnimator = MaplyQuadImageFrameAnimator(frameLoader: imageLayer!, viewC: baseVC)
@@ -253,10 +253,10 @@ class WeatherLayer {
         }
 
         // Color changing test
-//        imageLayer?.color = UIColor.green
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
-//            self.imageLayer?.color = UIColor.blue
-//        }
+        //        imageLayer?.color = UIColor.green
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+        //            self.imageLayer?.color = UIColor.blue
+        //        }
     }
 
 }

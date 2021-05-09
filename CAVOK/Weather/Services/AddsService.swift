@@ -40,7 +40,7 @@ public class AddsService {
         let query = [
             "hoursBeforeNow": "3",
             "mostRecentForEachStation": String(history == false)
-//            "fields": "raw_text"
+            //            "fields": "raw_text"
         ]
         return fetch(dataSource: source.rawValue, with: query, at: region).map { data -> [String] in
             let count = data.children.count

@@ -101,7 +101,7 @@ class WeatherRegion {
             "minLon": minLon,
             "maxLon": maxLon,
             "radius": radius
-            ]
+        ]
 
         print("Saving weather region \(coordinates)")
 

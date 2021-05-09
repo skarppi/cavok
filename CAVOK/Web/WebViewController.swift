@@ -110,7 +110,7 @@ class WebViewController: UIViewController {
     private func block(elements: String) -> WKUserScript {
         let source = "var styleTag = document.createElement('style');" +
             "styleTag.textContent = '\(elements) { display:none!important; }';" +
-        "document.documentElement.appendChild(styleTag);"
+            "document.documentElement.appendChild(styleTag);"
 
         return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true)
     }

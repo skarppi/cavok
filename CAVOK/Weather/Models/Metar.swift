@@ -18,7 +18,7 @@ public class Metar: Observation {
     public let temperature = RealmOptional<Int>()
     @objc open dynamic var temperatureGroup: String?
 
-    // The cloud base can be estimated from surface measurements of air temperature and 
+    // The cloud base can be estimated from surface measurements of air temperature and
     // humidity by calculating the lifted condensation level.
     // - Find the difference between the surface temperature and the dew point. This value is known as the "spread".
     // - Divide the spread °C by 2.5 then multiply by 1000. This will give you cloud base in feet AGL (Above Ground Level)

@@ -64,8 +64,8 @@ class TimeslotControl: UISegmentedControl {
         return subviews
             .filter { String(describing: type(of: $0)) == "UISegment" }
             .sorted(by: {(a, b) in
-            return a.frame.origin.x < b.frame.origin.x
-        })
+                return a.frame.origin.x < b.frame.origin.x
+            })
     }
 
     private static func image(color: UIColor) -> UIImage? {

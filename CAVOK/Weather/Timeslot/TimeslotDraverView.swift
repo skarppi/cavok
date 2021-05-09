@@ -34,7 +34,7 @@ struct TimeslotDrawerView: View {
                 DragGesture(minimumDistance: 0, coordinateSpace: .global)
                     .updating($cursor) { (value, state, _) in
                         state = value.location
-            })
+                    })
         }
     }
 
@@ -52,8 +52,8 @@ struct TimeslotDrawerView: View {
                                 .fill(Color(slot.color).opacity(0.4))
                         )
                         .border(state.selectedIndex == index ?  Color.black : Color.clear)
-                .background(self.rectReader(index: index))
-              }
+                        .background(self.rectReader(index: index))
+                }
             }
         }
         .background(
@@ -62,15 +62,15 @@ struct TimeslotDrawerView: View {
     }
 
     func rectReader(index: Int) -> some View {
-            return GeometryReader { (geometry) -> AnyView in
-                if geometry.frame(in: .global).contains(self.cursor) {
-                    DispatchQueue.main.async {
-                        state.selectedIndex = index
-                    }
+        return GeometryReader { (geometry) -> AnyView in
+            if geometry.frame(in: .global).contains(self.cursor) {
+                DispatchQueue.main.async {
+                    state.selectedIndex = index
                 }
-                return AnyView(Rectangle().fill(Color.clear))
             }
+            return AnyView(Rectangle().fill(Color.clear))
         }
+    }
 
     private func refreshAction() {
         //        setControls(hidden: true)
@@ -95,6 +95,6 @@ struct TimeslotDraverView_Previews: PreviewProvider {
     static var previews: some View {
         TimeslotDrawerView(refresh: {
         })
-            .environmentObject(state())
+        .environmentObject(state())
     }
 }
