@@ -35,7 +35,7 @@ final class Temperature: WeatherModule, MapModule {
 
 open class WeatherModule {
 
-    private weak var delegate: MapDelegate
+    private weak var delegate: MapDelegate?
 
     private let weatherService = WeatherServer()
 
@@ -117,13 +117,19 @@ open class WeatherModule {
     }
 
     private func startRegionSelection(at region: WeatherRegion) {
-        let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
-        drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
-        delegate.pulley.setDrawerContentViewController(controller: drawer)
+        //        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+
+        let drawer = ConfigDrawerView(closedAction: endRegionSelection, positionAction: moveRegionSelection)
+
+        //        let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
+        //        drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
+        //        delegate.pulley.setDrawerContentViewController(controller: drawer)
+        delegate.pulley.setDrawerContent(view: drawer.environmentObject(region), sizes: PulleySizes(collapsed: 275, partial: nil, full: true), animated: false)
+
         delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
     }
 
-    private func moveRegionSelection(at region: WeatherRegion) {
+    private func moveRegionSelection(to region: WeatherRegion) {
         delegate.clearComponents(ofType: RegionSelection.self)
 
         let selection = RegionSelection(region: region)
@@ -134,9 +140,9 @@ open class WeatherModule {
         // because drawer takes some space offset the region
         let offset: (km: Float, dir: Float, padding: Float)
         if delegate.pulley.currentDisplayMode == .drawer {
-            offset = (km: region.radius / 5, dir: 180, padding: region.radius / 40)
+            offset = (km: Float(region.radius) / 5, dir: 180, padding: Float(region.radius) / 40)
         } else {
-            offset = (km: region.radius, dir: 270, padding: region.radius / 10)
+            offset = (km: Float(region.radius), dir: 270, padding: Float(region.radius) / 10)
         }
 
         let center = region.center.locationAt(kilometers: offset.km, direction: offset.dir)
@@ -155,10 +161,7 @@ open class WeatherModule {
                 self.delegate.addComponents(key: key, value: components)
             }
 
-            if let drawer = self.delegate.pulley.drawerContentViewController as? ConfigDrawerController {
-                drawer.status(text: "Found \(stations.count) stations")
-            }
-
+            region.matches = stations.count
         }.catch(Messages.show)
     }
 

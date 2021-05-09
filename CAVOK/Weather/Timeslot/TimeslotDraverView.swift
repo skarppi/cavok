@@ -16,10 +16,7 @@ struct TimeslotDrawerView: View {
 
     var body: some View {
         PullToRefreshView(action: { refreshAction() }, isLoading: $state.isLoading) {
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(Color.secondary)
-                .frame(width: 50, height: 5)
-                .padding(5)
+            DrawerHandleView()
 
             VStack(alignment: .leading) {
                 Text(state.status)

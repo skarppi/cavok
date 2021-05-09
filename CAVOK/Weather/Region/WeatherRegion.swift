@@ -6,21 +6,24 @@
 //  Copyright © 2016 Juho Kolehmainen. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
+import Combine
 
-class WeatherRegion {
+class WeatherRegion: ObservableObject {
     // bounding box
     var minLat: Float
     var maxLat: Float
     var minLon: Float
     var maxLon: Float
 
+    var matches: Int = 0
+
     // radius of the circle in kilometers
-    var radius: Float {
+    var radius: Int {
         didSet {
             let recalculated = WeatherRegion(center: center, radius: radius)
             copyBoundaries(from: recalculated)
+            objectWillChange.send()
         }
     }
 
@@ -50,19 +53,18 @@ class WeatherRegion {
         }
     }
 
-    init(minLat: Float, maxLat: Float, minLon: Float, maxLon: Float, radius: Float) {
+    init(minLat: Float, maxLat: Float, minLon: Float, maxLon: Float, radius: Int) {
         self.minLat = minLat
         self.maxLat = maxLat
         self.minLon = minLon
         self.maxLon = maxLon
         self.radius = radius
     }
-
-    init(center: MaplyCoordinate, radius: Float) {
-        let top = center.locationAt(kilometers: radius, direction: 0)
-        let right = center.locationAt(kilometers: radius, direction: 90)
-        let bottom = center.locationAt(kilometers: radius, direction: 180)
-        let left = center.locationAt(kilometers: radius, direction: 270)
+    init(center: MaplyCoordinate, radius: Int) {
+        let top = center.locationAt(kilometers: Float(radius), direction: 0)
+        let right = center.locationAt(kilometers: Float(radius), direction: 90)
+        let bottom = center.locationAt(kilometers: Float(radius), direction: 180)
+        let left = center.locationAt(kilometers: Float(radius), direction: 270)
 
         self.minLat = bottom.deg.y
         self.maxLat = top.deg.y
@@ -87,7 +89,7 @@ class WeatherRegion {
                 maxLat: coordinates["maxLat"]!,
                 minLon: coordinates["minLon"]!,
                 maxLon: coordinates["maxLon"]!,
-                radius: coordinates["radius"]!
+                radius: Int(coordinates["radius"]!)
             )
         } else {
             return nil
@@ -100,7 +102,7 @@ class WeatherRegion {
             "maxLat": maxLat,
             "minLon": minLon,
             "maxLon": maxLon,
-            "radius": radius
+            "radius": Float(radius)
         ]
 
         print("Saving weather region \(coordinates)")
@@ -116,7 +118,7 @@ class WeatherRegion {
         let target = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
 
         let distance = location.distance(from: target)
-        return Float(distance) <= radius * 1000
+        return Int(distance) <= radius * 1000
     }
 
     func bbox(padding kilometers: Float, offset_y: Float = 0) -> MaplyBoundingBox {

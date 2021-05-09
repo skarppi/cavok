@@ -295,7 +295,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vg-jR-Hu7">
-                                                        <rect key="frame" x="329" y="8.0000000000000018" width="40" height="23.666666666666671"/>
+                                                        <rect key="frame" x="329" y="8" width="40" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="wU2-Tp-K91"/>
                                                         </constraints>
@@ -311,17 +311,17 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LinkTableViewCell" selectionStyle="none" showsReorderControl="YES" accessoryType="disclosureIndicator" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="LinkTableViewCell" editingAccessoryType="disclosureIndicator" id="HGe-9v-UqA" customClass="LinkTableViewCell" customModule="CAV_OK" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                        <rect key="frame" x="0.0" y="24.333333969116211" width="375" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HGe-9v-UqA" id="Xwg-Hm-HEH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="349.33333333333331" height="44"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="flG-zy-yyK">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="349.33333333333331" height="44"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bue-2L-ffQ">
-                                                                            <rect key="frame" x="5" y="0.0" width="342.66666666666669" height="21"/>
+                                                                            <rect key="frame" x="5" y="0.0" width="344.33333333333331" height="21"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="21" id="E8H-Ty-Z0N"/>
                                                                             </constraints>
@@ -330,7 +330,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dR-F4-QuO">
-                                                                            <rect key="frame" x="5" y="22" width="342.66666666666669" height="22"/>
+                                                                            <rect key="frame" x="5" y="22" width="344.33333333333331" height="22"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <nil key="highlightedColor"/>

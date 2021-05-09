@@ -20,15 +20,15 @@ struct ObservationDrawerView: View {
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                TitleRow(title: self.obs.station?.name, action: closedAction)
+                DrawerTitleView(title: self.obs.station?.name, action: closedAction)
 
                 AttributedText(obs: obs, presentation: presentation)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal).padding(.top)
+                    .padding(.top)
             }.background(GeometryReader { proxy -> Color in
                 self.sizes.collapsedHeight = proxy.frame(in: .local).maxY
                 return Color.clear
-            })
+            }).padding(.horizontal)
 
             ScrollView {
                 VStack(alignment: .leading) {
@@ -46,27 +46,6 @@ struct ObservationDrawerView: View {
 
         }
         .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct TitleRow: View {
-    var title: String?
-    var action: (() -> Void)
-
-    var body: some View {
-        HStack {
-            Text(title ?? "-")
-                .fixedSize(horizontal: false, vertical: true)
-                .font(Font.system(size: 22))
-                .padding(.leading)
-            Spacer()
-            Button(action: self.action) {
-                Image(systemName: "xmark.circle.fill")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .padding()
-            }
-        }
     }
 }
 

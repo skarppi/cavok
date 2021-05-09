@@ -62,7 +62,7 @@ class ConfigDrawerController: UIViewController {
     }
 
     @IBAction func radiusChanged(_ stepper: UIStepper) {
-        region.radius = Float(stepper.value)
+        region.radius = Int(stepper.value)
 
         radius.text = "\(region.radius) km"
 

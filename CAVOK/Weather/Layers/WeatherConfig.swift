@@ -36,8 +36,7 @@ class WeatherConfig {
 
     init(region: WeatherRegion) {
         self.region = region
-
-        self.padding = min(region.radius / 2, 300)
+        self.padding = min(Float(region.radius) / 2, 300)
 
         let bbox = region.bbox(padding: padding)
         let tiles = (0...maxZoom).map { zoom in
