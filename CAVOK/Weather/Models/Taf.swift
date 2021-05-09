@@ -9,37 +9,37 @@
 import Foundation
 
 public class Taf: Observation {
-    
+
     @objc public dynamic var from = Date()
     @objc public dynamic var to = Date()
-    
+
     override public func parse(raw: String) {
         super.parse(raw: raw)
-        
+
         let parser = Tokenizer(raw: self.raw)
-        
+
         if parser.peek() == "TAF" {
             parser.next()
         }
-        
-        if let type = parser.peek()  {
+
+        if let type = parser.peek() {
             if type.contains(["COR", "AMD"]) {
                 self.type = type
                 parser.next()
             }
         }
-        
+
         // identifier
         self.identifier = parser.pop()!
-        
+
         let time = parseDate(value: parser.peek())
         if let time = time {
             self.datetime = time
             parser.next()
         }
-        
+
         // validity start and end
-        if let (from,to) = parse(validity: parser.pop()) {
+        if let (from, to) = parse(validity: parser.pop()) {
             if time == nil {
                 self.datetime = from
             }
@@ -50,18 +50,18 @@ public class Taf: Observation {
             self.from = self.datetime
             self.to = zuluCalendar().date(byAdding: .hour, value: 24, to: self.datetime)!
         }
-        
+
         if let wind = parseWind(value: parser.peek()) {
             self.wind = wind
             parser.next()
         } else {
             self.wind = WindData()
         }
-        
+
         if parseWindVariability(value: parser.peek()) {
             self.windVariability = parser.pop()
         }
-        
+
         if let vis = parseVisibility(value: parser.peek()) {
             self.visibility.value = vis
             self.visibilityGroup = parser.pop()
@@ -69,28 +69,28 @@ public class Taf: Observation {
             self.visibility.value = nil
             self.visibilityGroup = nil
         }
-        
+
         self.weather = parser.loop { current in
             return isSkyCondition(field: current)
         }.joined(separator: " ")
-        
+
         self.clouds = parser.loop { current in
             return !isSkyCondition(field: current)
         }.joined(separator: " ")
-        
+
         self.cloudHeight.value = getCombinedCloudHeight()
 
         self.supplements = parser.all().joined(separator: " ")
-        
+
         // post-process
-        
+
         if self.visibility.value == nil && isCavok() {
             self.visibility.value = 10000
         }
-        
+
         self.condition = self.parseCondition().rawValue
     }
-    
+
     private func parse(validity: String?) -> (Date, Date)? {
         if let validity = validity, validity != "NIL", !validity.hasSuffix("Z") {
             let components = validity.components(separatedBy: "/").map { component -> Date in
@@ -103,7 +103,7 @@ public class Taf: Observation {
             return (components[0], components[1])
         }
         return nil
-        
+
     }
 
 }

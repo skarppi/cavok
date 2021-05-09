@@ -8,13 +8,13 @@
 
 import Foundation
 
-class UserMarker : MaplyScreenMarker {
-    
+class UserMarker: MaplyScreenMarker {
+
     init(coordinate: MaplyCoordinate) {
         super.init()
-        image = UIImage(named: "Location");
+        image = UIImage(named: "Location")
         loc = coordinate
-        size = CGSize(width: 12,height: 12);
+        size = CGSize(width: 12, height: 12)
         layoutImportance = 1.0
     }
 }

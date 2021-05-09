@@ -10,7 +10,7 @@ import RealmSwift
 import PromiseKit
 
 public class WeatherServer {
-    
+
     // query stations available
     func queryStations(at region: WeatherRegion) -> Promise<[Station]> {
         return firstly {
@@ -30,13 +30,13 @@ public class WeatherServer {
             return Array(result.values)
         }
     }
-    
+
     // query and persist stations
     func refreshStations() -> Promise<[Station]> {
         guard let region = WeatherRegion.load() else {
             return Promise(error: Weather.error(msg: "Region not set"))
         }
-        
+
         return queryStations(at: region).map { stations -> [Station] in
             let realm = try! Realm()
             try realm.write {
@@ -46,12 +46,12 @@ public class WeatherServer {
             return stations
         }
     }
-    
+
     func refreshObservations() -> Promise<Observations> {
         guard let region = WeatherRegion.load() else {
             return Promise(error: Weather.error(msg: "Region not set"))
         }
-        
+
         return firstly {
             when(fulfilled:
                 AddsService.fetchObservations(.METAR, history: true, at: region),
@@ -62,7 +62,7 @@ public class WeatherServer {
             let realm = try! Realm()
             let oldMetars = realm.objects(Metar.self)
             let oldTafs = realm.objects(Taf.self)
-            
+
             let metars = (addsMetars + awsMetars).compactMap { metar in
                 self.parseObservation(Metar(), raw: metar, realm: realm)
             }.sorted { a, b in
@@ -82,10 +82,10 @@ public class WeatherServer {
             return Observations(metars: metars, tafs: tafs)
         }
     }
-    
+
     private func parseObservation<T: Observation>(_ obs: T, raw: String, realm: Realm) -> T? {
         obs.parse(raw: raw)
-        
+
         let stations = realm.objects(Station.self).filter("identifier == '\(obs.identifier)'")
         if stations.count == 1 {
             obs.station = stations[0]
@@ -94,29 +94,29 @@ public class WeatherServer {
             return nil
         }
     }
-    
+
     // MARK: - Query cached data
-    
+
     func getStationCount() -> Int {
         let realm = try! Realm()
         return realm.objects(Station.self).count
     }
-    
+
     func observations() -> Observations {
         let realm = try! Realm()
-        
+
         let metars = realm.objects(Metar.self).sorted(byKeyPath: "datetime")
         let tafs = realm.objects(Taf.self).sorted(byKeyPath: "from")
 
         return Observations(metars: Array(metars), tafs: Array(tafs))
     }
-    
+
     func observations(for identifier: String) -> Observations {
         let realm = try! Realm()
-        
+
         let metars = realm.objects(Metar.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "datetime")
         let tafs = realm.objects(Taf.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "from")
-        
+
         return Observations(metars: Array(metars), tafs: Array(tafs))
     }
 }

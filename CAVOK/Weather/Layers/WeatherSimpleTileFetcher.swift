@@ -24,12 +24,12 @@ class WeatherTileInfo: NSObject, MaplyTileInfoNew {
     }
 
     func fetchInfo(forTile tileID: MaplyTileID, flipY: Bool) -> Any? {
-        if (tileID.validTile(config: config)) {
+        if tileID.validTile(config: config) {
             return WeatherTileFetchInfo(tileID: tileID, frame: frame)
         } else {
             return nil
         }
-        
+
     }
 
     func minZoom() -> Int32 {
@@ -52,11 +52,11 @@ struct TileInfo: Hashable {
             && lhs.fetchInfo.tileID.level == rhs.fetchInfo.tileID.level
             && lhs.fetchInfo.frame == rhs.fetchInfo.frame
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(request)
     }
-    
+
     // Priority before importance
     var priority: Int32
     // Importance of this tile request as passed in by the fetch request
@@ -81,26 +81,26 @@ struct TileInfo: Hashable {
 
 // Similar to SimpleTileFetcher but supports frames
 open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
-    
+
     /// Set by default.  We won't every return an error on failing to load.  Useful for sparse data sets
     private var neverFail = false
 
     private var active = false
     private var loadScheduled = false
-    
+
     // Tiles sorted by importance
     private var toLoad: Set<TileInfo> = []
-        
+
     // Tiles sorted by fetch request
     private var tilesByFetchRequest = [MaplyTileFetchRequest: TileInfo]()
 
     // Dispatch queue the data fetcher is doing its work on
     private var queue: DispatchQueue!
-    
+
     init(name: String) {
         queue = DispatchQueue(label: name)
         super.init()
-        
+
         active = true
     }
 
@@ -108,27 +108,27 @@ open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
         guard active else {
             return
         }
-        
+
         queue.async {
             requests.forEach { req in
                 let info = TileInfo(priority: req.priority, importance: req.importance, request: req, fetchInfo: req.fetchInfo as! WeatherTileFetchInfo)
                 self.tilesByFetchRequest[req] = info
                 self.toLoad.insert(info)
             }
-            
-            if (!self.loadScheduled) {
+
+            if !self.loadScheduled {
                 self.loadScheduled = true
                 self.updateLoading()
             }
 
         }
     }
-    
+
     public func updateTileFetch(_ request: Any, priority: Int32, importance: Double) -> Any? {
         guard active else {
             return Optional<Any>.none as Any
         }
-        
+
         queue.async {
             if let req = request as? MaplyTileFetchRequest, var tile = self.tilesByFetchRequest[req] {
                 self.toLoad.remove(tile)
@@ -137,15 +137,15 @@ open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
                 self.toLoad.insert(tile)
             }
         }
-        
+
         return request
     }
-    
+
     public func cancelTileFetches(_ requests: [Any]) {
         guard active else {
             return
         }
-        
+
         queue.async {
             requests.forEach { request in
                 if let req = request as? MaplyTileFetchRequest, let tile = self.tilesByFetchRequest.removeValue(forKey: req) {
@@ -154,38 +154,38 @@ open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
             }
         }
     }
-    
+
     func updateLoading() {
         loadScheduled = false
-        
+
         guard active else {
             return
         }
-        
+
         if let tile = toLoad.first {
             let info = tile.fetchInfo
-            
+
             // Do the callback on a background queue
             // Because the parsing might take a while
             DispatchQueue.global(qos: .background).sync {
                 let tileData = self.data(forTile: info, tileID: info.tileID)
-                if (tileData != nil || self.neverFail) {
+                if tileData != nil || self.neverFail {
                     tile.request.success?(tile.request, tileData as Any)
                 } else {
                     tile.request.failure?(tile.request, Weather.error(msg: "Failed to fetch tile"))
                 }
-                
+
                 self.queue?.async {
                     self.updateLoading()
                 }
             }
-           
+
             // Done with the tile, so take it out of here
             toLoad.remove(tile)
             tilesByFetchRequest.removeValue(forKey: tile.request)
         }
     }
-    
+
     // Name used for debugging
     public func name() -> String {
         queue?.label ?? ""
@@ -204,7 +204,7 @@ open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
     /// Call the superclass shutdown method *first* and then run your own shutdown.
     public func shutdown() {
         active = false
-        
+
         queue.async {
             // Execute an empty task and wait for it to return
             // This drains the queue

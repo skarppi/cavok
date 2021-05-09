@@ -17,11 +17,11 @@ enum AddsSource: String {
 }
 
 public class AddsService {
-    
+
     class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
         return fetch(dataSource: "stations", at: region).map { data -> [Station] in
             print("Found \(data.children.count) ADDS stations")
-            
+
             return data.children.map { station in
                 Station(
                     identifier: station["station_id"].element!.text,
@@ -35,7 +35,7 @@ public class AddsService {
             }
         }
     }
-    
+
     class func fetchObservations(_ source: AddsSource, history: Bool, at region: WeatherRegion) -> Promise<[String]> {
         let query = [
             "hoursBeforeNow": "3",
@@ -45,7 +45,7 @@ public class AddsService {
         return fetch(dataSource: source.rawValue, with: query, at: region).map { data -> [String] in
             let count = data.children.count
             print("Found \(count) ADDS \(source.rawValue)")
-            
+
             let raws = data.children.compactMap { item in
                 item["raw_text"].element?.text
             }
@@ -53,25 +53,25 @@ public class AddsService {
             return Array(Set(raws))
         }
     }
-    
+
     private class func parse(data: Data) throws -> XMLIndexer {
         let response = SWXMLHash.parse(data)["response"]
-    
+
         let errors = response["errors"]
         guard errors.children.count == 0  else {
             let msgs = errors["error"].all.compactMap { $0.element?.text }
             throw Weather.error(msg: msgs.joined(separator: ", "))
         }
-        
+
         let warnings = response["warnings"]
         if warnings.children.count > 0 {
             let msgs = warnings["warning"].all.compactMap { $0.element?.text }
             print("ADDS warning: \(msgs.joined())")
         }
-        
+
         return response["data"]
     }
-    
+
     private class func fetch(dataSource: String, with: [String: String] = [:], at region: WeatherRegion) -> Promise<XMLIndexer> {
         var params = [
             "dataSource": dataSource,
@@ -84,7 +84,7 @@ public class AddsService {
             "maxLon": String(region.maxLon)
         ]
         with.forEach { params[$0] = $1 }
-        
+
         let host = UserDefaults.standard.string(forKey: "addsURL")!
         var components = URLComponents(string: host)!
         components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
@@ -92,10 +92,10 @@ public class AddsService {
         let rq = URLRequest(url: components.url!)
         return execute(rq, retries: 0)
     }
-    
+
     private class func execute(_ rq: URLRequest, retries: Int = 0) -> Promise<XMLIndexer> {
         print("Fetching ADDS data from \(rq.url!)")
-        return URLSession.shared.dataTask(.promise, with: rq).map { data, urlResponse -> XMLIndexer in
+        return URLSession.shared.dataTask(.promise, with: rq).map { data, _ -> XMLIndexer in
             let unzipped: Data = try {
                 if data.isGzipped {
                     return try data.gunzipped()
@@ -115,7 +115,7 @@ public class AddsService {
                 } else {
                     throw Weather.error(msg: "ADDS temporarily unavailable")
                 }
-                
+
             default:
                 throw error
             }

@@ -12,16 +12,16 @@ struct ObservationDrawerView: View {
     var presentation: ObservationPresentation
     var obs: Observation
     var observations: Observations
-    
+
     var sizes = PulleySizes(collapsed: 0, partial: 0, full: true)
-    
+
     var closedAction: (() -> Void)
-        
+
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
                 TitleRow(title: self.obs.station?.name, action: closedAction)
-               
+
                 AttributedText(obs: obs, presentation: presentation)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal).padding(.top)
@@ -36,14 +36,14 @@ struct ObservationDrawerView: View {
                         title: "Metar history",
                         observations: observations.metars,
                         presentation: presentation)
-                   
+
                     ObservationList(
                         title: "Taf",
                         observations: observations.tafs,
                         presentation: presentation)
                 }
             }
-            
+
         }
         .edgesIgnoringSafeArea(.all)
     }
@@ -52,7 +52,7 @@ struct ObservationDrawerView: View {
 struct TitleRow: View {
     var title: String?
     var action: (() -> Void)
-    
+
     var body: some View {
         HStack {
             Text(title ?? "-")
@@ -74,7 +74,7 @@ struct ObservationList: View {
     var title: String
     var observations: [Observation]
     var presentation: ObservationPresentation
-    
+
     var body: some View {
         Group {
             if !observations.isEmpty {
@@ -83,10 +83,10 @@ struct ObservationList: View {
                     .padding(.all)
 
                 ForEach(observations.reversed(), id: \.self) { metar in
-                    
+
                     AttributedText(obs: metar, presentation: self.presentation)
                         .padding(.leading)
-                        .padding(.bottom,5)
+                        .padding(.bottom, 5)
                 }
             }
         }
@@ -96,11 +96,11 @@ struct ObservationList: View {
 struct AttributedText: View {
     var obs: Observation
     var presentation: ObservationPresentation
-    
+
     var data: ObservationPresentationData {
         presentation.split(observation: obs)
     }
-    
+
     var body: some View {
         Text(data.start)
             + Text(data.highlighted).foregroundColor(Color(data.color))
@@ -126,7 +126,7 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         tafs: [
             taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30 TEMPO 1305/1312 6000 TSRA")
         ])
-    
+
     static var previews: some View {
         ObservationDrawerView(presentation: presentation,
                               obs: observations.metars[0],
@@ -134,7 +134,7 @@ struct ObservationDrawerView_Previews: PreviewProvider {
                               sizes: PulleySizes(collapsed: 0, partial: 0, full: false),
                               closedAction: { () in print("Closed")})
     }
-    
+
     static func metar(_ raw: String) -> Metar {
         let metar = Metar()
         metar.parse(raw: raw)
@@ -142,7 +142,7 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         metar.station?.name = "Helsinki-Vantaan lentoasema EFHF airport"
         return metar
     }
-    
+
     static func taf(_ raw: String) -> Taf {
         let taf = Taf()
         taf.parse(raw: raw)

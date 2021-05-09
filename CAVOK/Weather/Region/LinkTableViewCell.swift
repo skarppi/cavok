@@ -8,12 +8,11 @@
 
 import Foundation
 
-
 class LinkTableViewCell: UITableViewCell {
-    
-    //MARK: Properties
-    
+
+    // MARK: Properties
+
     @IBOutlet weak var titleLabel: UILabel!
-    
+
     @IBOutlet weak var urlLabel: UILabel!
 }

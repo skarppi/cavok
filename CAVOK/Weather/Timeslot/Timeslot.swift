@@ -10,11 +10,11 @@ import Foundation
 
 public struct Timeslot: Hashable {
     let date: Date
-    
+
     let title: String
-    
+
     var color: UIColor = UIColor.clear
-    
+
     init(date: Date, title: String? = nil) {
         self.date = date
         if let title = title {

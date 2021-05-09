@@ -10,14 +10,14 @@ import Foundation
 
 class FrameChanger: MaplyActiveObject {
     let loader: MaplyQuadImageFrameLoader
-    
+
     // How long to animate from start to finish.
     let period: Double = 1
-    
+
     var startTime: TimeInterval?
     var sourceFrame: Double?
     var targetFrame: Double?
-    
+
     init(loader: MaplyQuadImageFrameLoader) {
         self.loader = loader
         super.init()
@@ -28,7 +28,7 @@ class FrameChanger: MaplyActiveObject {
         self.sourceFrame = loader.getCurrentImage()
         self.targetFrame = Double(targetFrame)
     }
-    
+
     @objc override func hasUpdate() -> Bool {
         if let target = targetFrame {
             return loader.getCurrentImage() != target
@@ -36,11 +36,11 @@ class FrameChanger: MaplyActiveObject {
             return false
         }
     }
-    
+
     override func update(forFrame frameInfo: UnsafeMutableRawPointer) {
         if let start = startTime, let source = sourceFrame, let target = targetFrame {
             let now = CFAbsoluteTimeGetCurrent()
-            
+
             let pos = (now - start) / period
             if pos >= period {
                 loader.setCurrentImage(target)

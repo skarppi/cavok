@@ -9,7 +9,7 @@
 import Foundation
 
 @IBDesignable class RightImageButton: UIButton {
-    
+
     @IBInspectable var imageAlpha: CGFloat = 1 {
         didSet {
             if let imageView = imageView {
@@ -17,10 +17,10 @@ import Foundation
             }
         }
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         if let imageView = imageView {
             imageView.alpha = imageAlpha
         }

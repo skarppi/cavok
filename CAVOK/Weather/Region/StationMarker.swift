@@ -8,14 +8,14 @@
 
 import Foundation
 
-class StationMarker : MaplyScreenMarker {
-    
+class StationMarker: MaplyScreenMarker {
+
     static let diameter = 10
-    
+
     static let markerImage: UIImage = {
         let size = StationMarker.diameter * 2
         UIGraphicsBeginImageContext(CGSize(width: size, height: size))
-        
+
         if let context = UIGraphicsGetCurrentContext() {
             context.setLineWidth(1)
             context.setFillColor(UIColor.black.withAlphaComponent(0.8).cgColor)
@@ -23,12 +23,12 @@ class StationMarker : MaplyScreenMarker {
             context.addEllipse(in: CGRect(x: 1, y: 1, width: size - 2, height: size - 2))
             context.drawPath(using: .fillStroke)
         }
-        
+
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
     }()
-    
+
     init(station: Station) {
         super.init()
         self.userObject = station

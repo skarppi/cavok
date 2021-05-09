@@ -9,9 +9,9 @@
 import Foundation
 
 class TimeslotControl: UISegmentedControl {
-    
+
     private static let clearImage = image(color: UIColor.clear)
-    
+
     override var selectedSegmentIndex: Int {
         didSet {
             let segments = self.segments()
@@ -22,16 +22,16 @@ class TimeslotControl: UISegmentedControl {
             segments[selectedSegmentIndex].layer.borderColor = UIColor.link.cgColor
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         setBackgroundImage(TimeslotControl.clearImage, for: .normal, barMetrics: .default)
         setBackgroundImage(TimeslotControl.clearImage, for: .selected, barMetrics: .default)
-        
+
         setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.link], for: .selected)
     }
-    
+
     func updateSegment(color: UIColor, at segment: Int) {
         let views = segments()
         if segment < views.count {
@@ -39,7 +39,7 @@ class TimeslotControl: UISegmentedControl {
             view.backgroundColor = color
         }
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesMoved(touches, with: event)
     }
@@ -67,7 +67,7 @@ class TimeslotControl: UISegmentedControl {
             return a.frame.origin.x < b.frame.origin.x
         })
     }
-    
+
     private static func image(color: UIColor) -> UIImage? {
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)

@@ -11,7 +11,7 @@ import Pulley
 import SwiftUI
 
 extension UIViewController {
-    
+
     var pulley: PulleyViewController! {
         get {
             return self.parent as? PulleyViewController
@@ -23,7 +23,7 @@ public class PulleySizes {
     var collapsedHeight: CGFloat?
     var partialHeight: CGFloat?
     var fullEnabled: Bool = false
-        
+
     init(collapsed: CGFloat?, partial: CGFloat?, full: Bool) {
         collapsedHeight = collapsed
         partialHeight = partial
@@ -36,7 +36,7 @@ extension PulleyViewController {
 
         let host = PulleyUIHostingController(rootView: view)
         host.sizes = sizes
-        
+
         setDrawerContentViewController(controller: host, animated: animated)
     }
 }
@@ -46,7 +46,7 @@ class PulleyUIHostingController<Content>: UIHostingController<Content>, PulleyDr
     var sizes: PulleySizes! = nil
 
     func supportedDrawerPositions() -> [PulleyPosition] {
-            
+
         return [sizes.collapsedHeight != nil ? PulleyPosition.collapsed : nil,
                 sizes.partialHeight != nil ?  PulleyPosition.partiallyRevealed : nil,
                 sizes.fullEnabled ? PulleyPosition.open : nil].compactMap {$0}
@@ -61,7 +61,7 @@ class PulleyUIHostingController<Content>: UIHostingController<Content>, PulleyDr
         guard (sizes.partialHeight ?? 0) > 0 else {
             return maxAvailableHeight / 2
         }
-    
+
         let height = sizes.partialHeight!
         if pulley.currentDisplayMode == .drawer {
             return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, height + bottomSafeArea)

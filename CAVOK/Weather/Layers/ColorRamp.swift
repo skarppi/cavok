@@ -13,7 +13,7 @@ struct GridStep {
     var upper: Int32
     var fromHue: Int32
     var toHue: Int32
-    
+
     func int4() -> [Int32] {
         return [lower, upper, fromHue, toHue]
     }
@@ -32,21 +32,21 @@ let brightness: CGFloat = 0.81
 
 class ColorRamp {
     let unit: String
-    
+
     let steps: [GridStep]
-    
+
     let titles: [String]
-    
+
     init(moduleType: WeatherModule.Type) {
         if let module = Modules.configuration(module: moduleType) {
-            let steps = module["steps"] as? [String:String] ?? [:]
-            
+            let steps = module["steps"] as? [String: String] ?? [:]
+
             self.unit = module["unit"] as? String ?? ""
-            
+
             let sorted = Array(steps).sorted(by: {$0.key < $1.key})
             let keys = sorted.map { (key, _) in Int32(key)! }
             titles = sorted.map { (_, value) in value }
-            
+
             self.steps = keys.enumerated().map { (i, step) in
                 let next = (i + 1) < keys.count ? keys[i + 1] : Int32.max
                 return GridStep(lower: step, upper: next, fromHue: hues[i][0], toHue: hues[i][1])
@@ -57,50 +57,50 @@ class ColorRamp {
             self.titles = []
         }
     }
-    
+
     func legend() -> Legend {
         return Legend(unit: unit, gradient: steps.map { step in color(for: step.lower).cgColor}, titles: titles)
     }
-    
+
     func color(for value: Int32, alpha: CGFloat = 1) -> UIColor {
         if let step = steps.reversed().first(where: { value >= $0.lower}) {
             // Point-Slope Equation of a Line: y - y1 = m(x - x1)
             let slope = CGFloat(step.toHue - step.fromHue) / CGFloat(step.upper - step.lower)
             let hue = slope * CGFloat(value - step.lower) + CGFloat(step.fromHue)
-            
-            return UIColor(hue:hue/360, saturation:1, brightness:brightness, alpha:alpha)
+
+            return UIColor(hue: hue/360, saturation: 1, brightness: brightness, alpha: alpha)
         } else {
             return UIColor.black
         }
     }
-    
+
     class func color(for date: Date, alpha: CGFloat = 1) -> UIColor {
         let minutes = Int(-date.timeIntervalSinceNow / 60)
         return ColorRamp.color(forMinutes: minutes, alpha: alpha)
     }
-    
+
     class func color(forMinutes minutes: Int, alpha: CGFloat = 1) -> UIColor {
-        if (minutes < 0) {
-            return UIColor(hue: CGFloat(blue[0])/360, saturation:1, brightness:brightness, alpha:alpha)
-        } else if(minutes <= 30) {
+        if minutes < 0 {
+            return UIColor(hue: CGFloat(blue[0])/360, saturation: 1, brightness: brightness, alpha: alpha)
+        } else if minutes <= 30 {
             return ColorRamp.color(for: .VFR, alpha: alpha)
-        } else if(minutes <= 90) {
+        } else if minutes <= 90 {
             return ColorRamp.color(for: .MVFR, alpha: alpha)
         } else {
             return ColorRamp.color(for: .IFR, alpha: alpha)
         }
     }
-    
+
     class func color(for condition: WeatherConditions, alpha: CGFloat = 1) -> UIColor {
         switch condition {
         case .VFR:
-            return UIColor(hue:120/360, saturation:1, brightness:brightness, alpha:alpha)
+            return UIColor(hue: 120/360, saturation: 1, brightness: brightness, alpha: alpha)
         case .MVFR:
-            return UIColor(hue:CGFloat(orange[0])/360, saturation:1, brightness:brightness, alpha:alpha)
+            return UIColor(hue: CGFloat(orange[0])/360, saturation: 1, brightness: brightness, alpha: alpha)
         case .IFR:
-            return UIColor(hue:0, saturation:1, brightness:0.61, alpha:alpha)
+            return UIColor(hue: 0, saturation: 1, brightness: 0.61, alpha: alpha)
         default:
-            return UIColor(hue:0, saturation:0, brightness:0.1, alpha:alpha)
+            return UIColor(hue: 0, saturation: 0, brightness: 0.1, alpha: alpha)
         }
     }
 }

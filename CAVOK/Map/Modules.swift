@@ -9,7 +9,7 @@
 import Foundation
 
 class Modules {
-    
+
     private class func modules() -> [[String: AnyObject]] {
         if let modules = UserDefaults.standard.array(forKey: "modules") as? [[String: AnyObject]] {
             return modules
@@ -17,34 +17,34 @@ class Modules {
             return []
         }
     }
-    
+
     class func availableTitles() -> [String] {
         return modules().compactMap { module in
             module["name"] as? String
         }
     }
-    
+
     class func loadModule(index: Int, delegate: MapDelegate) -> MapModule {
         let module = modules()[index]
         let className = module["class"] as! String
-        
+
         let type = NSClassFromString("CAV_OK.\(className)") as! MapModule.Type
         return type.init(delegate: delegate)
     }
-    
+
     class func configuration(module: AnyClass) -> [String: AnyObject]? {
         let moduleClassName = String(describing: module)
-        
+
         if let module = modules().first(where: { $0["class"] as? String == moduleClassName }) {
             return module
         } else {
             return nil
         }
     }
-    
+
     class func index(of module: AnyClass) -> Int? {
         let moduleClassName = String(describing: module)
-        
+
         return modules().compactMap { module in
             module["class"] as? String
         }.firstIndex(of: moduleClassName)

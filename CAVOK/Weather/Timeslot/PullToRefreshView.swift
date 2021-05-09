@@ -9,7 +9,7 @@ import SwiftUI
 import CoreHaptics
 
 // copied from https://www.jakelanders.com/swiftui/swiftui-pull-to-refresh/
-struct PullToRefreshView<Content>: View where Content : View {
+struct PullToRefreshView<Content>: View where Content: View {
     @Environment(\.colorScheme) var colorScheme
     // passed content view
     let content: () -> Content

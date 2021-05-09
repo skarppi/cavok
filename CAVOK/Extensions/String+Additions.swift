@@ -10,19 +10,19 @@ import Foundation
 
 // copied from https://gist.github.com/albertbori/0faf7de867d96eb83591
 extension String {
-    
+
     var length: Int {
         return self.count
     }
-    
+
     func trim() -> String {
         return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
-    
+
     func contains(_ s: String) -> Bool {
         return self.range(of: s) != nil ? true : false
     }
-    
+
     func contains(_ strs: [String]) -> Bool {
         for s in strs {
             if self.range(of: s) != nil {
@@ -31,11 +31,11 @@ extension String {
         }
         return false
     }
-    
+
     func replace(_ target: String, with: String) -> String {
         return self.replacingOccurrences(of: target, with: with, options: NSString.CompareOptions.literal, range: nil)
     }
-    
+
     subscript (i: Int) -> Character {
         let i = index(startIndex, offsetBy: i)
         return self[i]
@@ -52,38 +52,38 @@ extension String {
 
         return String(self[(startIndex ..< endIndex)])
     }
-    
+
     func subString(_ startIndex: Int, length: Int) -> String {
         let start = self.index(self.startIndex, offsetBy: startIndex)
         let end = self.index(self.startIndex, offsetBy: startIndex + length)
         return String(self[start ..< end])
     }
-    
+
     func isMatch(_ regex: String, options: NSRegularExpression.Options = []) -> Bool {
         do {
             let exp = try NSRegularExpression(pattern: regex, options: options)
-            let matchCount = exp.numberOfMatches(in: self, options: [], range: NSMakeRange(0, self.length))
+            let matchCount = exp.numberOfMatches(in: self, options: [], range: NSRange(location: 0, length: self.length))
             return matchCount > 0
         } catch {
             print(error)
             return false
         }
     }
-    
+
     func getMatch(_ regex: String, options: NSRegularExpression.Options = []) -> NSTextCheckingResult? {
         do {
             let exp = try NSRegularExpression(pattern: regex, options: options)
-            return exp.firstMatch(in: self, options: [], range: NSMakeRange(0, self.length))
+            return exp.firstMatch(in: self, options: [], range: NSRange(location: 0, length: self.length))
         } catch {
             print(error)
             return nil
         }
     }
-    
+
     func getMatches(_ regex: String, options: NSRegularExpression.Options = []) -> [NSTextCheckingResult] {
         do {
             let exp = try NSRegularExpression(pattern: regex, options: options)
-            return exp.matches(in: self, options: [], range: NSMakeRange(0, self.count))
+            return exp.matches(in: self, options: [], range: NSRange(location: 0, length: self.count))
         } catch {
             print(error)
             return []

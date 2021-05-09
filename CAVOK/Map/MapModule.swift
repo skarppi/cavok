@@ -11,14 +11,14 @@ import PromiseKit
 
 protocol MapModule: AnyObject {
     init(delegate: MapDelegate)
-    
+
     func cleanup()
-    
+
     func didTapAt(coord: MaplyCoordinate)
-        
+
     func configure(open: Bool)
-    
+
     func render(frame: Int)
-    
+
     func details(object: Any, parentFrame: CGRect)
 }

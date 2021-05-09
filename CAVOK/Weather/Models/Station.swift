@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 public class Station: Object {
-    
+
     @objc dynamic var identifier: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var latitude: Float = 0
@@ -19,11 +19,11 @@ public class Station: Object {
     @objc dynamic var hasMetar: Bool = false
     @objc dynamic var hasTaf: Bool = false
     @objc dynamic var timestamp: Date = Date()
-    
+
     override public static func primaryKey() -> String? {
         return "identifier"
     }
-    
+
     convenience init(identifier: String, name: String, latitude: Float, longitude: Float, elevation: Float, hasMetar: Bool, hasTaf: Bool) {
         self.init()
         self.identifier = identifier
@@ -34,7 +34,7 @@ public class Station: Object {
         self.hasMetar = hasMetar
         self.hasTaf = hasTaf
     }
-    
+
     func coordinate() -> MaplyCoordinate {
         return MaplyCoordinateMakeWithDegrees(self.longitude, self.latitude)
     }

@@ -15,7 +15,7 @@ struct Link {
 }
 
 class Links {
-    
+
     class func load() -> [Link] {
         if let links = UserDefaults.standard.array(forKey: "links") as? [[String: String]] {
             return links.compactMap { link in
@@ -28,16 +28,16 @@ class Links {
             return []
         }
     }
-    
+
     class func save(_ links: [Link]) -> Bool {
         print("Saving links \(links)")
-        
+
         let serialized = links.map { link in
             return ["title": link.title, "url": link.url, "blockElements": link.blockElements ?? ""]
         }
-        
+
         let defaults = UserDefaults.standard
-        defaults.set(serialized, forKey:"links")
+        defaults.set(serialized, forKey: "links")
         return defaults.synchronize()
     }
 }

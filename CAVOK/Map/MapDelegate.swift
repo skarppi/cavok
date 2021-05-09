@@ -16,19 +16,19 @@ public struct Legend {
 }
 
 public protocol MapDelegate {
-    
-    func loaded(frame:Int?, legend: Legend)
-    
+
+    func loaded(frame: Int?, legend: Legend)
+
     func findComponent(ofType: NSObject.Type) -> NSObject?
-    
+
     func addComponents(key: NSObject, value: MaplyComponentObject)
-    
+
     func clearComponents(ofType: NSObject.Type?)
-    
+
     var mapView: WhirlyGlobeViewController! {
         get
     }
-    
+
     var pulley: PulleyViewController! {
         get
     }

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TimeslotDrawerView: View {
     var refresh: (() -> Void)
-        
+
     @EnvironmentObject var state: TimeslotState
-    
+
     @GestureState var cursor = CGPoint.zero
 
     var body: some View {
@@ -20,24 +20,24 @@ struct TimeslotDrawerView: View {
                 .fill(Color.secondary)
                 .frame(width: 50, height: 5)
                 .padding(5)
-        
+
             VStack(alignment: .leading) {
                 Text(state.status)
                     .font(.body)
                     .foregroundColor(state.statusColor)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
-                
+
                 Timeline
             }
             .padding(.horizontal)
             .gesture(
                 DragGesture(minimumDistance: 0, coordinateSpace: .global)
-                    .updating($cursor) { (value, state, transaction) in
+                    .updating($cursor) { (value, state, _) in
                         state = value.location
             })
         }
     }
-    
+
     private var Timeline: some View {
         ZStack {
             HStack(spacing: 0) {
@@ -60,7 +60,7 @@ struct TimeslotDrawerView: View {
             RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .stroke(Color.gray, lineWidth: 1))
     }
-    
+
     func rectReader(index: Int) -> some View {
             return GeometryReader { (geometry) -> AnyView in
                 if geometry.frame(in: .global).contains(self.cursor) {
@@ -72,7 +72,6 @@ struct TimeslotDrawerView: View {
             }
         }
 
-    
     private func refreshAction() {
         //        setControls(hidden: true)
         state.startSpinning()
@@ -81,18 +80,18 @@ struct TimeslotDrawerView: View {
 }
 
 struct TimeslotDraverView_Previews: PreviewProvider {
-    
+
     static func state() -> TimeslotState {
         let state = TimeslotState()
         state.slots = [
             Timeslot(date: Date(), title: "10:30"),
             Timeslot(date: Date(), title: "11:30")
         ]
-        
+
         state.selectedIndex = 0
         return state
     }
-    
+
     static var previews: some View {
         TimeslotDrawerView(refresh: {
         })

@@ -10,12 +10,12 @@ import Foundation
 import CoreLocation
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
-    
+
     let manager = CLLocationManager()
-    
+
     var fulfill: (MaplyCoordinate) -> Void
     var reject: (String) -> Void
-    
+
     init(fulfill: @escaping (MaplyCoordinate) -> Void, reject: @escaping (String) -> Void) {
         self.fulfill = fulfill
         self.reject = reject
@@ -23,9 +23,9 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 
     func requestLocation() {
         if CLLocationManager.locationServicesEnabled() {
-            manager.delegate = self;
+            manager.delegate = self
             manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            
+
             manager.requestWhenInUseAuthorization()
             manager.requestLocation()
 
@@ -34,7 +34,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             reject("Location not enabled")
         }
     }
-    
+
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .restricted:
@@ -49,20 +49,19 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             manager.requestLocation()
         }
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let coordinate = MaplyCoordinateMakeWithDegrees(Float(location.coordinate.longitude), Float(location.coordinate.latitude))
-            print("Got location with accuracy \(location.horizontalAccuracy) to \(location.coordinate)");
+            print("Got location with accuracy \(location.horizontalAccuracy) to \(location.coordinate)")
             fulfill(coordinate)
-            
+
             LastLocation.save(location: coordinate)
         }
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get location", error)
         reject("Failed to get location")
     }
 }
-
