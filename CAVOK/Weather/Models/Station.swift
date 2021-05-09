@@ -24,7 +24,13 @@ public class Station: Object {
         return "identifier"
     }
 
-    convenience init(identifier: String, name: String, latitude: Float, longitude: Float, elevation: Float, hasMetar: Bool, hasTaf: Bool) {
+    convenience init(identifier: String,
+                     name: String,
+                     latitude: Float,
+                     longitude: Float,
+                     elevation: Float,
+                     hasMetar: Bool,
+                     hasTaf: Bool) {
         self.init()
         self.identifier = identifier
         self.name = name

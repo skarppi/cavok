@@ -20,12 +20,14 @@ public class Metar: Observation {
 
     // The cloud base can be estimated from surface measurements of air temperature and
     // humidity by calculating the lifted condensation level.
-    // - Find the difference between the surface temperature and the dew point. This value is known as the "spread".
-    // - Divide the spread °C by 2.5 then multiply by 1000. This will give you cloud base in feet AGL (Above Ground Level)
+    // - Find the difference between the surface temperature and the dew point.
+    //   This value is known as the "spread".
+    // - Divide the spread °C by 2.5 then multiply by 1000.
+    //   This will give you cloud base in feet AGL (Above Ground Level)
     // https://en.wikipedia.org/wiki/Cloud_base
     func spreadCeiling() -> Int? {
-        if let temp = temperature.value, let dp = dewPoint.value {
-            return (temp - dp) * 400
+        if let temp = temperature.value, let dewPoint = dewPoint.value {
+            return (temp - dewPoint) * 400
         } else {
             return nil
         }
@@ -81,9 +83,9 @@ public class Metar: Observation {
 
         self.cloudHeight.value = getCombinedCloudHeight()
 
-        if let (temp, dp) = parseTemperatures(parser.peek()) {
+        if let (temp, dewPoint) = parseTemperatures(parser.peek()) {
             self.temperature.value = temp
-            self.dewPoint.value = dp
+            self.dewPoint.value = dewPoint
 
             self.temperatureGroup = parser.pop()
         }

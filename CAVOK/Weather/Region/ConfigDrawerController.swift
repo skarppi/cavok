@@ -50,7 +50,9 @@ class ConfigDrawerController: UIViewController {
         drawerDisplayModeDidChange(drawer: pulley)
     }
 
-    func setup(region: WeatherRegion, closed: @escaping (WeatherRegion) -> Void, resized: @escaping (WeatherRegion) -> Void) {
+    func setup(region: WeatherRegion,
+               closed: @escaping (WeatherRegion) -> Void,
+               resized: @escaping (WeatherRegion) -> Void) {
         self.region = region
         self.closed = closed
         self.resized = resized
@@ -164,7 +166,8 @@ extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate {
 
         let cellIdentifier = "LinkTableViewCell"
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? LinkTableViewCell  else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,
+                                                       for: indexPath) as? LinkTableViewCell else {
             fatalError("The dequeued cell is not an instance of \(cellIdentifier).")
         }
 
@@ -180,7 +183,9 @@ extension ConfigDrawerController: UITableViewDataSource, UITableViewDelegate {
         return true
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             links.remove(at: indexPath.row)
             if Links.save(links) {
@@ -230,9 +235,11 @@ extension ConfigDrawerController: PulleyDrawerViewControllerDelegate {
 
         let maxAvailableHeight = UIApplication.shared.windows.first {$0.isKeyWindow}!.frame.height
         if pulley.currentDisplayMode == .drawer {
-            return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset, currentContentHeight + bottomSafeArea)
+            return min(maxAvailableHeight - bottomSafeArea - pulley.drawerTopInset,
+                       currentContentHeight + bottomSafeArea)
         } else {
-            return min(maxAvailableHeight - pulley.drawerTopInset * 2, currentContentHeight)
+            return min(maxAvailableHeight - pulley.drawerTopInset * 2,
+                       currentContentHeight)
         }
     }
 

@@ -19,13 +19,13 @@ extension String {
         return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
 
-    func contains(_ s: String) -> Bool {
-        return self.range(of: s) != nil ? true : false
+    func contains(_ str: String) -> Bool {
+        return self.range(of: str) != nil ? true : false
     }
 
     func contains(_ strs: [String]) -> Bool {
-        for s in strs {
-            if self.range(of: s) != nil {
+        for str in strs {
+            if self.range(of: str) != nil {
                 return true
             }
         }
@@ -42,13 +42,13 @@ extension String {
     }
 
     subscript (nsr: NSRange) -> String {
-        let r = Range(nsr)!
-        return self[r]
+        let range = Range(nsr)!
+        return self[range]
     }
 
-    subscript (r: Range<Int>) -> String {
-        let startIndex = self.index(self.startIndex, offsetBy: r.lowerBound)
-        let endIndex = self.index(self.startIndex, offsetBy: r.upperBound)
+    subscript (range: Range<Int>) -> String {
+        let startIndex = self.index(self.startIndex, offsetBy: range.lowerBound)
+        let endIndex = self.index(self.startIndex, offsetBy: range.upperBound)
 
         return String(self[(startIndex ..< endIndex)])
     }
@@ -62,7 +62,9 @@ extension String {
     func isMatch(_ regex: String, options: NSRegularExpression.Options = []) -> Bool {
         do {
             let exp = try NSRegularExpression(pattern: regex, options: options)
-            let matchCount = exp.numberOfMatches(in: self, options: [], range: NSRange(location: 0, length: self.length))
+            let matchCount = exp.numberOfMatches(in: self,
+                                                 options: [],
+                                                 range: NSRange(location: 0, length: self.length))
             return matchCount > 0
         } catch {
             print(error)

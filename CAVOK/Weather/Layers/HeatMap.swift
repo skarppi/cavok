@@ -49,7 +49,9 @@ class HeatMap {
 
             let (x, y) = config.bounds.normalize(localCoord)
 
-            return HeatData(x: Int32(round(x * Float(config.width) - 0.5)), y: Int32(round(y * Float(config.height) - 0.5)), value: Int32(value))
+            return HeatData(x: Int32(round(x * Float(config.width) - 0.5)),
+                            y: Int32(round(y * Float(config.height) - 0.5)),
+                            value: Int32(value))
         }
 
     }
@@ -65,10 +67,16 @@ class HeatMap {
             self.timer("end frame \(self.index)") {
                 print("start frame \(self.index)")
 
-                self.output = HeatMapGPU(input: self.input, config: self.config, steps: self.presentation.ramp.steps).render()
+                self.output = HeatMapGPU(input: self.input,
+                                         config: self.config,
+                                         steps: self.presentation.ramp.steps)
+                    .render()
 
                 if self.output == nil {
-                    self.output = HeatMapCPU(input: self.input, config: self.config, ramp: self.presentation.ramp).render()
+                    self.output = HeatMapCPU(input: self.input,
+                                             config: self.config,
+                                             ramp: self.presentation.ramp)
+                        .render()
                 }
             }
         }
@@ -86,21 +94,24 @@ class HeatMap {
         let pixelData = output!.dataProvider!.data
         let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
 
-        let (nx, ny) = config.bounds.normalize(localCoord)
-        let x = Int(round(nx * Float(config.width)))
-        let y = Int(round(ny * Float(config.height)))
+        let (normX, normY) = config.bounds.normalize(localCoord)
+        let x = Int(round(normX * Float(config.width)))
+        let y = Int(round(normY * Float(config.height)))
 
         let pixelInfo = (config.width * (config.height - 1 - y) + x) * 4
 
-        let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
-        let g = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
-        let b = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
-        let a = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
+        let red = CGFloat(data[pixelInfo]) / CGFloat(255.0)
+        let green = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
+        let blue = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
+        let alpha = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
 
-        return UIColor(red: r, green: g, blue: b, alpha: a)
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
 
-    func crop(bounds: MaplyBoundingBox, box: MaplyBoundingBox, width originalWidth: Int, height originalHeight: Int) -> CGRect {
+    func crop(bounds: MaplyBoundingBox,
+              box: MaplyBoundingBox,
+              width originalWidth: Int,
+              height originalHeight: Int) -> CGRect {
 
         let ll = bounds.normalize(box.ll)
         let ur = bounds.normalize(box.ur)

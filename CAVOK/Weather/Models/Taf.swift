@@ -13,6 +13,7 @@ public class Taf: Observation {
     @objc public dynamic var from = Date()
     @objc public dynamic var to = Date()
 
+    // swiftlint:disable:next function_body_length
     override public func parse(raw: String) {
         super.parse(raw: raw)
 

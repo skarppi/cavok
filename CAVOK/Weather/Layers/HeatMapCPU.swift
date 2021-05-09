@@ -41,7 +41,13 @@ class HeatMapCPU {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
 
-        let context = CGContext(data: bitmapData, width: config.width, height: config.height, bitsPerComponent: 8, bytesPerRow: config.width * 4, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
+        let context = CGContext(data: bitmapData,
+                                width: config.width,
+                                height: config.height,
+                                bitsPerComponent: 8,
+                                bytesPerRow: config.width * 4,
+                                space: colorSpace,
+                                bitmapInfo: bitmapInfo.rawValue)
 
         image = context?.makeImage()
 

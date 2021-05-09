@@ -42,15 +42,11 @@ class WeatherRegion: ObservableObject {
     }
 
     var ll: MaplyCoordinate {
-        get {
-            return MaplyCoordinateMakeWithDegrees(minLon, minLat)
-        }
+        return MaplyCoordinateMakeWithDegrees(minLon, minLat)
     }
 
     var ur: MaplyCoordinate {
-        get {
-            return MaplyCoordinateMakeWithDegrees(maxLon, maxLat)
-        }
+        return MaplyCoordinateMakeWithDegrees(maxLon, maxLat)
     }
 
     init(minLat: Float, maxLat: Float, minLon: Float, maxLon: Float, radius: Int) {
@@ -121,7 +117,7 @@ class WeatherRegion: ObservableObject {
         return Int(distance) <= radius * 1000
     }
 
-    func bbox(padding kilometers: Float, offset_y: Float = 0) -> MaplyBoundingBox {
+    func bbox(padding kilometers: Float, offsetY: Float = 0) -> MaplyBoundingBox {
         let llPadded = ll.locationAt(kilometers: kilometers, direction: 225)
         let urPadded = ur.locationAt(kilometers: kilometers, direction: 45)
 

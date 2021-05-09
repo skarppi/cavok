@@ -227,7 +227,10 @@ extension MapViewController: WhirlyGlobeViewControllerDelegate {
         module.didTapAt(coord: coord)
     }
 
-    func globeViewController(_ view: WhirlyGlobeViewController, didSelect selected: NSObject, atLoc coord: MaplyCoordinate, onScreen screenPt: CGPoint) {
+    func globeViewController(_ view: WhirlyGlobeViewController,
+                             didSelect selected: NSObject,
+                             atLoc coord: MaplyCoordinate,
+                             onScreen screenPt: CGPoint) {
 
         guard self.buttonView.isHidden == false else {
             module?.didTapAt(coord: coord)

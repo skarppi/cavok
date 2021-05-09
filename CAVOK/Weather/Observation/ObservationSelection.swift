@@ -18,16 +18,19 @@ class ObservationSelection: MaplyScreenMarker {
 
         layoutImportance = 2.0
 
-        let center = ObservationMarker(obs: obs).image as! UIImage
+        if let center = ObservationMarker(obs: obs).image as? UIImage {
 
-        let backgroundImage = UIImage(named: "Crosshair")!
+            let bgImage = UIImage(named: "Crosshair")!
 
-        UIGraphicsBeginImageContextWithOptions(backgroundImage.size, false, 0.0)
-        backgroundImage.draw(in: CGRect(x: 0.0, y: 0.0, width: backgroundImage.size.width, height: backgroundImage.size.height))
-        center.draw(in: CGRect(x: backgroundImage.size.width - center.size.width - 1, y: backgroundImage.size.height - center.size.height - 1, width: center.size.width / 2, height: center.size.height / 2))
-        image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
+            UIGraphicsBeginImageContextWithOptions(bgImage.size, false, 0.0)
+            bgImage.draw(in: CGRect(x: 0.0, y: 0.0, width: bgImage.size.width, height: bgImage.size.height))
+            center.draw(in: CGRect(x: bgImage.size.width - center.size.width - 1,
+                                   y: bgImage.size.height - center.size.height - 1,
+                                   width: center.size.width / 2,
+                                   height: center.size.height / 2))
+            image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        }
     }
 
 }

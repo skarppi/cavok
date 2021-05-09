@@ -56,8 +56,6 @@ open class WeatherTileFetcher: WeatherSimpleTileFetcher {
 
         let frame = frames[index]
 
-        // print("Fetching frame \(frame) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox.ll.deg.x) x \(bbox.ll.deg.y) ur = \(bbox.ur.deg.x) x \(bbox.ur.deg.y)")
-
         let localBox = config.coordSystem.geo(toLocalBox: bbox)
 
         if let image = frame.render(tileID, bbox: localBox, imageSize: config.tilesize) {

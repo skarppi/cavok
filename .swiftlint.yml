@@ -2,3 +2,16 @@ included:
   - CAVOK
   - CAVOKTests
   - CAVOKUITests
+
+identifier_name:
+  excluded:
+    - id
+    - i
+    - x
+    - y
+    - z
+    - n
+    - ll
+    - ur
+    - to
+    - NA

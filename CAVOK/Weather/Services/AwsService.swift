@@ -57,8 +57,8 @@ public class AwsService {
         let url = URL(string: UserDefaults.standard.string(forKey: dataSource.rawValue)!)!
 
         print("Fetching AWS data from \(url)")
-        let rq = URLRequest(url: url)
-        return URLSession.shared.dataTask(.promise, with: rq).map { data, _ -> JSON in
+        let req = URLRequest(url: url)
+        return URLSession.shared.dataTask(.promise, with: req).map { data, _ -> JSON in
             return try JSON(data: data)
         }
     }

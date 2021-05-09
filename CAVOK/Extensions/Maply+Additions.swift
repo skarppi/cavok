@@ -47,9 +47,8 @@ extension MaplyCoordinate {
     static let earthRadius = Float(6371.01) // Earth's radius in Kilometers
 
     var deg: MaplyCoordinate {
-        get {
-            return MaplyCoordinate(x: self.x * MaplyCoordinate.kRadiansToDegrees, y: self.y * MaplyCoordinate.kRadiansToDegrees)
-        }
+        return MaplyCoordinate(x: self.x * MaplyCoordinate.kRadiansToDegrees,
+                               y: self.y * MaplyCoordinate.kRadiansToDegrees)
     }
 
     func tile(offsetX: Int32, offsetY: Int32, zoom: Int32) -> MaplyTileID {
@@ -69,12 +68,12 @@ extension MaplyCoordinate {
         let lat1 = Float.pi/2 - self.y
         let dRad = direction * MaplyCoordinate.kDegreesToRadians
 
-        let nC = kilometers / MaplyCoordinate.earthRadius
+        let numC = kilometers / MaplyCoordinate.earthRadius
 
-        let nA = acosf(cosf(nC)*cosf(lat1) + sinf(lat1)*sinf(nC)*cosf(dRad))
-        let dLon = asin(sin(nC)*sin(dRad)/sin(nA))
+        let numA = acosf(cosf(numC)*cosf(lat1) + sinf(lat1)*sinf(numC)*cosf(dRad))
+        let dLon = asin(sin(numC)*sin(dRad)/sin(numA))
 
-        return MaplyCoordinateMake(dLon + self.x, Float.pi/2 - nA)
+        return MaplyCoordinateMake(dLon + self.x, Float.pi/2 - numA)
     }
 }
 
@@ -92,32 +91,27 @@ extension MaplyTileID {
     }
 
     var coordinate: MaplyCoordinate {
-        get {
-            return MaplyTileID.coord(x: self.x, y: self.y, z: self.level)
-        }
+        return MaplyTileID.coord(x: self.x, y: self.y, z: self.level)
     }
 
     var bbox: MaplyBoundingBox {
-        get {
-            return MaplyBoundingBox(
-                ll: MaplyTileID.coord(x: self.x, y: self.y + 1, z: self.level),
-                ur: MaplyTileID.coord(x: self.x + 1, y: self.y, z: self.level)
-            )
-        }
+        return MaplyBoundingBox(
+            ll: MaplyTileID.coord(x: self.x, y: self.y + 1, z: self.level),
+            ur: MaplyTileID.coord(x: self.x + 1, y: self.y, z: self.level)
+        )
     }
 
     var bboxFlip: MaplyBoundingBox {
-        get {
-            let yFlip = (1<<self.level)-self.y-1
-            return MaplyBoundingBox(
-                ll: MaplyTileID.coord(x: self.x, y: yFlip + 1, z: self.level),
-                ur: MaplyTileID.coord(x: self.x + 1, y: yFlip, z: self.level)
-            )
-        }
+        let yFlip = (1<<self.level)-self.y-1
+        return MaplyBoundingBox(
+            ll: MaplyTileID.coord(x: self.x, y: yFlip + 1, z: self.level),
+            ur: MaplyTileID.coord(x: self.x + 1, y: yFlip, z: self.level)
+        )
     }
 
     /** @brief Check if we should even try to load a given tile.
-     @details Tile pyramids can be sparse.  If you know where your pyramid is sparse, you can short circuit the fetch and simply return false here.
+     @details Tile pyramids can be sparse.  If you know where your pyramid is sparse,
+     you can short circuit the fetch and simply return false here.
      @details If this method isn't filled in, everything defaults to true.
      @details tileID The tile we're asking about.
      @details bbox The bounding box of the tile we're asking about, for convenience.

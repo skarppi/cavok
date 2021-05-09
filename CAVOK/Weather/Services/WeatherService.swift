@@ -20,7 +20,8 @@ public class WeatherServer {
             )
         }.map { adds, aws in
             return (adds + aws).filter { station -> Bool in
-                return region.inRange(latitude: station.latitude, longitude: station.longitude) && (station.hasMetar || station.hasTaf)
+                return region.inRange(latitude: station.latitude, longitude: station.longitude)
+                    && (station.hasMetar || station.hasTaf)
 
             }
         }.map { stations in
@@ -38,7 +39,7 @@ public class WeatherServer {
         }
 
         return queryStations(at: region).map { stations -> [Station] in
-            let realm = try! Realm()
+            let realm = try Realm()
             try realm.write {
                 realm.deleteAll()
                 realm.add(stations)
@@ -59,19 +60,19 @@ public class WeatherServer {
                  AwsService.fetchObservations(at: region)
             )
         }.map { addsMetars, addsTafs, awsMetars in
-            let realm = try! Realm()
+            let realm = try Realm()
             let oldMetars = realm.objects(Metar.self)
             let oldTafs = realm.objects(Taf.self)
 
             let metars = (addsMetars + awsMetars).compactMap { metar in
                 self.parseObservation(Metar(), raw: metar, realm: realm)
-            }.sorted { a, b in
-                a.datetime < b.datetime
+            }.sorted { metar1, metar2 in
+                metar1.datetime < metar2.datetime
             }
             let tafs = addsTafs.compactMap { taf in
                 self.parseObservation(Taf(), raw: taf, realm: realm)
-            }.sorted { a, b in
-                a.from < b.from
+            }.sorted { taf1, taf2 in
+                taf1.from < taf2.from
             }
             try realm.write {
                 realm.delete(oldMetars)
@@ -98,25 +99,37 @@ public class WeatherServer {
     // MARK: - Query cached data
 
     func getStationCount() -> Int {
-        let realm = try! Realm()
-        return realm.objects(Station.self).count
+        do {
+            let realm = try Realm()
+            return realm.objects(Station.self).count
+        } catch let error {
+            Messages.show(error: error)
+            return 0
+        }
     }
 
-    func observations() -> Observations {
-        let realm = try! Realm()
+    private func fetch<Element: Observation>(type: Element.Type, sortKey: String, filter: String?) -> [Element] {
+        do {
+            let realm = try Realm()
 
-        let metars = realm.objects(Metar.self).sorted(byKeyPath: "datetime")
-        let tafs = realm.objects(Taf.self).sorted(byKeyPath: "from")
+            let objects = realm.objects(type)
 
-        return Observations(metars: Array(metars), tafs: Array(tafs))
+            let filtered: Results<Element>
+            if let filter = filter {
+                filtered = objects.filter("identifier == '\(filter)'")
+            } else {
+                filtered = objects
+            }
+
+            return Array(filtered.sorted(byKeyPath: sortKey))
+        } catch let error {
+            Messages.show(error: error)
+            return Array()
+        }
     }
 
-    func observations(for identifier: String) -> Observations {
-        let realm = try! Realm()
-
-        let metars = realm.objects(Metar.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "datetime")
-        let tafs = realm.objects(Taf.self).filter("identifier == '\(identifier)'").sorted(byKeyPath: "from")
-
-        return Observations(metars: Array(metars), tafs: Array(tafs))
+    func observations(for identifier: String? = nil) -> Observations {
+        return Observations(metars: fetch(type: Metar.self, sortKey: "datetime", filter: identifier),
+                            tafs: fetch(type: Taf.self, sortKey: "from", filter: identifier))
     }
 }

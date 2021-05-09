@@ -11,8 +11,6 @@ import UIKit
 import WebKit
 import PromiseKit
 
-var myContext = 0
-
 class WebViewController: UIViewController {
 
     @IBOutlet weak var containerView: UIView! = nil
@@ -22,6 +20,8 @@ class WebViewController: UIViewController {
     private var webView: WKWebView!
 
     fileprivate var progressView: UIProgressView!
+
+    private var observation: NSKeyValueObservation?
 
     private var links: [Link] = []
 
@@ -61,26 +61,19 @@ class WebViewController: UIViewController {
 
         urls.sizeToFit()
 
-        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: &myContext)
+        observation = webView.observe(\WKWebView.estimatedProgress, options: .new) { _, change in
+            print("Loaded: \(change)")
+        }
+
+        observation = webView.observe(\.estimatedProgress, options: [.new]) { _, _ in
+            self.progressView.progress = Float(self.webView.estimatedProgress)
+        }
 
         load()
     }
 
-    // observer
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-
-        guard let change = change else { return }
-        if context != &myContext {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-            return
-        }
-
-        if keyPath == "estimatedProgress" {
-            if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
-                progressView.progress = progress
-            }
-            return
-        }
+    deinit {
+        observation = nil
     }
 
     @IBAction func close() {
@@ -88,7 +81,11 @@ class WebViewController: UIViewController {
     }
 
     fileprivate func errorPage(msg: String) {
-        let html = "<!doctype html><html><body><div style=\"width: 100%%; text-align: center; font-size: 36pt;\">\(msg)</div></body></html>"
+        let html = """
+            <!doctype html><html><body><div style=\"width: 100%%; text-align: center; font-size: 36pt;\">
+            \(msg)
+        </div></body></html>
+"""
         webView.loadHTMLString(html, baseURL: nil)
     }
 
@@ -142,7 +139,9 @@ class WebViewController: UIViewController {
 // MARK: WKNavigationDelegate
 extension WebViewController: WKNavigationDelegate {
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let host = navigationAction.request.url?.host {
             if host.contains("googleads") {
                 return decisionHandler(.cancel)

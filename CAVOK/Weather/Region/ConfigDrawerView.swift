@@ -38,6 +38,21 @@ struct ConfigDrawerView: View {
 
     @State var errorMsg: String?
 
+    func updatePosition() {
+        if let location = LastLocation.load() {
+            region.center = location
+            positionAction(region)
+        } else {
+            errorMsg = "Unknown location"
+            Timer.scheduledTimer(withTimeInterval: 10, repeats: false) {_ in
+                errorMsg = nil
+            }
+        }
+    }
+
+    func newLink() {
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             DrawerTitleView(title: "Weather region", action: {  closedAction(region)
@@ -63,17 +78,7 @@ struct ConfigDrawerView: View {
                     .foregroundColor(.blue)
             }
 
-            Button(action: {
-                if let location = LastLocation.load(), false {
-                    region.center = location
-                    positionAction(region)
-                } else {
-                    errorMsg = "Unknown location"
-                    Timer.scheduledTimer(withTimeInterval: 10, repeats: false) {_ in
-                        errorMsg = nil
-                    }
-                }
-            }) {
+            Button(action: updatePosition) {
                 HStack(spacing: 10) {
                     Text("Center Aroud My Location")
                     Image(systemName: "location")
@@ -87,7 +92,7 @@ struct ConfigDrawerView: View {
             HStack {
                 Text("Web Links").font(.system(.title))
                 Spacer()
-                Button(action: {}) {
+                Button(action: newLink) {
                     Image(systemName: "plus.circle")
                         .resizable()
                         .frame(width: 20, height: 20)

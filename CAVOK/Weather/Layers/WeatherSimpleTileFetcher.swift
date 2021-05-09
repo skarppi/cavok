@@ -111,9 +111,14 @@ open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
 
         queue.async {
             requests.forEach { req in
-                let info = TileInfo(priority: req.priority, importance: req.importance, request: req, fetchInfo: req.fetchInfo as! WeatherTileFetchInfo)
-                self.tilesByFetchRequest[req] = info
-                self.toLoad.insert(info)
+                if let fetchInfo = req.fetchInfo as? WeatherTileFetchInfo {
+                    let info = TileInfo(priority: req.priority,
+                                        importance: req.importance,
+                                        request: req,
+                                        fetchInfo: fetchInfo)
+                    self.tilesByFetchRequest[req] = info
+                    self.toLoad.insert(info)
+                }
             }
 
             if !self.loadScheduled {
@@ -148,7 +153,8 @@ open class WeatherSimpleTileFetcher: NSObject, MaplyTileFetcher {
 
         queue.async {
             requests.forEach { request in
-                if let req = request as? MaplyTileFetchRequest, let tile = self.tilesByFetchRequest.removeValue(forKey: req) {
+                if let req = request as? MaplyTileFetchRequest,
+                   let tile = self.tilesByFetchRequest.removeValue(forKey: req) {
                     self.toLoad.remove(tile)
                 }
             }

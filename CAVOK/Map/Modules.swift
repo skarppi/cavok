@@ -26,10 +26,12 @@ class Modules {
 
     class func loadModule(index: Int, delegate: MapDelegate) -> MapModule {
         let module = modules()[index]
-        let className = module["class"] as! String
-
-        let type = NSClassFromString("CAV_OK.\(className)") as! MapModule.Type
-        return type.init(delegate: delegate)
+        if let className = module["class"] as? String,
+           let type = NSClassFromString("CAV_OK.\(className)") as? MapModule.Type {
+            return type.init(delegate: delegate)
+        } else {
+            preconditionFailure("config error")
+        }
     }
 
     class func configuration(module: AnyClass) -> [String: AnyObject]? {

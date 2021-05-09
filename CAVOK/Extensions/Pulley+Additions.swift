@@ -13,9 +13,7 @@ import SwiftUI
 extension UIViewController {
 
     var pulley: PulleyViewController! {
-        get {
-            return self.parent as? PulleyViewController
-        }
+        return self.parent as? PulleyViewController
     }
 }
 
@@ -41,7 +39,8 @@ extension PulleyViewController {
     }
 }
 
-class PulleyUIHostingController<Content>: UIHostingController<Content>, PulleyDrawerViewControllerDelegate where Content: View {
+class PulleyUIHostingController<Content>: UIHostingController<Content>,
+                                          PulleyDrawerViewControllerDelegate where Content: View {
 
     var sizes: PulleySizes! = nil
 

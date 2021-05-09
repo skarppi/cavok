@@ -15,7 +15,7 @@ public struct Legend {
     var titles: [String]
 }
 
-public protocol MapDelegate {
+public protocol MapDelegate: AnyObject {
 
     func loaded(frame: Int?, legend: Legend)
 

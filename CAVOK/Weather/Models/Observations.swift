@@ -72,6 +72,8 @@ class Observations {
 
         let selectedFrame: Int? = metars.isEmpty ? nil : metars.count - 1
 
-        return ObservationGroups(timeslots: all.map { $0.slot }, frames: all.map { $0.observations }, selectedFrame: selectedFrame)
+        return ObservationGroups(timeslots: all.map { $0.slot },
+                                 frames: all.map { $0.observations },
+                                 selectedFrame: selectedFrame)
     }
 }

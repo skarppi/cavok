@@ -19,21 +19,29 @@ class HeatMapGPU {
     static var commandQueue = device?.makeCommandQueue()
 
     static var pipelineState: MTLComputePipelineState? = {
-        if let defaultLibrary = device?.makeDefaultLibrary() {
-            let kernelFunction = defaultLibrary.makeFunction(name: "heatMapShader")
-            return try! device?.makeComputePipelineState(function: kernelFunction!)
-        } else {
-            return nil
+        if let defaultLibrary = device?.makeDefaultLibrary(),
+           let kernelFunction = defaultLibrary.makeFunction(name: "heatMapShader") {
+            do {
+                return try device?.makeComputePipelineState(function: kernelFunction)
+            } catch let error {
+                assertionFailure("compute pipeline \(error)" )
+            }
         }
+        return nil
     }()
 
+    // swiftlint:disable:next function_body_length
     init(input: [HeatData], config: WeatherConfig, steps: [GridStep]) {
         guard let device = HeatMapGPU.device,
               let commandQueue = HeatMapGPU.commandQueue,
               let pipelineState = HeatMapGPU.pipelineState
         else { return }
 
-        let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: config.width, height: config.height, mipmapped: false)
+        let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .rgba8Unorm,
+            width: config.width,
+            height: config.height,
+            mipmapped: false)
         outTextureDescriptor.usage = [.shaderRead, .shaderWrite]
         self.outTexture = device.makeTexture(descriptor: outTextureDescriptor)
 
@@ -42,7 +50,8 @@ class HeatMapGPU {
             return
         }
 
-        if let commandBuffer = commandQueue.makeCommandBuffer(), let commandEncoder = commandBuffer.makeComputeCommandEncoder() {
+        if let commandBuffer = commandQueue.makeCommandBuffer(),
+           let commandEncoder = commandBuffer.makeComputeCommandEncoder() {
             commandEncoder.setComputePipelineState(pipelineState)
             commandEncoder.setTexture(self.outTexture, index: 0)
 
@@ -52,15 +61,22 @@ class HeatMapGPU {
             var count = input.count
             commandEncoder.setBytes(&count, length: MemoryLayout<Int32>.stride, index: 1)
 
-            let dataBuffer = device.makeBuffer(bytes: &arr, length: MemoryLayout<Int32>.stride * arr.count, options: .storageModeShared)
+            let dataBuffer = device.makeBuffer(bytes: &arr,
+                                               length: MemoryLayout<Int32>.stride * arr.count,
+                                               options: .storageModeShared)
             commandEncoder.setBuffer(dataBuffer, offset: 0, index: 2)
 
             var stepsArray = steps.flatMap { $0.int4() }
-            let stepsBuffer = device.makeBuffer(bytes: &stepsArray, length: MemoryLayout<Int32>.stride * stepsArray.count, options: .storageModeShared)
+            let stepsBuffer = device.makeBuffer(bytes: &stepsArray,
+                                                length: MemoryLayout<Int32>.stride * stepsArray.count,
+                                                options: .storageModeShared)
             commandEncoder.setBuffer(stepsBuffer, offset: 0, index: 3)
 
             let threadsPerThreadgroup = MTLSizeMake(pipelineState.threadExecutionWidth, 1, 1)
-            let threadGroupsPerGrid = MTLSizeMake(config.width / threadsPerThreadgroup.width, config.height / threadsPerThreadgroup.height, 1)
+            let threadGroupsPerGrid = MTLSizeMake(
+                config.width / threadsPerThreadgroup.width,
+                config.height / threadsPerThreadgroup.height,
+                1)
 
             assert(threadGroupsPerGrid.width > 0)
             assert(threadGroupsPerGrid.height > 0)
@@ -98,6 +114,16 @@ class HeatMapGPU {
         )
 
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-        return CGImage(width: outTexture.width, height: outTexture.height, bitsPerComponent: 8, bitsPerPixel: 8 * 4, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo, provider: providerRef!, decode: nil, shouldInterpolate: false, intent: CGColorRenderingIntent.defaultIntent)
+        return CGImage(width: outTexture.width,
+                       height: outTexture.height,
+                       bitsPerComponent: 8,
+                       bitsPerPixel: 8 * 4,
+                       bytesPerRow: bytesPerRow,
+                       space: colorSpace,
+                       bitmapInfo: bitmapInfo,
+                       provider: providerRef!,
+                       decode: nil,
+                       shouldInterpolate: false,
+                       intent: CGColorRenderingIntent.defaultIntent)
     }
 }

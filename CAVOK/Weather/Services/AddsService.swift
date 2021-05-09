@@ -72,7 +72,9 @@ public class AddsService {
         return response["data"]
     }
 
-    private class func fetch(dataSource: String, with: [String: String] = [:], at region: WeatherRegion) -> Promise<XMLIndexer> {
+    private class func fetch(dataSource: String,
+                             with: [String: String] = [:],
+                             at region: WeatherRegion) -> Promise<XMLIndexer> {
         var params = [
             "dataSource": dataSource,
             "requestType": "retrieve",
@@ -89,13 +91,13 @@ public class AddsService {
         var components = URLComponents(string: host)!
         components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
 
-        let rq = URLRequest(url: components.url!)
-        return execute(rq, retries: 0)
+        let req = URLRequest(url: components.url!)
+        return execute(req, retries: 0)
     }
 
-    private class func execute(_ rq: URLRequest, retries: Int = 0) -> Promise<XMLIndexer> {
-        print("Fetching ADDS data from \(rq.url!)")
-        return URLSession.shared.dataTask(.promise, with: rq).map { data, _ -> XMLIndexer in
+    private class func execute(_ req: URLRequest, retries: Int = 0) -> Promise<XMLIndexer> {
+        print("Fetching ADDS data from \(req.url!)")
+        return URLSession.shared.dataTask(.promise, with: req).map { data, _ -> XMLIndexer in
             let unzipped: Data = try {
                 if data.isGzipped {
                     return try data.gunzipped()
@@ -110,7 +112,7 @@ public class AddsService {
                 if retries > 0 {
                     return after(.seconds(1)).then { () -> Promise<XMLIndexer> in
                         print("Retrying ADDS query still \(retries - 1) times")
-                        return execute(rq, retries: retries - 1)
+                        return execute(req, retries: retries - 1)
                     }
                 } else {
                     throw Weather.error(msg: "ADDS temporarily unavailable")

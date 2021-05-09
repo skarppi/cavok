@@ -15,7 +15,7 @@ struct TimeslotDrawerView: View {
     @GestureState var cursor = CGPoint.zero
 
     var body: some View {
-        PullToRefreshView(action: { refreshAction() }, isLoading: $state.isLoading) {
+        PullToRefreshView(action: refreshAction, isLoading: $state.isLoading) {
             DrawerHandleView()
 
             VStack(alignment: .leading) {
@@ -24,7 +24,7 @@ struct TimeslotDrawerView: View {
                     .foregroundColor(state.statusColor)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
 
-                Timeline
+                timeline
             }
             .padding(.horizontal)
             .gesture(
@@ -35,7 +35,7 @@ struct TimeslotDrawerView: View {
         }
     }
 
-    private var Timeline: some View {
+    private var timeline: some View {
         ZStack {
             HStack(spacing: 0) {
                 ForEach(Array(state.slots.enumerated()), id: \.element) { (index, slot) in

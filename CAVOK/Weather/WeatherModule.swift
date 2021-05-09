@@ -35,7 +35,7 @@ final class Temperature: WeatherModule, MapModule {
 
 open class WeatherModule {
 
-    private weak var delegate: MapDelegate?
+    private weak var delegate: MapDelegate!
 
     private let weatherService = WeatherServer()
 
@@ -121,10 +121,10 @@ open class WeatherModule {
 
         let drawer = ConfigDrawerView(closedAction: endRegionSelection, positionAction: moveRegionSelection)
 
-        //        let drawer = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "configDrawer") as! ConfigDrawerController
-        //        drawer.setup(region: region, closed: endRegionSelection, resized: moveRegionSelection)
-        //        delegate.pulley.setDrawerContentViewController(controller: drawer)
-        delegate.pulley.setDrawerContent(view: drawer.environmentObject(region), sizes: PulleySizes(collapsed: 275, partial: nil, full: true), animated: false)
+        delegate.pulley.setDrawerContent(
+            view: drawer.environmentObject(region),
+            sizes: PulleySizes(collapsed: 275, partial: nil, full: true),
+            animated: false)
 
         delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
     }
@@ -197,7 +197,9 @@ open class WeatherModule {
             _ = self.refresh()
         }
 
-        delegate.pulley.setDrawerContent(view: timeline.environmentObject(timeslots), sizes: PulleySizes(collapsed: 80, partial: nil, full: false), animated: false)
+        delegate.pulley.setDrawerContent(view: timeline.environmentObject(timeslots),
+                                         sizes: PulleySizes(collapsed: 80, partial: nil, full: false),
+                                         animated: false)
     }
 
     // MARK: - Observations
@@ -240,7 +242,8 @@ open class WeatherModule {
             return ObservationMarker(obs: obs)
         }
 
-        if let key = markers.first, let components = delegate.mapView.addScreenMarkers(markers, desc: nil) {
+        if let key = markers.first,
+           let components = delegate.mapView.addScreenMarkers(markers, desc: nil) {
             delegate.addComponents(key: key, value: components)
         }
 
@@ -287,7 +290,9 @@ open class WeatherModule {
 
         let all = weatherService.observations(for: observation.station?.identifier ?? "")
 
-        let observationDrawer = ObservationDrawerView(presentation: presentation, obs: observation, observations: all) { () in
+        let observationDrawer = ObservationDrawerView(presentation: presentation,
+                                                      obs: observation,
+                                                      observations: all) { () in
             self.cleanDetails()
             self.showTimeslotDrawer()
         }

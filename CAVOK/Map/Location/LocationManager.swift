@@ -52,7 +52,9 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            let coordinate = MaplyCoordinateMakeWithDegrees(Float(location.coordinate.longitude), Float(location.coordinate.latitude))
+            let coordinate = MaplyCoordinateMakeWithDegrees(
+                Float(location.coordinate.longitude),
+                Float(location.coordinate.latitude))
             print("Got location with accuracy \(location.horizontalAccuracy) to \(location.coordinate)")
             fulfill(coordinate)
 

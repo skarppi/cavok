@@ -24,7 +24,18 @@ class LegendView: UIView {
 
         let gradientLayer = CAGradientLayer()
         let ramp = legend.gradient
-        gradientLayer.colors = [ramp[5], ramp[4], ramp[4], ramp[3], ramp[3], ramp[2], ramp[2], ramp[1], ramp[1], ramp[0]]
+        gradientLayer.colors = [
+            ramp[5],
+            ramp[4],
+            ramp[4],
+            ramp[3],
+            ramp[3],
+            ramp[2],
+            ramp[2],
+            ramp[1],
+            ramp[1],
+            ramp[0]
+        ]
         gradientLayer.locations = [ 0.15, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.85]
         gradientLayer.frame.origin = CGPoint(x: 0, y: 15)
         gradientLayer.frame.size = CGSize(width: 15, height: frame.height - gradientLayer.frame.origin.y)

@@ -60,7 +60,8 @@ struct PullToRefreshView<Content>: View where Content: View {
                                 .opacity(1 - arrowAngle / 180)
                         }
                     }
-                    .offset(y: isLoading ? 40 : 0)  // offset the content to allow the progress indicator to show when loading
+                    // offset the content to allow the progress indicator to show when loading
+                    .offset(y: isLoading ? 40 : 0)
                 }
 
             }
@@ -112,7 +113,9 @@ struct PullToRefreshView<Content>: View where Content: View {
             .frame(height: 40)
             .font(.system(size: 18, weight: .bold))
         }
-        .frame(height: 50 + (scrollOffset > 0 ? scrollOffset : 0)) // only allow height to increase if the user scrolls down
+        .frame(height: 50 +
+                // only allow height to increase if the user scrolls down
+                (scrollOffset > 0 ? scrollOffset : 0))
     }
 }
 

@@ -10,7 +10,16 @@ import Foundation
 
 class DebugTileFetcher: WeatherTileFetcher {
 
-    let debugColors: [Int] = [0x86812D, 0x5EB9C9, 0x2A7E3E, 0x4F256F, 0xD89CDE, 0x773B28, 0x333D99, 0x862D52, 0xC2C653, 0xB8583D]
+    let debugColors: [Int] = [0x86812D,
+                              0x5EB9C9,
+                              0x2A7E3E,
+                              0x4F256F,
+                              0xD89CDE,
+                              0x773B28,
+                              0x333D99,
+                              0x862D52,
+                              0xC2C653,
+                              0xB8583D]
 
     var loader: MaplyQuadImageFrameLoader?
 
@@ -36,11 +45,9 @@ class DebugTileFetcher: WeatherTileFetcher {
 
         let bbox = loader?.geoBounds(forTile: tileID)
 
-        // print("Fetched frame \(fetchInfo) tile: \(tileID.level): (\(tileID.x),\(tileID.y)) ll = \(bbox?.ll.deg.x ?? 0) x \(bbox?.ll.deg.y ?? 0) ur = \(bbox?.ur.deg.x ?? 0) x \(bbox?.ur.deg.y ?? 0)")
+        let width = CGFloat(tileSize())
 
-        let w = CGFloat(tileSize())
-
-        let size = CGSize(width: w, height: w)
+        let size = CGSize(width: width, height: width)
         UIGraphicsBeginImageContext(size)
 
         // Draw into the image context
@@ -66,7 +73,8 @@ class DebugTileFetcher: WeatherTileFetcher {
         fillColor.setStroke()
         fillColor.setFill()
         ctx?.setTextDrawingMode(CGTextDrawingMode.fill)
-        let textStr = "\(tileID.level) \(info?.frame ?? 0): (\(tileID.x),\(tileID.y)) \(valid) = (\(bbox?.ll.deg.x ?? 0),\(bbox?.ll.deg.y ?? 0))"
+        let textStr = "\(tileID.level) \(info?.frame ?? 0):" +
+            "(\(tileID.x),\(tileID.y)) \(valid) = (\(bbox?.ll.deg.x ?? 0),\(bbox?.ll.deg.y ?? 0))"
         textStr.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height), withAttributes: nil)
 
         // Grab the image and shut things down

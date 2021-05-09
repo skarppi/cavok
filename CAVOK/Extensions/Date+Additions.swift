@@ -20,20 +20,14 @@ public extension Date {
      - parameter minutes: number of minutes to add
      - parameter hours: number of hours to add
      - parameter days: number of days to add
-     - parameter weeks: number of weeks to add
-     - parameter months: number of months to add
-     - parameter years: number of years to add
      - returns: the NSDate computed
      */
-    func add(_ seconds: Int=0, minutes: Int = 0, hours: Int = 0, days: Int = 0, weeks: Int = 0, months: Int = 0, years: Int = 0) -> Date {
+    func add(seconds: Int = 0, minutes: Int = 0, hours: Int = 0, days: Int = 0) -> Date {
         let calendar = Calendar.current
         var date = calendar.date(byAdding: .second, value: seconds, to: self)!
         date = calendar.date(byAdding: .minute, value: minutes, to: date)!
         date = calendar.date(byAdding: .day, value: days, to: date)!
         date = calendar.date(byAdding: .hour, value: hours, to: date)!
-        date = calendar.date(byAdding: .weekOfYear, value: weeks, to: date)!
-        date = calendar.date(byAdding: .month, value: months, to: date)!
-        date = calendar.date(byAdding: .year, value: years, to: date)!
         return date
     }
 
@@ -44,7 +38,7 @@ public extension Date {
      - returns: the NSDate computed
      */
     func addSeconds (_ seconds: Int) -> Date {
-        return add(seconds)
+        return add(seconds: seconds)
     }
 
     /**
@@ -71,9 +65,7 @@ public extension Date {
      Date minuts
      */
     var minutes: Int {
-        get {
-            return getComponent(Calendar.Component.minute)
-        }
+        return getComponent(Calendar.Component.minute)
     }
 
     /**

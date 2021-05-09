@@ -23,9 +23,9 @@ class Tokenizer {
     }
 
     func loop(stopWhen: (String) -> Bool) -> [String] {
-        let to = items.firstIndex(where: stopWhen) ?? items.endIndex
-        let matching = items.prefix(upTo: to)
-        items.removeSubrange(0 ..< to)
+        let endIndex = items.firstIndex(where: stopWhen) ?? items.endIndex
+        let matching = items.prefix(upTo: endIndex)
+        items.removeSubrange(0 ..< endIndex)
         return Array(matching)
     }
 

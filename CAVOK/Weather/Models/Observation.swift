@@ -93,9 +93,8 @@ open class Observation: Object, Identifiable {
         set { self.condition = newValue.rawValue }
     }
 
-    public var id: String { get {
+    public var id: String {
         return raw
-    }
     }
 
     override public static func primaryKey() -> String? {
@@ -196,12 +195,12 @@ open class Observation: Object, Identifiable {
 
     // MARK: - Cloud coverage
 
-    let CLOUD_COVERAGE = ["FEW", "SCT", "OVC", "BKN"]
+    let oktas = ["FEW", "SCT", "OVC", "BKN"]
 
-    let CAVOK_CONDITIONS = ["CAVOK", "SKC", "NCD", "NSC", "CLR"]
+    let cavokSynonyms = ["CAVOK", "SKC", "NCD", "NSC", "CLR"]
 
     func isCavok() -> Bool {
-        return self.clouds?.contains(CAVOK_CONDITIONS) ?? false
+        return self.clouds?.contains(cavokSynonyms) ?? false
     }
 
     private func cavokLevel() -> Int? {
@@ -222,18 +221,19 @@ open class Observation: Object, Identifiable {
         return nil
     }
 
-    // the height above the ground or water of the base of the lowest layer of cloud below 6000 meters (20,000 feet) covering more than half the sky.
+    // the height above the ground or water of the base of the lowest layer of
+    // cloud below 6000 meters (20,000 feet) covering more than half the sky.
     private func getCeiling() -> Int? {
         return cloudLevel(layers: ["OVC", "BKN"])
     }
 
     // the lowest altitude of the visible portion of the cloud.
     private func getCloudBase() -> Int? {
-        return cloudLevel(layers: CLOUD_COVERAGE)
+        return cloudLevel(layers: oktas)
     }
 
     func isSkyCondition(field: String?) -> Bool {
-        let all = CAVOK_CONDITIONS + CLOUD_COVERAGE + ["VV", "NIL", "/"]
+        let all = cavokSynonyms + oktas + ["VV", "NIL", "/"]
 
         if let field = field {
             return all.contains { item in
