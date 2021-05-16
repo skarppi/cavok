@@ -103,7 +103,17 @@ open class WeatherModule {
             let region = WeatherRegion.load() ??
                 WeatherRegion(center: LastLocation.load() ?? delegate.mapView.getPosition(),
                               radius: 100)
-            startRegionSelection(at: region)
+
+            region.onChange(action: moveRegionSelection(to:))
+
+            delegate.pulley.setDrawerContent(
+                view: ConfigDrawerView(closedAction: endRegionSelection).environmentObject(region),
+                sizes: PulleySizes(collapsed: 275, partial: nil, full: true),
+                animated: false)
+
+            delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+
+            moveRegionSelection(to: region)
         } else {
             endRegionSelection()
         }
@@ -112,21 +122,8 @@ open class WeatherModule {
     func didTapAt(coord: MaplyCoordinate) {
         if let selection = delegate.findComponent(ofType: RegionSelection.self) as? RegionSelection {
             selection.region.center = coord
-            startRegionSelection(at: selection.region)
+            moveRegionSelection(to: selection.region)
         }
-    }
-
-    private func startRegionSelection(at region: WeatherRegion) {
-        //        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
-
-        let drawer = ConfigDrawerView(closedAction: endRegionSelection, positionAction: moveRegionSelection)
-
-        delegate.pulley.setDrawerContent(
-            view: drawer.environmentObject(region),
-            sizes: PulleySizes(collapsed: 275, partial: nil, full: true),
-            animated: false)
-
-        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
     }
 
     private func moveRegionSelection(to region: WeatherRegion) {

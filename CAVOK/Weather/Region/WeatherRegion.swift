@@ -18,12 +18,14 @@ class WeatherRegion: ObservableObject {
 
     var matches: Int = 0
 
+    var objectDidChange = ObservableObjectPublisher()
+    private var cancellables = Set<AnyCancellable>()
+
     // radius of the circle in kilometers
-    var radius: Int {
+    @Published var radius: Int {
         didSet {
             let recalculated = WeatherRegion(center: center, radius: radius)
             copyBoundaries(from: recalculated)
-            objectWillChange.send()
         }
     }
 
@@ -74,6 +76,8 @@ class WeatherRegion: ObservableObject {
         self.maxLat = from.maxLat
         self.minLon = from.minLon
         self.maxLon = from.maxLon
+
+        objectDidChange.send()
     }
 
     static func load() -> WeatherRegion? {
@@ -106,6 +110,12 @@ class WeatherRegion: ObservableObject {
         let defaults = UserDefaults.standard
         defaults.set(coordinates, forKey: "coordinates")
         return defaults.synchronize()
+    }
+
+    func onChange(action: @escaping (WeatherRegion) -> Void) {
+        objectDidChange
+            .sink { action(self) }
+            .store(in: &cancellables)
     }
 
     func inRange(latitude: Float, longitude: Float) -> Bool {

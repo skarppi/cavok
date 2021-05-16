@@ -32,8 +32,6 @@ struct ConfigDrawerView: View {
 
     var closedAction: ((WeatherRegion) -> Void)
 
-    var positionAction: ((WeatherRegion) -> Void)
-
     @EnvironmentObject var region: WeatherRegion
 
     @State var errorMsg: String?
@@ -41,7 +39,6 @@ struct ConfigDrawerView: View {
     func updatePosition() {
         if let location = LastLocation.load() {
             region.center = location
-            positionAction(region)
         } else {
             errorMsg = "Unknown location"
             Timer.scheduledTimer(withTimeInterval: 10, repeats: false) {_ in
@@ -61,12 +58,7 @@ struct ConfigDrawerView: View {
                 Stepper("Radius \(region.radius) km",
                         value: $region.radius,
                         in: 100...3000,
-                        step: region.radius >= 1000 ? 200 : 100,
-                        onEditingChanged: { didChange in
-                            if didChange {
-                                positionAction(region)
-                            }
-                        }
+                        step: region.radius >= 1000 ? 200 : 100
                 )
             }
 
@@ -104,10 +96,6 @@ struct ConfigDrawerView: View {
         }
         .padding(.horizontal)
         .edgesIgnoringSafeArea(.all)
-        .onAppear(perform: {
-            positionAction(region)
-        })
-
     }
 }
 
@@ -132,8 +120,7 @@ struct RegionConfigView: View {
 struct ConfigDrawerView_Previews: PreviewProvider {
     static var previews: some View {
         ConfigDrawerView(
-            closedAction: { _ in print("Closed") },
-            positionAction: { _ in print("move") }
+            closedAction: { _ in print("Closed") }
         ).environmentObject(WeatherRegion(center: MaplyCoordinate(), radius: 500))
     }
 }
