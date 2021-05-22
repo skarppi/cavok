@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
+		B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9B012653077300F3E74D /* LinkEditView.swift */; };
 		B64D83C126150316003AE228 /* TimeslotState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C026150316003AE228 /* TimeslotState.swift */; };
 		B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */; };
 		B64D83CB261511A3003AE228 /* DrawerTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83CA261511A3003AE228 /* DrawerTitleView.swift */; };
@@ -60,10 +62,6 @@
 		C09D66F32540CACA00FB3D39 /* RegionSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C62540CACA00FB3D39 /* RegionSelection.swift */; };
 		C09D66F42540CACA00FB3D39 /* StationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C72540CACA00FB3D39 /* StationMarker.swift */; };
 		C09D66F52540CACA00FB3D39 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C82540CACA00FB3D39 /* Links.swift */; };
-		C09D66F62540CACA00FB3D39 /* RightImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C92540CACA00FB3D39 /* RightImageButton.swift */; };
-		C09D66F72540CACA00FB3D39 /* LinkEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66CA2540CACA00FB3D39 /* LinkEditController.swift */; };
-		C09D66F82540CACA00FB3D39 /* ConfigDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66CB2540CACA00FB3D39 /* ConfigDrawerController.swift */; };
-		C09D66F92540CACA00FB3D39 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66CC2540CACA00FB3D39 /* LinkTableViewCell.swift */; };
 		C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66CD2540CACA00FB3D39 /* WeatherRegion.swift */; };
 		C09D66FD2540CACA00FB3D39 /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D12540CACA00FB3D39 /* Timeslot.swift */; };
 		C09D66FE2540CACA00FB3D39 /* WeatherModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D22540CACA00FB3D39 /* WeatherModule.swift */; };
@@ -135,6 +133,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
+		B62B9B012653077300F3E74D /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 		B64D83C026150316003AE228 /* TimeslotState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotState.swift; sourceTree = "<group>"; };
 		B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDrawerView.swift; sourceTree = "<group>"; };
 		B64D83CA261511A3003AE228 /* DrawerTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTitleView.swift; sourceTree = "<group>"; };
@@ -193,10 +193,6 @@
 		C09D66C62540CACA00FB3D39 /* RegionSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSelection.swift; sourceTree = "<group>"; };
 		C09D66C72540CACA00FB3D39 /* StationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationMarker.swift; sourceTree = "<group>"; };
 		C09D66C82540CACA00FB3D39 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
-		C09D66C92540CACA00FB3D39 /* RightImageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightImageButton.swift; sourceTree = "<group>"; };
-		C09D66CA2540CACA00FB3D39 /* LinkEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkEditController.swift; sourceTree = "<group>"; };
-		C09D66CB2540CACA00FB3D39 /* ConfigDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigDrawerController.swift; sourceTree = "<group>"; };
-		C09D66CC2540CACA00FB3D39 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
 		C09D66CD2540CACA00FB3D39 /* WeatherRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherRegion.swift; sourceTree = "<group>"; };
 		C09D66D12540CACA00FB3D39 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeslot.swift; sourceTree = "<group>"; };
 		C09D66D22540CACA00FB3D39 /* WeatherModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherModule.swift; sourceTree = "<group>"; };
@@ -453,12 +449,10 @@
 				C09D66C62540CACA00FB3D39 /* RegionSelection.swift */,
 				C09D66C72540CACA00FB3D39 /* StationMarker.swift */,
 				C09D66C82540CACA00FB3D39 /* Links.swift */,
-				C09D66C92540CACA00FB3D39 /* RightImageButton.swift */,
-				C09D66CA2540CACA00FB3D39 /* LinkEditController.swift */,
-				C09D66CB2540CACA00FB3D39 /* ConfigDrawerController.swift */,
-				C09D66CC2540CACA00FB3D39 /* LinkTableViewCell.swift */,
 				C09D66CD2540CACA00FB3D39 /* WeatherRegion.swift */,
 				B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */,
+				B62B9AFD2650FC5100F3E74D /* LinksView.swift */,
+				B62B9B012653077300F3E74D /* LinkEditView.swift */,
 			);
 			path = Region;
 			sourceTree = "<group>";
@@ -700,9 +694,8 @@
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
 				B6D0493E263E7EBE000DF0A8 /* DrawerHandleView.swift in Sources */,
 				C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */,
-				C09D66F82540CACA00FB3D39 /* ConfigDrawerController.swift in Sources */,
 				B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */,
-				C09D66F72540CACA00FB3D39 /* LinkEditController.swift in Sources */,
+				B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
 				C09D66F42540CACA00FB3D39 /* StationMarker.swift in Sources */,
@@ -715,8 +708,8 @@
 				C09D66EF2540CACA00FB3D39 /* Taf.swift in Sources */,
 				B64D83C126150316003AE228 /* TimeslotState.swift in Sources */,
 				C09D66E72540CACA00FB3D39 /* FrameChanger.swift in Sources */,
-				C09D66F62540CACA00FB3D39 /* RightImageButton.swift in Sources */,
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,
+				B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */,
 				C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */,
 				C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */,
 				C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */,
@@ -730,7 +723,6 @@
 				C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */,
 				C09D669A2540CAB800FB3D39 /* Messages.swift in Sources */,
 				C09D66E62540CACA00FB3D39 /* ColorRamp.swift in Sources */,
-				C09D66F92540CACA00FB3D39 /* LinkTableViewCell.swift in Sources */,
 				B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */,
 				C09D67462540D03100FB3D39 /* ObservationDrawerView.swift in Sources */,
 				C09D67002540CACA00FB3D39 /* WeatherService.swift in Sources */,

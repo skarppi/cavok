@@ -7,32 +7,13 @@
 
 import SwiftUI
 
-struct DynamicSizeHelper {
-    static private let baseViewWidth: CGFloat = 414.0
-    static private let baseViewHeight: CGFloat = 896.0
-
-    static func getHeight(_ height: CGFloat) -> CGFloat {
-        return (height / baseViewHeight) * UIScreen.main.bounds.height
-    }
-
-    static func getWidth(_ width: CGFloat) -> CGFloat {
-        return (width / baseViewWidth) * UIScreen.main.bounds.width
-    }
-
-    static func getOffsetX(_ x: CGFloat) -> CGFloat {
-        return (x / baseViewWidth) * UIScreen.main.bounds.width
-    }
-
-    static func getOffsetY(_ y: CGFloat) -> CGFloat {
-        return (y / baseViewHeight) * UIScreen.main.bounds.height
-    }
-}
-
 struct ConfigDrawerView: View {
 
     var closedAction: ((WeatherRegion) -> Void)
 
     @EnvironmentObject var region: WeatherRegion
+
+    @State var links = Links.load()
 
     @State var errorMsg: String?
 
@@ -47,12 +28,11 @@ struct ConfigDrawerView: View {
         }
     }
 
-    func newLink() {
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            DrawerTitleView(title: "Weather region", action: {  closedAction(region)
+            DrawerTitleView(title: "Weather region", action: {
+                _ = Links.save(links)
+                closedAction(region)
             })
             HStack {
                 Stepper("Radius \(region.radius) km",
@@ -81,39 +61,12 @@ struct ConfigDrawerView: View {
                     .stroke(Color.accentColor, lineWidth: 1)
             )
 
-            HStack {
-                Text("Web Links").font(.system(.title))
-                Spacer()
-                Button(action: newLink) {
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .padding()
-                }
-            }
+            LinksView(links: $links)
 
             Spacer()
         }
         .padding(.horizontal)
         .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct RegionConfigView: View {
-    var title: String?
-    var action: (() -> Void)
-
-    var body: some View {
-        HStack {
-            Text(title ?? "-").font(.system(.title))
-            Spacer()
-            Button(action: self.action) {
-                Image(systemName: "xmark.circle.fill")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .padding()
-            }
-        }
     }
 }
 

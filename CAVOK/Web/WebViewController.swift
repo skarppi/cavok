@@ -127,8 +127,8 @@ class WebViewController: UIViewController {
         let content = webView.configuration.userContentController
         content.removeAllUserScripts()
 
-        if let elements = link.blockElements {
-            let script = block(elements: elements)
+        if link.blockElements.length > 0 {
+            let script = block(elements: link.blockElements)
             content.addUserScript(script)
         }
 
