@@ -8,18 +8,33 @@
 
 import Foundation
 
-struct Link: Hashable {
+struct Link: Hashable, Identifiable {
     var id = UUID()
     var title: String
     var url: String
     var blockElements: String
+
+    func buildURL() -> URL? {
+        if url.contains("{lat}") || url.contains("{lon") {
+            if let deg = LastLocation.load()?.deg {
+                let lat = String(deg.y) + (deg.y > 0 ? "N" : "S")
+                let lon = String(deg.x) + (deg.x > 0 ? "E" : "W")
+
+                return URL(string: url.replace("{lat}", with: lat).replace("{lon}", with: lon))
+            } else {
+                return nil
+            }
+        } else {
+            return URL(string: url)
+        }
+    }
 }
 
 class Links {
 
     class func load() -> [Link] {
         if let links = UserDefaults.standard.array(forKey: "links") as? [[String: String]] {
-            return links.enumerated().compactMap { (index, link) in
+            return links.compactMap { link in
                 guard let title = link["title"], let url = link["url"] else {
                     return nil
                 }

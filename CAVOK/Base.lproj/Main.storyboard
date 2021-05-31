@@ -122,86 +122,15 @@
                         <outlet property="legendView" destination="8T7-O4-mC4" id="HlT-PA-2Ts"/>
                         <outlet property="moduleType" destination="EAe-qi-deb" id="95T-eG-88J"/>
                         <outlet property="moduleTypeLeftConstraint" destination="MCq-96-rzx" id="mLf-Cr-IkD"/>
-                        <segue destination="y93-m7-7Hy" kind="presentation" identifier="OpenBrowser" id="RaL-Fk-TrO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="112.50000000000001" y="115.94202898550725"/>
         </scene>
-        <!--Web View Controller-->
-        <scene sceneID="NtG-LO-eRl">
-            <objects>
-                <viewController id="U9G-f2-9Ay" customClass="WebViewController" customModule="CAV_OK" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pPV-3b-dWt">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EWh-1r-1oq">
-                                <rect key="frame" x="0.0" y="56" width="375" height="668"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="4kC-pd-MfR"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="4kC-pd-MfR" firstAttribute="trailing" secondItem="EWh-1r-1oq" secondAttribute="trailing" id="Bzs-qt-eFg"/>
-                            <constraint firstItem="4kC-pd-MfR" firstAttribute="bottom" secondItem="EWh-1r-1oq" secondAttribute="bottom" id="KFE-6y-P6n"/>
-                            <constraint firstItem="EWh-1r-1oq" firstAttribute="top" secondItem="4kC-pd-MfR" secondAttribute="top" id="Q3S-1l-86u"/>
-                            <constraint firstItem="EWh-1r-1oq" firstAttribute="leading" secondItem="4kC-pd-MfR" secondAttribute="leading" id="tyj-0l-18h"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="boG-TV-cVC">
-                        <barButtonItem key="leftBarButtonItem" image="Back" id="83L-O3-Wkb">
-                            <connections>
-                                <action selector="close" destination="U9G-f2-9Ay" id="qdf-44-U7Y"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="w5q-3P-DBr">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="bar" selectedSegmentIndex="0" id="fzy-Xh-Hbv">
-                                <rect key="frame" x="239" y="12" width="120" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="fmi"/>
-                                    <segment title="mb"/>
-                                </segments>
-                                <connections>
-                                    <action selector="load" destination="U9G-f2-9Ay" eventType="valueChanged" id="jJn-aZ-dVV"/>
-                                </connections>
-                            </segmentedControl>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="containerView" destination="EWh-1r-1oq" id="aCO-Je-1eh"/>
-                        <outlet property="urls" destination="fzy-Xh-Hbv" id="u6O-YR-Ui7"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QaN-H4-EbG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2480.8000000000002" y="116.94152923538232"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="PcQ-Bu-rdX">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y93-m7-7Hy" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="o8z-fQ-BDg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="U9G-f2-9Ay" kind="relationship" relationship="rootViewController" id="q72-Eo-1TF"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6nr-PO-p2R" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1498" y="117"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Airspace" width="50" height="50"/>
-        <image name="Back" width="13" height="21"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

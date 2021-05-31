@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import SwiftUI
 import CoreLocation
 import PromiseKit
 import Pulley
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet weak var moduleType: UISegmentedControl!
 
@@ -176,7 +177,9 @@ class MapViewController: UIViewController {
             if let module = module, let previousIndex = Modules.index(of: type(of: module)) {
                 moduleType.selectedSegmentIndex = previousIndex
             }
-            performSegue(withIdentifier: "OpenBrowser", sender: self)
+
+            let webVC = UIHostingController(rootView: WebView())
+            present(webVC, animated: true, completion: nil)
         } else {
             module?.cleanup()
             module = Modules.loadModule(index: selectedIndex, delegate: self)

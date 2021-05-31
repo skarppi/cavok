@@ -36,7 +36,7 @@
 		C09D66A12540CAB800FB3D39 /* MapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66972540CAB800FB3D39 /* MapModule.swift */; };
 		C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66982540CAB800FB3D39 /* Modules.swift */; };
 		C09D66A32540CAB800FB3D39 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66992540CAB800FB3D39 /* MapDelegate.swift */; };
-		C09D66DB2540CACA00FB3D39 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66A82540CACA00FB3D39 /* WebViewController.swift */; };
+		C09D66DB2540CACA00FB3D39 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66A82540CACA00FB3D39 /* WebView.swift */; };
 		C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */; };
 		C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AB2540CACA00FB3D39 /* UIView+Additions.swift */; };
 		C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */; };
@@ -167,7 +167,7 @@
 		C09D66972540CAB800FB3D39 /* MapModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapModule.swift; sourceTree = "<group>"; };
 		C09D66982540CAB800FB3D39 /* Modules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modules.swift; sourceTree = "<group>"; };
 		C09D66992540CAB800FB3D39 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
-		C09D66A82540CACA00FB3D39 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		C09D66A82540CACA00FB3D39 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pulley+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AB2540CACA00FB3D39 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
@@ -369,7 +369,7 @@
 		C09D66A72540CACA00FB3D39 /* Web */ = {
 			isa = PBXGroup;
 			children = (
-				C09D66A82540CACA00FB3D39 /* WebViewController.swift */,
+				C09D66A82540CACA00FB3D39 /* WebView.swift */,
 			);
 			path = Web;
 			sourceTree = "<group>";
@@ -742,7 +742,7 @@
 				C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */,
 				C09D66E52540CACA00FB3D39 /* HeatMapCPU.swift in Sources */,
 				C09D66FD2540CACA00FB3D39 /* Timeslot.swift in Sources */,
-				C09D66DB2540CACA00FB3D39 /* WebViewController.swift in Sources */,
+				C09D66DB2540CACA00FB3D39 /* WebView.swift in Sources */,
 				C09D669F2540CAB800FB3D39 /* LocationManager.swift in Sources */,
 				C09D66E92540CACA00FB3D39 /* WeatherLayer.swift in Sources */,
 				C09D66A32540CAB800FB3D39 /* MapDelegate.swift in Sources */,
