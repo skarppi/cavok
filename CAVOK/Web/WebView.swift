@@ -14,42 +14,46 @@ import PromiseKit
 struct WebView: View {
     var links = Links.load()
 
-    @StateObject var viewModel = ViewModel()
+    @StateObject var viewModel: ViewModel
 
     init() {
-        viewModel.link = links.first
+        let model = ViewModel()
+        model.link = links.first
+
+        _viewModel = StateObject(wrappedValue: model)
     }
 
     var body: some View {
         NavigationView {
-            LinkWebView(viewModel: viewModel)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(
-                    trailing:
-                        Group {
-                            Picker("", selection: $viewModel.link) {
-                                ForEach(links, id: \.self) { link in
-                                    Text(link.title)
-                                        .tag(link as Link?)
-                                }}
-                                    .pickerStyle(SegmentedPickerStyle())
-                                    .labelsHidden()
-
-                            ProgressView(value: viewModel.progress,
-                                         total: 1.0)
-                                    .progressViewStyle(LinearProgressViewStyle())
-                            //progressView.tintColor = #colorLiteral(red: 0.6576176882, green: 0.7789518833, blue: 0.2271372974, alpha: 1)
-                        }
-                )
+            ZStack(alignment: .topLeading) {
+                LinkWebView(viewModel: viewModel)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                if viewModel.progress < 1.0 {
+                    ProgressView(value: viewModel.progress,
+                                 total: 1.0)
+                        .progressViewStyle(LinearProgressViewStyle())
+                }
+            }
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(trailing:
+                Picker("", selection: $viewModel.link) {
+                    ForEach(links, id: \.self) { link in
+                        Text(link.title)
+                            .tag(link as Link?)
+                    }}
+                        .pickerStyle(SegmentedPickerStyle())
+                        .labelsHidden()
+            )
         }
+        //progressView.tintColor = #colorLiteral(red: 0.6576176882, green: 0.7789518833, blue: 0.2271372974, alpha: 1)
     }
 }
 
 class ViewModel: ObservableObject {
 
     @Published var link: Link?
-    @Published var progress: Double?
+    @Published var progress: Double = 0.0
 }
 
 struct WebView_Previews: PreviewProvider {
@@ -60,18 +64,13 @@ struct WebView_Previews: PreviewProvider {
 
 struct LinkWebView: UIViewRepresentable {
 
+    let webView = WKWebView()
+
     @ObservedObject var viewModel: ViewModel
 
-    @State var observation: NSKeyValueObservation?
-
     func makeUIView(context: UIViewRepresentableContext<LinkWebView>) -> WKWebView {
-        let webView = WKWebView()
-        webView.navigationDelegate = context.coordinator
 
-        observation  = webView.observe(\.estimatedProgress, options: .new) { _, change in
-            print("change ", webView.estimatedProgress, change)
-            viewModel.progress = webView.estimatedProgress
-        }
+        webView.navigationDelegate = context.coordinator
 
         return webView
     }
@@ -86,7 +85,6 @@ struct LinkWebView: UIViewRepresentable {
                 let request = URLRequest(url: url)
                 uiView.load(request)
             load(webView: uiView)
-            print("Update \(url)")
         }
     }
 
@@ -101,14 +99,21 @@ struct LinkWebView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self.viewModel)
+        Coordinator(viewModel: viewModel, webView: webView)
     }
 
     class Coordinator: NSObject, WKNavigationDelegate {
         private var viewModel: ViewModel
 
-        init(_ viewModel: ViewModel) {
+        private var observer: NSKeyValueObservation?
+
+        init(viewModel: ViewModel, webView: WKWebView) {
             self.viewModel = viewModel
+            super.init()
+
+            observer = webView.observe(\.estimatedProgress, options: [.new]) { [weak self] webView, _ in
+                viewModel.progress = webView.estimatedProgress
+            }
         }
 
         func webView(_ webView: WKWebView,
@@ -123,18 +128,15 @@ struct LinkWebView: UIViewRepresentable {
         }
 
         func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-//            viewModel.progress = 0
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//            viewModel.progress = nil
         }
 
         func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
             if !error.isCancelled {
                 webView.errorPage(error: error)
             }
-//            viewModel.progress = nil
         }
     }
 }
