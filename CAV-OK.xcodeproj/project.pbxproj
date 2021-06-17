@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
 		B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9B012653077300F3E74D /* LinkEditView.swift */; };
+		B648ECC52666BD38009212F6 /* CavokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ECC42666BD38009212F6 /* CavokApp.swift */; };
+		B648ED0A2675CE2C009212F6 /* PulleyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ED092675CE2C009212F6 /* PulleyWrapper.swift */; };
 		B64D83C126150316003AE228 /* TimeslotState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C026150316003AE228 /* TimeslotState.swift */; };
 		B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */; };
 		B64D83CB261511A3003AE228 /* DrawerTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83CA261511A3003AE228 /* DrawerTitleView.swift */; };
@@ -19,8 +21,6 @@
 		C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */; };
 		C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; };
 		C076EC7E2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */; };
-		C09D66322540BCBE00FB3D39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */; };
 		C09D66362540BCC100FB3D39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C09D66352540BCC100FB3D39 /* Assets.xcassets */; };
 		C09D66392540BCC100FB3D39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C09D66382540BCC100FB3D39 /* Preview Assets.xcassets */; };
 		C09D663C2540BCC100FB3D39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */; };
@@ -135,6 +135,8 @@
 /* Begin PBXFileReference section */
 		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
 		B62B9B012653077300F3E74D /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
+		B648ECC42666BD38009212F6 /* CavokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavokApp.swift; sourceTree = "<group>"; };
+		B648ED092675CE2C009212F6 /* PulleyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulleyWrapper.swift; sourceTree = "<group>"; };
 		B64D83C026150316003AE228 /* TimeslotState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotState.swift; sourceTree = "<group>"; };
 		B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDrawerView.swift; sourceTree = "<group>"; };
 		B64D83CA261511A3003AE228 /* DrawerTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTitleView.swift; sourceTree = "<group>"; };
@@ -144,8 +146,6 @@
 		B6D0494726484C65000DF0A8 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTileFetcher.swift; sourceTree = "<group>"; };
 		C09D662C2540BCBE00FB3D39 /* CAV-OK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CAV-OK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C09D66352540BCC100FB3D39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C09D66382540BCC100FB3D39 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C09D663B2540BCC100FB3D39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -279,9 +279,9 @@
 				C09D668D2540CAB800FB3D39 /* Map */,
 				C09D66AF2540CACA00FB3D39 /* Weather */,
 				C09D66A72540CACA00FB3D39 /* Web */,
-				C09D662F2540BCBE00FB3D39 /* AppDelegate.swift */,
+				B648ECC42666BD38009212F6 /* CavokApp.swift */,
+				B648ED092675CE2C009212F6 /* PulleyWrapper.swift */,
 				C09D674D2540D1CD00FB3D39 /* Main.storyboard */,
-				C09D66312540BCBE00FB3D39 /* SceneDelegate.swift */,
 				C09D66352540BCC100FB3D39 /* Assets.xcassets */,
 				C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */,
 				C09D663D2540BCC100FB3D39 /* Info.plist */,
@@ -690,10 +690,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0C8855E25A1B09B00B2F2EA /* WeatherSimpleTileFetcher.swift in Sources */,
+				B648ECC52666BD38009212F6 /* CavokApp.swift in Sources */,
 				B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */,
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
 				B6D0493E263E7EBE000DF0A8 /* DrawerHandleView.swift in Sources */,
-				C09D66302540BCBE00FB3D39 /* AppDelegate.swift in Sources */,
 				B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */,
 				B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
@@ -736,7 +736,6 @@
 				C09D66F02540CACA00FB3D39 /* Observation.swift in Sources */,
 				C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */,
 				C09D66E12540CACA00FB3D39 /* LegendView.swift in Sources */,
-				C09D66322540BCBE00FB3D39 /* SceneDelegate.swift in Sources */,
 				C09D66F22540CACA00FB3D39 /* Metar.swift in Sources */,
 				C09D67012540CACA00FB3D39 /* AwsService.swift in Sources */,
 				C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */,
@@ -744,6 +743,7 @@
 				C09D66FD2540CACA00FB3D39 /* Timeslot.swift in Sources */,
 				C09D66DB2540CACA00FB3D39 /* WebView.swift in Sources */,
 				C09D669F2540CAB800FB3D39 /* LocationManager.swift in Sources */,
+				B648ED0A2675CE2C009212F6 /* PulleyWrapper.swift in Sources */,
 				C09D66E92540CACA00FB3D39 /* WeatherLayer.swift in Sources */,
 				C09D66A32540CAB800FB3D39 /* MapDelegate.swift in Sources */,
 			);

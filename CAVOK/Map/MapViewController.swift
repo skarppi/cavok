@@ -55,6 +55,8 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
         }
 
         drawerDisplayModeDidChange(drawer: pulley)
+
+        locationManager?.requestLocation()
     }
 
     override func viewDidAppear(_ animated: Bool) {
