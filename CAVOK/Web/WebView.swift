@@ -25,26 +25,29 @@ struct WebView: View {
 
     var body: some View {
         NavigationView {
-            ZStack(alignment: .topLeading) {
-                LinkWebView(viewModel: viewModel)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                if viewModel.progress < 1.0 {
-                    ProgressView(value: viewModel.progress,
-                                 total: 1.0)
-                        .progressViewStyle(LinearProgressViewStyle())
+            GeometryReader { proxy in
+                ZStack(alignment: .topLeading) {
+                    LinkWebView(viewModel: viewModel)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    if viewModel.progress < 1.0 {
+                        ProgressView(value: viewModel.progress,
+                                     total: 1.0)
+                            .progressViewStyle(LinearProgressViewStyle())
+                    }
                 }
+                .navigationBarTitle("", displayMode: .inline)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(trailing:
+                    Picker("", selection: $viewModel.link) {
+                        ForEach(links, id: \.self) { link in
+                            Text(link.title)
+                                .tag(link as Link?)
+                        }}
+                            .pickerStyle(SegmentedPickerStyle())
+                            .frame(width: proxy.size.width)
+                            .labelsHidden()
+                )
             }
-            .navigationBarTitle("", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(trailing:
-                Picker("", selection: $viewModel.link) {
-                    ForEach(links, id: \.self) { link in
-                        Text(link.title)
-                            .tag(link as Link?)
-                    }}
-                        .pickerStyle(SegmentedPickerStyle())
-                        .labelsHidden()
-            )
         }
         //progressView.tintColor = #colorLiteral(red: 0.6576176882, green: 0.7789518833, blue: 0.2271372974, alpha: 1)
     }
