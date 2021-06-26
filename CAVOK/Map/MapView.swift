@@ -22,30 +22,37 @@ struct MapView: View {
 
     @State private var module: MapModule?
 
+    @State private var orientation: PulleyDisplayMode = PulleyDisplayMode.automatic
+
     init(pulley: PulleyViewController) {
         self.pulley = pulley
         mapApi = MapApi(pulley: pulley)
     }
 
-    //@State private var zoomToUserLocationTapped = PassthroughSubject<Void, Never>()
-
     var body: some View {
         ZStack(alignment: .topLeading) {
             MapWrapper(mapApi: mapApi)
                 .onAppear(perform: {
+
                     mapApi.mapReady.send()
-                    LocationManager.shared.requestLocation()
+                    locationManager.requestLocation()
                 })
+                .ignoresSafeArea()
 
             Picker("", selection: $selectedModule) {
                 ForEach(Modules.availableTitles(), id: \.self) {
                     Text($0).tag($0 as String?)
                 }
             }
-            .offset(x: 0, y: 10.0)
+            // when pulley is on the left, move segmented control out of the way
+            .padding(.leading, orientation != .drawer ? pulley.panelWidth + 20 : 10)
+            .padding([.trailing, .top], 10)
             .pickerStyle(SegmentedPickerStyle())
             .labelsHidden()
-        }.onReceive(LocationManager.shared.$lastLocation.first()) { coordinate in
+            .onAppear(perform: {
+                print(pulley.additionalSafeAreaInsets)
+            })
+        }.onReceive(locationManager.$lastLocation.first()) { coordinate in
             userLocationChanged(coordinate: coordinate)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             LastSession.save(
@@ -53,11 +60,12 @@ struct MapView: View {
                 height: mapApi.mapView.getHeight())
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             // request updated location
-            LocationManager.shared.requestLocation()
+            locationManager.requestLocation()
         }.onReceive(selectedModule.publisher.first()) { title in
             moduleTypeChanged(title: title)
-        }
-        .sheet(isPresented: $showWebView) {
+        }.onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+            orientation = pulley.currentDisplayMode
+        }.sheet(isPresented: $showWebView) {
             WebView()
         }
     }

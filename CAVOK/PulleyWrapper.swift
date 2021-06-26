@@ -20,9 +20,6 @@ struct PulleyWrapper: UIViewControllerRepresentable {
         pulley.setPrimaryContentViewController(controller: mainContentVC)
 
         pulley.displayMode = .automatic
-        if let delegate = mainContentVC as? PulleyDelegate {
-            pulley.delegate = delegate
-        }
 
         return pulley
     }

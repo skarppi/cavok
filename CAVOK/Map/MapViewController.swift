@@ -22,13 +22,6 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
 
     @IBOutlet weak var legendView: LegendView!
 
-    internal var mapView: WhirlyGlobeViewController!
-
-    fileprivate var module: MapModule!
-
-    
-
-
     private var backgroundLoader: MaplyQuadImageLoader?
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +32,7 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
             additionalSafeAreaInsets.top = 10
         }
 
-        drawerDisplayModeDidChange(drawer: pulley)
+//        drawerDisplayModeDidChange(drawer: pulley)
     }
 
     @IBAction func resetRegion() {
@@ -47,7 +40,7 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
         legendView.isHidden = true
 
         animateModuleType(show: false)
-        module.configure(open: true)
+//        module.configure(open: true)
     }
 
     fileprivate func animateModuleType(show: Bool) {
@@ -56,34 +49,5 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
         }, completion: { _ in
             self.moduleType.isHidden = self.moduleType.alpha == 0
         })
-    }
-}
-
-extension MapViewController: PulleyPrimaryContentControllerDelegate {
-
-    func drawerDisplayModeDidChange(drawer: PulleyViewController) {
-
-        if let window = UIApplication.shared.windows.first(where: {$0.isKeyWindow}) {
-
-            if window.safeAreaInsets != .zero {
-                // adjust position of the drawer on iPhoneX
-                switch window.windowScene?.interfaceOrientation {
-                case .landscapeLeft:
-                    print("left")
-                    // reduce safe area when notch is on the other side
-                    drawer.additionalSafeAreaInsets.left = 0 - window.safeAreaInsets.left / 2
-                case .landscapeRight:
-                    print("right")
-                    // decrease the margin to notch
-                    drawer.additionalSafeAreaInsets.left = -15
-                default:
-                    print("default")
-                    drawer.additionalSafeAreaInsets.left = 0
-                }
-            }
-
-            // when pulley is on the left, move segmented control out of the way
-            moduleTypeLeftConstraint.constant = drawer.currentDisplayMode == .panel ? pulley.panelWidth + 16*2 : 16
-        }
     }
 }

@@ -17,7 +17,7 @@ struct MapWrapper: UIViewControllerRepresentable {
     var components: [NSObject: MaplyComponentObject] = [:]
 
     func makeUIViewController(context: Context) -> WhirlyGlobeViewController {
-        mapApi.mapViewVC = context.coordinator.mapView
+        mapApi.mapView = context.coordinator.mapView
         return context.coordinator.mapView
     }
 
@@ -87,4 +87,3 @@ struct MapWrapper: UIViewControllerRepresentable {
         }
     }
 }
-

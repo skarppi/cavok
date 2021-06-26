@@ -12,7 +12,7 @@ import Pulley
 public class MapApi: ObservableObject {
     var pulley: PulleyViewController
 
-    var mapViewVC: WhirlyGlobeViewController?
+    var mapView: WhirlyGlobeViewController!
 
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]
 
@@ -56,11 +56,4 @@ public class MapApi: ObservableObject {
             components.removeAll()
         }
     }
-
-    var mapView: WhirlyGlobeViewController! {
-        get {
-            return self.mapViewVC
-        }
-    }
-
 }

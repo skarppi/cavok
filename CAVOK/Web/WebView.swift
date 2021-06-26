@@ -49,7 +49,6 @@ struct WebView: View {
                 )
             }
         }
-        //progressView.tintColor = #colorLiteral(red: 0.6576176882, green: 0.7789518833, blue: 0.2271372974, alpha: 1)
     }
 }
 
