@@ -13,19 +13,19 @@ import Pulley
 import Combine
 
 class Ceiling: WeatherModule, MapModule {
-    required init(delegate: MapDelegate) {
+    required init(delegate: MapApi) {
         super.init(delegate: delegate, mapper: { ($0.cloudHeight.value, $0.clouds) })
     }
 }
 
 class Visibility: WeatherModule, MapModule {
-    required init(delegate: MapDelegate) {
+    required init(delegate: MapApi) {
         super.init(delegate: delegate, mapper: { ($0.visibility.value, $0.visibilityGroup) })
     }
 }
 
 final class Temperature: WeatherModule, MapModule {
-    required init(delegate: MapDelegate) {
+    required init(delegate: MapApi) {
         super.init(delegate: delegate, mapper: {
             let metar = $0 as? Metar
             return (metar?.spreadCeiling(), metar?.temperatureGroup)
@@ -35,7 +35,7 @@ final class Temperature: WeatherModule, MapModule {
 
 open class WeatherModule {
 
-    private weak var delegate: MapDelegate!
+    private weak var delegate: MapApi!
 
     private let weatherService = WeatherServer()
 
@@ -49,7 +49,7 @@ open class WeatherModule {
 
     private var cancellables = Set<AnyCancellable>()
 
-    public init(delegate: MapDelegate, mapper: @escaping (Observation) -> (value: Int?, source: String?)) {
+    public init(delegate: MapApi, mapper: @escaping (Observation) -> (value: Int?, source: String?)) {
         self.delegate = delegate
 
         let ramp = ColorRamp(moduleType: type(of: self))
@@ -72,6 +72,21 @@ open class WeatherModule {
         if region != nil {
             load(observations: weatherService.observations())
         }
+
+        delegate.didTapAt.sink(receiveValue: { (coord, object) in
+//                        guard self.buttonView.isHidden == false else {
+//                            module?.didTapAt(coord: coord)
+//                            return
+//                        }
+
+            if let details = object {
+                self.details(object: details)
+            } else {
+                self.didTapAt(coord: coord)
+            }
+        }).store(in: &cancellables)
+
+
     }
 
     func initTimer() {
@@ -223,7 +238,7 @@ open class WeatherModule {
                 if index == frame {
                     self.render(frame: frame)
 
-                    self.delegate.loaded(frame: frame, legend: self.presentation.ramp.legend())
+//                    self.delegate.loaded(frame: frame, legend: self.presentation.ramp.legend())
                     self.initTimer()
                 }
             }
@@ -278,7 +293,7 @@ open class WeatherModule {
         showTimeslotDrawer()
     }
 
-    func details(object: Any, parentFrame: CGRect) {
+    func details(object: Any) {
         guard let observation = object as? Observation else {
             return
         }

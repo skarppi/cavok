@@ -10,15 +10,11 @@ import Foundation
 import PromiseKit
 
 protocol MapModule: AnyObject {
-    init(delegate: MapDelegate)
+    init(delegate: MapApi)
 
     func cleanup()
-
-    func didTapAt(coord: MaplyCoordinate)
 
     func configure(open: Bool)
 
     func render(frame: Int)
-
-    func details(object: Any, parentFrame: CGRect)
 }

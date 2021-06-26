@@ -21,6 +21,8 @@ struct CavokApp: SwiftUI.App {
         }
 
         initRealms()
+
+        Messages.setup()
     }
 
     var body: some Scene {

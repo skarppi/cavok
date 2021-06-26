@@ -14,11 +14,11 @@ struct PulleyWrapper: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
 
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainContentVC = storyboard.instantiateViewController(withIdentifier: "map")
-
-        let pulley = PulleyViewController(contentViewController: mainContentVC,
+        let pulley = PulleyViewController(contentViewController: UIViewController(),
                                           drawerViewController: UIViewController())
+        let mainContentVC = UIHostingController(rootView: MapView(pulley: pulley))
+        pulley.setPrimaryContentViewController(controller: mainContentVC)
+
         pulley.displayMode = .automatic
         if let delegate = mainContentVC as? PulleyDelegate {
             pulley.delegate = delegate

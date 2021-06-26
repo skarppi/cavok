@@ -26,25 +26,10 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
 
     fileprivate var module: MapModule!
 
-    fileprivate var components: [NSObject: MaplyComponentObject] = [:]
+    
 
-    private var locationManager: LocationManager!
 
     private var backgroundLoader: MaplyQuadImageLoader?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setupMapView()
-
-        Messages.setup()
-
-        setupObservers()
-
-        setupLocationManager()
-
-        setupModules()
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,105 +40,6 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
         }
 
         drawerDisplayModeDidChange(drawer: pulley)
-
-        locationManager?.requestLocation()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        if module == nil {
-            moduleTypeChanged()
-        }
-    }
-
-    func setupMapView() {
-        mapView = WhirlyGlobeViewController()
-        mapView.delegate = self
-
-        view.insertSubview(mapView.view, at: 0)
-        mapView.view.frame = view.bounds
-        addChild(mapView)
-
-        mapView.keepNorthUp = true
-        mapView.frameInterval = 1 // 60fps
-        mapView.performanceOutput = false
-        mapView.autoMoveToTap = false
-        mapView.clearColor = view.backgroundColor
-
-        if let (center, height) = LastSession.load() {
-            mapView.height = height
-            mapView.setPosition(center)
-        } else {
-            mapView.height = 0.7
-            mapView.setPosition(MaplyCoordinateMakeWithDegrees(10, 50))
-        }
-
-        if let basemap = UserDefaults.standard.string(forKey: "basemapURL") {
-            backgroundLoader = TileJSONLayer().load(url: basemap, globeVC: mapView)
-        }
-    }
-
-    func setupLocationManager() {
-        locationManager = LocationManager(
-            fulfill: userLocationChanged,
-            reject: { _ in
-                self.clearComponents(ofType: UserMarker.self)
-
-                _ = self.ensureConfigured()
-            })
-    }
-
-    func setupModules() {
-        moduleType.removeAllSegments()
-        for (index, title) in Modules.availableTitles().enumerated() {
-            moduleType.insertSegment(withTitle: title, at: index, animated: false)
-        }
-        moduleType.selectedSegmentIndex = 0
-    }
-
-    func setupObservers() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(MapViewController.enteredBackground(notification:)),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(MapViewController.enteredForeground(notification:)),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-    }
-
-    @objc func enteredBackground(notification: Notification) {
-        LastSession.save(center: mapView.getPosition(), height: mapView.getHeight())
-    }
-
-    @objc func enteredForeground(notification: Notification) {
-        locationManager?.requestLocation()
-    }
-
-    fileprivate func ensureConfigured() -> Bool {
-        if WeatherRegion.load() == nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.module?.configure(open: true)
-            })
-            return false
-        }
-        return true
-    }
-
-    func userLocationChanged(coordinate: MaplyCoordinate) {
-        clearComponents(ofType: UserMarker.self)
-
-        let userLocation = UserMarker(coordinate: coordinate)
-        if let objects = mapView.addScreenMarkers([userLocation], desc: nil) {
-            addComponents(key: userLocation, value: objects)
-        }
-
-        if ensureConfigured() {
-            let extents = mapView.getCurrentExtents()
-            if !extents.inside(coordinate) {
-                mapView.animate(toPosition: coordinate, time: 0.5)
-            }
-        }
     }
 
     @IBAction func resetRegion() {
@@ -170,83 +56,6 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
         }, completion: { _ in
             self.moduleType.isHidden = self.moduleType.alpha == 0
         })
-    }
-
-    @IBAction func moduleTypeChanged() {
-        let selectedIndex = moduleType.selectedSegmentIndex
-
-        if selectedIndex == moduleType.numberOfSegments - 1 {
-            if let module = module, let previousIndex = Modules.index(of: type(of: module)) {
-                moduleType.selectedSegmentIndex = previousIndex
-            }
-
-            let webVC = UIHostingController(rootView: WebView())
-            present(webVC, animated: true, completion: nil)
-        } else {
-            module?.cleanup()
-            module = Modules.loadModule(index: selectedIndex, delegate: self)
-        }
-    }
-}
-
-// MARK: - MapDelegate
-extension MapViewController: MapDelegate {
-
-    func loaded(frame: Int?, legend: Legend) {
-        DispatchQueue.main.async {
-            self.buttonView.isHidden = false
-
-            if frame != nil {
-                self.legendView.loaded(legend: legend)
-                self.animateModuleType(show: true)
-            } else {
-                self.resetRegion()
-            }
-        }
-    }
-
-    func findComponent(ofType: NSObject.Type) -> NSObject? {
-        return components.keys.filter { $0.isKind(of: ofType) }.first
-    }
-
-    func addComponents(key: NSObject, value: MaplyComponentObject) {
-        components[key] = value
-    }
-
-    func clearComponents(ofType: NSObject.Type?) {
-        if let ofType = ofType {
-            let matching = components
-                .filter { type(of: $0.key) == ofType }
-                .compactMap { components.removeValue(forKey: $0.key) }
-            mapView.remove(matching)
-        } else {
-            mapView.remove([MaplyComponentObject](components.values))
-            components.removeAll()
-        }
-    }
-}
-
-// MARK: - WhirlyGlobeViewControllerDelegate
-extension MapViewController: WhirlyGlobeViewControllerDelegate {
-    func globeViewController(_ view: WhirlyGlobeViewController, didTapAt coord: MaplyCoordinate) {
-        module.didTapAt(coord: coord)
-    }
-
-    func globeViewController(_ view: WhirlyGlobeViewController,
-                             didSelect selected: NSObject,
-                             atLoc coord: MaplyCoordinate,
-                             onScreen screenPt: CGPoint) {
-
-        guard self.buttonView.isHidden == false else {
-            module?.didTapAt(coord: coord)
-            return
-        }
-
-        if let marker = selected as? MaplyScreenMarker, let object = marker.userObject {
-            module.details(object: object, parentFrame: self.view.frame)
-        } else if let object = selected as? MaplyVectorObject {
-            module.details(object: object, parentFrame: self.view.frame)
-        }
     }
 }
 

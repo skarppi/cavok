@@ -24,9 +24,9 @@ class Modules {
         }
     }
 
-    class func loadModule(index: Int, delegate: MapDelegate) -> MapModule {
-        let module = modules()[index]
-        if let className = module["class"] as? String,
+    class func loadModule(title: String, delegate: MapApi) -> MapModule {
+        if let module = modules().first(where: { $0["name"] as? String == title}),
+           let className = module["class"] as? String,
            let type = NSClassFromString("CAV_OK.\(className)") as? MapModule.Type {
             return type.init(delegate: delegate)
         } else {
@@ -44,11 +44,12 @@ class Modules {
         }
     }
 
-    class func index(of module: AnyClass) -> Int? {
-        let moduleClassName = String(describing: module)
-
-        return modules().compactMap { module in
-            module["class"] as? String
-        }.firstIndex(of: moduleClassName)
+    class func title(of moduleType: AnyClass) -> String? {
+        if let module = Modules.configuration(module: moduleType) {
+            return module["name"] as? String
+        } else {
+            return nil
+        }
     }
+
 }

@@ -8,6 +8,12 @@
 
 import Foundation
 
+public struct Legend {
+    var unit: String
+    var gradient: [CGColor]
+    var titles: [String]
+}
+
 class LegendView: UIView {
     func loaded(legend: Legend) {
         self.subviews.forEach { $0.removeFromSuperview() }

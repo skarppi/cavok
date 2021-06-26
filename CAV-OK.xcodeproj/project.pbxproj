@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
 		B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9B012653077300F3E74D /* LinkEditView.swift */; };
+		B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63676DA267AFFFE00A92257 /* MapWrapper.swift */; };
+		B648ECC326660A2D009212F6 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ECC226660A2D009212F6 /* MapView.swift */; };
 		B648ECC52666BD38009212F6 /* CavokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ECC42666BD38009212F6 /* CavokApp.swift */; };
 		B648ED0A2675CE2C009212F6 /* PulleyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ED092675CE2C009212F6 /* PulleyWrapper.swift */; };
 		B64D83C126150316003AE228 /* TimeslotState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C026150316003AE228 /* TimeslotState.swift */; };
 		B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */; };
 		B64D83CB261511A3003AE228 /* DrawerTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83CA261511A3003AE228 /* DrawerTitleView.swift */; };
+		B688A4652683C87500EE7373 /* MapApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688A4642683C87500EE7373 /* MapApi.swift */; };
 		B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */; };
 		B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */; };
 		B6D0493E263E7EBE000DF0A8 /* DrawerHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */; };
@@ -35,7 +38,6 @@
 		C09D66A02540CAB800FB3D39 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66962540CAB800FB3D39 /* MapViewController.swift */; };
 		C09D66A12540CAB800FB3D39 /* MapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66972540CAB800FB3D39 /* MapModule.swift */; };
 		C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66982540CAB800FB3D39 /* Modules.swift */; };
-		C09D66A32540CAB800FB3D39 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66992540CAB800FB3D39 /* MapDelegate.swift */; };
 		C09D66DB2540CACA00FB3D39 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66A82540CACA00FB3D39 /* WebView.swift */; };
 		C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */; };
 		C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AB2540CACA00FB3D39 /* UIView+Additions.swift */; };
@@ -135,11 +137,14 @@
 /* Begin PBXFileReference section */
 		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
 		B62B9B012653077300F3E74D /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
+		B63676DA267AFFFE00A92257 /* MapWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWrapper.swift; sourceTree = "<group>"; };
+		B648ECC226660A2D009212F6 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B648ECC42666BD38009212F6 /* CavokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavokApp.swift; sourceTree = "<group>"; };
 		B648ED092675CE2C009212F6 /* PulleyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulleyWrapper.swift; sourceTree = "<group>"; };
 		B64D83C026150316003AE228 /* TimeslotState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotState.swift; sourceTree = "<group>"; };
 		B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDrawerView.swift; sourceTree = "<group>"; };
 		B64D83CA261511A3003AE228 /* DrawerTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTitleView.swift; sourceTree = "<group>"; };
+		B688A4642683C87500EE7373 /* MapApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapApi.swift; sourceTree = "<group>"; };
 		B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotDraverView.swift; sourceTree = "<group>"; };
 		B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
 		B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerHandleView.swift; sourceTree = "<group>"; };
@@ -166,7 +171,6 @@
 		C09D66962540CAB800FB3D39 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C09D66972540CAB800FB3D39 /* MapModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapModule.swift; sourceTree = "<group>"; };
 		C09D66982540CAB800FB3D39 /* Modules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modules.swift; sourceTree = "<group>"; };
-		C09D66992540CAB800FB3D39 /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		C09D66A82540CACA00FB3D39 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pulley+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AB2540CACA00FB3D39 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
@@ -340,9 +344,11 @@
 				C09D66912540CAB800FB3D39 /* Location */,
 				C09D668E2540CAB800FB3D39 /* Messages.swift */,
 				C09D66962540CAB800FB3D39 /* MapViewController.swift */,
+				B648ECC226660A2D009212F6 /* MapView.swift */,
 				C09D66972540CAB800FB3D39 /* MapModule.swift */,
 				C09D66982540CAB800FB3D39 /* Modules.swift */,
-				C09D66992540CAB800FB3D39 /* MapDelegate.swift */,
+				B63676DA267AFFFE00A92257 /* MapWrapper.swift */,
+				B688A4642683C87500EE7373 /* MapApi.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -708,6 +714,7 @@
 				C09D66EF2540CACA00FB3D39 /* Taf.swift in Sources */,
 				B64D83C126150316003AE228 /* TimeslotState.swift in Sources */,
 				C09D66E72540CACA00FB3D39 /* FrameChanger.swift in Sources */,
+				B688A4652683C87500EE7373 /* MapApi.swift in Sources */,
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,
 				B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */,
 				C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */,
@@ -732,7 +739,9 @@
 				C09D66EC2540CACA00FB3D39 /* Observations.swift in Sources */,
 				C09D66E82540CACA00FB3D39 /* HeatMap.metal in Sources */,
 				C09D66E02540CACA00FB3D39 /* String+Additions.swift in Sources */,
+				B648ECC326660A2D009212F6 /* MapView.swift in Sources */,
 				C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */,
+				B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */,
 				C09D66F02540CACA00FB3D39 /* Observation.swift in Sources */,
 				C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */,
 				C09D66E12540CACA00FB3D39 /* LegendView.swift in Sources */,
@@ -745,7 +754,6 @@
 				C09D669F2540CAB800FB3D39 /* LocationManager.swift in Sources */,
 				B648ED0A2675CE2C009212F6 /* PulleyWrapper.swift in Sources */,
 				C09D66E92540CACA00FB3D39 /* WeatherLayer.swift in Sources */,
-				C09D66A32540CAB800FB3D39 /* MapDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
