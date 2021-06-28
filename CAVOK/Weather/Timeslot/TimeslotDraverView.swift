@@ -16,41 +16,43 @@ struct TimeslotDrawerView: View {
 
     var body: some View {
         PullToRefreshView(action: refreshAction, isLoading: $state.isLoading) {
-            DrawerHandleView()
 
-            VStack(alignment: .leading) {
+            VStack(spacing: 0) {
+                DrawerHandleView(position: .top)
+
                 Text(state.status)
                     .font(.body)
                     .foregroundColor(state.statusColor)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
 
                 timeline
+                    .padding(.bottom, 5)
+                    .gesture(
+                        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                            .updating($cursor) { (value, state, _) in
+                                state = value.location
+                            })
+
+                DrawerHandleView(position: .bottom)
             }
             .padding(.horizontal)
-            .gesture(
-                DragGesture(minimumDistance: 0, coordinateSpace: .global)
-                    .updating($cursor) { (value, state, _) in
-                        state = value.location
-                    })
         }
     }
 
     private var timeline: some View {
-        ZStack {
-            HStack(spacing: 0) {
-                ForEach(Array(state.slots.enumerated()), id: \.element) { (index, slot) in
-                    Text(slot.title)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity)
-                        .padding(EdgeInsets(top: 10, leading: 3, bottom: 10, trailing: 3))
-                        .background(
-                            Rectangle()
-                                .fill(Color(slot.color).opacity(0.4))
-                        )
-                        .border(state.selectedIndex == index ?  Color.black : Color.clear)
-                        .background(self.rectReader(index: index))
-                }
+        HStack(spacing: 0) {
+            ForEach(Array(state.slots.enumerated()), id: \.element) { (index, slot) in
+                Text(slot.title)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity)
+                    .padding(EdgeInsets(top: 10, leading: 3, bottom: 10, trailing: 3))
+                    .background(
+                        Rectangle()
+                            .fill(Color(slot.color).opacity(0.4))
+                    )
+                    .border(state.selectedIndex == index ?  Color.black : Color.clear)
+                    .background(self.rectReader(index: index))
             }
         }
         .background(

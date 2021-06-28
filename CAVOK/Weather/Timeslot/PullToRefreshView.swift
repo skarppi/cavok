@@ -58,6 +58,7 @@ struct PullToRefreshView<Content>: View where Content: View {
                                 // prevent bounce up
                                 .offset(y: scrollOffset < 0 ? -scrollOffset : 0)
                                 .opacity(1 - arrowAngle / 180)
+                                .background(Color(UIColor.systemBackground))
                         }
                     }
                     // offset the content to allow the progress indicator to show when loading

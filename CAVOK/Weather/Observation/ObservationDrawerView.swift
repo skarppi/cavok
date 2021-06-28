@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Pulley
 
 struct ObservationDrawerView: View {
     var presentation: ObservationPresentation
@@ -18,7 +19,7 @@ struct ObservationDrawerView: View {
     var closedAction: (() -> Void)
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .center) {
             VStack(alignment: .leading) {
                 DrawerTitleView(title: self.obs.station?.name, action: closedAction)
 
@@ -26,7 +27,7 @@ struct ObservationDrawerView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top)
             }.background(GeometryReader { proxy -> Color in
-                self.sizes.collapsedHeight = proxy.frame(in: .local).maxY
+                self.sizes.collapsedHeight = proxy.frame(in: .local).maxY + DrawerHandleView.height()
                 return Color.clear
             }).padding(.horizontal)
 
@@ -44,6 +45,7 @@ struct ObservationDrawerView: View {
                 }
             }
 
+            DrawerHandleView(position: .bottom)
         }
         .edgesIgnoringSafeArea(.all)
     }

@@ -13,7 +13,7 @@ struct DrawerTitleView: View {
 
     var body: some View {
         VStack {
-            DrawerHandleView()
+            DrawerHandleView(position: .top)
 
             HStack {
                 Text(title ?? "-").font(.system(.title))
