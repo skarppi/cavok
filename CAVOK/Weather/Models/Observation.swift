@@ -22,8 +22,27 @@ public struct WindData {
 }
 
 struct ObservationPresentation {
-    var mapper: (Observation) -> (value: Int?, source: String?)
+    var module: Module
     var ramp: ColorRamp
+
+    init(module: Module) {
+        self.module = module
+        self.ramp = ColorRamp(module: module)
+    }
+
+    func mapper(_ observation: Observation) -> (value: Int?, source: String?) {
+        switch module.key {
+        case .ceiling:
+            return (observation.cloudHeight.value, observation.clouds)
+        case .visibility:
+            return (observation.visibility.value, observation.visibilityGroup)
+        case .temp:
+            let metar = observation as? Metar
+            return (metar?.spreadCeiling(), metar?.temperatureGroup)
+        default:
+            return (nil, nil)
+        }
+    }
 
     func highlight(observation: Observation) -> NSAttributedString {
         let attributed = NSMutableAttributedString(string: observation.raw)

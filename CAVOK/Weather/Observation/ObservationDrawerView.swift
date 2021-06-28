@@ -89,8 +89,7 @@ struct AttributedText: View {
 
 struct ObservationDrawerView_Previews: PreviewProvider {
     static let presentation = ObservationPresentation(
-        mapper: { ($0.cloudHeight.value, $0.clouds) },
-        ramp: ColorRamp(moduleType: Ceiling.self)
+        module: Module(key: ModuleKey.ceiling, title: "ceil", unit: "FL", legend: [:])
     )
     static let observations = Observations(
         metars: [

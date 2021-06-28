@@ -37,29 +37,17 @@ class ColorRamp {
 
     let titles: [String]
 
-    init(moduleType: WeatherModule.Type) {
-        if let module = Modules.configuration(module: moduleType) {
-            let steps = module["steps"] as? [String: String] ?? [:]
+    init(module: Module) {
+        unit = module.unit
 
-            self.unit = module["unit"] as? String ?? ""
+        let sorted = Array(module.legend).sorted(by: {$0.key < $1.key})
+        let keys = sorted.map { (key, _) in Int32(key)! }
+        titles = sorted.map { (_, value) in value }
 
-            let sorted = Array(steps).sorted(by: {$0.key < $1.key})
-            let keys = sorted.map { (key, _) in Int32(key)! }
-            titles = sorted.map { (_, value) in value }
-
-            self.steps = keys.enumerated().map { (i, step) in
-                let next = (i + 1) < keys.count ? keys[i + 1] : Int32.max
-                return GridStep(lower: step, upper: next, fromHue: hues[i][0], toHue: hues[i][1])
-            }
-        } else {
-            self.unit = ""
-            self.steps = []
-            self.titles = []
+        steps = keys.enumerated().map { (i, step) in
+            let next = (i + 1) < keys.count ? keys[i + 1] : Int32.max
+            return GridStep(lower: step, upper: next, fromHue: hues[i][0], toHue: hues[i][1])
         }
-    }
-
-    func legend() -> Legend {
-        return Legend(unit: unit, gradient: steps.map { step in color(for: step.lower).cgColor}, titles: titles)
     }
 
     func color(for value: Int32, alpha: CGFloat = 1) -> UIColor {

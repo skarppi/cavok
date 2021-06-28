@@ -12,34 +12,14 @@ import PromiseKit
 import Pulley
 import Combine
 
-class Ceiling: WeatherModule, MapModule {
-    required init(delegate: MapApi) {
-        super.init(delegate: delegate, mapper: { ($0.cloudHeight.value, $0.clouds) })
-    }
-}
+class WeatherModule {
+    let module: Module
 
-class Visibility: WeatherModule, MapModule {
-    required init(delegate: MapApi) {
-        super.init(delegate: delegate, mapper: { ($0.visibility.value, $0.visibilityGroup) })
-    }
-}
-
-final class Temperature: WeatherModule, MapModule {
-    required init(delegate: MapApi) {
-        super.init(delegate: delegate, mapper: {
-            let metar = $0 as? Metar
-            return (metar?.spreadCeiling(), metar?.temperatureGroup)
-        })
-    }
-}
-
-open class WeatherModule {
-
-    private weak var delegate: MapApi!
+    private let delegate = MapApi.shared
 
     private let weatherService = WeatherServer()
 
-    private let presentation: ObservationPresentation
+    let presentation: ObservationPresentation
 
     private let weatherLayer: WeatherLayer
 
@@ -49,11 +29,10 @@ open class WeatherModule {
 
     private var cancellables = Set<AnyCancellable>()
 
-    public init(delegate: MapApi, mapper: @escaping (Observation) -> (value: Int?, source: String?)) {
-        self.delegate = delegate
+    init(module: Module) {
+        self.module = module
 
-        let ramp = ColorRamp(moduleType: type(of: self))
-        presentation = ObservationPresentation(mapper: mapper, ramp: ramp)
+        presentation = ObservationPresentation(module: module)
 
         let region = WeatherRegion.load()
 
@@ -85,8 +64,6 @@ open class WeatherModule {
                 self.didTapAt(coord: coord)
             }
         }).store(in: &cancellables)
-
-
     }
 
     func initTimer() {
@@ -134,7 +111,7 @@ open class WeatherModule {
         }
     }
 
-    func didTapAt(coord: MaplyCoordinate) {
+    private func didTapAt(coord: MaplyCoordinate) {
         if let selection = delegate.findComponent(ofType: RegionSelection.self) as? RegionSelection {
             selection.region.center = coord
             moveRegionSelection(to: selection.region)
@@ -237,15 +214,13 @@ open class WeatherModule {
 
                 if index == frame {
                     self.render(frame: frame)
-
-//                    self.delegate.loaded(frame: frame, legend: self.presentation.ramp.legend())
                     self.initTimer()
                 }
             }
         }
     }
 
-    func render(frame: Int) {
+    private func render(frame: Int) {
         delegate.clearComponents(ofType: ObservationMarker.self)
 
         let observations = weatherLayer.go(frame: frame)
@@ -293,7 +268,7 @@ open class WeatherModule {
         showTimeslotDrawer()
     }
 
-    func details(object: Any) {
+    private func details(object: Any) {
         guard let observation = object as? Observation else {
             return
         }

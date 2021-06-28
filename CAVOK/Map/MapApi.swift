@@ -10,15 +10,14 @@ import Combine
 import Pulley
 
 public class MapApi: ObservableObject {
-    var pulley: PulleyViewController
+
+    static var shared = MapApi()
+
+    var pulley: PulleyViewController!
 
     var mapView: WhirlyGlobeViewController!
 
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]
-
-    init(pulley: PulleyViewController) {
-        self.pulley = pulley
-    }
 
     var mapReady = PassthroughSubject<Void, Never>()
 

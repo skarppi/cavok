@@ -8,48 +8,35 @@
 
 import Foundation
 
-class Modules {
+struct Module: Hashable {
+    var key: ModuleKey
+    var title: String
+    var unit: String
+    var legend: [String: String]
+}
 
-    private class func modules() -> [[String: AnyObject]] {
+enum ModuleKey: String {
+    case ceiling, visibility, temp, web
+}
+
+class Modules {
+    static var available = load()
+
+    private class func load() -> [Module] {
         if let modules = UserDefaults.standard.array(forKey: "modules") as? [[String: AnyObject]] {
-            return modules
+            return modules.compactMap { module in
+                if let key = ModuleKey(rawValue: module["key"] as? String ?? ""),
+                   let name = module["name"] as? String {
+                    return Module(key: key,
+                           title: name,
+                           unit: module["unit"] as? String ?? "",
+                           legend: module["legend"] as? [String: String] ?? [:])
+                } else {
+                    return nil
+                }
+            }
         } else {
             return []
         }
     }
-
-    class func availableTitles() -> [String] {
-        return modules().compactMap { module in
-            module["name"] as? String
-        }
-    }
-
-    class func loadModule(title: String, delegate: MapApi) -> MapModule {
-        if let module = modules().first(where: { $0["name"] as? String == title}),
-           let className = module["class"] as? String,
-           let type = NSClassFromString("CAV_OK.\(className)") as? MapModule.Type {
-            return type.init(delegate: delegate)
-        } else {
-            preconditionFailure("config error")
-        }
-    }
-
-    class func configuration(module: AnyClass) -> [String: AnyObject]? {
-        let moduleClassName = String(describing: module)
-
-        if let module = modules().first(where: { $0["class"] as? String == moduleClassName }) {
-            return module
-        } else {
-            return nil
-        }
-    }
-
-    class func title(of moduleType: AnyClass) -> String? {
-        if let module = Modules.configuration(module: moduleType) {
-            return module["name"] as? String
-        } else {
-            return nil
-        }
-    }
-
 }

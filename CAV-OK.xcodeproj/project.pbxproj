@@ -17,6 +17,7 @@
 		B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */; };
 		B64D83CB261511A3003AE228 /* DrawerTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83CA261511A3003AE228 /* DrawerTitleView.swift */; };
 		B688A4652683C87500EE7373 /* MapApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688A4642683C87500EE7373 /* MapApi.swift */; };
+		B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A829562687CEF100FA5B11 /* LegendView.swift */; };
 		B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */; };
 		B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */; };
 		B6D0493E263E7EBE000DF0A8 /* DrawerHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */; };
@@ -35,8 +36,6 @@
 		C09D669D2540CAB800FB3D39 /* UserMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66932540CAB800FB3D39 /* UserMarker.swift */; };
 		C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66942540CAB800FB3D39 /* LastLocation.swift */; };
 		C09D669F2540CAB800FB3D39 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66952540CAB800FB3D39 /* LocationManager.swift */; };
-		C09D66A02540CAB800FB3D39 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66962540CAB800FB3D39 /* MapViewController.swift */; };
-		C09D66A12540CAB800FB3D39 /* MapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66972540CAB800FB3D39 /* MapModule.swift */; };
 		C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66982540CAB800FB3D39 /* Modules.swift */; };
 		C09D66DB2540CACA00FB3D39 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66A82540CACA00FB3D39 /* WebView.swift */; };
 		C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */; };
@@ -44,7 +43,6 @@
 		C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */; };
 		C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AD2540CACA00FB3D39 /* Maply+Additions.swift */; };
 		C09D66E02540CACA00FB3D39 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AE2540CACA00FB3D39 /* String+Additions.swift */; };
-		C09D66E12540CACA00FB3D39 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B12540CACA00FB3D39 /* LegendView.swift */; };
 		C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B32540CACA00FB3D39 /* WeatherConfig.swift */; };
 		C09D66E32540CACA00FB3D39 /* HeatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B42540CACA00FB3D39 /* HeatMap.swift */; };
 		C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B52540CACA00FB3D39 /* DebugTileFetcher.swift */; };
@@ -81,7 +79,6 @@
 		C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = C09D673A2540CE2900FB3D39 /* Gzip */; };
 		C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67402540CE5700FB3D39 /* SwiftMessages */; };
 		C09D67462540D03100FB3D39 /* ObservationDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */; };
-		C09D674F2540D1CD00FB3D39 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C09D674D2540D1CD00FB3D39 /* Main.storyboard */; };
 		C09D67552540D94800FB3D39 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C09D67542540D94700FB3D39 /* README.md */; };
 		C09D675B2540DAB100FB3D39 /* CAVOK.template.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09D67592540DAB100FB3D39 /* CAVOK.template.plist */; };
 		C09D675C2540DAB100FB3D39 /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09D675A2540DAB100FB3D39 /* CAVOK.plist */; };
@@ -145,6 +142,7 @@
 		B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDrawerView.swift; sourceTree = "<group>"; };
 		B64D83CA261511A3003AE228 /* DrawerTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTitleView.swift; sourceTree = "<group>"; };
 		B688A4642683C87500EE7373 /* MapApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapApi.swift; sourceTree = "<group>"; };
+		B6A829562687CEF100FA5B11 /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotDraverView.swift; sourceTree = "<group>"; };
 		B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
 		B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerHandleView.swift; sourceTree = "<group>"; };
@@ -168,8 +166,6 @@
 		C09D66932540CAB800FB3D39 /* UserMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMarker.swift; sourceTree = "<group>"; };
 		C09D66942540CAB800FB3D39 /* LastLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastLocation.swift; sourceTree = "<group>"; };
 		C09D66952540CAB800FB3D39 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		C09D66962540CAB800FB3D39 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		C09D66972540CAB800FB3D39 /* MapModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapModule.swift; sourceTree = "<group>"; };
 		C09D66982540CAB800FB3D39 /* Modules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modules.swift; sourceTree = "<group>"; };
 		C09D66A82540CACA00FB3D39 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pulley+Additions.swift"; sourceTree = "<group>"; };
@@ -177,7 +173,6 @@
 		C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AD2540CACA00FB3D39 /* Maply+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Maply+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AE2540CACA00FB3D39 /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
-		C09D66B12540CACA00FB3D39 /* LegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		C09D66B32540CACA00FB3D39 /* WeatherConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherConfig.swift; sourceTree = "<group>"; };
 		C09D66B42540CACA00FB3D39 /* HeatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatMap.swift; sourceTree = "<group>"; };
 		C09D66B52540CACA00FB3D39 /* DebugTileFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTileFetcher.swift; sourceTree = "<group>"; };
@@ -206,7 +201,6 @@
 		C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationSelection.swift; sourceTree = "<group>"; };
 		C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationMarker.swift; sourceTree = "<group>"; };
 		C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDrawerView.swift; sourceTree = "<group>"; };
-		C09D674E2540D1CD00FB3D39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C09D67532540D94700FB3D39 /* CAV-OK.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "CAV-OK.entitlements"; sourceTree = "<group>"; };
 		C09D67542540D94700FB3D39 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C09D67592540DAB100FB3D39 /* CAVOK.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CAVOK.template.plist; path = CAVOK/CAVOK.template.plist; sourceTree = "<group>"; };
@@ -285,7 +279,6 @@
 				C09D66A72540CACA00FB3D39 /* Web */,
 				B648ECC42666BD38009212F6 /* CavokApp.swift */,
 				B648ED092675CE2C009212F6 /* PulleyWrapper.swift */,
-				C09D674D2540D1CD00FB3D39 /* Main.storyboard */,
 				C09D66352540BCC100FB3D39 /* Assets.xcassets */,
 				C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */,
 				C09D663D2540BCC100FB3D39 /* Info.plist */,
@@ -343,12 +336,11 @@
 				C09D668F2540CAB800FB3D39 /* Layers */,
 				C09D66912540CAB800FB3D39 /* Location */,
 				C09D668E2540CAB800FB3D39 /* Messages.swift */,
-				C09D66962540CAB800FB3D39 /* MapViewController.swift */,
 				B648ECC226660A2D009212F6 /* MapView.swift */,
-				C09D66972540CAB800FB3D39 /* MapModule.swift */,
 				C09D66982540CAB800FB3D39 /* Modules.swift */,
 				B63676DA267AFFFE00A92257 /* MapWrapper.swift */,
 				B688A4642683C87500EE7373 /* MapApi.swift */,
+				B6A829562687CEF100FA5B11 /* LegendView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -396,7 +388,6 @@
 			isa = PBXGroup;
 			children = (
 				C09D66D22540CACA00FB3D39 /* WeatherModule.swift */,
-				C09D66B02540CACA00FB3D39 /* Legend */,
 				C09D66B22540CACA00FB3D39 /* Layers */,
 				C09D66BD2540CACA00FB3D39 /* Models */,
 				C09D66C52540CACA00FB3D39 /* Region */,
@@ -407,14 +398,6 @@
 				B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */,
 			);
 			path = Weather;
-			sourceTree = "<group>";
-		};
-		C09D66B02540CACA00FB3D39 /* Legend */ = {
-			isa = PBXGroup;
-			children = (
-				C09D66B12540CACA00FB3D39 /* LegendView.swift */,
-			);
-			path = Legend;
 			sourceTree = "<group>";
 		};
 		C09D66B22540CACA00FB3D39 /* Layers */ = {
@@ -649,7 +632,6 @@
 				C09D675C2540DAB100FB3D39 /* CAVOK.plist in Resources */,
 				C09D66362540BCC100FB3D39 /* Assets.xcassets in Resources */,
 				C09D675B2540DAB100FB3D39 /* CAVOK.template.plist in Resources */,
-				C09D674F2540D1CD00FB3D39 /* Main.storyboard in Resources */,
 				C0C8855A25A127D800B2F2EA /* colorramp.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,6 +690,7 @@
 				C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */,
 				C09D66F12540CACA00FB3D39 /* Weather.swift in Sources */,
 				C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */,
+				B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */,
 				C09D66E32540CACA00FB3D39 /* HeatMap.swift in Sources */,
 				C09D66ED2540CACA00FB3D39 /* Tokenizer.swift in Sources */,
 				C09D669B2540CAB800FB3D39 /* TileJSONLayer.swift in Sources */,
@@ -722,11 +705,9 @@
 				C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */,
 				C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */,
 				C09D66F52540CACA00FB3D39 /* Links.swift in Sources */,
-				C09D66A02540CAB800FB3D39 /* MapViewController.swift in Sources */,
 				C09D669D2540CAB800FB3D39 /* UserMarker.swift in Sources */,
 				C09D66F32540CACA00FB3D39 /* RegionSelection.swift in Sources */,
 				C09D669C2540CAB800FB3D39 /* LastSession.swift in Sources */,
-				C09D66A12540CAB800FB3D39 /* MapModule.swift in Sources */,
 				C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */,
 				C09D669A2540CAB800FB3D39 /* Messages.swift in Sources */,
 				C09D66E62540CACA00FB3D39 /* ColorRamp.swift in Sources */,
@@ -744,7 +725,6 @@
 				B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */,
 				C09D66F02540CACA00FB3D39 /* Observation.swift in Sources */,
 				C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */,
-				C09D66E12540CACA00FB3D39 /* LegendView.swift in Sources */,
 				C09D66F22540CACA00FB3D39 /* Metar.swift in Sources */,
 				C09D67012540CACA00FB3D39 /* AwsService.swift in Sources */,
 				C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */,
@@ -795,14 +775,6 @@
 				C09D663B2540BCC100FB3D39 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		C09D674D2540D1CD00FB3D39 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C09D674E2540D1CD00FB3D39 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

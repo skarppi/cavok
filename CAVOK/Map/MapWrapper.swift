@@ -12,7 +12,7 @@ import Pulley
 
 struct MapWrapper: UIViewControllerRepresentable {
 
-    var mapApi: MapApi
+    var mapApi = MapApi.shared
 
     var components: [NSObject: MaplyComponentObject] = [:]
 

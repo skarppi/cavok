@@ -10,48 +10,66 @@ import Combine
 import Pulley
 
 struct MapView: View {
-    var pulley: PulleyViewController
-
-    @State private var selectedModule: String? = Modules.availableTitles()[0]
+    @State private var selectedModule: Module? = Modules.available[0]
 
     @State private var showWebView = false
 
     @ObservedObject var locationManager = LocationManager.shared
 
-    @ObservedObject var mapApi: MapApi
+    @ObservedObject var mapApi = MapApi.shared
 
-    @State private var module: MapModule?
+    @State private var module: WeatherModule?
 
     @State private var orientation: PulleyDisplayMode = PulleyDisplayMode.automatic
 
     init(pulley: PulleyViewController) {
-        self.pulley = pulley
-        mapApi = MapApi(pulley: pulley)
+        mapApi.pulley = pulley
     }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             MapWrapper(mapApi: mapApi)
                 .onAppear(perform: {
-
                     mapApi.mapReady.send()
                     locationManager.requestLocation()
                 })
                 .ignoresSafeArea()
 
-            Picker("", selection: $selectedModule) {
-                ForEach(Modules.availableTitles(), id: \.self) {
-                    Text($0).tag($0 as String?)
+            VStack (alignment: .trailing) {
+                Picker("", selection: $selectedModule) {
+                    ForEach(Modules.available, id: \.self) { module in
+                        Text(module.title).tag(module as Module?)
+                    }
                 }
+                // when pulley is on the left, move segmented control out of the way
+                .padding(.leading, orientation != .drawer ? mapApi.pulley.panelWidth + 20 : 10)
+                .padding([.trailing, .top], 10)
+                .pickerStyle(SegmentedPickerStyle())
+                .labelsHidden()
+
+                if let module = selectedModule, module.legend.count > 0 {
+                    LegendView(module: module)
+                        .background(Color.white.opacity(0.25))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.blue, lineWidth: 1)
+                        )
+                        .padding(.trailing, 10)
+                }
+
+                Button(action: {
+                    module?.configure(open: true)
+                }) {
+                    Image(systemName: "gear")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(5)
+                }.overlay(
+                    RoundedRectangle(cornerRadius: 50)
+                        .stroke(Color.blue, lineWidth: 1)
+                )
+                .padding(.trailing, 10)
             }
-            // when pulley is on the left, move segmented control out of the way
-            .padding(.leading, orientation != .drawer ? pulley.panelWidth + 20 : 10)
-            .padding([.trailing, .top], 10)
-            .pickerStyle(SegmentedPickerStyle())
-            .labelsHidden()
-            .onAppear(perform: {
-                print(pulley.additionalSafeAreaInsets)
-            })
         }.onReceive(locationManager.$lastLocation.first()) { coordinate in
             userLocationChanged(coordinate: coordinate)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
@@ -61,31 +79,33 @@ struct MapView: View {
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             // request updated location
             locationManager.requestLocation()
-        }.onReceive(selectedModule.publisher.first()) { title in
-            moduleTypeChanged(title: title)
+        }.onReceive(selectedModule.publisher.first()) { newModule in
+            moduleTypeChanged(newModule: newModule)
         }.onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-            orientation = pulley.currentDisplayMode
+            orientation = mapApi.pulley.currentDisplayMode
         }.sheet(isPresented: $showWebView) {
             WebView()
         }
     }
 
-    func moduleTypeChanged(title: String) {
-        let oldModule = module.flatMap {
-            Modules.title(of: type(of: $0))
+    func moduleTypeChanged(newModule: Module) {
+        guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" else {
+            return
         }
 
-        guard title != "Web" else {
+        let oldModule = self.module?.module
+
+        guard newModule.key != .web else {
             showWebView = true
             selectedModule = oldModule
             return
         }
-        guard !showWebView, oldModule != title else {
+        guard !showWebView, oldModule != newModule else {
             return
         }
 
         module?.cleanup()
-        module = Modules.loadModule(title: title, delegate: mapApi)
+        module = WeatherModule(module: newModule)
 
         checkForFirstRun()
     }
