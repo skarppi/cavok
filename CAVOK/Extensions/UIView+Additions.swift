@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension UIView {
 
@@ -53,5 +54,15 @@ extension UIButton {
 extension UIApplication {
     static var withSafeAreas: Bool {
         return shared.delegate?.window??.safeAreaInsets != .zero
+    }
+}
+
+extension View {
+    func phoneOnlyStackNavigationView() -> some View {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return AnyView(self.navigationViewStyle(StackNavigationViewStyle()))
+        } else {
+            return AnyView(self)
+        }
     }
 }

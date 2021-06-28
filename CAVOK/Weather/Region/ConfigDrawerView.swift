@@ -63,8 +63,9 @@ struct ConfigDrawerView: View {
 
             LinksView(links: $links)
 
-            Spacer()
+            DrawerHandleView(position: .bottom)
         }
+        .phoneOnlyStackNavigationView()
         .padding(.horizontal)
         .edgesIgnoringSafeArea(.all)
     }
