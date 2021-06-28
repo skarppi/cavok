@@ -98,12 +98,11 @@ class WeatherModule {
 
             region.onChange(action: moveRegionSelection(to:))
 
-            delegate.pulley.setDrawerContent(
+            Pulley.shared.setDrawerContent(
                 view: ConfigDrawerView(closedAction: endRegionSelection).environmentObject(region),
                 sizes: PulleySizes(collapsed: 275, partial: nil, full: true),
                 animated: false)
-
-            delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+            Pulley.shared.setDrawerPosition(position: .collapsed, animated: true)
 
             moveRegionSelection(to: region)
         } else {
@@ -128,7 +127,7 @@ class WeatherModule {
 
         // because drawer takes some space offset the region
         let offset: (km: Float, dir: Float, padding: Float)
-        if delegate.pulley.currentDisplayMode == .drawer {
+        if Pulley.shared.currentDisplayMode == .drawer {
             offset = (km: Float(region.radius) / 5, dir: 180, padding: Float(region.radius) / 40)
         } else {
             offset = (km: Float(region.radius), dir: 270, padding: Float(region.radius) / 10)
@@ -180,13 +179,13 @@ class WeatherModule {
     // MARK: - Drawers
 
     private func showTimeslotDrawer() {
-        delegate.pulley.setDrawerPosition(position: .collapsed, animated: true)
+        Pulley.shared.setDrawerPosition(position: .collapsed, animated: true)
 
         let timeline = TimeslotDrawerView {
             _ = self.refresh()
         }
 
-        delegate.pulley.setDrawerContent(view: timeline.environmentObject(timeslots),
+        Pulley.shared.setDrawerContent(view: timeline.environmentObject(timeslots),
                                          sizes: PulleySizes(collapsed: 80, partial: nil, full: false),
                                          animated: false)
     }
@@ -283,8 +282,7 @@ class WeatherModule {
             self.cleanDetails()
             self.showTimeslotDrawer()
         }
-        delegate.pulley.setDrawerContent(view: observationDrawer, sizes: observationDrawer.sizes, animated: false)
-        delegate.pulley.setDrawerPosition(position: delegate.pulley.drawerPosition, animated: true)
+        Pulley.shared.setDrawerContent(view: observationDrawer, sizes: observationDrawer.sizes, animated: true)
 
         let marker = ObservationSelection(obs: observation)
         if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {

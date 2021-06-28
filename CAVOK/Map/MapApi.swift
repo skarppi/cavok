@@ -13,8 +13,6 @@ public class MapApi: ObservableObject {
 
     static var shared = MapApi()
 
-    var pulley: PulleyViewController!
-
     var mapView: WhirlyGlobeViewController!
 
     fileprivate var components: [NSObject: MaplyComponentObject] = [:]

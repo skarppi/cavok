@@ -10,13 +10,6 @@ import Foundation
 import Pulley
 import SwiftUI
 
-extension UIViewController {
-
-    var pulley: PulleyViewController! {
-        return self.parent as? PulleyViewController
-    }
-}
-
 public class PulleySizes {
     var collapsedHeight: CGFloat?
     var partialHeight: CGFloat?
@@ -43,6 +36,10 @@ class PulleyUIHostingController<Content>: UIHostingController<Content>,
                                           PulleyDrawerViewControllerDelegate where Content: View {
 
     var sizes: PulleySizes! = nil
+
+    var pulley: PulleyViewController! {
+        return self.parent as? PulleyViewController
+    }
 
     func supportedDrawerPositions() -> [PulleyPosition] {
 

@@ -9,16 +9,19 @@ import SwiftUI
 import UIKit
 import Pulley
 
+public class Pulley {
+    static var shared = PulleyViewController(contentViewController: UIViewController(),
+                                             drawerViewController: UIViewController())
+}
+
 struct PulleyWrapper: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 
     func makeUIViewController(context: Context) -> UIViewController {
 
-        let pulley = PulleyViewController(contentViewController: UIViewController(),
-                                          drawerViewController: UIViewController())
-        let mainContentVC = UIHostingController(rootView: MapView(pulley: pulley))
+        let pulley = Pulley.shared
+        let mainContentVC = UIHostingController(rootView: MapView())
         pulley.setPrimaryContentViewController(controller: mainContentVC)
-
         pulley.displayMode = .automatic
 
         return pulley

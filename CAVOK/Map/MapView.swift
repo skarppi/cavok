@@ -22,10 +22,6 @@ struct MapView: View {
 
     @State private var orientation: PulleyDisplayMode = PulleyDisplayMode.automatic
 
-    init(pulley: PulleyViewController) {
-        mapApi.pulley = pulley
-    }
-
     var body: some View {
         ZStack(alignment: .topLeading) {
             MapWrapper(mapApi: mapApi)
@@ -42,7 +38,7 @@ struct MapView: View {
                     }
                 }
                 // when pulley is on the left, move segmented control out of the way
-                .padding(.leading, orientation != .drawer ? mapApi.pulley.panelWidth + 20 : 10)
+                .padding(.leading, orientation != .drawer ? Pulley.shared.panelWidth + 20 : 10)
                 .padding([.trailing, .top], 10)
                 .pickerStyle(SegmentedPickerStyle())
                 .labelsHidden()
@@ -82,7 +78,7 @@ struct MapView: View {
         }.onReceive(selectedModule.publisher.first()) { newModule in
             moduleTypeChanged(newModule: newModule)
         }.onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-            orientation = mapApi.pulley.currentDisplayMode
+            orientation = Pulley.shared.currentDisplayMode
         }.sheet(isPresented: $showWebView) {
             WebView()
         }
@@ -137,6 +133,6 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(pulley: PulleyViewController(contentViewController: UIViewController(), drawerViewController: UIViewController()))
+        MapView()
     }
 }
