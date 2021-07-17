@@ -28,9 +28,9 @@ class Modules {
                 if let key = ModuleKey(rawValue: module["key"] as? String ?? ""),
                    let name = module["name"] as? String {
                     return Module(key: key,
-                           title: name,
-                           unit: module["unit"] as? String ?? "",
-                           legend: module["legend"] as? [String: String] ?? [:])
+                                  title: name,
+                                  unit: module["unit"] as? String ?? "",
+                                  legend: module["legend"] as? [String: String] ?? [:])
                 } else {
                     return nil
                 }

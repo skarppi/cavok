@@ -33,13 +33,13 @@ struct LinksView: View {
                 trailing: HStack {
                     Button(action: addRow) {
                         HStack {
-                          Image(systemName: "plus")
+                            Image(systemName: "plus")
                         }
-                      }
+                    }
                     Spacer(minLength: 30)
                     EditButton()
-                    }
-                )
+                }
+            )
         }
     }
 

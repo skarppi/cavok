@@ -38,14 +38,14 @@ struct WebView: View {
                 .navigationBarTitle("", displayMode: .inline)
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(trailing:
-                    Picker("", selection: $viewModel.link) {
-                        ForEach(links, id: \.self) { link in
-                            Text(link.title)
-                                .tag(link as Link?)
-                        }}
-                            .pickerStyle(SegmentedPickerStyle())
-                            .frame(width: proxy.size.width)
-                            .labelsHidden()
+                                        Picker("", selection: $viewModel.link) {
+                                            ForEach(links, id: \.self) { link in
+                                                Text(link.title)
+                                                    .tag(link as Link?)
+                                            }}
+                                        .pickerStyle(SegmentedPickerStyle())
+                                        .frame(width: proxy.size.width)
+                                        .labelsHidden()
                 )
             }
         }
@@ -84,8 +84,8 @@ struct LinkWebView: UIViewRepresentable {
         }
 
         if !(uiView.url?.absoluteString.contains(url.host ?? "") ?? false) {
-                let request = URLRequest(url: url)
-                uiView.load(request)
+            let request = URLRequest(url: url)
+            uiView.load(request)
             load(webView: uiView)
         }
     }
@@ -113,7 +113,7 @@ struct LinkWebView: UIViewRepresentable {
             self.viewModel = viewModel
             super.init()
 
-            observer = webView.observe(\.estimatedProgress, options: [.new]) { [weak self] webView, _ in
+            observer = webView.observe(\.estimatedProgress, options: [.new]) { _, _ in
                 viewModel.progress = webView.estimatedProgress
             }
         }

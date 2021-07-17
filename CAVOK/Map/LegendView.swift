@@ -44,8 +44,8 @@ struct LegendView: View {
 
             return [
                 Gradient.Stop.init(
-                        color: Color(colors[top]),
-                        location: location - overlap),
+                    color: Color(colors[top]),
+                    location: location - overlap),
                 Gradient.Stop.init(
                     color: Color(colors[bottom]),
                     location: location + overlap)]
@@ -64,7 +64,7 @@ struct LegendView: View {
                     gradient: generateGradient(),
                     startPoint: .top,
                     endPoint: .bottom)
-                    .frame(width: 20, height: .infinity)
+                    .frame(width: 20)
 
                 VStack {
                     ForEach(ramp.titles.reversed(), id: \.self) { title in

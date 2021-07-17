@@ -21,19 +21,6 @@ public class MapApi: ObservableObject {
 
     var didTapAt = PassthroughSubject<(MaplyCoordinate, Any?), Never>()
 
-//    func loaded(frame: Int?, legend: Legend) {
-//        DispatchQueue.main.async {
-//                self.buttonView.isHidden = false
-//
-//                if frame != nil {
-//                    self.legendView.loaded(legend: legend)
-//                    self.animateModuleType(show: true)
-//                } else {
-//                    self.resetRegion()
-//                }
-//        }
-//    }
-
     func findComponent(ofType: NSObject.Type) -> NSObject? {
         return components.keys.filter { $0.isKind(of: ofType) }.first
     }

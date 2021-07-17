@@ -31,7 +31,7 @@ struct MapView: View {
                 })
                 .ignoresSafeArea()
 
-            VStack (alignment: .trailing) {
+            VStack(alignment: .trailing) {
                 Picker("", selection: $selectedModule) {
                     ForEach(Modules.available, id: \.self) { module in
                         Text(module.title).tag(module as Module?)
@@ -53,14 +53,14 @@ struct MapView: View {
                         .padding(.trailing, 10)
                 }
 
-                Button(action: {
-                    module?.configure(open: true)
-                }) {
-                    Image(systemName: "gear")
+                Button(
+                    action: { module?.configure(open: true) },
+                    label: {
+                        Image(systemName: "gear")
                         .resizable()
                         .frame(width: 30, height: 30)
                         .padding(5)
-                }.overlay(
+                }).overlay(
                     RoundedRectangle(cornerRadius: 50)
                         .stroke(Color.blue, lineWidth: 1)
                 )

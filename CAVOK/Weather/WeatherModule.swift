@@ -15,7 +15,7 @@ import Combine
 class WeatherModule {
     let module: Module
 
-    private let delegate = MapApi.shared
+    private var mapApi = MapApi.shared
 
     private let weatherService = WeatherServer()
 
@@ -36,7 +36,7 @@ class WeatherModule {
 
         let region = WeatherRegion.load()
 
-        weatherLayer = WeatherLayer(mapView: delegate.mapView, presentation: presentation, region: region)
+        weatherLayer = WeatherLayer(mapView: mapApi.mapView, presentation: presentation, region: region)
 
         showTimeslotDrawer()
 
@@ -52,11 +52,7 @@ class WeatherModule {
             load(observations: weatherService.observations())
         }
 
-        delegate.didTapAt.sink(receiveValue: { (coord, object) in
-//                        guard self.buttonView.isHidden == false else {
-//                            module?.didTapAt(coord: coord)
-//                            return
-//                        }
+        mapApi.didTapAt.sink(receiveValue: { (coord, object) in
 
             if let details = object {
                 self.details(object: details)
@@ -77,7 +73,7 @@ class WeatherModule {
     }
 
     func cleanup() {
-        delegate.clearComponents(ofType: ObservationMarker.self)
+        mapApi.clearComponents(ofType: ObservationMarker.self)
         cleanDetails()
 
         timer?.invalidate()
@@ -93,7 +89,7 @@ class WeatherModule {
 
         if open {
             let region = WeatherRegion.load() ??
-                WeatherRegion(center: LastLocation.load() ?? delegate.mapView.getPosition(),
+                WeatherRegion(center: LastLocation.load() ?? mapApi.mapView.getPosition(),
                               radius: 100)
 
             region.onChange(action: moveRegionSelection(to:))
@@ -111,18 +107,18 @@ class WeatherModule {
     }
 
     private func didTapAt(coord: MaplyCoordinate) {
-        if let selection = delegate.findComponent(ofType: RegionSelection.self) as? RegionSelection {
+        if let selection = mapApi.findComponent(ofType: RegionSelection.self) as? RegionSelection {
             selection.region.center = coord
             moveRegionSelection(to: selection.region)
         }
     }
 
     private func moveRegionSelection(to region: WeatherRegion) {
-        delegate.clearComponents(ofType: RegionSelection.self)
+        mapApi.clearComponents(ofType: RegionSelection.self)
 
         let selection = RegionSelection(region: region)
-        if let stickers = delegate.mapView.addShapes([selection], desc: selection.desc) {
-            delegate.addComponents(key: selection, value: stickers)
+        if let stickers = mapApi.mapView.addShapes([selection], desc: selection.desc) {
+            mapApi.addComponents(key: selection, value: stickers)
         }
 
         // because drawer takes some space offset the region
@@ -135,18 +131,18 @@ class WeatherModule {
 
         let center = region.center.locationAt(kilometers: offset.km, direction: offset.dir)
 
-        let height = delegate.mapView.findHeight(toViewBounds: region.bbox(padding: offset.padding), pos: center)
-        delegate.mapView.animate(toPosition: center, height: height, heading: 0, time: 0.5)
+        let height = mapApi.mapView.findHeight(toViewBounds: region.bbox(padding: offset.padding), pos: center)
+        mapApi.mapView.animate(toPosition: center, height: height, heading: 0, time: 0.5)
 
         showStations(at: region)
     }
 
     private func showStations(at region: WeatherRegion) {
-        delegate.clearComponents(ofType: StationMarker.self)
+        mapApi.clearComponents(ofType: StationMarker.self)
         weatherService.queryStations(at: region).done { stations in
             let markers = stations.map { station in StationMarker(station: station) }
-            if let key = markers.first, let components = self.delegate.mapView.addScreenMarkers(markers, desc: nil) {
-                self.delegate.addComponents(key: key, value: components)
+            if let key = markers.first, let components = self.mapApi.mapView.addScreenMarkers(markers, desc: nil) {
+                self.mapApi.addComponents(key: key, value: components)
             }
 
             region.matches = stations.count
@@ -154,8 +150,8 @@ class WeatherModule {
     }
 
     private func endRegionSelection(at region: WeatherRegion? = nil) {
-        delegate.clearComponents(ofType: StationMarker.self)
-        delegate.clearComponents(ofType: RegionSelection.self)
+        mapApi.clearComponents(ofType: StationMarker.self)
+        mapApi.clearComponents(ofType: RegionSelection.self)
 
         showTimeslotDrawer()
         timeslots.startSpinning()
@@ -186,8 +182,8 @@ class WeatherModule {
         }
 
         Pulley.shared.setDrawerContent(view: timeline.environmentObject(timeslots),
-                                         sizes: PulleySizes(collapsed: 80, partial: nil, full: false),
-                                         animated: false)
+                                       sizes: PulleySizes(collapsed: 80, partial: nil, full: false),
+                                       animated: false)
     }
 
     // MARK: - Observations
@@ -220,7 +216,7 @@ class WeatherModule {
     }
 
     private func render(frame: Int) {
-        delegate.clearComponents(ofType: ObservationMarker.self)
+        mapApi.clearComponents(ofType: ObservationMarker.self)
 
         let observations = weatherLayer.go(frame: frame)
 
@@ -229,8 +225,8 @@ class WeatherModule {
         }
 
         if let key = markers.first,
-           let components = delegate.mapView.addScreenMarkers(markers, desc: nil) {
-            delegate.addComponents(key: key, value: components)
+           let components = mapApi.mapView.addScreenMarkers(markers, desc: nil) {
+            mapApi.addComponents(key: key, value: components)
         }
 
         if let tafs = observations as? [Taf],
@@ -259,7 +255,7 @@ class WeatherModule {
     }
 
     private func cleanDetails() {
-        delegate.clearComponents(ofType: ObservationSelection.self)
+        mapApi.clearComponents(ofType: ObservationSelection.self)
     }
 
     private func quitDetails() {
@@ -285,8 +281,8 @@ class WeatherModule {
         Pulley.shared.setDrawerContent(view: observationDrawer, sizes: observationDrawer.sizes, animated: true)
 
         let marker = ObservationSelection(obs: observation)
-        if let components = delegate.mapView.addScreenMarkers([marker], desc: nil) {
-            delegate.addComponents(key: marker, value: components)
+        if let components = mapApi.mapView.addScreenMarkers([marker], desc: nil) {
+            mapApi.addComponents(key: marker, value: components)
         }
     }
 }

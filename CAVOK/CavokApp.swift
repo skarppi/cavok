@@ -30,7 +30,7 @@ struct CavokApp: SwiftUI.App {
             PulleyWrapper()
                 .ignoresSafeArea()
         }.onChange(of: scenePhase) { newScenePhase in
-            switch(newScenePhase) {
+            switch newScenePhase {
             case .background:
                 print("Writing settings to disk -> background")
                 UserDefaults.standard.synchronize()
@@ -44,7 +44,6 @@ struct CavokApp: SwiftUI.App {
         }
     }
 }
-
 
 func initRealms() {
     let config = Realm.Configuration(
