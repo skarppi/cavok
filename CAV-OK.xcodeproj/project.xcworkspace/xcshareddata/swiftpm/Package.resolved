@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/52inc/Pulley",
         "state": {
           "branch": null,
-          "revision": "5d5ec9c9c2a2ab3c1d76d5c7a7ce6eff20410719",
-          "version": "2.9.0"
+          "revision": "355bb7c53d4d430334422ad05a97fbe43ce326db",
+          "version": "2.9.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/realm/realm-cocoa",
         "state": {
           "branch": null,
-          "revision": "239a6a383af5d4b445626a95aa6356925e6acf22",
-          "version": "10.7.4"
+          "revision": "328425bfc372ce77ec1f4f2701f61ececbb97d84",
+          "version": "10.19.0"
         }
       },
       {
@@ -51,17 +51,17 @@
         "repositoryURL": "https://github.com/realm/realm-core",
         "state": {
           "branch": null,
-          "revision": "28ed052d10d2245542b4fbdc71d388febb1e9bc4",
-          "version": "10.6.0"
+          "revision": "b170db6a47789ff5f2fbc3eeed0220b4b0a3f6b7",
+          "version": "11.6.0"
         }
       },
       {
         "package": "SwiftMessages",
         "repositoryURL": "https://github.com/SwiftKickMobile/SwiftMessages",
         "state": {
-          "branch": "work/xcode12",
-          "revision": "0d1068917cc7cb4de0d50de736aa3ed50b227bf0",
-          "version": null
+          "branch": null,
+          "revision": "1e49de7b3780b69927bc3e61903d8ec0693a3dc5",
+          "version": "9.0.5"
         }
       },
       {
