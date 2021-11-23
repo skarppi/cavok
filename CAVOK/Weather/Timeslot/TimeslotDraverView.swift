@@ -10,6 +10,8 @@ import SwiftUI
 struct TimeslotDrawerView: View {
     var refresh: (() -> Void)
 
+    @Environment(\.colorScheme) var colorScheme
+
     @EnvironmentObject var state: TimeslotState
 
     @GestureState var cursor = CGPoint.zero
@@ -22,7 +24,8 @@ struct TimeslotDrawerView: View {
 
                 Text(state.status)
                     .font(.body)
-                    .foregroundColor(state.statusColor)
+                    .foregroundColor(
+                        state.statusColor.lighter(by:  colorScheme == .dark ? 0.4 : 0))
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
 
                 timeline
@@ -49,9 +52,10 @@ struct TimeslotDrawerView: View {
                     .padding(EdgeInsets(top: 10, leading: 3, bottom: 10, trailing: 3))
                     .background(
                         Rectangle()
-                            .fill(Color(slot.color).opacity(0.4))
+                            .fill(Color(slot.color)
+                                    .opacity(colorScheme == .dark ? 0.9 : 0.4))
                     )
-                    .border(state.selectedIndex == index ?  Color.black : Color.clear)
+                    .border(state.selectedIndex == index ? (colorScheme == .dark ? Color.white : Color.black) : Color.clear)
                     .background(self.rectReader(index: index))
             }
         }
@@ -87,13 +91,17 @@ struct TimeslotDraverView_Previews: PreviewProvider {
             Timeslot(date: Date(), title: "11:30")
         ]
 
+        state.slots[0].color = UIColor.red
+        state.slots[1].color = UIColor.blue
+
         state.selectedIndex = 0
+
+        state.statusColor = Color(UIColor.systemRed)
         return state
     }
 
     static var previews: some View {
-        TimeslotDrawerView(refresh: {
-        })
-        .environmentObject(state())
+        ForEach(ColorScheme.allCases, id: \.self, content: TimeslotDrawerView(refresh: {})
+                    .environmentObject(state()).preferredColorScheme)
     }
 }

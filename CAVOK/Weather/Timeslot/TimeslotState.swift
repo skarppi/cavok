@@ -38,7 +38,7 @@ class TimeslotState: ObservableObject {
         }
     }
 
-    func setStatus(text: String?, color: UIColor = UIColor.red) {
+    func setStatus(text: String?, color: UIColor = UIColor.systemRed) {
         if let text = text {
             statusColor = Color(color)
             status = text

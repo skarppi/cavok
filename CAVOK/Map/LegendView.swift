@@ -57,6 +57,7 @@ struct LegendView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(module.unit)
+                .foregroundColor(.black)
                 .offset(x: 22)
 
             HStack(spacing: 2) {
@@ -69,6 +70,7 @@ struct LegendView: View {
                 VStack {
                     ForEach(ramp.titles.reversed(), id: \.self) { title in
                         Text(title)
+                            .foregroundColor(.black)
                             .frame(height: height / CGFloat(ramp.titles.count))
                     }
                 }

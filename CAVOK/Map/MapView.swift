@@ -37,6 +37,7 @@ struct MapView: View {
                         Text(module.title).tag(module as Module?)
                     }
                 }
+                .colorScheme(.light)
                 // when pulley is on the left, move segmented control out of the way
                 .padding(.leading, orientation != .drawer ? Pulley.shared.panelWidth + 20 : 10)
                 .padding([.trailing, .top], 10)
