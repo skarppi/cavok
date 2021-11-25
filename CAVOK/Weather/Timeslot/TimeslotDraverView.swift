@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TimeslotDrawerView: View {
-    var refresh: (() -> Void)
+    @Environment(\.refresh) private var refresh
 
     @Environment(\.colorScheme) var colorScheme
 
@@ -18,27 +18,25 @@ struct TimeslotDrawerView: View {
 
     var body: some View {
         PullToRefreshView(action: refreshAction, isLoading: $state.isLoading) {
-
-            VStack(spacing: 0) {
+            ZStack(alignment: .topLeading) {
                 DrawerHandleView(position: .top)
 
-                Text(state.status)
-                    .font(.body)
-                    .foregroundColor(
-                        state.statusColor.lighter(by:  colorScheme == .dark ? 0.4 : 0))
-                    .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
+                VStack(spacing: 0) {
+                    Text(state.status)
+                        .font(.body)
+                        .foregroundColor(
+                            state.statusColor.lighter(by: colorScheme == .dark ? 0.4 : 0))
+                        .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
 
-                timeline
-                    .padding(.bottom, 5)
-                    .gesture(
-                        DragGesture(minimumDistance: 0, coordinateSpace: .global)
-                            .updating($cursor) { (value, state, _) in
-                                state = value.location
-                            })
-
-                DrawerHandleView(position: .bottom)
+                    timeline
+                        .padding(.bottom, 5)
+                        .gesture(
+                            DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                                .updating($cursor) { (value, state, _) in
+                                    state = value.location
+                                })
+                }
             }
-            .padding(.horizontal)
         }
     }
 
@@ -55,7 +53,9 @@ struct TimeslotDrawerView: View {
                             .fill(Color(slot.color)
                                     .opacity(colorScheme == .dark ? 0.9 : 0.4))
                     )
-                    .border(state.selectedIndex == index ? (colorScheme == .dark ? Color.white : Color.black) : Color.clear)
+                    .border(state.selectedIndex == index
+                            ? (colorScheme == .dark ? Color.white : Color.black)
+                            : Color.clear)
                     .background(self.rectReader(index: index))
             }
         }
@@ -76,9 +76,13 @@ struct TimeslotDrawerView: View {
     }
 
     private func refreshAction() {
-        //        setControls(hidden: true)
         state.startSpinning()
-        state.refreshRequested.send()
+
+        if let refresh = refresh {
+            Task {
+                await refresh()
+            }
+        }
     }
 }
 
@@ -101,7 +105,9 @@ struct TimeslotDraverView_Previews: PreviewProvider {
     }
 
     static var previews: some View {
-        ForEach(ColorScheme.allCases, id: \.self, content: TimeslotDrawerView(refresh: {})
-                    .environmentObject(state()).preferredColorScheme)
+        ForEach(ColorScheme.allCases,
+                id: \.self,
+                content: TimeslotDrawerView().environmentObject(state()).preferredColorScheme
+        )
     }
 }

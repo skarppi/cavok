@@ -13,8 +13,6 @@ struct ConfigDrawerView: View {
 
     @EnvironmentObject var region: WeatherRegion
 
-    @State var links = Links.load()
-
     @State var errorMsg: String?
 
     func updatePosition() {
@@ -31,7 +29,6 @@ struct ConfigDrawerView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             DrawerTitleView(title: "Weather region", action: {
-                _ = Links.save(links)
                 closedAction(region)
             })
             HStack {
@@ -60,10 +57,6 @@ struct ConfigDrawerView: View {
                 RoundedRectangle(cornerRadius: 6)
                     .stroke(Color.accentColor, lineWidth: 1)
             )
-
-            LinksView(links: $links)
-
-            DrawerHandleView(position: .bottom)
         }
         .phoneOnlyStackNavigationView()
         .padding(.horizontal)

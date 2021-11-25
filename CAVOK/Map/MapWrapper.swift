@@ -8,7 +8,6 @@
 import SwiftUI
 import UIKit
 import Combine
-import Pulley
 
 struct MapWrapper: UIViewControllerRepresentable {
 
@@ -32,8 +31,6 @@ struct MapWrapper: UIViewControllerRepresentable {
         var mapView = WhirlyGlobeViewController()
 
         var backgroundLoader: MaplyQuadImageLoader?
-
-        var pulley: PulleyViewController!
 
         var parent: MapWrapper
 

@@ -12,19 +12,20 @@ struct DrawerTitleView: View {
     var action: (() -> Void)
 
     var body: some View {
-        VStack {
-            DrawerHandleView(position: .top)
+        HStack {
+            Text(title ?? "-").font(.title).bold().lineLimit(1)
 
-            HStack {
-                Text(title ?? "-").font(.system(.title))
-                Spacer()
-                Button(action: self.action) {
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .padding()
-                }
+            Spacer()
+
+            Button(action: action) {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
             }
+            .font(.title)
+
+//                    .resizable()
+//                    .frame(width: 20, height: 20)
+//                    .padding()
         }
     }
 }

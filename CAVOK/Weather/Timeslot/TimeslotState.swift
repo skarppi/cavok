@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 // Our observable object class
-class TimeslotState: ObservableObject {
+@MainActor class TimeslotState: ObservableObject {
     @Published var slots: [Timeslot] = [Timeslot(date: Date(), title: "")]
 
     @Published var selectedIndex = 0
@@ -19,8 +19,6 @@ class TimeslotState: ObservableObject {
     @Published var statusColor = Color.primary
 
     @Published var isLoading = false
-
-    let refreshRequested = ObservableObjectPublisher()
 
     func reset(slots: [Timeslot], selected: Int) {
         self.slots = slots
@@ -54,7 +52,6 @@ class TimeslotState: ObservableObject {
     }
 
     func stopSpinning() {
-        print("stop")
         withAnimation { isLoading = false }
     }
 

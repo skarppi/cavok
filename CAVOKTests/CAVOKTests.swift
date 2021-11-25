@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import CAVOK
+//@testable import CAVOK
 
 class CAVOKTests: XCTestCase {
 

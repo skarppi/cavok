@@ -7,47 +7,40 @@
 //
 
 import SwiftUI
-import Pulley
 
-struct ObservationDrawerView: View {
+struct ObservationHeaderView: View {
     var presentation: ObservationPresentation
     var obs: Observation
-    var observations: Observations
-
-    var sizes = PulleySizes(collapsed: 0, partial: 0, full: true)
 
     var closedAction: (() -> Void)
 
     var body: some View {
-        VStack(alignment: .center) {
-            VStack(alignment: .leading) {
-                DrawerTitleView(title: self.obs.station?.name, action: closedAction)
+        VStack(alignment: .leading) {
+            DrawerTitleView(title: self.obs.station?.name, action: closedAction)
 
-                AttributedText(obs: obs, presentation: presentation)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top)
-            }.background(GeometryReader { proxy -> Color in
-                self.sizes.collapsedHeight = proxy.frame(in: .local).maxY + DrawerHandleView.height()
-                return Color.clear
-            }).padding(.horizontal)
-
-            ScrollView {
-                VStack(alignment: .leading) {
-                    ObservationList(
-                        title: "Metar history",
-                        observations: observations.metars,
-                        presentation: presentation)
-
-                    ObservationList(
-                        title: "Taf",
-                        observations: observations.tafs,
-                        presentation: presentation)
-                }
-            }
-
-            DrawerHandleView(position: .bottom)
+            AttributedText(obs: obs, presentation: presentation)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top)
         }
-        .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct ObservationDetailsView: View {
+    var presentation: ObservationPresentation
+    var observations: Observations
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            ObservationList(
+                title: "Metar history",
+                observations: observations.metars,
+                presentation: presentation)
+
+            ObservationList(
+                title: "Taf",
+                observations: observations.tafs,
+                presentation: presentation)
+        }
     }
 }
 
@@ -108,11 +101,11 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         ])
 
     static var previews: some View {
-        ObservationDrawerView(presentation: presentation,
+        ObservationHeaderView(presentation: presentation,
                               obs: observations.metars[0],
-                              observations: observations,
-                              sizes: PulleySizes(collapsed: 0, partial: 0, full: false),
                               closedAction: { () in print("Closed")})
+        ObservationDetailsView(presentation: presentation,
+                              observations: observations)
     }
 
     static func metar(_ raw: String) -> Metar {

@@ -29,15 +29,6 @@
         }
       },
       {
-        "package": "Pulley",
-        "repositoryURL": "https://github.com/52inc/Pulley",
-        "state": {
-          "branch": null,
-          "revision": "355bb7c53d4d430334422ad05a97fbe43ce326db",
-          "version": "2.9.1"
-        }
-      },
-      {
         "package": "Realm",
         "repositoryURL": "https://github.com/realm/realm-cocoa",
         "state": {

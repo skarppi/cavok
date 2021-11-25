@@ -29,7 +29,7 @@ struct PullToRefreshView<Content>: View where Content: View {
 
     // colors for the background of the scroll indicator
     private let darkColor: Color = Color(red: 40 / 255, green: 40 / 255, blue: 40 / 255)
-    private let lightColor: Color = Color(red: 240 / 255, green: 240 / 255, blue: 245 / 255)
+    private let lightColor: Color = Color.white
 
     // haptic feedback for when user has pulled enough
     private let haptic = UIImpactFeedbackGenerator(style: .heavy)
@@ -108,7 +108,7 @@ struct PullToRefreshView<Content>: View where Content: View {
                     // show an arrow that lets the user know they can drag the view
                     Image(systemName: "arrow.down")
                         .rotationEffect(Angle(degrees: arrowAngle < 180 ? arrowAngle : 180))
-                        .opacity(arrowAngle > 45 ? (arrowAngle - 45) / 180: 0)
+                        .opacity(arrowAngle > 15 ? (arrowAngle - 45) / 180: 0)
                 }
             }
             .frame(height: 40)

@@ -12,12 +12,20 @@
 		B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63676DA267AFFFE00A92257 /* MapWrapper.swift */; };
 		B648ECC326660A2D009212F6 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ECC226660A2D009212F6 /* MapView.swift */; };
 		B648ECC52666BD38009212F6 /* CavokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ECC42666BD38009212F6 /* CavokApp.swift */; };
-		B648ED0A2675CE2C009212F6 /* PulleyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648ED092675CE2C009212F6 /* PulleyWrapper.swift */; };
 		B64D83C126150316003AE228 /* TimeslotState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C026150316003AE228 /* TimeslotState.swift */; };
 		B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */; };
 		B64D83CB261511A3003AE228 /* DrawerTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D83CA261511A3003AE228 /* DrawerTitleView.swift */; };
 		B65329CD26A4BCD800B30A64 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65329CC26A4BCD800B30A64 /* UIColor+Additions.swift */; };
 		B688A4652683C87500EE7373 /* MapApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688A4642683C87500EE7373 /* MapApi.swift */; };
+		B6972391274E6CE1000873A3 /* ConfigContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6972390274E6CE1000873A3 /* ConfigContainerView.swift */; };
+		B6972393274E7547000873A3 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6972392274E7547000873A3 /* WeatherView.swift */; };
+		B69723B2275056FB000873A3 /* BottomSheetPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AA275056FB000873A3 /* BottomSheetPosition.swift */; };
+		B69723B3275056FB000873A3 /* BottomSheetArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AB275056FB000873A3 /* BottomSheetArray.swift */; };
+		B69723B4275056FB000873A3 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AD275056FB000873A3 /* RoundedCorner.swift */; };
+		B69723B5275056FB000873A3 /* EffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AE275056FB000873A3 /* EffectView.swift */; };
+		B69723B6275056FB000873A3 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AF275056FB000873A3 /* BottomSheetView.swift */; };
+		B69723B7275056FB000873A3 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723B0275056FB000873A3 /* ViewExtension.swift */; };
+		B69723B8275056FB000873A3 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723B1275056FB000873A3 /* BottomSheet.swift */; };
 		B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A829562687CEF100FA5B11 /* LegendView.swift */; };
 		B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */; };
 		B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */; };
@@ -39,7 +47,6 @@
 		C09D669F2540CAB800FB3D39 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66952540CAB800FB3D39 /* LocationManager.swift */; };
 		C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66982540CAB800FB3D39 /* Modules.swift */; };
 		C09D66DB2540CACA00FB3D39 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66A82540CACA00FB3D39 /* WebView.swift */; };
-		C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */; };
 		C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AB2540CACA00FB3D39 /* UIView+Additions.swift */; };
 		C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */; };
 		C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AD2540CACA00FB3D39 /* Maply+Additions.swift */; };
@@ -65,13 +72,11 @@
 		C09D66F52540CACA00FB3D39 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C82540CACA00FB3D39 /* Links.swift */; };
 		C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66CD2540CACA00FB3D39 /* WeatherRegion.swift */; };
 		C09D66FD2540CACA00FB3D39 /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D12540CACA00FB3D39 /* Timeslot.swift */; };
-		C09D66FE2540CACA00FB3D39 /* WeatherModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D22540CACA00FB3D39 /* WeatherModule.swift */; };
 		C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D42540CACA00FB3D39 /* AddsService.swift */; };
 		C09D67002540CACA00FB3D39 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D52540CACA00FB3D39 /* WeatherService.swift */; };
 		C09D67012540CACA00FB3D39 /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D62540CACA00FB3D39 /* AwsService.swift */; };
 		C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */; };
 		C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */; };
-		C09D67172540CC1E00FB3D39 /* Pulley in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67162540CC1E00FB3D39 /* Pulley */; };
 		C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = C09D671C2540CC7C00FB3D39 /* PromiseKit */; };
 		C09D67232540CCED00FB3D39 /* PMKFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67222540CCED00FB3D39 /* PMKFoundation */; };
 		C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67282540CD2300FB3D39 /* SwiftyJSON */; };
@@ -138,12 +143,20 @@
 		B63676DA267AFFFE00A92257 /* MapWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWrapper.swift; sourceTree = "<group>"; };
 		B648ECC226660A2D009212F6 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B648ECC42666BD38009212F6 /* CavokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavokApp.swift; sourceTree = "<group>"; };
-		B648ED092675CE2C009212F6 /* PulleyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulleyWrapper.swift; sourceTree = "<group>"; };
 		B64D83C026150316003AE228 /* TimeslotState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotState.swift; sourceTree = "<group>"; };
 		B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDrawerView.swift; sourceTree = "<group>"; };
 		B64D83CA261511A3003AE228 /* DrawerTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTitleView.swift; sourceTree = "<group>"; };
 		B65329CC26A4BCD800B30A64 /* UIColor+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
 		B688A4642683C87500EE7373 /* MapApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapApi.swift; sourceTree = "<group>"; };
+		B6972390274E6CE1000873A3 /* ConfigContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigContainerView.swift; sourceTree = "<group>"; };
+		B6972392274E7547000873A3 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		B69723AA275056FB000873A3 /* BottomSheetPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheetPosition.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheetPosition.swift; sourceTree = SOURCE_ROOT; };
+		B69723AB275056FB000873A3 /* BottomSheetArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheetArray.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheetArray.swift; sourceTree = SOURCE_ROOT; };
+		B69723AD275056FB000873A3 /* RoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		B69723AE275056FB000873A3 /* EffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectView.swift; sourceTree = "<group>"; };
+		B69723AF275056FB000873A3 /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheetView.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheetView.swift; sourceTree = SOURCE_ROOT; };
+		B69723B0275056FB000873A3 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewExtension.swift; path = libs/BottomSheet/Sources/BottomSheet/ViewExtension.swift; sourceTree = SOURCE_ROOT; };
+		B69723B1275056FB000873A3 /* BottomSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheet.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheet.swift; sourceTree = SOURCE_ROOT; };
 		B6A829562687CEF100FA5B11 /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotDraverView.swift; sourceTree = "<group>"; };
 		B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
@@ -170,7 +183,6 @@
 		C09D66952540CAB800FB3D39 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		C09D66982540CAB800FB3D39 /* Modules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modules.swift; sourceTree = "<group>"; };
 		C09D66A82540CACA00FB3D39 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pulley+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AB2540CACA00FB3D39 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 		C09D66AD2540CACA00FB3D39 /* Maply+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Maply+Additions.swift"; sourceTree = "<group>"; };
@@ -196,7 +208,6 @@
 		C09D66C82540CACA00FB3D39 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		C09D66CD2540CACA00FB3D39 /* WeatherRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherRegion.swift; sourceTree = "<group>"; };
 		C09D66D12540CACA00FB3D39 /* Timeslot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeslot.swift; sourceTree = "<group>"; };
-		C09D66D22540CACA00FB3D39 /* WeatherModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherModule.swift; sourceTree = "<group>"; };
 		C09D66D42540CACA00FB3D39 /* AddsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddsService.swift; sourceTree = "<group>"; };
 		C09D66D52540CACA00FB3D39 /* WeatherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		C09D66D62540CACA00FB3D39 /* AwsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwsService.swift; sourceTree = "<group>"; };
@@ -223,7 +234,6 @@
 				C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
 				C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */,
-				C09D67172540CC1E00FB3D39 /* Pulley in Frameworks */,
 				C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,6 +255,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B697239A274FB694000873A3 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				B69723B1275056FB000873A3 /* BottomSheet.swift */,
+				B69723AB275056FB000873A3 /* BottomSheetArray.swift */,
+				B69723AA275056FB000873A3 /* BottomSheetPosition.swift */,
+				B69723AF275056FB000873A3 /* BottomSheetView.swift */,
+				B69723AC275056FB000873A3 /* HelperViews */,
+				B69723B0275056FB000873A3 /* ViewExtension.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
+		B69723AC275056FB000873A3 /* HelperViews */ = {
+			isa = PBXGroup;
+			children = (
+				B69723AD275056FB000873A3 /* RoundedCorner.swift */,
+				B69723AE275056FB000873A3 /* EffectView.swift */,
+			);
+			name = HelperViews;
+			path = libs/BottomSheet/Sources/BottomSheet/HelperViews;
+			sourceTree = SOURCE_ROOT;
+		};
 		C09D66232540BCBE00FB3D39 = {
 			isa = PBXGroup;
 			children = (
@@ -280,7 +313,6 @@
 				C09D66AF2540CACA00FB3D39 /* Weather */,
 				C09D66A72540CACA00FB3D39 /* Web */,
 				B648ECC42666BD38009212F6 /* CavokApp.swift */,
-				B648ED092675CE2C009212F6 /* PulleyWrapper.swift */,
 				C09D66352540BCC100FB3D39 /* Assets.xcassets */,
 				C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */,
 				C09D663D2540BCC100FB3D39 /* Info.plist */,
@@ -318,6 +350,7 @@
 		C09D666B2540BF3600FB3D39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B697239A274FB694000873A3 /* BottomSheet */,
 				C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */,
 			);
 			name = Frameworks;
@@ -343,6 +376,7 @@
 				B63676DA267AFFFE00A92257 /* MapWrapper.swift */,
 				B688A4642683C87500EE7373 /* MapApi.swift */,
 				B6A829562687CEF100FA5B11 /* LegendView.swift */,
+				B6972392274E7547000873A3 /* WeatherView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -377,7 +411,6 @@
 		C09D66A92540CACA00FB3D39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C09D66AA2540CACA00FB3D39 /* Pulley+Additions.swift */,
 				C09D66AB2540CACA00FB3D39 /* UIView+Additions.swift */,
 				C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */,
 				C09D66AD2540CACA00FB3D39 /* Maply+Additions.swift */,
@@ -390,7 +423,6 @@
 		C09D66AF2540CACA00FB3D39 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
-				C09D66D22540CACA00FB3D39 /* WeatherModule.swift */,
 				C09D66B22540CACA00FB3D39 /* Layers */,
 				C09D66BD2540CACA00FB3D39 /* Models */,
 				C09D66C52540CACA00FB3D39 /* Region */,
@@ -445,6 +477,7 @@
 				B64D83C626150F9B003AE228 /* ConfigDrawerView.swift */,
 				B62B9AFD2650FC5100F3E74D /* LinksView.swift */,
 				B62B9B012653077300F3E74D /* LinkEditView.swift */,
+				B6972390274E6CE1000873A3 /* ConfigContainerView.swift */,
 			);
 			path = Region;
 			sourceTree = "<group>";
@@ -499,7 +532,6 @@
 			);
 			name = "CAV-OK";
 			packageProductDependencies = (
-				C09D67162540CC1E00FB3D39 /* Pulley */,
 				C09D671C2540CC7C00FB3D39 /* PromiseKit */,
 				C09D67222540CCED00FB3D39 /* PMKFoundation */,
 				C09D67282540CD2300FB3D39 /* SwiftyJSON */,
@@ -580,7 +612,6 @@
 			);
 			mainGroup = C09D66232540BCBE00FB3D39;
 			packageReferences = (
-				C09D67152540CC1E00FB3D39 /* XCRemoteSwiftPackageReference "Pulley" */,
 				C09D671B2540CC7C00FB3D39 /* XCRemoteSwiftPackageReference "PromiseKit" */,
 				C09D67212540CCED00FB3D39 /* XCRemoteSwiftPackageReference "Foundation" */,
 				C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
@@ -685,16 +716,20 @@
 				B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */,
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
 				B6D0493E263E7EBE000DF0A8 /* DrawerHandleView.swift in Sources */,
+				B69723B2275056FB000873A3 /* BottomSheetPosition.swift in Sources */,
 				B65329CD26A4BCD800B30A64 /* UIColor+Additions.swift in Sources */,
+				B69723B6275056FB000873A3 /* BottomSheetView.swift in Sources */,
 				B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */,
 				B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
 				C09D66F42540CACA00FB3D39 /* StationMarker.swift in Sources */,
+				B69723B4275056FB000873A3 /* RoundedCorner.swift in Sources */,
 				C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */,
 				C09D66F12540CACA00FB3D39 /* Weather.swift in Sources */,
 				C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */,
 				B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */,
+				B6972393274E7547000873A3 /* WeatherView.swift in Sources */,
 				C09D66E32540CACA00FB3D39 /* HeatMap.swift in Sources */,
 				C09D66ED2540CACA00FB3D39 /* Tokenizer.swift in Sources */,
 				C09D669B2540CAB800FB3D39 /* TileJSONLayer.swift in Sources */,
@@ -702,6 +737,7 @@
 				B64D83C126150316003AE228 /* TimeslotState.swift in Sources */,
 				C09D66E72540CACA00FB3D39 /* FrameChanger.swift in Sources */,
 				B688A4652683C87500EE7373 /* MapApi.swift in Sources */,
+				B69723B8275056FB000873A3 /* BottomSheet.swift in Sources */,
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,
 				B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */,
 				C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */,
@@ -711,17 +747,20 @@
 				C09D66F52540CACA00FB3D39 /* Links.swift in Sources */,
 				C09D669D2540CAB800FB3D39 /* UserMarker.swift in Sources */,
 				C09D66F32540CACA00FB3D39 /* RegionSelection.swift in Sources */,
+				B69723B3275056FB000873A3 /* BottomSheetArray.swift in Sources */,
 				C09D669C2540CAB800FB3D39 /* LastSession.swift in Sources */,
 				C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */,
+				B6972391274E6CE1000873A3 /* ConfigContainerView.swift in Sources */,
 				C09D669A2540CAB800FB3D39 /* Messages.swift in Sources */,
 				C09D66E62540CACA00FB3D39 /* ColorRamp.swift in Sources */,
 				B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */,
 				C09D67462540D03100FB3D39 /* ObservationDrawerView.swift in Sources */,
 				C09D67002540CACA00FB3D39 /* WeatherService.swift in Sources */,
 				B64D83CB261511A3003AE228 /* DrawerTitleView.swift in Sources */,
-				C09D66FE2540CACA00FB3D39 /* WeatherModule.swift in Sources */,
+				B69723B7275056FB000873A3 /* ViewExtension.swift in Sources */,
 				C09D66EE2540CACA00FB3D39 /* Station.swift in Sources */,
 				C09D66EC2540CACA00FB3D39 /* Observations.swift in Sources */,
+				B69723B5275056FB000873A3 /* EffectView.swift in Sources */,
 				C09D66E82540CACA00FB3D39 /* HeatMap.metal in Sources */,
 				C09D66E02540CACA00FB3D39 /* String+Additions.swift in Sources */,
 				B648ECC326660A2D009212F6 /* MapView.swift in Sources */,
@@ -731,12 +770,10 @@
 				C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */,
 				C09D66F22540CACA00FB3D39 /* Metar.swift in Sources */,
 				C09D67012540CACA00FB3D39 /* AwsService.swift in Sources */,
-				C09D66DC2540CACA00FB3D39 /* Pulley+Additions.swift in Sources */,
 				C09D66E52540CACA00FB3D39 /* HeatMapCPU.swift in Sources */,
 				C09D66FD2540CACA00FB3D39 /* Timeslot.swift in Sources */,
 				C09D66DB2540CACA00FB3D39 /* WebView.swift in Sources */,
 				C09D669F2540CAB800FB3D39 /* LocationManager.swift in Sources */,
-				B648ED0A2675CE2C009212F6 /* PulleyWrapper.swift in Sources */,
 				C09D66E92540CACA00FB3D39 /* WeatherLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -835,7 +872,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -890,7 +927,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1072,14 +1109,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C09D67152540CC1E00FB3D39 /* XCRemoteSwiftPackageReference "Pulley" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/52inc/Pulley";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.5;
-			};
-		};
 		C09D671B2540CC7C00FB3D39 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/PromiseKit";
@@ -1139,11 +1168,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C09D67162540CC1E00FB3D39 /* Pulley */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C09D67152540CC1E00FB3D39 /* XCRemoteSwiftPackageReference "Pulley" */;
-			productName = Pulley;
-		};
 		C09D671C2540CC7C00FB3D39 /* PromiseKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C09D671B2540CC7C00FB3D39 /* XCRemoteSwiftPackageReference "PromiseKit" */;

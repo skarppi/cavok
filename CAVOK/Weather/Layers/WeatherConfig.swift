@@ -11,7 +11,7 @@ import Foundation
 class WeatherConfig {
     let coordSystem = MaplySphericalMercator(webStandard: ())
 
-    let region: WeatherRegion
+    let region = WeatherRegion.load()
 
     // width and height in pixels
     let width: Int
@@ -34,8 +34,7 @@ class WeatherConfig {
 
     let tiles: [(ll: MaplyTileID, ur: MaplyTileID)]
 
-    init(region: WeatherRegion) {
-        self.region = region
+    init() {
         self.padding = min(Float(region.radius) / 2, 300)
 
         let bbox = region.bbox(padding: padding)

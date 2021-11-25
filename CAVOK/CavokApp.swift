@@ -27,8 +27,7 @@ struct CavokApp: SwiftUI.App {
 
     var body: some Scene {
         WindowGroup {
-            PulleyWrapper()
-                .ignoresSafeArea()
+            MapView()
         }.onChange(of: scenePhase) { newScenePhase in
             switch newScenePhase {
             case .background:

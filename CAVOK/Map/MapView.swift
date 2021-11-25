@@ -7,20 +7,15 @@
 
 import SwiftUI
 import Combine
-import Pulley
 
 struct MapView: View {
-    @State private var selectedModule: Module? = Modules.available[0]
-
     @State private var showWebView = false
+
+    @State private var showConfigView = false
 
     @ObservedObject var locationManager = LocationManager.shared
 
     @ObservedObject var mapApi = MapApi.shared
-
-    @State private var module: WeatherModule?
-
-    @State private var orientation: PulleyDisplayMode = PulleyDisplayMode.automatic
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -28,44 +23,23 @@ struct MapView: View {
                 .onAppear(perform: {
                     mapApi.mapReady.send()
                     locationManager.requestLocation()
+                    checkForFirstRun()
                 })
                 .ignoresSafeArea()
 
-            VStack(alignment: .trailing) {
-                Picker("", selection: $selectedModule) {
-                    ForEach(Modules.available, id: \.self) { module in
-                        Text(module.title).tag(module as Module?)
+            if showConfigView {
+                ConfigContainerView(onClose: {
+                    showConfigView = false
+                })
+            } else {
+                WeatherView(showWebView: { show in
+                    if show {
+                        showWebView = true
                     }
-                }
-                .colorScheme(.light)
-                // when pulley is on the left, move segmented control out of the way
-                .padding(.leading, orientation != .drawer ? Pulley.shared.panelWidth + 20 : 10)
-                .padding([.trailing, .top], 10)
-                .pickerStyle(SegmentedPickerStyle())
-                .labelsHidden()
-
-                if let module = selectedModule, module.legend.count > 0 {
-                    LegendView(module: module)
-                        .background(Color.white.opacity(0.25))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.blue, lineWidth: 1)
-                        )
-                        .padding(.trailing, 10)
-                }
-
-                Button(
-                    action: { module?.configure(open: true) },
-                    label: {
-                        Image(systemName: "gear")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(5)
-                }).overlay(
-                    RoundedRectangle(cornerRadius: 50)
-                        .stroke(Color.blue, lineWidth: 1)
-                )
-                .padding(.trailing, 10)
+                    return showWebView
+                }, showConfigView: {
+                    showConfigView = true
+                })
             }
         }.onReceive(locationManager.$lastLocation.first()) { coordinate in
             userLocationChanged(coordinate: coordinate)
@@ -76,35 +50,9 @@ struct MapView: View {
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             // request updated location
             locationManager.requestLocation()
-        }.onReceive(selectedModule.publisher.first()) { newModule in
-            moduleTypeChanged(newModule: newModule)
-        }.onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-            orientation = Pulley.shared.currentDisplayMode
         }.sheet(isPresented: $showWebView) {
             WebView()
         }
-    }
-
-    func moduleTypeChanged(newModule: Module) {
-        guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" else {
-            return
-        }
-
-        let oldModule = self.module?.module
-
-        guard newModule.key != .web else {
-            showWebView = true
-            selectedModule = oldModule
-            return
-        }
-        guard !showWebView, oldModule != newModule else {
-            return
-        }
-
-        module?.cleanup()
-        module = WeatherModule(module: newModule)
-
-        checkForFirstRun()
     }
 
     func userLocationChanged(coordinate: MaplyCoordinate?) {
@@ -124,9 +72,9 @@ struct MapView: View {
     }
 
     fileprivate func checkForFirstRun() {
-        if WeatherRegion.load() == nil {
+        if !WeatherRegion.isSet() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.module?.configure(open: true)
+                self.showConfigView = true
             })
         }
     }

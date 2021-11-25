@@ -34,11 +34,7 @@ public class WeatherServer {
 
     // query and persist stations
     func refreshStations() -> Promise<[Station]> {
-        guard let region = WeatherRegion.load() else {
-            return Promise(error: Weather.error(msg: "Region not set"))
-        }
-
-        return queryStations(at: region).map { stations -> [Station] in
+        return queryStations(at: WeatherRegion.load()).map { stations -> [Station] in
             let realm = try Realm()
             try realm.write {
                 realm.deleteAll()
@@ -48,10 +44,8 @@ public class WeatherServer {
         }
     }
 
-    func refreshObservations() -> Promise<Observations> {
-        guard let region = WeatherRegion.load() else {
-            return Promise(error: Weather.error(msg: "Region not set"))
-        }
+    func refreshObservations() -> Promise<Void> {
+        let region = WeatherRegion.load()
 
         return firstly {
             when(fulfilled:
@@ -80,7 +74,6 @@ public class WeatherServer {
                 realm.add(metars, update: .all)
                 realm.add(tafs, update: .all)
             }
-            return Observations(metars: metars, tafs: tafs)
         }
     }
 

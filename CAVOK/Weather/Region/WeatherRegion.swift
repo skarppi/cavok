@@ -80,7 +80,12 @@ class WeatherRegion: ObservableObject {
         objectDidChange.send()
     }
 
-    static func load() -> WeatherRegion? {
+    static func isSet() -> Bool {
+        let defaults = UserDefaults.standard
+        return defaults.dictionary(forKey: "coordinates") as? [String: Float] != nil
+    }
+
+    static func load() -> WeatherRegion {
         let defaults = UserDefaults.standard
         if let coordinates = defaults.dictionary(forKey: "coordinates") as? [String: Float] {
 
@@ -92,7 +97,8 @@ class WeatherRegion: ObservableObject {
                 radius: Int(coordinates["radius"]!)
             )
         } else {
-            return nil
+            return WeatherRegion(center: LastLocation.load() ?? MaplyCoordinateMakeWithDegrees(10, 50),
+                                 radius: 100)
         }
     }
 
