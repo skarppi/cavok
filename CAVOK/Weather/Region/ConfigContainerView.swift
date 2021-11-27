@@ -42,10 +42,7 @@ struct ConfigContainerView: View {
         .bottomSheet(
             bottomSheetPosition: self.$bottomSheetPosition,
             options: [
-//                .showCloseButton(action: {
-//                    endRegionSelection()
-//                }),
-                .appleScrollBehavior,
+                .appleScrollBehavior
             ],
             headerContent: {
                 ConfigDrawerView(closedAction: { _ in
@@ -130,7 +127,10 @@ struct ConfigContainerView: View {
 
 struct ConfigContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigContainerView(onClose: {
-        })
+        ForEach(ColorScheme.allCases,
+                id: \.self,
+                content:
+                    ConfigContainerView(onClose: {}).preferredColorScheme
+        )
     }
 }

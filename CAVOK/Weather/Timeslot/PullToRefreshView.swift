@@ -14,22 +14,16 @@ struct PullToRefreshView<Content>: View where Content: View {
     // passed content view
     let content: () -> Content
 
-    // action to be performed when the user scrolls
-    var action: () -> Void
+    @Environment(\.refresh) private var refresh
 
     // whether loading is occuring or not
     @Binding var isLoading: Bool
 
     // init all variables
-    init?(action: (() -> Void)? = {}, isLoading: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) {
-        self.action = action!
+    init?(isLoading: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) {
         self._isLoading = isLoading
         self.content = content
     }
-
-    // colors for the background of the scroll indicator
-    private let darkColor: Color = Color(red: 40 / 255, green: 40 / 255, blue: 40 / 255)
-    private let lightColor: Color = Color.white
 
     // haptic feedback for when user has pulled enough
     private let haptic = UIImpactFeedbackGenerator(style: .heavy)
@@ -58,7 +52,6 @@ struct PullToRefreshView<Content>: View where Content: View {
                                 // prevent bounce up
                                 .offset(y: scrollOffset < 0 ? -scrollOffset : 0)
                                 .opacity(1 - arrowAngle / 180)
-                                .background(Color(UIColor.systemBackground))
                         }
                     }
                     // offset the content to allow the progress indicator to show when loading
@@ -92,7 +85,6 @@ struct PullToRefreshView<Content>: View where Content: View {
     // view that is shown when the user scrolls
     private var scrollableContent: some View {
         ZStack(alignment: .top) {
-            colorScheme == .light ? lightColor : darkColor
             Group {
                 if arrowAngle > 180 || hasPulled || isLoading {
                     ProgressView()
@@ -100,7 +92,13 @@ struct PullToRefreshView<Content>: View where Content: View {
                             // indicate the user has pulled all the way
                             withAnimation { hasPulled = true }
                             // complete the action supplied
-                            action()
+
+                            if let refresh = refresh {
+                                Task {
+                                    await refresh()
+                                }
+                            }
+
                             // let user know they have pulled enough with a haptic
                             haptic.impactOccurred()
                         }

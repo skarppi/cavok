@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct TimeslotDrawerView: View {
-    @Environment(\.refresh) private var refresh
-
     @Environment(\.colorScheme) var colorScheme
 
     @EnvironmentObject var state: TimeslotState
@@ -17,27 +15,26 @@ struct TimeslotDrawerView: View {
     @GestureState var cursor = CGPoint.zero
 
     var body: some View {
-        PullToRefreshView(action: refreshAction, isLoading: $state.isLoading) {
-            ZStack(alignment: .topLeading) {
-                DrawerHandleView(position: .top)
+        VStack(spacing: 4) {
+            Capsule()
+                .fill(Color.secondary)
+                .frame(width: 36, height: 5)
 
-                VStack(spacing: 0) {
-                    Text(state.status)
-                        .font(.body)
-                        .foregroundColor(
-                            state.statusColor.lighter(by: colorScheme == .dark ? 0.4 : 0))
-                        .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
+            Text(state.status)
+                .font(.body)
+                .padding(.leading, 15)
+                .foregroundColor(
+                    state.statusColor.lighter(by: colorScheme == .dark ? 0.4 : 0))
+                .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
+                .background(Color(.secondarySystemFill))
+                .cornerRadius(10)
 
-                    timeline
-                        .padding(.bottom, 5)
-                        .gesture(
-                            DragGesture(minimumDistance: 0, coordinateSpace: .global)
-                                .updating($cursor) { (value, state, _) in
-                                    state = value.location
-                                })
-                }
-            }
-        }
+            timeline.gesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                    .updating($cursor) { (value, state, _) in
+                        state = value.location
+                    })
+        }.padding(.top, 4)
     }
 
     private var timeline: some View {
@@ -74,16 +71,6 @@ struct TimeslotDrawerView: View {
             return AnyView(Rectangle().fill(Color.clear))
         }
     }
-
-    private func refreshAction() {
-        state.startSpinning()
-
-        if let refresh = refresh {
-            Task {
-                await refresh()
-            }
-        }
-    }
 }
 
 struct TimeslotDraverView_Previews: PreviewProvider {
@@ -107,7 +94,11 @@ struct TimeslotDraverView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases,
                 id: \.self,
-                content: TimeslotDrawerView().environmentObject(state()).preferredColorScheme
+                content:
+                    TimeslotDrawerView()
+                        .environmentObject(state())
+                        .background(Color(.secondarySystemGroupedBackground))
+                        .preferredColorScheme
         )
     }
 }

@@ -29,7 +29,6 @@
 		B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A829562687CEF100FA5B11 /* LegendView.swift */; };
 		B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */; };
 		B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */; };
-		B6D0493E263E7EBE000DF0A8 /* DrawerHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */; };
 		B6D0494A26484C65000DF0A8 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B6D0494726484C65000DF0A8 /* .swiftlint.yml */; };
 		C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */; };
 		C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; };
@@ -160,7 +159,6 @@
 		B6A829562687CEF100FA5B11 /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotDraverView.swift; sourceTree = "<group>"; };
 		B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
-		B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerHandleView.swift; sourceTree = "<group>"; };
 		B6D0494726484C65000DF0A8 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTileFetcher.swift; sourceTree = "<group>"; };
 		C09D662C2540BCBE00FB3D39 /* CAV-OK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CAV-OK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -430,7 +428,6 @@
 				C09D66D32540CACA00FB3D39 /* Services */,
 				C09D66D72540CACA00FB3D39 /* Observation */,
 				B64D83CA261511A3003AE228 /* DrawerTitleView.swift */,
-				B6D0493D263E7EBE000DF0A8 /* DrawerHandleView.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -715,7 +712,6 @@
 				B648ECC52666BD38009212F6 /* CavokApp.swift in Sources */,
 				B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */,
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
-				B6D0493E263E7EBE000DF0A8 /* DrawerHandleView.swift in Sources */,
 				B69723B2275056FB000873A3 /* BottomSheetPosition.swift in Sources */,
 				B65329CD26A4BCD800B30A64 /* UIColor+Additions.swift in Sources */,
 				B69723B6275056FB000873A3 /* BottomSheetView.swift in Sources */,

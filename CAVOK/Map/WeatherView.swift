@@ -25,7 +25,7 @@ struct TimeslotPositions: CaseIterable, RawRepresentable {
     var rawValue: CGFloat
 
     static let hidden = TimeslotPositions(rawValue: 0)
-    static let bottom = TimeslotPositions(rawValue: 120)
+    static let bottom = TimeslotPositions(rawValue: 140)
 
     static var allCases: [TimeslotPositions] = [.hidden, .bottom]
 
@@ -111,30 +111,35 @@ struct WeatherView: View {
         .bottomSheet(
             bottomSheetPosition: .constant(TimeslotPositions.bottom),
             options: [
-                .background(AnyView(Color.white)),
                 .notResizeable,
-                .noDragIndicator
+                .noDragIndicator,
+                .background(AnyView(EffectView(effect: UIBlurEffect(style: .systemThickMaterial))))
             ],
             headerContent: {
-                TimeslotDrawerView()
-                    .environmentObject(timeslots)
-                    // remove extra padding added by BottomSheet
-                    .padding(.top, -20)
-                    .frame(height: 100, alignment: .top)
-                    .refreshable {
-                        Messages.show(text: "Refreshing observations...")
+                PullToRefreshView(isLoading: $timeslots.isLoading) {
+                    TimeslotDrawerView()
+                        .environmentObject(timeslots)
 
-                        _ = weatherService.refreshObservations().done {
-                            load()
-                        }.catch(Messages.show)
-                    }
+                }
+                // remove extra padding added by BottomSheet
+                .padding(.top, -20)
+                .frame(height: 100, alignment: .top)
+                .refreshable {
+                    timeslots.startSpinning()
+
+                    Messages.show(text: "Refreshing observations...")
+
+                    _ = weatherService.refreshObservations().done {
+                        timeslots.stopSpinning()
+                        load()
+                    }.catch(Messages.show)
+                }
             },
             mainContent: {}
         )
         .bottomSheet(
             bottomSheetPosition: $observationPosition,
             options: [
-                .background(AnyView(Color.white)),
                 .appleScrollBehavior,
                 .swipeToDismiss
             ],
@@ -199,14 +204,11 @@ struct WeatherView: View {
         if let frame = groups.selectedFrame {
             timeslots.reset(slots: groups.timeslots, selected: frame)
 
-            let userLocation = LastLocation.load()
-
-            weatherLayer?.load(groups: groups, at: userLocation) { index, color in
+            weatherLayer?.load(groups: groups, at: LastLocation.load()) { index, color in
                 self.timeslots.update(color: color, at: index)
 
                 if index == frame {
                     self.render(frame: frame)
-//                    self.initTimer()
                 }
             }
         }
@@ -280,8 +282,13 @@ struct WeatherView: View {
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherView(showWebView: { _ in
-            return true
-        }, showConfigView: {})
+        ForEach(ColorScheme.allCases,
+                id: \.self,
+                content:
+                    WeatherView(showWebView: { _ in
+                        return true
+                    }, showConfigView: {})
+                        .preferredColorScheme
+        )
     }
 }

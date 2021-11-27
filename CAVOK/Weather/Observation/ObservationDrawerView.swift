@@ -40,7 +40,7 @@ struct ObservationDetailsView: View {
                 title: "Taf",
                 observations: observations.tafs,
                 presentation: presentation)
-        }
+        }.padding(.horizontal)
     }
 }
 
@@ -54,12 +54,11 @@ struct ObservationList: View {
             if !observations.isEmpty {
                 Text(title)
                     .font(Font.system(.headline))
-                    .padding(.all)
+                    .padding(.vertical)
 
                 ForEach(observations.reversed(), id: \.self) { metar in
 
                     AttributedText(obs: metar, presentation: self.presentation)
-                        .padding(.leading)
                         .padding(.bottom, 5)
                 }
             }
@@ -101,11 +100,14 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         ])
 
     static var previews: some View {
-        ObservationHeaderView(presentation: presentation,
-                              obs: observations.metars[0],
-                              closedAction: { () in print("Closed")})
-        ObservationDetailsView(presentation: presentation,
-                              observations: observations)
+        VStack {
+            ObservationHeaderView(presentation: presentation,
+                                  obs: observations.metars[0],
+                                  closedAction: { () in print("Closed")})
+
+            ObservationDetailsView(presentation: presentation,
+                                  observations: observations)
+        }
     }
 
     static func metar(_ raw: String) -> Metar {
