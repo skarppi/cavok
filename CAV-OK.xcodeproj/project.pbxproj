@@ -494,8 +494,8 @@
 			isa = PBXGroup;
 			children = (
 				C09D66D42540CACA00FB3D39 /* AddsService.swift */,
-				C09D66D52540CACA00FB3D39 /* WeatherService.swift */,
 				C09D66D62540CACA00FB3D39 /* AwsService.swift */,
+				C09D66D52540CACA00FB3D39 /* WeatherService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";

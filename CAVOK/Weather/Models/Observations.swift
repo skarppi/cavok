@@ -31,8 +31,8 @@ class Observations {
     }
 
     private func slotDate(date: Date) -> Date {
-        let min = Calendar.current.component(.minute, from: date)
-        let offset = -(min + 10) % 30
+        let minute = Calendar.current.component(.minute, from: date)
+        let offset = -minute % 30
         return Calendar.current.date(byAdding: .minute, value: offset, to: date)!
     }
 
@@ -40,10 +40,17 @@ class Observations {
         return Timeslot(date: date, title: title)
     }
 
-    // group metars into half hour time slots starting every 20 and 50 past
+    // group metars into half hour time slots
     private func groupMetars() -> [ObservationSlot] {
-        let grouped = metars.reduce([Date: [Observation]]()) { (res, item) in
+        // sort latest first
+        let grouped = metars.reversed().reduce([Date: [Observation]]()) { (res, item) in
             let slot = self.slotDate(date: item.datetime)
+            let existingItems = res[slot] ?? []
+
+            guard !existingItems.contains(where: { $0.station == item.station }) else {
+                // newer observation already exists for the station
+                return res
+            }
 
             var res = res
             if case nil = res[slot]?.append(item) {
