@@ -373,8 +373,6 @@
 				C09D66982540CAB800FB3D39 /* Modules.swift */,
 				B63676DA267AFFFE00A92257 /* MapWrapper.swift */,
 				B688A4642683C87500EE7373 /* MapApi.swift */,
-				B6A829562687CEF100FA5B11 /* LegendView.swift */,
-				B6972392274E7547000873A3 /* WeatherView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -423,11 +421,13 @@
 			children = (
 				C09D66B22540CACA00FB3D39 /* Layers */,
 				C09D66BD2540CACA00FB3D39 /* Models */,
-				C09D66C52540CACA00FB3D39 /* Region */,
-				C09D66CE2540CACA00FB3D39 /* Timeslot */,
-				C09D66D32540CACA00FB3D39 /* Services */,
 				C09D66D72540CACA00FB3D39 /* Observation */,
+				C09D66C52540CACA00FB3D39 /* Region */,
+				C09D66D32540CACA00FB3D39 /* Services */,
+				C09D66CE2540CACA00FB3D39 /* Timeslot */,
 				B64D83CA261511A3003AE228 /* DrawerTitleView.swift */,
+				B6A829562687CEF100FA5B11 /* LegendView.swift */,
+				B6972392274E7547000873A3 /* WeatherView.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";

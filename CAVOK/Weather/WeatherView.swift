@@ -63,17 +63,12 @@ struct WeatherView: View {
                 }
             }
             .colorScheme(.light)
-            .padding([.trailing, .top], 10)
+            .padding([.horizontal, .top], 10)
             .pickerStyle(SegmentedPickerStyle())
             .labelsHidden()
 
             if let module = selectedModule, module.legend.count > 0 {
                 LegendView(module: module)
-                    .background(Color.white.opacity(0.25))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.blue, lineWidth: 1)
-                    )
                     .padding(.trailing, 10)
             }
 

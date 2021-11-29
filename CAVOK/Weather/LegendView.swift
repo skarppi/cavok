@@ -18,7 +18,7 @@ struct LegendView: View {
 
     var ramp: ColorRamp
 
-    let width: CGFloat = 50
+    let width: CGFloat = 20
     let height: CGFloat = 150
 
     // how much overlap in gradient to each direction
@@ -57,7 +57,6 @@ struct LegendView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(module.unit)
-                .foregroundColor(.black)
                 .offset(x: 22)
 
             HStack(spacing: 2) {
@@ -65,18 +64,25 @@ struct LegendView: View {
                     gradient: generateGradient(),
                     startPoint: .top,
                     endPoint: .bottom)
-                    .frame(width: 20)
+                    .frame(width: width)
 
-                VStack {
+                VStack(spacing: 0) {
                     ForEach(ramp.titles.reversed(), id: \.self) { title in
                         Text(title)
-                            .foregroundColor(.black)
-                            .frame(height: height / CGFloat(ramp.titles.count))
+                            .frame(maxHeight: .infinity)
                     }
-                }
+                }.frame(height: height)
             }
             .frame(height: height)
-        }.padding(10)
+        }
+            .foregroundColor(Color(.darkGray))
+            .padding(10)
+            .background(Color.white.opacity(0.25))
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.blue, lineWidth: 1)
+            )
     }
 }
 
@@ -86,9 +92,14 @@ struct LegendView_Previews: PreviewProvider {
             module: Module(
                 key: ModuleKey.ceiling,
                 title: "Test",
-                unit: "mm",
-                legend: ["01": "000", "02": "100", "03": "200"]
+                unit: "FL",
+                legend: ["01": "000", "02": "005", "03": "010", "04": "015", "05": "020"]
             )
         )
+
+        LegendView(
+            module: Modules.available[0]
+        ).preferredColorScheme(.dark)
+
     }
 }
