@@ -64,10 +64,10 @@ public class Taf: Observation {
         }
 
         if let vis = parseVisibility(value: parser.peek()) {
-            self.visibility.value = vis
+            self.visibility = vis
             self.visibilityGroup = parser.pop()
         } else {
-            self.visibility.value = nil
+            self.visibility = nil
             self.visibilityGroup = nil
         }
 
@@ -79,14 +79,14 @@ public class Taf: Observation {
             return !isSkyCondition(field: current)
         }.joined(separator: " ")
 
-        self.cloudHeight.value = getCombinedCloudHeight()
+        self.cloudHeight = getCombinedCloudHeight()
 
         self.supplements = parser.all().joined(separator: " ")
 
         // post-process
 
-        if self.visibility.value == nil && isCavok() {
-            self.visibility.value = 10000
+        if self.visibility == nil && isCavok() {
+            self.visibility = 10000
         }
 
         self.condition = self.parseCondition().rawValue

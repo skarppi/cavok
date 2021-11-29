@@ -33,9 +33,9 @@ struct ObservationPresentation {
     func mapper(_ observation: Observation) -> (value: Int?, source: String?) {
         switch module.key {
         case .ceiling:
-            return (observation.cloudHeight.value, observation.clouds)
+            return (observation.cloudHeight, observation.clouds)
         case .visibility:
-            return (observation.visibility.value, observation.visibilityGroup)
+            return (observation.visibility, observation.visibilityGroup)
         case .temp:
             let metar = observation as? Metar
             return (metar?.spreadCeiling(), metar?.temperatureGroup)
@@ -89,23 +89,23 @@ open class Observation: Object, Identifiable {
     // current date, will be used to parse dates
     var now: Date = Date()
 
-    @objc open dynamic var type: String = ""
-    @objc public dynamic var identifier: String = ""
-    public var cloudHeight = RealmOptional<Int>()
-    @objc public dynamic var condition: Int16 = 0
-    @objc public dynamic var datetime: Date = Date()
-    @objc public dynamic var raw: String = ""
-    @objc public dynamic var clouds: String?
-    @objc public dynamic var supplements: String?
-    @objc public dynamic var visibilityGroup: String?
-    public let visibility = RealmOptional<Int>()
-    @objc public dynamic var weather: String?
-    private let windDirection = RealmOptional<Int>()
-    private let windGust = RealmOptional<Int>()
-    private let windSpeed = RealmOptional<Int>()
-    @objc public dynamic var windVariability: String?
+    @Persisted var type: String = ""
+    @Persisted var identifier: String = ""
+    @Persisted var cloudHeight: Int?
+    @Persisted var condition: Int16 = 0
+    @Persisted var datetime: Date = Date()
+    @Persisted var raw: String = ""
+    @Persisted var clouds: String?
+    @Persisted var supplements: String?
+    @Persisted var visibilityGroup: String?
+    @Persisted var visibility: Int?
+    @Persisted var weather: String?
+    @Persisted var windDirection: Int?
+    @Persisted var windGust: Int?
+    @Persisted var windSpeed: Int?
+    @Persisted var windVariability: String?
 
-    @objc public dynamic var station: Station?
+    @Persisted var station: Station?
 
     public var conditionEnum: WeatherConditions {
         get { return WeatherConditions(rawValue: self.condition) ?? .NA }
@@ -122,15 +122,15 @@ open class Observation: Object, Identifiable {
 
     public var wind: WindData {
         get { return WindData(
-            direction: windDirection.value,
-            speed: windSpeed.value,
-            gust: windGust.value,
+            direction: windDirection,
+            speed: windSpeed,
+            gust: windGust,
             variability: windVariability)
         }
         set {
-            self.windDirection.value = newValue.direction
-            self.windSpeed.value = newValue.speed
-            self.windGust.value = newValue.gust
+            self.windDirection = newValue.direction
+            self.windSpeed = newValue.speed
+            self.windGust = newValue.gust
             self.windVariability = newValue.variability
         }
     }
@@ -304,7 +304,7 @@ open class Observation: Object, Identifiable {
         ].compactMap { $0 }.min() ?? 5000
 
         // let ceiling = ceilingOpt ?? -1
-        let vis = self.visibility.value ?? -1
+        let vis = self.visibility ?? -1
         if (0 <= ceiling && ceiling < 1500) || (0 <= vis && vis < 5000) {
             return WeatherConditions.IFR
         } else if (1500 <= ceiling && ceiling < 3000) || (5000 <= vis && vis < 8000) {

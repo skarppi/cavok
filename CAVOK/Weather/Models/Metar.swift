@@ -11,12 +11,12 @@ import RealmSwift
 
 public class Metar: Observation {
 
-    public let altimeter = RealmOptional<Int>()
-    @objc open dynamic var runwayVisualRange: String?
+    @Persisted var altimeter: Int?
+    @Persisted var runwayVisualRange: String?
 
-    public let dewPoint = RealmOptional<Int>()
-    public let temperature = RealmOptional<Int>()
-    @objc open dynamic var temperatureGroup: String?
+    @Persisted var dewPoint: Int?
+    @Persisted var temperature: Int?
+    @Persisted var temperatureGroup: String?
 
     // The cloud base can be estimated from surface measurements of air temperature and
     // humidity by calculating the lifted condensation level.
@@ -26,7 +26,7 @@ public class Metar: Observation {
     //   This will give you cloud base in feet AGL (Above Ground Level)
     // https://en.wikipedia.org/wiki/Cloud_base
     func spreadCeiling() -> Int? {
-        if let temp = temperature.value, let dewPoint = dewPoint.value {
+        if let temp = temperature, let dewPoint = dewPoint {
             return (temp - dewPoint) * 400
         } else {
             return nil
@@ -65,11 +65,11 @@ public class Metar: Observation {
         }
 
         if let vis = parseVisibility(value: parser.peek()) {
-            self.visibility.value = vis
+            self.visibility = vis
 
             self.visibilityGroup = parser.pop()
         } else {
-            self.visibility.value = nil
+            self.visibility = nil
             self.visibilityGroup = nil
         }
 
@@ -81,17 +81,17 @@ public class Metar: Observation {
             return !isSkyCondition(field: current)
         }.joined(separator: " ")
 
-        self.cloudHeight.value = getCombinedCloudHeight()
+        self.cloudHeight = getCombinedCloudHeight()
 
         if let (temp, dewPoint) = parseTemperatures(parser.peek()) {
-            self.temperature.value = temp
-            self.dewPoint.value = dewPoint
+            self.temperature = temp
+            self.dewPoint = dewPoint
 
             self.temperatureGroup = parser.pop()
         }
 
         if let alt = parseAltimeter(parser.peek()) {
-            self.altimeter.value = alt
+            self.altimeter = alt
 
             parser.next()
         }
@@ -100,8 +100,8 @@ public class Metar: Observation {
 
         // post-process
 
-        if self.visibility.value == nil && isCavok() {
-            self.visibility.value = 10000
+        if self.visibility == nil && isCavok() {
+            self.visibility = 10000
             self.visibilityGroup = "CAVOK"
         }
 

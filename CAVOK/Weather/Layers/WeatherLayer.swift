@@ -31,7 +31,6 @@ class WeatherLayer {
         clean()
     }
 
-
     func load(groups: ObservationGroups, at coordinate: MaplyCoordinate?, loaded: @escaping (Int, UIColor) -> Void) {
         guard let selected = groups.selectedFrame else {
             return
