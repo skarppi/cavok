@@ -8,15 +8,12 @@
 
 import Foundation
 
-private typealias ObservationSlot = (slot: Timeslot, observations: [Observation])
-
 struct ObservationGroups {
     let timeslots: [Timeslot]
-    let frames: [[Observation]]
     let selectedFrame: Int?
 
     var count: Int {
-        return frames.count
+        return timeslots.count
     }
 }
 
@@ -30,21 +27,17 @@ class Observations {
         self.tafs = tafs
     }
 
-    private func slotDate(date: Date) -> Date {
+    private func nearestHalfHour(date: Date) -> Date {
         let minute = Calendar.current.component(.minute, from: date)
         let offset = -minute % 30
         return Calendar.current.date(byAdding: .minute, value: offset, to: date)!
     }
 
-    private func slot(date: Date, title: String? = nil) -> Timeslot {
-        return Timeslot(date: date, title: title)
-    }
-
     // group metars into half hour time slots
-    private func groupMetars() -> [ObservationSlot] {
+    private func groupMetars() -> [Timeslot] {
         // sort latest first
         let grouped = metars.reversed().reduce([Date: [Observation]]()) { (res, item) in
-            let slot = self.slotDate(date: item.datetime)
+            let slot = nearestHalfHour(date: item.datetime)
             let existingItems = res[slot] ?? []
 
             guard !existingItems.contains(where: { $0.station == item.station }) else {
@@ -59,16 +52,18 @@ class Observations {
             return res
         }
 
-        return [Date](grouped.keys).sorted().suffix(6).map { key in
-            return (slot(date: key), grouped[key]!)
+        return [Date](grouped.keys).sorted().suffix(6).map { date in
+            return Timeslot(date: date, observations: grouped[date]!)
         }
     }
 
-    private func groupTafs() -> [ObservationSlot] {
+    private func groupTafs() -> [Timeslot] {
         if tafs.isEmpty {
             return []
         } else {
-            return [(slot(date: Date.distantFuture, title: "TAF"), tafs)]
+            return [
+                Timeslot(tafs: tafs)
+            ]
         }
     }
 
@@ -79,8 +74,6 @@ class Observations {
 
         let selectedFrame: Int? = metars.isEmpty ? nil : metars.count - 1
 
-        return ObservationGroups(timeslots: all.map { $0.slot },
-                                 frames: all.map { $0.observations },
-                                 selectedFrame: selectedFrame)
+        return ObservationGroups(timeslots: all, selectedFrame: selectedFrame)
     }
 }

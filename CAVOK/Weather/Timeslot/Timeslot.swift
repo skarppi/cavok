@@ -8,21 +8,41 @@
 
 import Foundation
 
-public struct Timeslot: Hashable {
+public struct Timeslot {
     let date: Date
 
     let title: String
 
+    let observations: [Observation]
+
     var color: UIColor = UIColor.clear
 
-    init(date: Date, title: String? = nil) {
+    init(tafs: [Taf]) {
+        self.date = Date.distantFuture
+        self.title = "TAF"
+        self.observations = tafs
+    }
+
+    init(date: Date, observations: [Observation]) {
         self.date = date
-        if let title = title {
-            self.title = title
-        } else {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            self.title = formatter.string(from: date)
-        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        self.title = formatter.string(from: date)
+        self.observations = observations
+    }
+
+    var isForecast: Bool {
+        return observations.first?.isKind(of: Taf.self) ?? false
+    }
+}
+
+// Date is unique enough
+extension Timeslot: Hashable {
+    public static func == (lhs: Timeslot, rhs: Timeslot) -> Bool {
+        return lhs.date == rhs.date
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(date)
     }
 }

@@ -12,7 +12,13 @@ struct TimeslotDrawerView: View {
 
     @EnvironmentObject var state: TimeslotState
 
+    @State var status: String = "Loading"
+
+    @State var statusColor = Color.primary
+
     @GestureState var cursor = CGPoint.zero
+
+    let updateTimestampsTimer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack(spacing: 4) {
@@ -20,11 +26,11 @@ struct TimeslotDrawerView: View {
                 .fill(Color.secondary)
                 .frame(width: 36, height: 5)
 
-            Text(state.status)
+            Text(status)
                 .font(.body)
                 .padding(.leading, 15)
                 .foregroundColor(
-                    state.statusColor.lighter(by: colorScheme == .dark ? 0.4 : 0))
+                    statusColor.lighter(by: colorScheme == .dark ? 0.4 : 0))
                 .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
                 .background(Color(.secondarySystemFill))
                 .cornerRadius(10)
@@ -34,7 +40,20 @@ struct TimeslotDrawerView: View {
                     .updating($cursor) { (value, state, _) in
                         state = value.location
                     })
-        }.padding(.top, 4)
+        }
+        .padding(.top, 4)
+        .onChange(of: state.selectedIndex) { index in
+            refreshStatus(slot: state.slots[index])
+        }
+        .onChange(of: state.slots) { slots in
+            refreshStatus(slot: slots[state.selectedIndex])
+        }
+        .onReceive(updateTimestampsTimer) { _ in
+            refreshStatus(slot: state.slots[state.selectedIndex])
+        }
+        .onAppear {
+            refreshStatus(slot: state.slots[state.selectedIndex])
+        }
     }
 
     private var timeline: some View {
@@ -71,6 +90,52 @@ struct TimeslotDrawerView: View {
             return AnyView(Rectangle().fill(Color.clear))
         }
     }
+
+    private func status(slot: Timeslot) -> String {
+        let timestamps = slot.observations.map({ $0.datetime })
+
+        let oldest = timestamps.min()!
+        let latest = timestamps.max()!
+
+        let oldestMinutes = Int(abs(oldest.timeIntervalSinceNow) / 60)
+        let latestMinutes = Int(abs(latest.timeIntervalSinceNow) / 60)
+
+        if oldest == latest || oldestMinutes >= 120 {
+            return since(minutes: latestMinutes)
+        } else if oldestMinutes < 60 {
+            return "\(latestMinutes)-\(since(minutes: oldestMinutes))"
+        } else {
+            return "\(since(minutes: latestMinutes))-\(since(minutes: oldestMinutes))"
+        }
+    }
+
+    private func since(minutes: Int) -> String {
+
+        let formatter = DateComponentsFormatter()
+        if minutes < 60*6 {
+            formatter.allowedUnits = [.hour, .minute]
+        } else {
+            formatter.allowedUnits = [.day, .hour]
+        }
+        formatter.unitsStyle = .brief
+        formatter.zeroFormattingBehavior = .dropLeading
+
+        return formatter.string(from: Double(minutes * 60))!
+    }
+
+    private func refreshStatus(slot: Timeslot?) {
+        guard let slot = slot else {
+            self.status = "No Data"
+            return
+        }
+
+        let status = status(slot: slot)
+
+        self.status = "\(status) ago"
+        self.statusColor = Color(ColorRamp.color(for: slot.date))
+
+    }
+
 }
 
 struct TimeslotDraverView_Previews: PreviewProvider {
@@ -78,8 +143,8 @@ struct TimeslotDraverView_Previews: PreviewProvider {
     static func state() -> TimeslotState {
         let state = TimeslotState()
         state.slots = [
-            Timeslot(date: Date(), title: "10:30"),
-            Timeslot(date: Date(), title: "11:30")
+            Timeslot(date: Date(), observations: []),
+            Timeslot(date: Date().addMinutes(30), observations: [])
         ]
 
         state.slots[0].color = UIColor.red
@@ -87,7 +152,6 @@ struct TimeslotDraverView_Previews: PreviewProvider {
 
         state.selectedIndex = 0
 
-        state.statusColor = Color(UIColor.systemRed)
         return state
     }
 

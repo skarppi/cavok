@@ -10,34 +10,13 @@ import Combine
 
 // Our observable object class
 @MainActor class TimeslotState: ObservableObject {
-    @Published var slots: [Timeslot] = [Timeslot(date: Date(), title: "")]
+    @Published var slots: [Timeslot] = []
 
     @Published var selectedIndex = 0
-
-    @Published var status = "Loading"
-
-    @Published var statusColor = Color.primary
 
     func reset(slots: [Timeslot], selected: Int) {
         self.slots = slots
         selectedIndex = selected
-    }
-
-    func setStatus(error: Error) {
-        switch error {
-        case let Weather.error(msg):
-            setStatus(text: msg)
-        default:
-            print(error)
-            setStatus(text: error.localizedDescription)
-        }
-    }
-
-    func setStatus(text: String?, color: UIColor = UIColor.systemRed) {
-        if let text = text {
-            statusColor = Color(color)
-            status = text
-        }
     }
 
     func update(color: UIColor, at index: Int) {

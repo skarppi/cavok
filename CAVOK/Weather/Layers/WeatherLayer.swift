@@ -39,8 +39,8 @@ class WeatherLayer {
         clean()
 
         // generate heatmaps in inverse order
-        let frames = groups.frames.enumerated().map { index, obs in
-            return HeatMap(index: index, observations: obs, config: config, presentation: self.presentation)
+        let frames = groups.timeslots.enumerated().map { index, slot in
+            return HeatMap(index: index, observations: slot.observations, config: config, presentation: self.presentation)
         }
 
         frames.reversed().forEach { frame in

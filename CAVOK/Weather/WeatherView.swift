@@ -49,8 +49,6 @@ struct WeatherView: View {
 
     let weatherService = WeatherServer()
 
-    let updateTimestampsTimer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
-
     @State private var observationPosition: ObservationPositions = .hidden
 
     @State private var selectedObservation: Observation?
@@ -91,11 +89,6 @@ struct WeatherView: View {
         }
         .onChange(of: timeslots.selectedIndex) { frame in
             render(frame: frame)
-        }
-        .onReceive(updateTimestampsTimer) { _ in
-            if timeslots.selectedIndex > 0 {
-                render(frame: timeslots.selectedIndex)
-            }
         }
         .onReceive(selectedModule.publisher.first()) { newModule in
             moduleTypeChanged(newModule: newModule)
@@ -223,32 +216,9 @@ struct WeatherView: View {
         }
 
         if let key = markers.first,
-           let components = mapApi.mapView.addScreenMarkers(markers, desc: nil) {
+            let components = mapApi.mapView.addScreenMarkers(markers, desc: nil) {
             mapApi.addComponents(key: key, value: components)
         }
-
-        if let tafs = observations as? [Taf],
-           let latest = tafs.map({ $0.to }).max() {
-            renderTimestamp(date: latest, suffix: "forecast")
-        } else if let min = observations.map({ $0.datetime }).min() {
-            renderTimestamp(date: min, suffix: "ago")
-        }
-    }
-
-    private func renderTimestamp(date: Date, suffix: String) {
-        let seconds = abs(date.timeIntervalSinceNow)
-
-        let formatter = DateComponentsFormatter()
-        if seconds < 3600*6 {
-            formatter.allowedUnits = [.hour, .minute]
-        } else {
-            formatter.allowedUnits = [.day, .hour]
-        }
-        formatter.unitsStyle = .brief
-        formatter.zeroFormattingBehavior = .dropLeading
-
-        let status = formatter.string(from: seconds)!
-        timeslots.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
 
     private func cleanDetails() {
