@@ -12,7 +12,7 @@ import Combine
 @MainActor class TimeslotState: ObservableObject {
     @Published var slots: [Timeslot] = []
 
-    @Published var selectedIndex = 0
+    @Published var selectedIndex: Int?
 
     func reset(slots: [Timeslot], selected: Int) {
         self.slots = slots
@@ -21,9 +21,5 @@ import Combine
 
     func update(color: UIColor, at index: Int) {
         slots[index].color = color
-    }
-
-    func selectedColor() -> Color {
-        return Color(slots[selectedIndex].color)
     }
 }

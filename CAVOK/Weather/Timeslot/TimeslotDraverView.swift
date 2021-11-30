@@ -42,17 +42,17 @@ struct TimeslotDrawerView: View {
                     })
         }
         .padding(.top, 4)
-        .onChange(of: state.selectedIndex) { index in
-            refreshStatus(slot: state.slots[index])
+        .onReceive(state.$selectedIndex) { index in
+            refreshStatus(slot: state.slots[safe: index])
         }
         .onChange(of: state.slots) { slots in
-            refreshStatus(slot: slots[state.selectedIndex])
+            refreshStatus(slot: slots[safe: state.selectedIndex])
         }
         .onReceive(updateTimestampsTimer) { _ in
-            refreshStatus(slot: state.slots[state.selectedIndex])
+            refreshStatus(slot: state.slots[safe: state.selectedIndex])
         }
         .onAppear {
-            refreshStatus(slot: state.slots[state.selectedIndex])
+            refreshStatus(slot: state.slots[safe: state.selectedIndex])
         }
     }
 

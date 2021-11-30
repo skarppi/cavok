@@ -87,7 +87,7 @@ struct WeatherView: View {
 
             Spacer()
         }
-        .onChange(of: timeslots.selectedIndex) { frame in
+        .onReceive(timeslots.$selectedIndex) { frame in
             render(frame: frame)
         }
         .onReceive(selectedModule.publisher.first()) { newModule in
@@ -202,12 +202,12 @@ struct WeatherView: View {
         }
     }
 
-    private func render(frame: Int) {
-        guard let weatherLayer = weatherLayer else {
+    private func render(frame: Int?) {
+        cleanMarkers()
+
+        guard let weatherLayer = weatherLayer, let frame = frame else {
             return
         }
-
-        cleanMarkers()
 
         let observations = weatherLayer.go(frame: frame)
 

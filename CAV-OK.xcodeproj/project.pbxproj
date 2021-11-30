@@ -26,6 +26,7 @@
 		B69723B6275056FB000873A3 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AF275056FB000873A3 /* BottomSheetView.swift */; };
 		B69723B7275056FB000873A3 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723B0275056FB000873A3 /* ViewExtension.swift */; };
 		B69723B8275056FB000873A3 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723B1275056FB000873A3 /* BottomSheet.swift */; };
+		B6A7424127569AEA00CBAA55 /* Collection+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A7424027569AEA00CBAA55 /* Collection+Additions.swift */; };
 		B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A829562687CEF100FA5B11 /* LegendView.swift */; };
 		B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */; };
 		B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */; };
@@ -156,6 +157,7 @@
 		B69723AF275056FB000873A3 /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheetView.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheetView.swift; sourceTree = SOURCE_ROOT; };
 		B69723B0275056FB000873A3 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewExtension.swift; path = libs/BottomSheet/Sources/BottomSheet/ViewExtension.swift; sourceTree = SOURCE_ROOT; };
 		B69723B1275056FB000873A3 /* BottomSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheet.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheet.swift; sourceTree = SOURCE_ROOT; };
+		B6A7424027569AEA00CBAA55 /* Collection+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Additions.swift"; sourceTree = "<group>"; };
 		B6A829562687CEF100FA5B11 /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotDraverView.swift; sourceTree = "<group>"; };
 		B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				C09D66AD2540CACA00FB3D39 /* Maply+Additions.swift */,
 				C09D66AE2540CACA00FB3D39 /* String+Additions.swift */,
 				B65329CC26A4BCD800B30A64 /* UIColor+Additions.swift */,
+				B6A7424027569AEA00CBAA55 /* Collection+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -719,6 +722,7 @@
 				B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
+				B6A7424127569AEA00CBAA55 /* Collection+Additions.swift in Sources */,
 				C09D66F42540CACA00FB3D39 /* StationMarker.swift in Sources */,
 				B69723B4275056FB000873A3 /* RoundedCorner.swift in Sources */,
 				C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */,
