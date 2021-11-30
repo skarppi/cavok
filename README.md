@@ -33,7 +33,7 @@ cp CAVOK/CAVOK.template.plist CAVOK/CAVOK.plist
 ```
 
 Edit `CAVOK/CAVOK.plist` with missing data
-* `basemapURL` add [MapBox](https://www.mapbox.com) access token or any other [TileJSON](https://github.com/mapbox/tilejson-spec)
+* `basemapURLlight` and `basemapURLdark` add [MapBox](https://www.mapbox.com) access token or any other [TileJSON](https://github.com/mapbox/tilejson-spec)
 
 ## Customizations
 

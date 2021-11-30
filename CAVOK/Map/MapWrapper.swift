@@ -15,12 +15,22 @@ struct MapWrapper: UIViewControllerRepresentable {
 
     var components: [NSObject: MaplyComponentObject] = [:]
 
+    @Environment(\.colorScheme) var colorScheme
+
     func makeUIViewController(context: Context) -> WhirlyGlobeViewController {
         mapApi.mapView = context.coordinator.mapView
         return context.coordinator.mapView
     }
 
+    func getBaseMapUrl() -> String? {
+        let scheme = colorScheme == .dark ? "dark" : "light"
+        return UserDefaults.standard.string(forKey: "basemapURL\(scheme)")
+    }
+
     func updateUIViewController(_ mapView: WhirlyGlobeViewController, context: Context) {
+        if let loader = context.coordinator.backgroundLoader, let basemap = getBaseMapUrl() {
+            TileJSONLayer.refresh(url: basemap, loader: loader)
+        }
     }
 
     func makeCoordinator() -> Coordinator {
@@ -46,8 +56,8 @@ struct MapWrapper: UIViewControllerRepresentable {
 
             mapView.delegate = self
 
-            if let basemap = UserDefaults.standard.string(forKey: "basemapURL") {
-                backgroundLoader = TileJSONLayer().load(url: basemap, globeVC: mapView)
+            if let basemap = parent.getBaseMapUrl() {
+                backgroundLoader = TileJSONLayer.load(url: basemap, globeVC: mapView)
             }
 
             parent.mapApi.mapReady.sink { () in

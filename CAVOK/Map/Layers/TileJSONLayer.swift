@@ -10,13 +10,21 @@ import Foundation
 
 class TileJSONLayer {
 
-    let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+    static let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
 
-    func load(url: String, globeVC: WhirlyGlobeViewController) -> MaplyQuadImageLoader? {
+    private static func loadTileInfo(url: String) -> MaplyRemoteTileInfoNew {
+        assert(!url.contains("MAPBOX_TOKEN"), "Update CAVOK.plist with your MapBox access key")
+
         let tileInfo = MaplyRemoteTileInfoNew(baseURL: url,
                                               minZoom: 0,
                                               maxZoom: 22)
-        tileInfo.cacheDir = "\(cacheDir.absoluteString)\(abs(url.hash))"
+        tileInfo.cacheDir = "\(cacheDir.absoluteString)a\(abs(url.hash))"
+
+        return tileInfo
+    }
+
+    static func load(url: String, globeVC: WhirlyGlobeViewController) -> MaplyQuadImageLoader? {
+        let tileInfo = loadTileInfo(url: url)
 
         let sampleParams = MaplySamplingParams()
         sampleParams.coordSys = MaplySphericalMercator(webStandard: ())
@@ -33,5 +41,10 @@ class TileJSONLayer {
 
         print("Loaded map to \(tileInfo.cacheDir!)")
         return imageLoader
+    }
+
+    static func refresh(url: String, loader: MaplyQuadImageLoader) {
+        let tileInfo = loadTileInfo(url: url)
+        loader.changeTileInfo(tileInfo)
     }
 }

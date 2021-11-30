@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>basemapURL</key>
-	<string>https://api.mapbox.com/v4/mapbox.light.json?access_token=</string>
+	<key>basemapURLlight</key>
+	<string>https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}?access_token=MAPBOX_TOKEN</string>
+	<key>basemapURLdark</key>
+	<string>https://api.mapbox.com/styles/v1/skarppi/ckwltncmreswg15qnv14ops3t/tiles/256/{z}/{x}/{y}?access_token=MAPBOX_TOKEN</string>
 	<key>addsURL</key>
 	<string>https://www.aviationweather.gov/adds/dataserver_current/httpparam</string>
 	<key>awsMetarsURL</key>
