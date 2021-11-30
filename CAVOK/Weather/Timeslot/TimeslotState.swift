@@ -18,12 +18,9 @@ import Combine
 
     @Published var statusColor = Color.primary
 
-    @Published var isLoading = false
-
     func reset(slots: [Timeslot], selected: Int) {
         self.slots = slots
         selectedIndex = selected
-        stopSpinning()
     }
 
     func setStatus(error: Error) {
@@ -45,14 +42,6 @@ import Combine
 
     func update(color: UIColor, at index: Int) {
         slots[index].color = color
-    }
-
-    func startSpinning() {
-        isLoading = true
-    }
-
-    func stopSpinning() {
-        withAnimation { isLoading = false }
     }
 
     func selectedColor() -> Color {

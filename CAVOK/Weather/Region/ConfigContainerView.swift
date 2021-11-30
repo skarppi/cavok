@@ -22,22 +22,29 @@ struct ConfigContainerView: View {
 
     @State var links = Links.load()
 
+    @ObservedObject var locationManager = LocationManager.shared
+
     @ObservedObject var mapApi = MapApi.shared
 
     @Environment(\.isPreview) var isPreview
+
+    @State var loading: String?
 
     var cancellables = Set<AnyCancellable>()
 
     var body: some View {
         ZStack {
         }.onAppear(perform: {
-            print("appear")
-
-            region.onChange(action: moveRegionSelection(to:))
-            moveRegionSelection(to: region)
+            region.onChange(action: refresh(region:))
+            refresh(region: region)
         })
+        .onReceive(locationManager.$lastLocation.first()) { coordinate in
+            if let coord = coordinate {
+                move(to: coord)
+            }
+        }
         .onReceive(mapApi.didTapAt) { (coord, _) in
-            didTapAt(coord: coord)
+            move(to: coord)
         }
         .bottomSheet(
             bottomSheetPosition: self.$bottomSheetPosition,
@@ -45,27 +52,32 @@ struct ConfigContainerView: View {
                 .appleScrollBehavior
             ],
             headerContent: {
-                ConfigDrawerView(closedAction: { _ in
-                    endRegionSelection()
-                }).environmentObject(region)
+                if let loading = loading {
+                    ProgressView(loading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                } else {
+                    ConfigDrawerView(closedAction: { _ in
+                        endRegionSelection()
+                    }).environmentObject(region)
+                }
             },
             mainContent: {
                     LinksView(links: $links)
-//                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 //                        .transition(.opacity)
 //                        .animation(.easeInOut)
             }
         )
     }
 
-    private func didTapAt(coord: MaplyCoordinate) {
+    private func move(to coord: MaplyCoordinate) {
         if let selection = mapApi.findComponent(ofType: RegionSelection.self) as? RegionSelection {
             selection.region.center = coord
-            moveRegionSelection(to: selection.region)
+            refresh(region: selection.region)
         }
     }
 
-    private func moveRegionSelection(to region: WeatherRegion) {
+    private func refresh(region: WeatherRegion) {
         guard !isPreview else {
             return
         }
@@ -112,16 +124,17 @@ struct ConfigContainerView: View {
         _ = Links.save(links)
 
         if region.save() {
-            Messages.show(text: "Reloading stations...")
+            loading = "Reloading stations"
 
             weatherService.refreshStations().then { _ -> Promise<Void> in
-                weatherService.refreshObservations()
+                loading = "Reloading weather"
+                return weatherService.refreshObservations()
             }.catch { err in
                 Messages.show(error: err)
+            }.finally {
+                onClose()
             }
         }
-
-        onClose()
     }
 }
 

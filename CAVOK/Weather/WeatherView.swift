@@ -55,6 +55,8 @@ struct WeatherView: View {
 
     @State private var selectedObservation: Observation?
 
+    @State private var loadingMessage: String?
+
     var body: some View {
         VStack(alignment: .trailing) {
             Picker("", selection: $selectedModule) {
@@ -111,7 +113,7 @@ struct WeatherView: View {
                 .background(AnyView(EffectView(effect: UIBlurEffect(style: .systemThickMaterial))))
             ],
             headerContent: {
-                PullToRefreshView(isLoading: $timeslots.isLoading) {
+                PullToRefreshView(loadingMessage: $loadingMessage) {
                     TimeslotDrawerView()
                         .environmentObject(timeslots)
 
@@ -120,12 +122,10 @@ struct WeatherView: View {
                 .padding(.top, -20)
                 .frame(height: 100, alignment: .top)
                 .refreshable {
-                    timeslots.startSpinning()
-
-                    Messages.show(text: "Refreshing observations...")
+                    loadingMessage = "Reloading weather"
 
                     _ = weatherService.refreshObservations().done {
-                        timeslots.stopSpinning()
+                        loadingMessage = nil
                         load()
                     }.catch(Messages.show)
                 }
@@ -248,8 +248,6 @@ struct WeatherView: View {
         formatter.zeroFormattingBehavior = .dropLeading
 
         let status = formatter.string(from: seconds)!
-
-        print(status)
         timeslots.setStatus(text: "\(status) \(suffix)", color: ColorRamp.color(for: date))
     }
 

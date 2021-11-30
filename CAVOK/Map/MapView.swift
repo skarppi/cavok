@@ -65,7 +65,9 @@ struct MapView: View {
 
             let extents = mapApi.mapView.getCurrentExtents()
             if !extents.inside(coordinate) {
-                mapApi.mapView.animate(toPosition: coordinate, time: 0.5)
+                let height = LastSession.load()?.height ?? 0.1
+
+                mapApi.mapView.animate(toPosition: coordinate, height: height, heading: 0, time: 0.5)
             }
         }
     }

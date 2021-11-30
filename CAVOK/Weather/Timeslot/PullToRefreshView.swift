@@ -16,12 +16,12 @@ struct PullToRefreshView<Content>: View where Content: View {
 
     @Environment(\.refresh) private var refresh
 
-    // whether loading is occuring or not
-    @Binding var isLoading: Bool
+    // message shown whether loading is occuring or not
+    @Binding var loadingMessage: String?
 
     // init all variables
-    init?(isLoading: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) {
-        self._isLoading = isLoading
+    init?(loadingMessage: Binding<String?>, @ViewBuilder content: @escaping () -> Content) {
+        self._loadingMessage = loadingMessage
         self.content = content
     }
 
@@ -47,15 +47,13 @@ struct PullToRefreshView<Content>: View where Content: View {
                         Color.clear.preference(key: ViewOffsetKey.self, value: offset)
                     }
                     VStack {
-                        if !isLoading {
+                        if loadingMessage == nil {
                             content()
                                 // prevent bounce up
                                 .offset(y: scrollOffset < 0 ? -scrollOffset : 0)
                                 .opacity(1 - arrowAngle / 180)
                         }
                     }
-                    // offset the content to allow the progress indicator to show when loading
-                    .offset(y: isLoading ? 40 : 0)
                 }
 
             }
@@ -73,10 +71,16 @@ struct PullToRefreshView<Content>: View where Content: View {
                 }
                 // start the loading when the user releases the screen
                 if arrowAngle < 180 && hasPulled {
-                    // keep show loading indicator
-                    // spring animation is very important
-                    withAnimation(.spring()) { isLoading = true }
-                    hasPulled = false
+                    // complete the action supplied
+                    if let refresh = refresh {
+                        Task {
+                            await refresh()
+                            hasPulled = false
+                        }
+                    }
+
+                    // let user know they have pulled enough with a haptic
+                    haptic.impactOccurred()
                 }
             }
         }
@@ -84,37 +88,18 @@ struct PullToRefreshView<Content>: View where Content: View {
 
     // view that is shown when the user scrolls
     private var scrollableContent: some View {
-        ZStack(alignment: .top) {
-            Group {
-                if arrowAngle > 180 || hasPulled || isLoading {
-                    ProgressView()
-                        .onAppear {
-                            // indicate the user has pulled all the way
-                            withAnimation { hasPulled = true }
-                            // complete the action supplied
-
-                            if let refresh = refresh {
-                                Task {
-                                    await refresh()
-                                }
-                            }
-
-                            // let user know they have pulled enough with a haptic
-                            haptic.impactOccurred()
-                        }
-                } else {
-                    // show an arrow that lets the user know they can drag the view
-                    Image(systemName: "arrow.down")
-                        .rotationEffect(Angle(degrees: arrowAngle < 180 ? arrowAngle : 180))
-                        .opacity(arrowAngle > 15 ? (arrowAngle - 45) / 180: 0)
-                }
+        Group {
+            if hasPulled || loadingMessage != nil {
+                ProgressView(loadingMessage ?? "")
+                    .frame(height: 80)
+            } else {
+                // show an arrow that lets the user know they can drag the view
+                Image(systemName: "arrow.down")
+                    .rotationEffect(Angle(degrees: arrowAngle < 180 ? arrowAngle : 180))
+                    .opacity(arrowAngle > 15 ? (arrowAngle - 45) / 180: 0)
+                    .frame(height: 40)
             }
-            .frame(height: 40)
-            .font(.system(size: 18, weight: .bold))
         }
-        .frame(height: 50 +
-                // only allow height to increase if the user scrolls down
-                (scrollOffset > 0 ? scrollOffset : 0))
     }
 }
 
