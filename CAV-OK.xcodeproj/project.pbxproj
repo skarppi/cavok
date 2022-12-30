@@ -32,8 +32,8 @@
 		B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */; };
 		B6D0494A26484C65000DF0A8 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B6D0494726484C65000DF0A8 /* .swiftlint.yml */; };
 		C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0420D46256A5336004B3855 /* WeatherTileFetcher.swift */; };
-		C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; };
-		C076EC7E2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C076EC7D2572E54500470190 /* WhirlyGlobe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobe.framework */; };
+		C076EC7E2572E54500470190 /* WhirlyGlobe.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C09D66722540BF3700FB3D39 /* WhirlyGlobe.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C09D66362540BCC100FB3D39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C09D66352540BCC100FB3D39 /* Assets.xcassets */; };
 		C09D66392540BCC100FB3D39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C09D66382540BCC100FB3D39 /* Preview Assets.xcassets */; };
 		C09D663C2540BCC100FB3D39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */; };
@@ -93,6 +93,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B65F256E295EBB1C0063897D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 310573EA2863C72D00B50828;
+			remoteInfo = WhirlyGlobeMin;
+		};
 		C09D66432540BCC200FB3D39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C09D66242540BCBE00FB3D39 /* Project object */;
@@ -130,7 +137,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C076EC7E2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Embed Frameworks */,
+				C076EC7E2572E54500470190 /* WhirlyGlobe.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,7 +241,7 @@
 				C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
 				C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */,
-				C076EC7D2572E54500470190 /* WhirlyGlobeMaplyComponent.framework in Frameworks */,
+				C076EC7D2572E54500470190 /* WhirlyGlobe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +366,8 @@
 		C09D666D2540BF3700FB3D39 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */,
+				C09D66722540BF3700FB3D39 /* WhirlyGlobe.framework */,
+				B65F256F295EBB1C0063897D /* WhirlyGlobe.framework */,
 				C09D66742540BF3700FB3D39 /* WhirlyGlobeMaplyComponentTests.xctest */,
 			);
 			name = Products;
@@ -638,10 +646,17 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C09D66722540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.framework */ = {
+		B65F256F295EBB1C0063897D /* WhirlyGlobe.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = WhirlyGlobeMaplyComponent.framework;
+			path = WhirlyGlobe.framework;
+			remoteRef = B65F256E295EBB1C0063897D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C09D66722540BF3700FB3D39 /* WhirlyGlobe.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WhirlyGlobe.framework;
 			remoteRef = C09D66712540BF3700FB3D39 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
