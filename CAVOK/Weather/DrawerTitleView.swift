@@ -22,10 +22,6 @@ struct DrawerTitleView: View {
                     .foregroundColor(Color(UIColor.tertiaryLabel))
             }
             .font(.title)
-
-//                    .resizable()
-//                    .frame(width: 20, height: 20)
-//                    .padding()
         }
     }
 }

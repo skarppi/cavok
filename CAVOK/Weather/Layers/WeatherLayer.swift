@@ -22,6 +22,8 @@ class WeatherLayer {
 
     private var frameChanger: FrameChanger?
 
+    let DEBUG = false
+
     init(mapView: WhirlyGlobeViewController, presentation: ObservationPresentation) {
         self.mapView = mapView
         self.presentation = presentation
@@ -31,7 +33,7 @@ class WeatherLayer {
         clean()
     }
 
-    func load(groups: ObservationGroups, at coordinate: MaplyCoordinate?, loaded: @escaping (Int, UIColor) -> Void) {
+    func load(groups: ObservationGroups, at coordinate: MaplyCoordinate?, loaded: @MainActor @escaping (Int, UIColor) -> Void) {
         guard let selected = groups.selectedFrame else {
             return
         }
@@ -45,12 +47,12 @@ class WeatherLayer {
 
         frames.reversed().forEach { frame in
             let selected = frame.index == selected
-            frame.process(priority: selected).done {
+
+            Task(priority: selected ? .userInitiated : .low) {
+                frame.process()
                 if let coordinate = coordinate {
-                    loaded(frame.index, frame.color(for: coordinate))
+                    await loaded(frame.index, frame.color(for: coordinate))
                 }
-            }.catch { error in
-                print("Failed to generate heatmap \(frame.index) because of \(error)")
             }
         }
 
@@ -79,19 +81,12 @@ class WeatherLayer {
         }
         loader?.shutdown()
         loader = nil
-
-        //        fetcher?.shutdown()
-        //        fetcher = nil
-
     }
 
     private func initLoader(frames: [HeatMap]) -> MaplyQuadImageFrameLoader? {
-        //        // for debugging tiles
-
-        self.fetcher = // frames.compactMap { frame in
-            //            DebugTileFetcher(frames: frames, config: config!)
-            WeatherTileFetcher(frames: frames, config: config)
-        //        }
+        self.fetcher = DEBUG
+            ? DebugTileFetcher(frames: frames, config: config)
+            : WeatherTileFetcher(frames: frames, config: config)
 
         let params = MaplySamplingParams()
         params.coverPoles = false
@@ -100,25 +95,9 @@ class WeatherLayer {
         params.coordSys = MaplySphericalMercator(webStandard: ())
         params.singleLevel = true
 
-        //        let layer = MaplyQuadImageTilesLayer(coordSystem:tileSource.coordSys(), tileSource:tileSource)!
-        //        layer.imageDepth = UInt32(frames.count)
-        //        layer.currentImage = Float(frames.count - 1)
-        //        layer.allowFrameLoading = true
-        //
-
         let customTilerSources = frames.map { frame in
             WeatherTileInfo(config: config, frame: frame.index)
         }
-
-        //        let customTileSources2 = frames.map { frame in
-        //            fetcher.
-        //        }
-
-        // Set up a variable target for two pass rendering
-        //        varTarget = MaplyVariableTarget(type: .imageIntRGBA, viewC: mapView)
-        //        varTarget?.setScale(0.5)
-        //        varTarget?.clearEveryFrame = true
-        //        varTarget?.drawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
 
         guard let loader = MaplyQuadImageFrameLoader(params: params,
                                                      tileInfos: customTilerSources,
@@ -132,32 +111,9 @@ class WeatherLayer {
         loader.baseDrawPriority = kMaplyImageLayerDrawPriorityDefault + 1000
         loader.setTileFetcher(self.fetcher!)
 
-        //
-        //        if let varTarget = varTarget {
-        //            loader.setRenderTarget(varTarget.renderTarget)
-        //        }
-        //
-        //        guard let shader = mapView.getShaderByName(kMaplyShaderDefaultTriMultiTexRamp) else {
-        //            return nil
-        //        }
-        //        loader.setShader(shader)
-        //
-        //        // Assign the ramp texture to the first entry in the texture lookup slot
-        //        guard let rampTex = mapView.addTexture(UIImage.init(named: "colorramp.png")!,
-        //                                               desc: nil, mode: .current) else {
-        //            return nil
-        //        }
-        //        shader.setTexture(rampTex, for: 0)
-        //
         if let debugTileFetcher = fetcher as? DebugTileFetcher {
             debugTileFetcher.loader = loader
         }
-
-        // load selected frame first and then others in reverse order
-        //        var priorities: [Int] = Array(0...groups.count - 1)
-        //        priorities.remove(at: selected)
-        //        priorities.append(selected)
-        //        loader.setFrameLoadingPriority(priorities.reversed())
 
         let frameChanger = FrameChanger(loader: loader)
         mapView.add(frameChanger)

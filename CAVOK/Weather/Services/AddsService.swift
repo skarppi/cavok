@@ -8,8 +8,6 @@
 
 import Foundation
 import SWXMLHash
-import PMKFoundation
-import PromiseKit
 import Gzip
 
 enum AddsSource: String {
@@ -18,40 +16,38 @@ enum AddsSource: String {
 
 public class AddsService {
 
-    class func fetchStations(at region: WeatherRegion) -> Promise<[Station]> {
-        return fetch(dataSource: "stations", at: region).map { data -> [Station] in
-            print("Found \(data.children.count) ADDS stations")
+    class func fetchStations(at region: WeatherRegion) async throws -> [Station] {
+        let data = try await fetch(dataSource: "stations", at: region)
+        print("Found \(data.children.count) ADDS stations")
 
-            return data.children.map { station in
-                Station(
-                    identifier: station["station_id"].element!.text,
-                    name: station["site"].element!.text,
-                    latitude: Float(station["latitude"].element!.text)!,
-                    longitude: Float(station["longitude"].element!.text)!,
-                    elevation: Float(station["elevation_m"].element!.text)!,
-                    hasMetar: station["site_type"]["METAR"].element != nil,
-                    hasTaf: station["site_type"]["TAF"].element != nil
-                )
-            }
+        return data.children.map { station in
+            Station(
+                identifier: station["station_id"].element!.text,
+                name: station["site"].element!.text,
+                latitude: Float(station["latitude"].element!.text)!,
+                longitude: Float(station["longitude"].element!.text)!,
+                elevation: Float(station["elevation_m"].element!.text)!,
+                hasMetar: station["site_type"]["METAR"].element != nil,
+                hasTaf: station["site_type"]["TAF"].element != nil
+            )
         }
     }
 
-    class func fetchObservations(_ source: AddsSource, history: Bool, at region: WeatherRegion) -> Promise<[String]> {
+    class func fetchObservations(_ source: AddsSource, history: Bool, at region: WeatherRegion) async throws -> [String] {
         let query = [
             "hoursBeforeNow": "3",
             "mostRecentForEachStation": String(history == false)
             //            "fields": "raw_text"
         ]
-        return fetch(dataSource: source.rawValue, with: query, at: region).map { data -> [String] in
-            let count = data.children.count
-            print("Found \(count) ADDS \(source.rawValue)")
+        let data = try await fetch(dataSource: source.rawValue, with: query, at: region)
+        let count = data.children.count
+        print("Found \(count) ADDS \(source.rawValue)")
 
-            let raws = data.children.compactMap { item in
-                item["raw_text"].element?.text
-            }
-            // remove possible duplicate entries
-            return Array(Set(raws))
+        let raws = data.children.compactMap { item in
+            item["raw_text"].element?.text
         }
+        // remove possible duplicate entries
+        return Array(Set(raws))
     }
 
     private class func parse(data: Data) throws -> XMLIndexer {
@@ -74,7 +70,7 @@ public class AddsService {
 
     private class func fetch(dataSource: String,
                              with: [String: String] = [:],
-                             at region: WeatherRegion) -> Promise<XMLIndexer> {
+                             at region: WeatherRegion) async throws -> XMLIndexer {
         var params = [
             "dataSource": dataSource,
             "requestType": "retrieve",
@@ -91,35 +87,23 @@ public class AddsService {
         var components = URLComponents(string: host)!
         components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
 
-        let req = URLRequest(url: components.url!)
-        return execute(req, retries: 0)
+        return try await execute(url: components.url!, retries: 0)
     }
 
-    private class func execute(_ req: URLRequest, retries: Int = 0) -> Promise<XMLIndexer> {
-        print("Fetching ADDS data from \(req.url!)")
-        return URLSession.shared.dataTask(.promise, with: req).map { data, _ -> XMLIndexer in
-            let unzipped: Data = try {
-                if data.isGzipped {
-                    return try data.gunzipped()
-                } else {
-                    return data
-                }
-            }()
-            return try self.parse(data: unzipped)
-        }.recover { error -> Promise<XMLIndexer> in
-            switch error {
-            case let Weather.error(msg) where msg.contains("Invalid field name(s) found: raw_text"):
-                if retries > 0 {
-                    return after(.seconds(1)).then { () -> Promise<XMLIndexer> in
-                        print("Retrying ADDS query still \(retries - 1) times")
-                        return execute(req, retries: retries - 1)
-                    }
-                } else {
-                    throw Weather.error(msg: "ADDS temporarily unavailable")
-                }
+    private class func execute(url: URL, retries: Int = 0) async throws -> XMLIndexer {
+        print("Fetching ADDS data from \(url)")
 
-            default:
-                throw error
+        let (data, _)  = try await URLSession.shared.data(from: url)
+
+        do {
+            return try self.parse(data: data.isGzipped ? data.gunzipped() : data)
+        } catch Weather.error(let msg) where msg.contains("Invalid field name(s) found: raw_text") {
+            if retries > 0 {
+                try await Task.sleep(seconds: 1)
+                print("Retrying ADDS query still \(retries - 1) times")
+                return try await execute(url: url, retries: retries - 1)
+            } else {
+                throw Weather.error(msg: "ADDS temporarily unavailable")
             }
         }
     }

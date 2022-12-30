@@ -80,13 +80,6 @@ kernel void heatMapShader(
         }
     }
 
-    // Scale to UV space coords
-//    float2 uv = float2(gid) / float2(grid);
-    // Transform to [(-1.0, -1.0), (1.0, 1.0)] range
-//    uv = 2.0 * uv - 1.0;
-    // Calculate how near to the center (0.0) or edge (1.0) this fragment is
-//    float gradient = uv.x * uv.x + uv.y * uv.y;
-
     // start fading from the half radius
     float fadingDistance = radius / 2.0f;
     

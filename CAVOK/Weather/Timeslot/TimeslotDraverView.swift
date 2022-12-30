@@ -105,7 +105,7 @@ struct TimeslotDrawerView: View {
         } else if oldestMinutes < 60 {
             return "\(latestMinutes)-\(since(minutes: oldestMinutes))"
         } else {
-            return "\(since(minutes: latestMinutes))-\(since(minutes: oldestMinutes))"
+            return "\(since(minutes: latestMinutes)) - \(since(minutes: oldestMinutes))"
         }
     }
 

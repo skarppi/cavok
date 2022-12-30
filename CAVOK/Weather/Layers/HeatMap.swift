@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import PromiseKit
 
 struct HeatData {
     let x: Int32
@@ -60,24 +59,20 @@ class HeatMap {
         print("Canceling heatmap")
     }
 
-    func process(priority: Bool) -> Promise<Void> {
-        let qos: DispatchQoS = (priority) ? .userInitiated : .background
+    func process() {
+        self.timer("end frame \(self.index)") {
+            print("start frame \(self.index)")
 
-        return DispatchQueue.global().async(.promise, group: group, qos: qos) {
-            self.timer("end frame \(self.index)") {
-                print("start frame \(self.index)")
+            self.output = HeatMapGPU(input: self.input,
+                                     config: self.config,
+                                     steps: self.presentation.ramp.steps)
+                .render()
 
-                self.output = HeatMapGPU(input: self.input,
+            if self.output == nil {
+                self.output = HeatMapCPU(input: self.input,
                                          config: self.config,
-                                         steps: self.presentation.ramp.steps)
+                                         ramp: self.presentation.ramp)
                     .render()
-
-                if self.output == nil {
-                    self.output = HeatMapCPU(input: self.input,
-                                             config: self.config,
-                                             ramp: self.presentation.ramp)
-                        .render()
-                }
             }
         }
     }

@@ -8,7 +8,6 @@
 import SwiftUI
 import Combine
 // import BottomSheet
-import PromiseKit
 
 struct ConfigContainerView: View {
 
@@ -90,12 +89,11 @@ struct ConfigContainerView: View {
         }
 
         // because drawer takes some space offset the region
-        let offset: (km: Float, dir: Float, padding: Float)
-//        if Pulley.shared.currentDisplayMode == .drawer {
-            offset = (km: Float(region.radius) / 5, dir: 180, padding: Float(region.radius) / 40)
-//        } else {
-//            offset = (km: Float(region.radius), dir: 270, padding: Float(region.radius) / 10)
-//        }
+        let offset = (
+            km: Float(region.radius) / 5,
+            dir: Float(180),
+            padding: Float(region.radius) / 40
+        )
 
         let center = region.center.locationAt(kilometers: offset.km, direction: offset.dir)
 
@@ -107,14 +105,20 @@ struct ConfigContainerView: View {
 
     private func showStations(at region: WeatherRegion) {
         mapApi.clearComponents(ofType: StationMarker.self)
-        weatherService.queryStations(at: region).done { stations in
-            let markers = stations.map { station in StationMarker(station: station) }
-            if let key = markers.first, let components = self.mapApi.mapView.addScreenMarkers(markers, desc: nil) {
-                self.mapApi.addComponents(key: key, value: components)
-            }
 
-            region.matches = stations.count
-        }.catch(Messages.show)
+        Task {
+            do {
+                let stations = try await weatherService.queryStations(at: region)
+                let markers = stations.map { station in StationMarker(station: station) }
+                if let key = markers.first, let components = self.mapApi.mapView.addScreenMarkers(markers, desc: nil) {
+                    self.mapApi.addComponents(key: key, value: components)
+                }
+
+                region.matches = stations.count
+            } catch {
+                Messages.show(error: error)
+            }
+        }
     }
 
     private func endRegionSelection() {
@@ -124,14 +128,17 @@ struct ConfigContainerView: View {
         _ = Links.save(links)
 
         if region.save() {
-            loading = "Reloading stations"
+            Task {
+                do {
+                    loading = "Reloading stations"
+                    _ = try await weatherService.refreshStations()
 
-            weatherService.refreshStations().then { _ -> Promise<Void> in
-                loading = "Reloading weather"
-                return weatherService.refreshObservations()
-            }.catch { err in
-                Messages.show(error: err)
-            }.finally {
+                    loading = "Reloading weather"
+                    try await weatherService.refreshObservations()
+                } catch {
+                    Messages.show(error: error)
+                }
+
                 onClose()
             }
         }

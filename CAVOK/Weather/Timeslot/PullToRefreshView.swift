@@ -74,8 +74,8 @@ struct PullToRefreshView<Content>: View where Content: View {
                     // complete the action supplied
                     if let refresh = refresh {
                         Task {
-                            await refresh()
                             hasPulled = false
+                            await refresh()
                         }
                     }
 

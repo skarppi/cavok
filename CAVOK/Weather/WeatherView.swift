@@ -117,10 +117,13 @@ struct WeatherView: View {
                 .refreshable {
                     loadingMessage = "Reloading weather"
 
-                    _ = weatherService.refreshObservations().done {
+                    do {
+                        try await weatherService.refreshObservations()
                         loadingMessage = nil
                         load()
-                    }.catch(Messages.show)
+                    } catch {
+                        Messages.show(error: error)
+                    }
                 }
             },
             mainContent: {}
@@ -203,6 +206,10 @@ struct WeatherView: View {
     }
 
     private func render(frame: Int?) {
+        guard !isPreview else {
+            return
+        }
+
         cleanMarkers()
 
         guard let weatherLayer = weatherLayer, let frame = frame else {

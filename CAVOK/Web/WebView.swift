@@ -9,7 +9,6 @@
 import SwiftUI
 import UIKit
 import WebKit
-import PromiseKit
 
 struct WebView: View {
     var links = Links.load()

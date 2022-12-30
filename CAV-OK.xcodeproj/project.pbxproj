@@ -77,8 +77,6 @@
 		C09D67012540CACA00FB3D39 /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D62540CACA00FB3D39 /* AwsService.swift */; };
 		C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */; };
 		C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */; };
-		C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = C09D671C2540CC7C00FB3D39 /* PromiseKit */; };
-		C09D67232540CCED00FB3D39 /* PMKFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67222540CCED00FB3D39 /* PMKFoundation */; };
 		C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67282540CD2300FB3D39 /* SwiftyJSON */; };
 		C09D672F2540CD9800FB3D39 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C09D672E2540CD9800FB3D39 /* RealmSwift */; };
 		C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67342540CDC000FB3D39 /* SWXMLHash */; };
@@ -236,9 +234,7 @@
 			files = (
 				C09D672F2540CD9800FB3D39 /* RealmSwift in Frameworks */,
 				C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */,
-				C09D67232540CCED00FB3D39 /* PMKFoundation in Frameworks */,
 				C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */,
-				C09D671D2540CC7C00FB3D39 /* PromiseKit in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
 				C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */,
 				C076EC7D2572E54500470190 /* WhirlyGlobe.framework in Frameworks */,
@@ -540,8 +536,6 @@
 			);
 			name = "CAV-OK";
 			packageProductDependencies = (
-				C09D671C2540CC7C00FB3D39 /* PromiseKit */,
-				C09D67222540CCED00FB3D39 /* PMKFoundation */,
 				C09D67282540CD2300FB3D39 /* SwiftyJSON */,
 				C09D672E2540CD9800FB3D39 /* RealmSwift */,
 				C09D67342540CDC000FB3D39 /* SWXMLHash */,
@@ -620,8 +614,6 @@
 			);
 			mainGroup = C09D66232540BCBE00FB3D39;
 			packageReferences = (
-				C09D671B2540CC7C00FB3D39 /* XCRemoteSwiftPackageReference "PromiseKit" */,
-				C09D67212540CCED00FB3D39 /* XCRemoteSwiftPackageReference "Foundation" */,
 				C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				C09D672D2540CD9800FB3D39 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */,
@@ -1124,22 +1116,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C09D671B2540CC7C00FB3D39 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxcl/PromiseKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.13.3;
-			};
-		};
-		C09D67212540CCED00FB3D39 /* XCRemoteSwiftPackageReference "Foundation" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/PromiseKit/Foundation";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.3.4;
-			};
-		};
 		C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
@@ -1183,16 +1159,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C09D671C2540CC7C00FB3D39 /* PromiseKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C09D671B2540CC7C00FB3D39 /* XCRemoteSwiftPackageReference "PromiseKit" */;
-			productName = PromiseKit;
-		};
-		C09D67222540CCED00FB3D39 /* PMKFoundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C09D67212540CCED00FB3D39 /* XCRemoteSwiftPackageReference "Foundation" */;
-			productName = PMKFoundation;
-		};
 		C09D67282540CD2300FB3D39 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
