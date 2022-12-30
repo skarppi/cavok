@@ -29,7 +29,7 @@ public class WeatherServer {
     }
 
     // query and persist stations
-    func refreshStations() async throws -> [Station] {
+    @MainActor func refreshStations() async throws -> [Station] {
         let stations = try await queryStations(at: WeatherRegion.load())
         let realm = try await Realm()
 
@@ -40,7 +40,7 @@ public class WeatherServer {
         return stations
     }
 
-    func refreshObservations() async throws {
+    @MainActor func refreshObservations() async throws {
         let region = WeatherRegion.load()
 
         async let addsMetars = AddsService.fetchObservations(.METAR, history: true, at: region)
