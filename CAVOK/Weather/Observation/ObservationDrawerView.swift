@@ -19,9 +19,8 @@ struct ObservationHeaderView: View {
             DrawerTitleView(title: self.obs.station?.name, action: closedAction)
 
             AttributedText(obs: obs, presentation: presentation)
-                .fixedSize(horizontal: false, vertical: true)
                 .padding(.top)
-        }
+        }.padding(.horizontal)
     }
 }
 

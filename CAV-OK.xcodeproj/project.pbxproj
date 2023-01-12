@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		895B986D2970A27E005E5D7F /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 895B986C2970A27E005E5D7F /* BottomSheet */; };
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
 		B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9B012653077300F3E74D /* LinkEditView.swift */; };
 		B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63676DA267AFFFE00A92257 /* MapWrapper.swift */; };
@@ -19,13 +20,6 @@
 		B688A4652683C87500EE7373 /* MapApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688A4642683C87500EE7373 /* MapApi.swift */; };
 		B6972391274E6CE1000873A3 /* ConfigContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6972390274E6CE1000873A3 /* ConfigContainerView.swift */; };
 		B6972393274E7547000873A3 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6972392274E7547000873A3 /* WeatherView.swift */; };
-		B69723B2275056FB000873A3 /* BottomSheetPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AA275056FB000873A3 /* BottomSheetPosition.swift */; };
-		B69723B3275056FB000873A3 /* BottomSheetArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AB275056FB000873A3 /* BottomSheetArray.swift */; };
-		B69723B4275056FB000873A3 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AD275056FB000873A3 /* RoundedCorner.swift */; };
-		B69723B5275056FB000873A3 /* EffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AE275056FB000873A3 /* EffectView.swift */; };
-		B69723B6275056FB000873A3 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723AF275056FB000873A3 /* BottomSheetView.swift */; };
-		B69723B7275056FB000873A3 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723B0275056FB000873A3 /* ViewExtension.swift */; };
-		B69723B8275056FB000873A3 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69723B1275056FB000873A3 /* BottomSheet.swift */; };
 		B6A7424127569AEA00CBAA55 /* Collection+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A7424027569AEA00CBAA55 /* Collection+Additions.swift */; };
 		B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A829562687CEF100FA5B11 /* LegendView.swift */; };
 		B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */; };
@@ -155,13 +149,6 @@
 		B688A4642683C87500EE7373 /* MapApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapApi.swift; sourceTree = "<group>"; };
 		B6972390274E6CE1000873A3 /* ConfigContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigContainerView.swift; sourceTree = "<group>"; };
 		B6972392274E7547000873A3 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
-		B69723AA275056FB000873A3 /* BottomSheetPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheetPosition.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheetPosition.swift; sourceTree = SOURCE_ROOT; };
-		B69723AB275056FB000873A3 /* BottomSheetArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheetArray.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheetArray.swift; sourceTree = SOURCE_ROOT; };
-		B69723AD275056FB000873A3 /* RoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
-		B69723AE275056FB000873A3 /* EffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectView.swift; sourceTree = "<group>"; };
-		B69723AF275056FB000873A3 /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheetView.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheetView.swift; sourceTree = SOURCE_ROOT; };
-		B69723B0275056FB000873A3 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewExtension.swift; path = libs/BottomSheet/Sources/BottomSheet/ViewExtension.swift; sourceTree = SOURCE_ROOT; };
-		B69723B1275056FB000873A3 /* BottomSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomSheet.swift; path = libs/BottomSheet/Sources/BottomSheet/BottomSheet.swift; sourceTree = SOURCE_ROOT; };
 		B6A7424027569AEA00CBAA55 /* Collection+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Additions.swift"; sourceTree = "<group>"; };
 		B6A829562687CEF100FA5B11 /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotDraverView.swift; sourceTree = "<group>"; };
@@ -234,6 +221,7 @@
 			files = (
 				C09D672F2540CD9800FB3D39 /* RealmSwift in Frameworks */,
 				C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */,
+				895B986D2970A27E005E5D7F /* BottomSheet in Frameworks */,
 				C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
 				C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */,
@@ -258,29 +246,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B697239A274FB694000873A3 /* BottomSheet */ = {
-			isa = PBXGroup;
-			children = (
-				B69723B1275056FB000873A3 /* BottomSheet.swift */,
-				B69723AB275056FB000873A3 /* BottomSheetArray.swift */,
-				B69723AA275056FB000873A3 /* BottomSheetPosition.swift */,
-				B69723AF275056FB000873A3 /* BottomSheetView.swift */,
-				B69723AC275056FB000873A3 /* HelperViews */,
-				B69723B0275056FB000873A3 /* ViewExtension.swift */,
-			);
-			path = BottomSheet;
-			sourceTree = "<group>";
-		};
-		B69723AC275056FB000873A3 /* HelperViews */ = {
-			isa = PBXGroup;
-			children = (
-				B69723AD275056FB000873A3 /* RoundedCorner.swift */,
-				B69723AE275056FB000873A3 /* EffectView.swift */,
-			);
-			name = HelperViews;
-			path = libs/BottomSheet/Sources/BottomSheet/HelperViews;
-			sourceTree = SOURCE_ROOT;
-		};
 		C09D66232540BCBE00FB3D39 = {
 			isa = PBXGroup;
 			children = (
@@ -353,7 +318,6 @@
 		C09D666B2540BF3600FB3D39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B697239A274FB694000873A3 /* BottomSheet */,
 				C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */,
 			);
 			name = Frameworks;
@@ -541,6 +505,7 @@
 				C09D67342540CDC000FB3D39 /* SWXMLHash */,
 				C09D673A2540CE2900FB3D39 /* Gzip */,
 				C09D67402540CE5700FB3D39 /* SwiftMessages */,
+				895B986C2970A27E005E5D7F /* BottomSheet */,
 			);
 			productName = CAVOK;
 			productReference = C09D662C2540BCBE00FB3D39 /* CAV-OK.app */;
@@ -619,6 +584,7 @@
 				C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */,
 				C09D67392540CE2900FB3D39 /* XCRemoteSwiftPackageReference "GzipSwift" */,
 				C09D673F2540CE5700FB3D39 /* XCRemoteSwiftPackageReference "SwiftMessages" */,
+				895B986B2970A27D005E5D7F /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = C09D662D2540BCBE00FB3D39 /* Products */;
 			projectDirPath = "";
@@ -722,16 +688,13 @@
 				B648ECC52666BD38009212F6 /* CavokApp.swift in Sources */,
 				B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */,
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
-				B69723B2275056FB000873A3 /* BottomSheetPosition.swift in Sources */,
 				B65329CD26A4BCD800B30A64 /* UIColor+Additions.swift in Sources */,
-				B69723B6275056FB000873A3 /* BottomSheetView.swift in Sources */,
 				B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */,
 				B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
 				B6A7424127569AEA00CBAA55 /* Collection+Additions.swift in Sources */,
 				C09D66F42540CACA00FB3D39 /* StationMarker.swift in Sources */,
-				B69723B4275056FB000873A3 /* RoundedCorner.swift in Sources */,
 				C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */,
 				C09D66F12540CACA00FB3D39 /* Weather.swift in Sources */,
 				C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */,
@@ -744,7 +707,6 @@
 				B64D83C126150316003AE228 /* TimeslotState.swift in Sources */,
 				C09D66E72540CACA00FB3D39 /* FrameChanger.swift in Sources */,
 				B688A4652683C87500EE7373 /* MapApi.swift in Sources */,
-				B69723B8275056FB000873A3 /* BottomSheet.swift in Sources */,
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,
 				B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */,
 				C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */,
@@ -754,7 +716,6 @@
 				C09D66F52540CACA00FB3D39 /* Links.swift in Sources */,
 				C09D669D2540CAB800FB3D39 /* UserMarker.swift in Sources */,
 				C09D66F32540CACA00FB3D39 /* RegionSelection.swift in Sources */,
-				B69723B3275056FB000873A3 /* BottomSheetArray.swift in Sources */,
 				C09D669C2540CAB800FB3D39 /* LastSession.swift in Sources */,
 				C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */,
 				B6972391274E6CE1000873A3 /* ConfigContainerView.swift in Sources */,
@@ -764,10 +725,8 @@
 				C09D67462540D03100FB3D39 /* ObservationDrawerView.swift in Sources */,
 				C09D67002540CACA00FB3D39 /* WeatherService.swift in Sources */,
 				B64D83CB261511A3003AE228 /* DrawerTitleView.swift in Sources */,
-				B69723B7275056FB000873A3 /* ViewExtension.swift in Sources */,
 				C09D66EE2540CACA00FB3D39 /* Station.swift in Sources */,
 				C09D66EC2540CACA00FB3D39 /* Observations.swift in Sources */,
-				B69723B5275056FB000873A3 /* EffectView.swift in Sources */,
 				C09D66E82540CACA00FB3D39 /* HeatMap.metal in Sources */,
 				C09D66E02540CACA00FB3D39 /* String+Additions.swift in Sources */,
 				B648ECC326660A2D009212F6 /* MapView.swift in Sources */,
@@ -879,7 +838,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -934,7 +893,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -955,6 +914,7 @@
 				ENABLE_PREVIEWS = YES;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -978,6 +938,7 @@
 				ENABLE_PREVIEWS = YES;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/libs/WhirlyGlobe/ios/library/WhirlyGlobe-MaplyComponent/include/**";
 				INFOPLIST_FILE = CAVOK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1116,6 +1077,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		895B986B2970A27D005E5D7F /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
@@ -1159,6 +1128,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		895B986C2970A27E005E5D7F /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 895B986B2970A27D005E5D7F /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
+		};
 		C09D67282540CD2300FB3D39 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

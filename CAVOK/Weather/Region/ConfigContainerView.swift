@@ -7,13 +7,13 @@
 
 import SwiftUI
 import Combine
-// import BottomSheet
+import BottomSheet
 
 struct ConfigContainerView: View {
 
     var onClose: (() -> Void)
 
-    @State private var bottomSheetPosition: BottomSheetPosition = .middle
+    @State private var bottomSheetPosition: BottomSheetPosition = .relative(0.4)
 
     @State private var region = WeatherRegion.load()
 
@@ -47,9 +47,7 @@ struct ConfigContainerView: View {
         }
         .bottomSheet(
             bottomSheetPosition: self.$bottomSheetPosition,
-            options: [
-                .appleScrollBehavior
-            ],
+            switchablePositions: [.relative(0.125), .relative(0.4), .relativeTop(0.975)],
             headerContent: {
                 if let loading = loading {
                     ProgressView(loading)
@@ -66,7 +64,7 @@ struct ConfigContainerView: View {
 //                        .transition(.opacity)
 //                        .animation(.easeInOut)
             }
-        )
+        ).enableAppleScrollBehavior(true)
     }
 
     private func move(to coord: MaplyCoordinate) {

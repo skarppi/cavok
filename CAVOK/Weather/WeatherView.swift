@@ -7,14 +7,8 @@
 
 import SwiftUI
 import Combine
-// import BottomSheet
+import BottomSheet
 
-public enum ObservationPositions: CGFloat, CaseIterable {
-    case top = 0.975
-    case middle = 0.4
-    case bottom = 0.2
-    case hidden = 0
-}
 
 struct TimeslotPositions: CaseIterable, RawRepresentable {
     init(rawValue: CGFloat) {
@@ -49,7 +43,7 @@ struct WeatherView: View {
 
     let weatherService = WeatherServer()
 
-    @State private var observationPosition: ObservationPositions = .hidden
+    @State private var observationPosition: BottomSheetPosition = .hidden
 
     @State private var selectedObservation: Observation?
 
@@ -99,12 +93,8 @@ struct WeatherView: View {
             }
         }
         .bottomSheet(
-            bottomSheetPosition: .constant(TimeslotPositions.bottom),
-            options: [
-                .notResizeable,
-                .noDragIndicator,
-                .background(AnyView(EffectView(effect: UIBlurEffect(style: .systemThickMaterial))))
-            ],
+            bottomSheetPosition: .constant(.dynamicBottom),
+            switchablePositions: [.dynamicBottom],
             headerContent: {
                 PullToRefreshView(loadingMessage: $loadingMessage) {
                     TimeslotDrawerView()
@@ -112,7 +102,6 @@ struct WeatherView: View {
 
                 }
                 // remove extra padding added by BottomSheet
-                .padding(.top, -20)
                 .frame(height: 100, alignment: .top)
                 .refreshable {
                     loadingMessage = "Reloading weather"
@@ -128,12 +117,12 @@ struct WeatherView: View {
             },
             mainContent: {}
         )
+        .enableBackgroundBlur(true)
+        .showDragIndicator(false)
+        .isResizable(false)
         .bottomSheet(
             bottomSheetPosition: $observationPosition,
-            options: [
-                .appleScrollBehavior,
-                .swipeToDismiss
-            ],
+            switchablePositions: [.hidden, .dynamicBottom, .dynamicTop],
             headerContent: {
                 if let observation = selectedObservation, let weatherLayer = weatherLayer {
                     ObservationHeaderView(presentation: weatherLayer.presentation,
@@ -150,6 +139,8 @@ struct WeatherView: View {
                 }
             }
         )
+        .enableAppleScrollBehavior(true)
+        .enableSwipeToDismiss(true)
     }
 
     private func cleanMarkers() {
@@ -240,7 +231,7 @@ struct WeatherView: View {
         selectedObservation = observation
 
         if observationPosition == .hidden {
-            observationPosition = .bottom
+            observationPosition = .dynamicBottom
         }
 
         let marker = ObservationSelection(obs: observation)

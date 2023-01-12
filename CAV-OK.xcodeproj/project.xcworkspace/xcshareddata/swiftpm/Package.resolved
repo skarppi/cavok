@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "bottomsheet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lucaszischka/BottomSheet",
+      "state" : {
+        "revision" : "4c9ef84552712e0117c37d4893270fdc28fb9288",
+        "version" : "3.1.0"
+      }
+    },
+    {
       "identity" : "gzipswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/1024jp/GzipSwift",

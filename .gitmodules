@@ -1,6 +1,3 @@
 [submodule "libs/WhirlyGlobe"]
 	path = libs/WhirlyGlobe
 	url = https://github.com/mousebird/WhirlyGlobe.git
-[submodule "libs/BottomSheet"]
-	path = libs/BottomSheet
-	url = https://github.com/LucasMucGH/BottomSheet.git
