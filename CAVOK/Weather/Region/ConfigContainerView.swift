@@ -123,6 +123,8 @@ struct ConfigContainerView: View {
     }
 
     private func endRegionSelection() {
+        bottomSheetPosition = .relative(0.125)
+
         mapApi.clearComponents(ofType: StationMarker.self)
         mapApi.clearComponents(ofType: RegionSelection.self)
 
