@@ -30,6 +30,8 @@ struct ConfigContainerView: View {
     @State var loading: String?
 
     var cancellables = Set<AnyCancellable>()
+    
+    let bgColor: any ShapeStyle = Color(UIColor.secondarySystemBackground)
 
     var body: some View {
         ZStack {
@@ -59,12 +61,13 @@ struct ConfigContainerView: View {
                 }
             },
             mainContent: {
-                    LinksView(links: $links)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-//                        .transition(.opacity)
-//                        .animation(.easeInOut)
+                LinksView(links: $links)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                    .padding(.top)
             }
-        ).enableAppleScrollBehavior(true)
+        )
+        .enableAppleScrollBehavior()
+        .customBackground(bgColor)
     }
 
     private func move(to coord: MaplyCoordinate) {
@@ -145,10 +148,6 @@ struct ConfigContainerView: View {
 
 struct ConfigContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(ColorScheme.allCases,
-                id: \.self,
-                content:
-                    ConfigContainerView(onClose: {}).preferredColorScheme
-        )
+        ConfigContainerView(onClose: {})
     }
 }
