@@ -44,6 +44,8 @@ struct WeatherView: View {
     let weatherService = WeatherServer()
 
     @State private var observationPosition: BottomSheetPosition = .hidden
+    
+    @State private var observationSize: CGFloat = .zero
 
     @State private var selectedObservation: Observation?
 
@@ -73,7 +75,8 @@ struct WeatherView: View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .padding(5)
-            }).overlay(
+                }
+            ).overlay(
                 RoundedRectangle(cornerRadius: 50)
                     .stroke(Color.blue, lineWidth: 1)
             )
@@ -136,13 +139,23 @@ struct WeatherView: View {
                     let all = weatherService.observations(for: observation.station?.identifier ?? "")
                     ObservationDetailsView(presentation: weatherLayer.presentation,
                                            observations: all)
+                        // wrapping observations to multiple lines cause problem unless the frame is fixed
+                        .frame(minWidth: observationSize, idealWidth: observationSize, maxWidth: .infinity, alignment: .leading)
+                        .background(GeometryReader(content: setObservationSize(geometry:)))
                 }
             }
         )
-        .enableAppleScrollBehavior(true)
         .enableSwipeToDismiss(true)
+        .enableAppleScrollBehavior()
+        .enableBackgroundBlur()
+        .backgroundBlurMaterial(.systemDark)
     }
 
+    private func setObservationSize(geometry: GeometryProxy) -> some View {
+        self.observationSize = geometry.size.width
+         return Color.clear
+     }
+      
     private func cleanMarkers() {
         mapApi.clearComponents(ofType: ObservationMarker.self)
     }

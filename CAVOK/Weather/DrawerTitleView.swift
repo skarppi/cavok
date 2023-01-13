@@ -13,7 +13,7 @@ struct DrawerTitleView: View {
 
     var body: some View {
         HStack {
-            Text(title ?? "-").font(.title).bold().lineLimit(1)
+            Text(title ?? "-").font(.title).bold()
 
             Spacer()
 
@@ -28,7 +28,7 @@ struct DrawerTitleView: View {
 
 struct DrawerTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawerTitleView(title: "Title") {
+        DrawerTitleView(title: "Title is too long to fit into one row even when landscape or is it") {
         }
     }
 }

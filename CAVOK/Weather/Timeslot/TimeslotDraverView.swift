@@ -94,8 +94,8 @@ struct TimeslotDrawerView: View {
     private func status(slot: Timeslot) -> String {
         let timestamps = slot.observations.map({ $0.datetime })
 
-        let oldest = timestamps.min()!
-        let latest = timestamps.max()!
+        guard let oldest = timestamps.min() else { return "-" }
+        guard let latest = timestamps.max() else { return "-" }
 
         let oldestMinutes = Int(abs(oldest.timeIntervalSinceNow) / 60)
         let latestMinutes = Int(abs(latest.timeIntervalSinceNow) / 60)
@@ -156,13 +156,7 @@ struct TimeslotDraverView_Previews: PreviewProvider {
     }
 
     static var previews: some View {
-        ForEach(ColorScheme.allCases,
-                id: \.self,
-                content:
-                    TimeslotDrawerView()
-                        .environmentObject(state())
-                        .background(Color(.secondarySystemGroupedBackground))
-                        .preferredColorScheme
-        )
+        TimeslotDrawerView()
+            .environmentObject(state())
     }
 }

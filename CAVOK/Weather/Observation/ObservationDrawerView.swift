@@ -56,7 +56,6 @@ struct ObservationList: View {
                     .padding(.vertical)
 
                 ForEach(observations.reversed(), id: \.self) { metar in
-
                     AttributedText(obs: metar, presentation: self.presentation)
                         .padding(.bottom, 5)
                 }
@@ -74,15 +73,23 @@ struct AttributedText: View {
     }
 
     var body: some View {
-        Text(data.start)
-            + Text(data.highlighted).foregroundColor(Color(data.color))
-            + Text(data.end)
+        (
+            Text(data.start)
+                + Text(data.highlighted).foregroundColor(Color(data.color))
+                + Text(data.end)
+        )
+        // make it wrap to multiple lines
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
 struct ObservationDrawerView_Previews: PreviewProvider {
     static let presentation = ObservationPresentation(
-        module: Module(key: ModuleKey.ceiling, title: "ceil", unit: "FL", legend: [:])
+        module: Module(key: ModuleKey.ceiling,
+                       title: "ceil",
+                       unit: "FL",
+                       legend: ["0000": "000", "0500": "005", "1000": "010", "1500": "015", "2000": "020", "5000": "050"]
+                      )
     )
     static let observations = Observations(
         metars: [
@@ -90,7 +97,7 @@ struct ObservationDrawerView_Previews: PreviewProvider {
             metar("METAR EFHK 091920Z 04006KT 4000 -DZ BR BKN004 05/05 Q1009="),
             metar("METAR EFHK 091850Z 07004KT 040V130 4000 BR BKN005 05/05 Q1009="),
             metar("METAR EFHK 091820Z 07003KT 4000 BR BKN005 05/05 Q1009="),
-            metar("EFHK 091750Z 06004KT CAVOK 05/05 Q1009="),
+            metar("EFHK 091750Z CAVOK /// Q1009="),
             metar("METAR EFHK 091720Z 06004KT 6000 BKN006 05/05 Q1009="),
             metar("METAR EFHK 091650Z 08004KT 7000 SCT004 BKN006 05/05 RMK AO2 SLP135 T01170028 10144 20111 Q1009=")
         ],
