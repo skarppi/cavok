@@ -7,13 +7,10 @@
 
 import SwiftUI
 import Combine
-import BottomSheet
 
 struct ConfigContainerView: View {
 
-    var onClose: (() -> Void)
-
-    @State private var bottomSheetPosition: BottomSheetPosition = .relative(0.4)
+    @Binding var configuring: Bool
 
     @State private var region = WeatherRegion.load()
 
@@ -29,9 +26,12 @@ struct ConfigContainerView: View {
 
     @State var loading: String?
 
-    var cancellables = Set<AnyCancellable>()
-    
-    let bgColor: any ShapeStyle = Color(UIColor.secondarySystemBackground)
+    @State var selection: PresentationDetent = {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad: return .medium
+        default: return .dynamicHeader
+    }
+    }()
 
     var body: some View {
         ZStack {
@@ -48,14 +48,16 @@ struct ConfigContainerView: View {
             move(to: coord)
         }
         .bottomSheet(
-            bottomSheetPosition: self.$bottomSheetPosition,
-            switchablePositions: [.relative(0.125), .relative(0.4), .relativeTop(0.975)],
+            isPresented: $configuring,
+            onDismiss: {
+                endRegionSelection()
+            },
             headerContent: {
                 if let loading = loading {
                     ProgressView(loading)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 } else {
-                    ConfigDrawerView(closedAction: { _ in
+                    ConfigDrawerView(closedAction: {
                         endRegionSelection()
                     }).environmentObject(region)
                 }
@@ -65,9 +67,7 @@ struct ConfigContainerView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                     .padding(.top)
             }
-        )
-        .enableAppleScrollBehavior()
-        .customBackground(bgColor)
+        ).presentationDetents([.dynamicHeader, .medium, .large], selection: $selection)
     }
 
     private func move(to coord: MaplyCoordinate) {
@@ -123,33 +123,35 @@ struct ConfigContainerView: View {
     }
 
     private func endRegionSelection() {
-        bottomSheetPosition = .relative(0.125)
+        selection = .dynamicHeader
 
-        mapApi.clearComponents(ofType: StationMarker.self)
-        mapApi.clearComponents(ofType: RegionSelection.self)
+        //bottomSheetPosition = .relative(0.125)
 
-        _ = Links.save(links)
-
-        if region.save() {
-            Task {
-                do {
-                    loading = "Reloading stations"
-                    _ = try await weatherService.refreshStations()
-
-                    loading = "Reloading weather"
-                    try await weatherService.refreshObservations()
-                } catch {
-                    Messages.show(error: error)
-                }
-
-                onClose()
-            }
-        }
+        //mapApi.clearComponents(ofType: StationMarker.self)
+        //mapApi.clearComponents(ofType: RegionSelection.self)
+//
+//        _ = Links.save(links)
+//
+//        if region.save() {
+//            Task {
+//                do {
+//                    loading = "Reloading stations"
+//                    _ = try await weatherService.refreshStations()
+//
+//                    loading = "Reloading weather"
+//                    try await weatherService.refreshObservations()
+//                } catch {
+//                    Messages.show(error: error)
+//                }
+//
+//                configuring = false
+//            }
+//        }
     }
 }
 
 struct ConfigContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigContainerView(onClose: {})
+        ConfigContainerView(configuring: .constant(true))
     }
 }

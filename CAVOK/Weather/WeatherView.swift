@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Combine
-import BottomSheet
 
 
 struct TimeslotPositions: CaseIterable, RawRepresentable {
@@ -43,13 +42,11 @@ struct WeatherView: View {
 
     let weatherService = WeatherServer()
 
-    @State private var observationPosition: BottomSheetPosition = .hidden
-    
-    @State private var observationSize: CGFloat = .zero
-
     @State private var selectedObservation: Observation?
 
     @State private var loadingMessage: String?
+
+    var configuringDetent = PassthroughSubject<UISheetPresentationController.Detent.Identifier,Never>()
 
     var body: some View {
         VStack(alignment: .trailing) {
@@ -72,9 +69,9 @@ struct WeatherView: View {
                 action: configure,
                 label: {
                     Image(systemName: "gear")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .padding(5)
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(5)
                 }
             ).overlay(
                 RoundedRectangle(cornerRadius: 50)
@@ -92,45 +89,37 @@ struct WeatherView: View {
         }
         .onReceive(mapApi.didTapAt) { (_, object) in
             if let observation = object as? Observation {
-                details(observation: observation)
+                showDetails(observation)
+            }
+        }
+        .overlay(alignment: .bottom) {
+            PullToRefreshView(loadingMessage: $loadingMessage) {
+                TimeslotDrawerView()
+                    .environmentObject(timeslots)
+            }
+            .frame(height: 100, alignment: .top)
+            .background(.white.opacity(0.8))
+            .refreshable {
+                loadingMessage = "Reloading weather"
+                do {
+                    try await weatherService.refreshObservations()
+                    loadingMessage = nil
+                    load()
+                } catch {
+                    Messages.show(error: error)
+                }
             }
         }
         .bottomSheet(
-            bottomSheetPosition: .constant(.dynamicBottom),
-            switchablePositions: [.dynamicBottom],
-            headerContent: {
-                PullToRefreshView(loadingMessage: $loadingMessage) {
-                    TimeslotDrawerView()
-                        .environmentObject(timeslots)
-
-                }
-                // remove extra padding added by BottomSheet
-                .frame(height: 100, alignment: .top)
-                .refreshable {
-                    loadingMessage = "Reloading weather"
-
-                    do {
-                        try await weatherService.refreshObservations()
-                        loadingMessage = nil
-                        load()
-                    } catch {
-                        Messages.show(error: error)
-                    }
-                }
+            isPresented: .constant(selectedObservation != nil),
+            onDismiss: {
+                showDetails(nil)
             },
-            mainContent: {}
-        )
-        .enableBackgroundBlur(true)
-        .showDragIndicator(false)
-        .isResizable(false)
-        .bottomSheet(
-            bottomSheetPosition: $observationPosition,
-            switchablePositions: [.hidden, .dynamicBottom, .dynamicTop],
             headerContent: {
                 if let observation = selectedObservation, let weatherLayer = weatherLayer {
                     ObservationHeaderView(presentation: weatherLayer.presentation,
                                           obs: observation) { () in
-                        cleanDetails()
+                        showDetails(nil)
                     }
                 }
             },
@@ -139,23 +128,14 @@ struct WeatherView: View {
                     let all = weatherService.observations(for: observation.station?.identifier ?? "")
                     ObservationDetailsView(presentation: weatherLayer.presentation,
                                            observations: all)
-                        // wrapping observations to multiple lines cause problem unless the frame is fixed
-                        .frame(minWidth: observationSize, idealWidth: observationSize, maxWidth: .infinity, alignment: .leading)
-                        .background(GeometryReader(content: setObservationSize(geometry:)))
                 }
             }
+        ).presentationDetents(
+            [.dynamicHeader, .medium, .large],
+            selection: .constant(.dynamicHeader)
         )
-        .enableSwipeToDismiss(true)
-        .enableAppleScrollBehavior()
-        .enableBackgroundBlur()
-        .backgroundBlurMaterial(.systemDark)
     }
 
-    private func setObservationSize(geometry: GeometryProxy) -> some View {
-        self.observationSize = geometry.size.width
-         return Color.clear
-     }
-      
     private func cleanMarkers() {
         mapApi.clearComponents(ofType: ObservationMarker.self)
     }
@@ -232,37 +212,23 @@ struct WeatherView: View {
         }
     }
 
-    private func cleanDetails() {
-        observationPosition = .hidden
+    private func showDetails(_ observation: Observation?) {
         mapApi.clearComponents(ofType: ObservationSelection.self)
-        selectedObservation = nil
-    }
-
-    private func details(observation: Observation) {
-        mapApi.clearComponents(ofType: ObservationSelection.self)
-
         selectedObservation = observation
 
-        if observationPosition == .hidden {
-            observationPosition = .dynamicBottom
-        }
-
-        let marker = ObservationSelection(obs: observation)
-        if let components = mapApi.mapView.addScreenMarkers([marker], desc: nil) {
-            mapApi.addComponents(key: marker, value: components)
+        if let observation = observation {
+            let marker = ObservationSelection(obs: observation)
+            if let components = mapApi.mapView.addScreenMarkers([marker], desc: nil) {
+                mapApi.addComponents(key: marker, value: components)
+            }
         }
     }
 }
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(ColorScheme.allCases,
-                id: \.self,
-                content:
-                    WeatherView(showWebView: { _ in
-                        return true
-                    }, showConfigView: {})
-                        .preferredColorScheme
-        )
+        WeatherView(showWebView: { _ in
+            return true
+        }, showConfigView: {})
     }
 }

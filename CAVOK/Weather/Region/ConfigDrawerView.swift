@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ConfigDrawerView: View {
 
-    var closedAction: ((WeatherRegion) -> Void)
+    var closedAction: (() -> Void)
 
     @EnvironmentObject var region: WeatherRegion
 
@@ -28,9 +28,9 @@ struct ConfigDrawerView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            DrawerTitleView(title: "Weather region", action: {
-                closedAction(region)
-            })
+            DrawerTitleView(title: "Weather region") {
+                closedAction()
+            }
             HStack {
                 Stepper("Radius \(region.radius) km",
                         value: $region.radius,
@@ -67,7 +67,7 @@ struct ConfigDrawerView: View {
 struct ConfigDrawerView_Previews: PreviewProvider {
     static var previews: some View {
         ConfigDrawerView(
-            closedAction: { _ in print("Closed") }
+            closedAction: { print("Closed") }
         ).environmentObject(WeatherRegion(center: MaplyCoordinate(), radius: 500))
     }
 }

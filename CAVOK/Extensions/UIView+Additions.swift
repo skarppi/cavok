@@ -7,6 +7,20 @@
 //
 
 import SwiftUI
+import Combine
+
+extension UIApplication {
+    func sceneRootPresentedVC() -> UIViewController? {
+        guard let windows = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return nil
+        }
+        return windows.windows.first?.rootViewController?.presentedViewController
+    }
+
+    func sheetVC() -> UISheetPresentationController? {
+        return sceneRootPresentedVC()?.presentationController as? UISheetPresentationController
+    }
+}
 
 extension View {
     func phoneOnlyStackNavigationView() -> some View {

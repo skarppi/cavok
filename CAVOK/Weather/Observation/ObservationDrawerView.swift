@@ -19,6 +19,7 @@ struct ObservationHeaderView: View {
             DrawerTitleView(title: self.obs.station?.name, action: closedAction)
 
             AttributedText(obs: obs, presentation: presentation)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.top)
         }.padding(.horizontal)
     }
@@ -29,7 +30,7 @@ struct ObservationDetailsView: View {
     var observations: Observations
 
     var body: some View {
-        VStack(alignment: .leading) {
+        ScrollView {
             ObservationList(
                 title: "Metar history",
                 observations: observations.metars,
@@ -39,7 +40,8 @@ struct ObservationDetailsView: View {
                 title: "Taf",
                 observations: observations.tafs,
                 presentation: presentation)
-        }.padding(.horizontal)
+        }
+        .padding(.horizontal)
     }
 }
 
@@ -60,7 +62,7 @@ struct ObservationList: View {
                         .padding(.bottom, 5)
                 }
             }
-        }
+        }.frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -95,18 +97,18 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         metars: [
             metar("METAR EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="),
             metar("METAR EFHK 091920Z 04006KT 4000 -DZ BR BKN004 05/05 Q1009="),
-            metar("METAR EFHK 091850Z 07004KT 040V130 4000 BR BKN005 05/05 Q1009="),
-            metar("METAR EFHK 091820Z 07003KT 4000 BR BKN005 05/05 Q1009="),
-            metar("EFHK 091750Z CAVOK /// Q1009="),
-            metar("METAR EFHK 091720Z 06004KT 6000 BKN006 05/05 Q1009="),
-            metar("METAR EFHK 091650Z 08004KT 7000 SCT004 BKN006 05/05 RMK AO2 SLP135 T01170028 10144 20111 Q1009=")
+          //  metar("METAR EFHK 091850Z 07004KT 040V130 4000 BR BKN005 05/05 Q1009="),
+           // metar("METAR EFHK 091820Z 07003KT 4000 BR BKN005 05/05 Q1009="),
+            //metar("EFHK 091750Z CAVOK /// Q1009="),
+            //metar("METAR EFHK 091720Z 06004KT 6000 BKN006 05/05 Q1009="),
+            //metar("METAR EFHK 091650Z 08004KT 7000 SCT004 BKN006 05/05 RMK AO2 SLP135 T01170028 10144 AO2 SLP135 T01170028 10144 20111 Q1009=")
         ],
         tafs: [
             taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30")
         ])
 
     static var previews: some View {
-        VStack {
+        VStack {                              
             ObservationHeaderView(presentation: presentation,
                                   obs: observations.metars[0],
                                   closedAction: { () in print("Closed")})

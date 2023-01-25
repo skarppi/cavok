@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		895B986D2970A27E005E5D7F /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 895B986C2970A27E005E5D7F /* BottomSheet */; };
+		895B987229774600005E5D7F /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B987129774600005E5D7F /* BottomSheetView.swift */; };
+		895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B98742977F878005E5D7F /* BottomSheetConfig.swift */; };
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
 		B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9B012653077300F3E74D /* LinkEditView.swift */; };
 		B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63676DA267AFFFE00A92257 /* MapWrapper.swift */; };
@@ -137,6 +138,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		895B987129774600005E5D7F /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		895B98742977F878005E5D7F /* BottomSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfig.swift; sourceTree = "<group>"; };
 		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
 		B62B9B012653077300F3E74D /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 		B63676DA267AFFFE00A92257 /* MapWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWrapper.swift; sourceTree = "<group>"; };
@@ -221,7 +224,6 @@
 			files = (
 				C09D672F2540CD9800FB3D39 /* RealmSwift in Frameworks */,
 				C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */,
-				895B986D2970A27E005E5D7F /* BottomSheet in Frameworks */,
 				C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
 				C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */,
@@ -246,6 +248,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		895B98732977F862005E5D7F /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				895B987129774600005E5D7F /* BottomSheetView.swift */,
+				895B98742977F878005E5D7F /* BottomSheetConfig.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
 		C09D66232540BCBE00FB3D39 = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +286,7 @@
 		C09D662E2540BCBE00FB3D39 /* CAVOK */ = {
 			isa = PBXGroup;
 			children = (
+				895B98732977F862005E5D7F /* BottomSheet */,
 				C0C8855725A127D800B2F2EA /* colorramp.png */,
 				C09D66A92540CACA00FB3D39 /* Extensions */,
 				C09D668D2540CAB800FB3D39 /* Map */,
@@ -505,7 +517,6 @@
 				C09D67342540CDC000FB3D39 /* SWXMLHash */,
 				C09D673A2540CE2900FB3D39 /* Gzip */,
 				C09D67402540CE5700FB3D39 /* SwiftMessages */,
-				895B986C2970A27E005E5D7F /* BottomSheet */,
 			);
 			productName = CAVOK;
 			productReference = C09D662C2540BCBE00FB3D39 /* CAV-OK.app */;
@@ -584,7 +595,6 @@
 				C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */,
 				C09D67392540CE2900FB3D39 /* XCRemoteSwiftPackageReference "GzipSwift" */,
 				C09D673F2540CE5700FB3D39 /* XCRemoteSwiftPackageReference "SwiftMessages" */,
-				895B986B2970A27D005E5D7F /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = C09D662D2540BCBE00FB3D39 /* Products */;
 			projectDirPath = "";
@@ -690,6 +700,7 @@
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
 				B65329CD26A4BCD800B30A64 /* UIColor+Additions.swift in Sources */,
 				B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */,
+				895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */,
 				B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
@@ -701,6 +712,7 @@
 				B6A829572687CEF100FA5B11 /* LegendView.swift in Sources */,
 				B6972393274E7547000873A3 /* WeatherView.swift in Sources */,
 				C09D66E32540CACA00FB3D39 /* HeatMap.swift in Sources */,
+				895B987229774600005E5D7F /* BottomSheetView.swift in Sources */,
 				C09D66ED2540CACA00FB3D39 /* Tokenizer.swift in Sources */,
 				C09D669B2540CAB800FB3D39 /* TileJSONLayer.swift in Sources */,
 				C09D66EF2540CACA00FB3D39 /* Taf.swift in Sources */,
@@ -1077,14 +1089,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		895B986B2970A27D005E5D7F /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
@@ -1128,11 +1132,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		895B986C2970A27E005E5D7F /* BottomSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 895B986B2970A27D005E5D7F /* XCRemoteSwiftPackageReference "BottomSheet" */;
-			productName = BottomSheet;
-		};
 		C09D67282540CD2300FB3D39 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

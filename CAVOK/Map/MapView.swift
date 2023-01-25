@@ -17,6 +17,8 @@ struct MapView: View {
 
     @ObservedObject var mapApi = MapApi.shared
 
+    @Environment(\.isPreview) var isPreview
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             MapWrapper(mapApi: mapApi)
@@ -28,9 +30,7 @@ struct MapView: View {
                 .ignoresSafeArea()
 
             if showConfigView {
-                ConfigContainerView(onClose: {
-                    showConfigView = false
-                })
+                ConfigContainerView(configuring: $showConfigView)
             } else {
                 WeatherView(showWebView: { show in
                     if show {
@@ -55,6 +55,8 @@ struct MapView: View {
     }
 
     func userLocationChanged(coordinate: MaplyCoordinate?) {
+        guard !isPreview else { return }
+
         mapApi.clearComponents(ofType: UserMarker.self)
 
         if let coordinate = coordinate {
