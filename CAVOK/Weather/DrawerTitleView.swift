@@ -13,7 +13,10 @@ struct DrawerTitleView: View {
 
     var body: some View {
         HStack {
-            Text(title ?? "-").font(.title).bold()
+            Text(title ?? "-")
+                .font(.title)
+                .bold()
+                .fixedSize(horizontal: false, vertical: true)
 
             Spacer()
 

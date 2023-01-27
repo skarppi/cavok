@@ -39,24 +39,30 @@ struct ConfigDrawerView: View {
                 )
             }
 
-            if let error = errorMsg {
-                Text(error)
-                    .foregroundColor(Color(ColorRamp.color(for: .IFR, alpha: 1)))
-            } else {
-                Text("Found \(region.matches) stations")
-                    .foregroundColor(.blue)
-            }
+            AdaptiveStack { isLandscape in
+                if let error = errorMsg {
+                    Text(error)
+                        .foregroundColor(Color(ColorRamp.color(for: .IFR, alpha: 1)))
+                } else {
+                    Text("Found \(region.matches) stations")
+                        .foregroundColor(.blue)
+                }
 
-            Button(action: updatePosition) {
-                HStack(spacing: 10) {
-                    Text("Center Aroud My Location")
-                    Image(systemName: "location")
-                }.padding()
+                if isLandscape {
+                    Spacer()
+                }
+
+                Button(action: updatePosition) {
+                    HStack(spacing: 10) {
+                        Text("Center Aroud My Location")
+                        Image(systemName: "location")
+                    }.padding()
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.accentColor, lineWidth: 1)
+                )
             }
-            .overlay(
-                RoundedRectangle(cornerRadius: 6)
-                    .stroke(Color.accentColor, lineWidth: 1)
-            )
         }
         .phoneOnlyStackNavigationView()
         .padding(.horizontal)

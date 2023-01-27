@@ -23,8 +23,19 @@ extension UIApplication {
 }
 
 extension View {
+}
+
+extension View {
+    static var isPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
+    }
+
+    static var isPhone: Bool {
+        UIDevice.current.userInterfaceIdiom == .phone
+    }
+
     func phoneOnlyStackNavigationView() -> some View {
-        if UIDevice.current.userInterfaceIdiom == .phone {
+        if Self.isPhone {
             return AnyView(self.navigationViewStyle(StackNavigationViewStyle()))
         } else {
             return AnyView(self)

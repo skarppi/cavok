@@ -22,11 +22,11 @@ struct MapView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             MapWrapper(mapApi: mapApi)
-                .onAppear(perform: {
+                .onAppear {
                     mapApi.mapReady.send()
                     locationManager.requestLocation()
                     checkForFirstRun()
-                })
+                }
                 .ignoresSafeArea()
 
             if showConfigView {

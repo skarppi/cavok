@@ -50,7 +50,9 @@ struct ConfigContainerView: View {
         .bottomSheet(
             isPresented: $configuring,
             onDismiss: {
-                endRegionSelection()
+                if configuring {
+                    endRegionSelection()
+                }
             },
             headerContent: {
                 if let loading = loading {
@@ -67,7 +69,8 @@ struct ConfigContainerView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                     .padding(.top)
             }
-        ).presentationDetents([.dynamicHeader, .medium, .large], selection: $selection)
+        )
+        .presentationDetents([.dynamicHeader, .medium, .large], selection: $selection)
     }
 
     private func move(to coord: MaplyCoordinate) {
@@ -125,28 +128,26 @@ struct ConfigContainerView: View {
     private func endRegionSelection() {
         selection = .dynamicHeader
 
-        //bottomSheetPosition = .relative(0.125)
+        mapApi.clearComponents(ofType: StationMarker.self)
+        mapApi.clearComponents(ofType: RegionSelection.self)
 
-        //mapApi.clearComponents(ofType: StationMarker.self)
-        //mapApi.clearComponents(ofType: RegionSelection.self)
-//
-//        _ = Links.save(links)
-//
-//        if region.save() {
-//            Task {
-//                do {
-//                    loading = "Reloading stations"
-//                    _ = try await weatherService.refreshStations()
-//
-//                    loading = "Reloading weather"
-//                    try await weatherService.refreshObservations()
-//                } catch {
-//                    Messages.show(error: error)
-//                }
-//
-//                configuring = false
-//            }
-//        }
+        _ = Links.save(links)
+
+        if region.save() {
+            Task {
+                do {
+                    loading = "Reloading stations"
+                    _ = try await weatherService.refreshStations()
+
+                    loading = "Reloading weather"
+                    try await weatherService.refreshObservations()
+                } catch {
+                    Messages.show(error: error)
+                }
+
+                configuring = false
+            }
+        }
     }
 }
 

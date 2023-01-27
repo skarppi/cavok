@@ -75,13 +75,10 @@ struct AttributedText: View {
     }
 
     var body: some View {
-        (
             Text(data.start)
                 + Text(data.highlighted).foregroundColor(Color(data.color))
                 + Text(data.end)
-        )
         // make it wrap to multiple lines
-        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

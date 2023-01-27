@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		894EA96029842EB0005C986D /* AdaptiveStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894EA95F29842EB0005C986D /* AdaptiveStack.swift */; };
 		895B987229774600005E5D7F /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B987129774600005E5D7F /* BottomSheetView.swift */; };
 		895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B98742977F878005E5D7F /* BottomSheetConfig.swift */; };
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
@@ -138,6 +139,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		894EA95F29842EB0005C986D /* AdaptiveStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveStack.swift; sourceTree = "<group>"; };
 		895B987129774600005E5D7F /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		895B98742977F878005E5D7F /* BottomSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfig.swift; sourceTree = "<group>"; };
 		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 				C09D663A2540BCC100FB3D39 /* LaunchScreen.storyboard */,
 				C09D663D2540BCC100FB3D39 /* Info.plist */,
 				C09D66372540BCC100FB3D39 /* Preview Content */,
+				894EA95F29842EB0005C986D /* AdaptiveStack.swift */,
 			);
 			path = CAVOK;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				B648ECC326660A2D009212F6 /* MapView.swift in Sources */,
 				C0420D47256A5336004B3855 /* WeatherTileFetcher.swift in Sources */,
 				B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */,
+				894EA96029842EB0005C986D /* AdaptiveStack.swift in Sources */,
 				C09D66F02540CACA00FB3D39 /* Observation.swift in Sources */,
 				C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */,
 				C09D66F22540CACA00FB3D39 /* Metar.swift in Sources */,

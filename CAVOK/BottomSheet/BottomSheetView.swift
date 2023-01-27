@@ -61,16 +61,18 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
         view.sheet(isPresented: isPresented, onDismiss: onDismiss) {
             VStack(alignment: .leading) {
                 headerContent
-                    .padding(.vertical)
+                    .padding(.top, 20)
                     .background(GeometryReader { geometry in
                         Color.clear.onAppear {
+                            headerSize = geometry.size.height
+                        }.onChange(of: geometry.size) { _ in
                             headerSize = geometry.size.height
                         }
                     })
 
                 mainContent
             }
-            .padding(.top, 20)
+            .padding(.top)
             .presentationDetents(
                 toDynamic(),
                 selection: Binding(
