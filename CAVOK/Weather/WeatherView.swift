@@ -46,6 +46,8 @@ struct WeatherView: View {
 
     @State private var loadingMessage: String?
 
+    private let haptic = UIImpactFeedbackGenerator(style: .heavy)
+
     var configuringDetent = PassthroughSubject<UISheetPresentationController.Detent.Identifier,Never>()
 
     var body: some View {
@@ -98,9 +100,11 @@ struct WeatherView: View {
                     .environmentObject(timeslots)
             }
             .frame(height: 100, alignment: .top)
-            .background(.white.opacity(0.8))
+            .background(.regularMaterial)
             .refreshable {
                 loadingMessage = "Reloading weather"
+                haptic.impactOccurred()
+
                 do {
                     try await weatherService.refreshObservations()
                     loadingMessage = nil

@@ -73,6 +73,7 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
                 mainContent
             }
             .padding(.top)
+            .background(Material.ultraThinMaterial)
             .presentationDetents(
                 toDynamic(),
                 selection: Binding(
