@@ -19,7 +19,7 @@ import Combine
         selectedIndex = selected
     }
 
-    func update(color: UIColor, at index: Int) {
+    func update(color: Color, at index: Int) {
         slots[index].color = color
     }
 }

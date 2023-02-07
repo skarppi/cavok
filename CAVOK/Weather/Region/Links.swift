@@ -16,9 +16,9 @@ struct Link: Hashable, Identifiable {
 
     func buildURL() -> URL? {
         if url.contains("{lat}") || url.contains("{lon") {
-            if let deg = LastLocation.load()?.deg {
-                let lat = String(deg.y) + (deg.y > 0 ? "N" : "S")
-                let lon = String(deg.x) + (deg.x > 0 ? "E" : "W")
+            if let deg = LastLocation.load() {
+                let lat = String(deg.latitude) + (deg.latitude > 0 ? "N" : "S")
+                let lon = String(deg.longitude) + (deg.longitude > 0 ? "E" : "W")
 
                 return URL(string: url.replace("{lat}", with: lat).replace("{lon}", with: lon))
             } else {
@@ -33,7 +33,7 @@ struct Link: Hashable, Identifiable {
 class Links {
 
     class func load() -> [Link] {
-        if let links = UserDefaults.standard.array(forKey: "links") as? [[String: String]] {
+        if let links = UserDefaults.cavok?.array(forKey: "links") as? [[String: String]] {
             return links.compactMap { link in
                 guard let title = link["title"], let url = link["url"] else {
                     return nil
@@ -45,15 +45,15 @@ class Links {
         }
     }
 
-    class func save(_ links: [Link]) -> Bool {
+    class func save(_ links: [Link]) {
         print("Saving links \(links)")
 
         let serialized = links.map { link in
             return ["title": link.title, "url": link.url, "blockElements": link.blockElements]
         }
 
-        let defaults = UserDefaults.standard
-        defaults.set(serialized, forKey: "links")
-        return defaults.synchronize()
+        let defaults = UserDefaults.cavok
+        defaults?.set(serialized, forKey: "links")
+        defaults?.synchronize()
     }
 }

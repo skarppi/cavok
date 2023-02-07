@@ -11,10 +11,10 @@ import Combine
 
 class WeatherRegion: ObservableObject {
     // bounding box
-    var minLat: Float
-    var maxLat: Float
-    var minLon: Float
-    var maxLon: Float
+    var minLat: Double
+    var maxLat: Double
+    var minLon: Double
+    var maxLon: Double
 
     var matches: Int = 0
 
@@ -30,12 +30,12 @@ class WeatherRegion: ObservableObject {
     }
 
     // center of the circle
-    var center: MaplyCoordinate {
+    var center: CLLocationCoordinate2D {
         get {
             let latitude = minLat + (maxLat - minLat) / 2
             let longitude = minLon + (maxLon - minLon) / 2
 
-            return MaplyCoordinateMakeWithDegrees(longitude, latitude)
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         }
         set {
             let recalculated = WeatherRegion(center: newValue, radius: radius)
@@ -43,31 +43,23 @@ class WeatherRegion: ObservableObject {
         }
     }
 
-    var ll: MaplyCoordinate {
-        return MaplyCoordinateMakeWithDegrees(minLon, minLat)
-    }
-
-    var ur: MaplyCoordinate {
-        return MaplyCoordinateMakeWithDegrees(maxLon, maxLat)
-    }
-
-    init(minLat: Float, maxLat: Float, minLon: Float, maxLon: Float, radius: Int) {
+    init(minLat: Double, maxLat: Double, minLon: Double, maxLon: Double, radius: Int) {
         self.minLat = minLat
         self.maxLat = maxLat
         self.minLon = minLon
         self.maxLon = maxLon
         self.radius = radius
     }
-    init(center: MaplyCoordinate, radius: Int) {
+    init(center: CLLocationCoordinate2D, radius: Int) {
         let top = center.locationAt(kilometers: Float(radius), direction: 0)
         let right = center.locationAt(kilometers: Float(radius), direction: 90)
         let bottom = center.locationAt(kilometers: Float(radius), direction: 180)
         let left = center.locationAt(kilometers: Float(radius), direction: 270)
 
-        self.minLat = bottom.deg.y
-        self.maxLat = top.deg.y
-        self.minLon = left.deg.x
-        self.maxLon = right.deg.x
+        self.minLat = bottom.latitude
+        self.maxLat = top.latitude
+        self.minLon = left.longitude
+        self.maxLon = right.longitude
         self.radius = radius
     }
 
@@ -81,13 +73,11 @@ class WeatherRegion: ObservableObject {
     }
 
     static func isSet() -> Bool {
-        let defaults = UserDefaults.standard
-        return defaults.dictionary(forKey: "coordinates") as? [String: Float] != nil
+        return UserDefaults.cavok?.dictionary(forKey: "coordinates") as? [String: Double] != nil
     }
 
     static func load() -> WeatherRegion {
-        let defaults = UserDefaults.standard
-        if let coordinates = defaults.dictionary(forKey: "coordinates") as? [String: Float] {
+        if let coordinates = UserDefaults.cavok?.dictionary(forKey: "coordinates") as? [String: Double] {
 
             return WeatherRegion(
                 minLat: coordinates["minLat"]!,
@@ -97,25 +87,25 @@ class WeatherRegion: ObservableObject {
                 radius: Int(coordinates["radius"]!)
             )
         } else {
-            return WeatherRegion(center: LastLocation.load() ?? MaplyCoordinateMakeWithDegrees(10, 50),
+            return WeatherRegion(center: LastLocation.load() ?? CLLocationCoordinate2DMake(50, 10),
                                  radius: 100)
         }
     }
 
-    func save() -> Bool {
+    func save() {
         let coordinates = [
             "minLat": minLat,
             "maxLat": maxLat,
             "minLon": minLon,
             "maxLon": maxLon,
-            "radius": Float(radius)
+            "radius": Double(radius)
         ]
 
         print("Saving weather region \(coordinates)")
 
-        let defaults = UserDefaults.standard
-        defaults.set(coordinates, forKey: "coordinates")
-        return defaults.synchronize()
+        let defaults = UserDefaults.cavok
+        defaults?.set(coordinates, forKey: "coordinates")
+        defaults?.synchronize()
     }
 
     func onChange(action: @escaping (WeatherRegion) -> Void) {
@@ -125,18 +115,11 @@ class WeatherRegion: ObservableObject {
     }
 
     func inRange(latitude: Float, longitude: Float) -> Bool {
-        let deg = center.deg
-        let location = CLLocation(latitude: Double(deg.y), longitude: Double(deg.x))
+        let deg = center
+        let location = CLLocation(latitude: deg.latitude, longitude: deg.longitude)
         let target = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
 
         let distance = location.distance(from: target)
         return Int(distance) <= radius * 1000
-    }
-
-    func bbox(padding kilometers: Float, offsetY: Float = 0) -> MaplyBoundingBox {
-        let llPadded = ll.locationAt(kilometers: kilometers, direction: 225)
-        let urPadded = ur.locationAt(kilometers: kilometers, direction: 45)
-
-        return MaplyBoundingBox(ll: llPadded, ur: urPadded)
     }
 }

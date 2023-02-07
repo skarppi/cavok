@@ -42,7 +42,7 @@ struct ConfigDrawerView: View {
             AdaptiveStack { isLandscape in
                 if let error = errorMsg {
                     Text(error)
-                        .foregroundColor(Color(ColorRamp.color(for: .IFR, alpha: 1)))
+                        .foregroundColor(ColorRamp.color(for: .IFR, alpha: 1))
                 } else {
                     Text("Found \(region.matches) stations")
                         .foregroundColor(.blue)
@@ -74,6 +74,6 @@ struct ConfigDrawerView_Previews: PreviewProvider {
     static var previews: some View {
         ConfigDrawerView(
             closedAction: { print("Closed") }
-        ).environmentObject(WeatherRegion(center: MaplyCoordinate(), radius: 500))
+        ).environmentObject(WeatherRegion(center: CLLocationCoordinate2DMake(60, 20), radius: 500))
     }
 }

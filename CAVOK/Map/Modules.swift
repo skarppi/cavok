@@ -23,7 +23,7 @@ class Modules {
     static var available = load()
 
     private class func load() -> [Module] {
-        if let modules = UserDefaults.standard.array(forKey: "modules") as? [[String: AnyObject]] {
+        if let modules = UserDefaults.cavok?.array(forKey: "modules") as? [[String: AnyObject]] {
             return modules.compactMap { module in
                 if let key = ModuleKey(rawValue: module["key"] as? String ?? ""),
                    let name = module["name"] as? String {

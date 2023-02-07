@@ -11,7 +11,7 @@ import Foundation
 class LastSession {
 
     class func load() -> (center: MaplyCoordinate, height: Float)? {
-        if let lastSession = UserDefaults.standard.dictionary(forKey: "LastSession") as? [String: Float] {
+        if let lastSession = UserDefaults.cavok?.dictionary(forKey: "LastSession") as? [String: Float] {
             if let longitude = lastSession["longitude"],
                let latitude = lastSession["latitude"],
                let height = lastSession["height"] {
@@ -30,8 +30,8 @@ class LastSession {
         ]
         print("Saving location \(lastSession)")
 
-        let defaults = UserDefaults.standard
-        defaults.set(lastSession, forKey: "LastSession")
-        defaults.synchronize()
+        let defaults = UserDefaults.cavok
+        defaults?.set(lastSession, forKey: "LastSession")
+        defaults?.synchronize()
     }
 }

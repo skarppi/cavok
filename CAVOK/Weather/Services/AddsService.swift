@@ -83,28 +83,23 @@ public class AddsService {
         ]
         with.forEach { params[$0] = $1 }
 
-        let host = UserDefaults.standard.string(forKey: "addsURL")!
-        var components = URLComponents(string: host)!
+        let host = UserDefaults.cavok?.string(forKey: "addsURL")
+        var components = URLComponents(string: host!)!
         components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
 
-        return try await execute(url: components.url!, retries: 0)
+        return try await execute(url: components.url!)
     }
 
-    private class func execute(url: URL, retries: Int = 0) async throws -> XMLIndexer {
+    private class func execute(url: URL) async throws -> XMLIndexer {
         print("Fetching ADDS data from \(url)")
 
         let (data, _)  = try await URLSession.shared.data(from: url)
 
         do {
             return try self.parse(data: data.isGzipped ? data.gunzipped() : data)
-        } catch Weather.error(let msg) where msg.contains("Invalid field name(s) found: raw_text") {
-            if retries > 0 {
-                try await Task.sleep(seconds: 1)
-                print("Retrying ADDS query still \(retries - 1) times")
-                return try await execute(url: url, retries: retries - 1)
-            } else {
-                throw Weather.error(msg: "ADDS temporarily unavailable")
-            }
+        } catch Weather.error(let msg) {
+            print(msg)
+            throw Weather.error(msg: "ADDS temporarily unavailable")
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct GridStep {
     var lower: Int32
@@ -50,26 +51,26 @@ class ColorRamp {
         }
     }
 
-    func color(for value: Int32, alpha: CGFloat = 1) -> UIColor {
+    func color(for value: Int32, alpha: CGFloat = 1) -> Color {
         if let step = steps.reversed().first(where: { value >= $0.lower}) {
             // Point-Slope Equation of a Line: y - y1 = m(x - x1)
             let slope = CGFloat(step.toHue - step.fromHue) / CGFloat(step.upper - step.lower)
             let hue = slope * CGFloat(value - step.lower) + CGFloat(step.fromHue)
 
-            return UIColor(hue: hue/360, saturation: 1, brightness: brightness, alpha: alpha)
+            return Color(hue: hue/360, saturation: 1, brightness: brightness, opacity: alpha)
         } else {
-            return UIColor.black
+            return Color.black
         }
     }
 
-    class func color(for date: Date, alpha: CGFloat = 1) -> UIColor {
+    class func color(for date: Date, alpha: CGFloat = 1) -> Color {
         let minutes = Int(-date.timeIntervalSinceNow / 60)
         return ColorRamp.color(forMinutes: minutes, alpha: alpha)
     }
 
-    class func color(forMinutes minutes: Int, alpha: CGFloat = 1) -> UIColor {
+    class func color(forMinutes minutes: Int, alpha: CGFloat = 1) -> Color {
         if minutes < 0 {
-            return UIColor(hue: CGFloat(blue[0])/360, saturation: 1, brightness: brightness, alpha: alpha)
+            return Color(hue: CGFloat(blue[0])/360, saturation: 1, brightness: brightness, opacity: alpha)
         } else if minutes <= 30 {
             return ColorRamp.color(for: .VFR, alpha: alpha)
         } else if minutes <= 90 {
@@ -79,16 +80,16 @@ class ColorRamp {
         }
     }
 
-    class func color(for condition: WeatherConditions, alpha: CGFloat = 1) -> UIColor {
+    class func color(for condition: WeatherConditions, alpha: CGFloat = 1) -> Color {
         switch condition {
         case .VFR:
-            return UIColor(hue: 120/360, saturation: 1, brightness: brightness, alpha: alpha)
+            return Color(hue: 120/360, saturation: 1, brightness: brightness, opacity: alpha)
         case .MVFR:
-            return UIColor(hue: CGFloat(orange[0])/360, saturation: 1, brightness: brightness, alpha: alpha)
+            return Color(hue: CGFloat(orange[0])/360, saturation: 1, brightness: brightness, opacity: alpha)
         case .IFR:
-            return UIColor(hue: 0, saturation: 1, brightness: 0.61, alpha: alpha)
+            return Color(hue: 0, saturation: 1, brightness: 0.61, opacity: alpha)
         default:
-            return UIColor(hue: 0, saturation: 0, brightness: 0.1, alpha: alpha)
+            return Color(hue: 0, saturation: 0, brightness: 0.1, opacity: alpha)
         }
     }
 }

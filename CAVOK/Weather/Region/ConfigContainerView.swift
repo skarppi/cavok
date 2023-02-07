@@ -40,7 +40,7 @@ struct ConfigContainerView: View {
             refresh(region: region)
         })
         .onReceive(locationManager.$lastLocation.first()) { coordinate in
-            if let coord = coordinate {
+            if let coord = coordinate?.maplyCoordinate {
                 move(to: coord)
             }
         }
@@ -75,7 +75,7 @@ struct ConfigContainerView: View {
 
     private func move(to coord: MaplyCoordinate) {
         if let selection = mapApi.findComponent(ofType: RegionSelection.self) as? RegionSelection {
-            selection.region.center = coord
+            selection.region.center = coord.cl
             refresh(region: selection.region)
         }
     }
@@ -100,6 +100,7 @@ struct ConfigContainerView: View {
         )
 
         let center = region.center.locationAt(kilometers: offset.km, direction: offset.dir)
+            .maplyCoordinate
 
         let height = mapApi.mapView.findHeight(toViewBounds: region.bbox(padding: offset.padding), pos: center)
         mapApi.mapView.animate(toPosition: center, height: height, heading: 0, time: 0.5)
@@ -131,22 +132,21 @@ struct ConfigContainerView: View {
         mapApi.clearComponents(ofType: StationMarker.self)
         mapApi.clearComponents(ofType: RegionSelection.self)
 
-        _ = Links.save(links)
+        Links.save(links)
+        region.save()
 
-        if region.save() {
-            Task {
-                do {
-                    loading = "Reloading stations"
-                    _ = try await weatherService.refreshStations()
+        Task {
+            do {
+                loading = "Reloading stations"
+                _ = try await weatherService.refreshStations()
 
-                    loading = "Reloading weather"
-                    try await weatherService.refreshObservations()
-                } catch {
-                    Messages.show(error: error)
-                }
-
-                configuring = false
+                loading = "Reloading weather"
+                try await weatherService.refreshObservations()
+            } catch {
+                Messages.show(error: error)
             }
+
+            configuring = false
         }
     }
 }

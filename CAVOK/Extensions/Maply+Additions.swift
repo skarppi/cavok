@@ -51,6 +51,11 @@ extension MaplyCoordinate {
                                y: self.y * MaplyCoordinate.kRadiansToDegrees)
     }
 
+    var cl: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: Double(self.y * MaplyCoordinate.kRadiansToDegrees),
+                                      longitude: Double(self.x * MaplyCoordinate.kRadiansToDegrees))
+    }
+
     func tile(offsetX: Int32, offsetY: Int32, zoom: Int32) -> MaplyTileID {
         let scale = pow(2.0, Double(zoom))
 
@@ -137,5 +142,28 @@ extension MaplySphericalMercator {
             ll: geo(toLocal: bbox.ll),
             ur: geo(toLocal: bbox.ur)
         )
+    }
+}
+
+extension CLLocationCoordinate2D {
+    var maplyCoordinate: MaplyCoordinate {
+        return MaplyCoordinateMakeWithDegrees(Float(self.longitude), Float(self.latitude))
+    }
+}
+
+extension WeatherRegion {
+    var ll: MaplyCoordinate {
+        return MaplyCoordinateMakeWithDegrees(Float(minLon), Float(minLat))
+    }
+
+    var ur: MaplyCoordinate {
+        return MaplyCoordinateMakeWithDegrees(Float(maxLon), Float(maxLat))
+    }
+
+    func bbox(padding kilometers: Float, offsetY: Float = 0) -> MaplyBoundingBox {
+        let llPadded = ll.locationAt(kilometers: kilometers, direction: 225)
+        let urPadded = ur.locationAt(kilometers: kilometers, direction: 45)
+
+        return MaplyBoundingBox(ll: llPadded, ur: urPadded)
     }
 }

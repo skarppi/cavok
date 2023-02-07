@@ -77,11 +77,11 @@ class HeatMap {
         }
     }
 
-    func color(for coordinate: MaplyCoordinate) -> UIColor {
-        let localCoord = config.coordSystem.geo(toLocal: coordinate)
+    func color(for coordinate: CLLocationCoordinate2D) -> CGColor {
+        let localCoord = config.coordSystem.geo(toLocal: coordinate.maplyCoordinate)
 
         guard config.bounds.inside(localCoord) else {
-            return UIColor.clear
+            return CGColor(gray: 0, alpha: 0)
         }
 
         group.wait()
@@ -100,7 +100,7 @@ class HeatMap {
         let blue = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
         let alpha = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
 
-        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        return CGColor(red: red, green: green, blue: blue, alpha: alpha)
     }
 
     func crop(bounds: MaplyBoundingBox,

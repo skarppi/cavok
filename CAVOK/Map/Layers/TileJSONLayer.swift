@@ -10,7 +10,7 @@ import Foundation
 
 class TileJSONLayer {
 
-    static let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+    static let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appending(path: "tiles")
 
     private static func loadTileInfo(url: String) -> MaplyRemoteTileInfoNew {
         assert(!url.contains("MAPBOX_TOKEN"), "Update CAVOK.plist with your MapBox access key")
@@ -18,7 +18,7 @@ class TileJSONLayer {
         let tileInfo = MaplyRemoteTileInfoNew(baseURL: url,
                                               minZoom: 0,
                                               maxZoom: 22)
-        tileInfo.cacheDir = "\(cacheDir.absoluteString)a\(abs(url.hash))"
+        tileInfo.cacheDir = cacheDir?.appending(path: String(abs(url.hash))).path
 
         return tileInfo
     }

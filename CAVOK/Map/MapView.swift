@@ -54,12 +54,12 @@ struct MapView: View {
         }
     }
 
-    func userLocationChanged(coordinate: MaplyCoordinate?) {
+    func userLocationChanged(coordinate: CLLocationCoordinate2D?) {
         guard !isPreview else { return }
 
         mapApi.clearComponents(ofType: UserMarker.self)
 
-        if let coordinate = coordinate {
+        if let coordinate = coordinate?.maplyCoordinate {
             let userLocation = UserMarker(coordinate: coordinate)
             if let objects = mapApi.mapView.addScreenMarkers([userLocation], desc: nil) {
                 mapApi.addComponents(key: userLocation, value: objects)

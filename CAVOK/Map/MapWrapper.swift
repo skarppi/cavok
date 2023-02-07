@@ -24,7 +24,7 @@ struct MapWrapper: UIViewControllerRepresentable {
 
     func getBaseMapUrl() -> String? {
         let scheme = colorScheme == .dark ? "dark" : "light"
-        return UserDefaults.standard.string(forKey: "basemapURL\(scheme)")
+        return UserDefaults.cavok?.string(forKey: "basemapURL\(scheme)")
     }
 
     func updateUIViewController(_ mapView: WhirlyGlobeViewController, context: Context) {

@@ -6,6 +6,7 @@
 //  Copyright © 2016 Juho Kolehmainen. All rights reserved.
 //
 
+import Foundation
 import SwiftyJSON
 
 enum AwsSource: String {
@@ -28,7 +29,7 @@ public class AwsService {
             )
         } ?? []
 
-        NSLog("Found \(stations.count) AWS stations")
+        print("Found \(stations.count) AWS stations")
         return stations
     }
 
@@ -50,7 +51,7 @@ public class AwsService {
             return nil
         }
 
-        let url = URL(string: UserDefaults.standard.string(forKey: dataSource.rawValue)!)!
+        let url = URL(string: UserDefaults.cavok!.string(forKey: dataSource.rawValue)!)!
 
         print("Fetching AWS data from \(url)")
         let (data, _) = try await URLSession.shared.data(from: url)

@@ -33,7 +33,7 @@ class RegionSelection: MaplyShapeCircle {
     }
 
     func update() {
-        center = region.center
+        center = region.center.maplyCoordinate
         radius = (region.ur.y - region.ll.y ) / 2
     }
 }

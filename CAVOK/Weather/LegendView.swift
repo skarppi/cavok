@@ -44,10 +44,10 @@ struct LegendView: View {
 
             return [
                 Gradient.Stop.init(
-                    color: Color(colors[top]),
+                    color: colors[top],
                     location: location - overlap),
                 Gradient.Stop.init(
-                    color: Color(colors[bottom]),
+                    color: colors[bottom],
                     location: location + overlap)]
         }
 

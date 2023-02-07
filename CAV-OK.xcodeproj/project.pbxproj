@@ -7,7 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		894524DB2991280B007CE96F /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524DA2991280B007CE96F /* AttributedTextView.swift */; };
+		894524DC29913314007CE96F /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66982540CAB800FB3D39 /* Modules.swift */; };
+		894524DE2991435B007CE96F /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D52540CACA00FB3D39 /* WeatherService.swift */; };
+		894524DF299143A8007CE96F /* Metar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C42540CACA00FB3D39 /* Metar.swift */; };
+		894524E229914448007CE96F /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C22540CACA00FB3D39 /* Observation.swift */; };
+		894524E329914458007CE96F /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BE2540CACA00FB3D39 /* Observations.swift */; };
+		894524E42991445C007CE96F /* Taf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C12540CACA00FB3D39 /* Taf.swift */; };
+		894524E529914519007CE96F /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524DA2991280B007CE96F /* AttributedTextView.swift */; };
+		894524E629914538007CE96F /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C02540CACA00FB3D39 /* Station.swift */; };
+		894524E729914544007CE96F /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BF2540CACA00FB3D39 /* Tokenizer.swift */; };
+		894524E829914588007CE96F /* Timeslot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D12540CACA00FB3D39 /* Timeslot.swift */; };
+		894524E929914592007CE96F /* AwsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D62540CACA00FB3D39 /* AwsService.swift */; };
+		894524EA29914596007CE96F /* AddsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D42540CACA00FB3D39 /* AddsService.swift */; };
+		894524EB299145B3007CE96F /* WeatherRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66CD2540CACA00FB3D39 /* WeatherRegion.swift */; };
+		894524EC29915507007CE96F /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AE2540CACA00FB3D39 /* String+Additions.swift */; };
+		894524ED2991551C007CE96F /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C32540CACA00FB3D39 /* Weather.swift */; };
+		894524EF2991558F007CE96F /* Cavok+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524EE2991558F007CE96F /* Cavok+Additions.swift */; };
+		894524F0299157BB007CE96F /* ColorRamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B72540CACA00FB3D39 /* ColorRamp.swift */; };
+		894524F229918A62007CE96F /* CLLocation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524F129918A62007CE96F /* CLLocation+Additions.swift */; };
+		894524F329918A7B007CE96F /* CLLocation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524F129918A62007CE96F /* CLLocation+Additions.swift */; };
+		894524F429918C4B007CE96F /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66942540CAB800FB3D39 /* LastLocation.swift */; };
+		894524F6299198AB007CE96F /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 894524F5299198AB007CE96F /* Gzip */; };
+		894524F8299198B1007CE96F /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = 894524F7299198B1007CE96F /* SWXMLHash */; };
+		894524FA299198B6007CE96F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 894524F9299198B6007CE96F /* SwiftyJSON */; };
+		894524FF2991AC02007CE96F /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524FE2991AC02007CE96F /* FileManager+Additions.swift */; };
+		894525002991AE58007CE96F /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524FE2991AC02007CE96F /* FileManager+Additions.swift */; };
+		894525012991BFF2007CE96F /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09D675A2540DAB100FB3D39 /* CAVOK.plist */; };
+		89452504299290E1007CE96F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89452503299290E1007CE96F /* RealmSwift */; };
+		894525562992D9DF007CE96F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 894525532992984B007CE96F /* RealmSwift */; };
 		894EA96029842EB0005C986D /* AdaptiveStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894EA95F29842EB0005C986D /* AdaptiveStack.swift */; };
+		8958CB9629882022001F4553 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8958CB9529882022001F4553 /* WidgetKit.framework */; };
+		8958CB9829882022001F4553 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8958CB9729882022001F4553 /* SwiftUI.framework */; };
+		8958CB9B29882022001F4553 /* CAV_OK_WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8958CB9A29882022001F4553 /* CAV_OK_WidgetBundle.swift */; };
+		8958CB9D29882022001F4553 /* CAV_OK_WidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8958CB9C29882022001F4553 /* CAV_OK_WidgetLiveActivity.swift */; };
+		8958CB9F29882022001F4553 /* CAV_OK_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8958CB9E29882022001F4553 /* CAV_OK_Widget.swift */; };
+		8958CBA229882023001F4553 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8958CBA129882023001F4553 /* Assets.xcassets */; };
+		8958CBA429882023001F4553 /* CAV_OK_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8958CBA029882022001F4553 /* CAV_OK_Widget.intentdefinition */; };
+		8958CBA529882023001F4553 /* CAV_OK_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8958CBA029882022001F4553 /* CAV_OK_Widget.intentdefinition */; };
+		8958CBA829882023001F4553 /* CAV-OK WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		895B987229774600005E5D7F /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B987129774600005E5D7F /* BottomSheetView.swift */; };
 		895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B98742977F878005E5D7F /* BottomSheetConfig.swift */; };
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
@@ -74,7 +112,6 @@
 		C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */; };
 		C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */; };
 		C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67282540CD2300FB3D39 /* SwiftyJSON */; };
-		C09D672F2540CD9800FB3D39 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C09D672E2540CD9800FB3D39 /* RealmSwift */; };
 		C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67342540CDC000FB3D39 /* SWXMLHash */; };
 		C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = C09D673A2540CE2900FB3D39 /* Gzip */; };
 		C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67402540CE5700FB3D39 /* SwiftMessages */; };
@@ -87,6 +124,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8958CBA629882023001F4553 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C09D66242540BCBE00FB3D39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8958CB9329882022001F4553;
+			remoteInfo = "CAV-OK WidgetExtension";
+		};
 		B65F256E295EBB1C0063897D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */;
@@ -125,6 +169,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		8958CBAC29882023001F4553 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8958CBA829882023001F4553 /* CAV-OK WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C076EC7F2572E54500470190 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -139,7 +194,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		894524DA2991280B007CE96F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
+		894524EE2991558F007CE96F /* Cavok+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cavok+Additions.swift"; sourceTree = "<group>"; };
+		894524F129918A62007CE96F /* CLLocation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Additions.swift"; sourceTree = "<group>"; };
+		894524FB2991AAE9007CE96F /* CAV-OK WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CAV-OK WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		894524FE2991AC02007CE96F /* FileManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Additions.swift"; sourceTree = "<group>"; };
 		894EA95F29842EB0005C986D /* AdaptiveStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveStack.swift; sourceTree = "<group>"; };
+		8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CAV-OK WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8958CB9529882022001F4553 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		8958CB9729882022001F4553 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		8958CB9A29882022001F4553 /* CAV_OK_WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAV_OK_WidgetBundle.swift; sourceTree = "<group>"; };
+		8958CB9C29882022001F4553 /* CAV_OK_WidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAV_OK_WidgetLiveActivity.swift; sourceTree = "<group>"; };
+		8958CB9E29882022001F4553 /* CAV_OK_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAV_OK_Widget.swift; sourceTree = "<group>"; };
+		8958CBA029882022001F4553 /* CAV_OK_Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = CAV_OK_Widget.intentdefinition; sourceTree = "<group>"; };
+		8958CBA129882023001F4553 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8958CBA329882023001F4553 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		895B987129774600005E5D7F /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		895B98742977F878005E5D7F /* BottomSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfig.swift; sourceTree = "<group>"; };
 		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
@@ -220,11 +289,24 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8958CB9129882022001F4553 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				894525562992D9DF007CE96F /* RealmSwift in Frameworks */,
+				894524FA299198B6007CE96F /* SwiftyJSON in Frameworks */,
+				8958CB9829882022001F4553 /* SwiftUI.framework in Frameworks */,
+				894524F8299198B1007CE96F /* SWXMLHash in Frameworks */,
+				894524F6299198AB007CE96F /* Gzip in Frameworks */,
+				8958CB9629882022001F4553 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C09D66292540BCBE00FB3D39 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C09D672F2540CD9800FB3D39 /* RealmSwift in Frameworks */,
+				89452504299290E1007CE96F /* RealmSwift in Frameworks */,
 				C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */,
 				C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
@@ -250,6 +332,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8958CB9929882022001F4553 /* CAV-OK Widget */ = {
+			isa = PBXGroup;
+			children = (
+				8958CB9A29882022001F4553 /* CAV_OK_WidgetBundle.swift */,
+				8958CB9C29882022001F4553 /* CAV_OK_WidgetLiveActivity.swift */,
+				8958CB9E29882022001F4553 /* CAV_OK_Widget.swift */,
+				8958CBA029882022001F4553 /* CAV_OK_Widget.intentdefinition */,
+				8958CBA129882023001F4553 /* Assets.xcassets */,
+				8958CBA329882023001F4553 /* Info.plist */,
+			);
+			path = "CAV-OK Widget";
+			sourceTree = "<group>";
+		};
 		895B98732977F862005E5D7F /* BottomSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +357,7 @@
 		C09D66232540BCBE00FB3D39 = {
 			isa = PBXGroup;
 			children = (
+				894524FB2991AAE9007CE96F /* CAV-OK WidgetExtension.entitlements */,
 				B6D0494726484C65000DF0A8 /* .swiftlint.yml */,
 				C09D675A2540DAB100FB3D39 /* CAVOK.plist */,
 				C09D67592540DAB100FB3D39 /* CAVOK.template.plist */,
@@ -270,6 +366,7 @@
 				C09D662E2540BCBE00FB3D39 /* CAVOK */,
 				C09D66452540BCC200FB3D39 /* CAVOKTests */,
 				C09D66502540BCC200FB3D39 /* CAVOKUITests */,
+				8958CB9929882022001F4553 /* CAV-OK Widget */,
 				C09D662D2540BCBE00FB3D39 /* Products */,
 				C09D666B2540BF3600FB3D39 /* Frameworks */,
 			);
@@ -281,6 +378,7 @@
 				C09D662C2540BCBE00FB3D39 /* CAV-OK.app */,
 				C09D66422540BCC200FB3D39 /* CAV-OKTests.xctest */,
 				C09D664D2540BCC200FB3D39 /* CAV-OKUITests.xctest */,
+				8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -334,6 +432,8 @@
 			isa = PBXGroup;
 			children = (
 				C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */,
+				8958CB9529882022001F4553 /* WidgetKit.framework */,
+				8958CB9729882022001F4553 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -398,6 +498,9 @@
 				C09D66AE2540CACA00FB3D39 /* String+Additions.swift */,
 				B65329CC26A4BCD800B30A64 /* UIColor+Additions.swift */,
 				B6A7424027569AEA00CBAA55 /* Collection+Additions.swift */,
+				894524EE2991558F007CE96F /* Cavok+Additions.swift */,
+				894524F129918A62007CE96F /* CLLocation+Additions.swift */,
+				894524FE2991AC02007CE96F /* FileManager+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -492,6 +595,7 @@
 				C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */,
 				C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */,
 				C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */,
+				894524DA2991280B007CE96F /* AttributedTextView.swift */,
 			);
 			path = Observation;
 			sourceTree = "<group>";
@@ -499,6 +603,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8958CB9329882022001F4553 /* CAV-OK WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8958CBA929882023001F4553 /* Build configuration list for PBXNativeTarget "CAV-OK WidgetExtension" */;
+			buildPhases = (
+				8958CB9029882022001F4553 /* Sources */,
+				8958CB9129882022001F4553 /* Frameworks */,
+				8958CB9229882022001F4553 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CAV-OK WidgetExtension";
+			packageProductDependencies = (
+				894524F5299198AB007CE96F /* Gzip */,
+				894524F7299198B1007CE96F /* SWXMLHash */,
+				894524F9299198B6007CE96F /* SwiftyJSON */,
+				894525532992984B007CE96F /* RealmSwift */,
+			);
+			productName = "CAV-OK WidgetExtension";
+			productReference = 8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C09D662B2540BCBE00FB3D39 /* CAV-OK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C09D66562540BCC200FB3D39 /* Build configuration list for PBXNativeTarget "CAV-OK" */;
@@ -508,18 +635,20 @@
 				C09D662A2540BCBE00FB3D39 /* Resources */,
 				C076EC7F2572E54500470190 /* Embed Frameworks */,
 				B6D0494226482FC0000DF0A8 /* ShellScript */,
+				8958CBAC29882023001F4553 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8958CBA729882023001F4553 /* PBXTargetDependency */,
 			);
 			name = "CAV-OK";
 			packageProductDependencies = (
 				C09D67282540CD2300FB3D39 /* SwiftyJSON */,
-				C09D672E2540CD9800FB3D39 /* RealmSwift */,
 				C09D67342540CDC000FB3D39 /* SWXMLHash */,
 				C09D673A2540CE2900FB3D39 /* Gzip */,
 				C09D67402540CE5700FB3D39 /* SwiftMessages */,
+				89452503299290E1007CE96F /* RealmSwift */,
 			);
 			productName = CAVOK;
 			productReference = C09D662C2540BCBE00FB3D39 /* CAV-OK.app */;
@@ -567,9 +696,12 @@
 		C09D66242540BCBE00FB3D39 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					8958CB9329882022001F4553 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					C09D662B2540BCBE00FB3D39 = {
 						CreatedOnToolsVersion = 12.0.1;
 					};
@@ -594,10 +726,10 @@
 			mainGroup = C09D66232540BCBE00FB3D39;
 			packageReferences = (
 				C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				C09D672D2540CD9800FB3D39 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */,
 				C09D67392540CE2900FB3D39 /* XCRemoteSwiftPackageReference "GzipSwift" */,
 				C09D673F2540CE5700FB3D39 /* XCRemoteSwiftPackageReference "SwiftMessages" */,
+				89452502299290E1007CE96F /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = C09D662D2540BCBE00FB3D39 /* Products */;
 			projectDirPath = "";
@@ -612,6 +744,7 @@
 				C09D662B2540BCBE00FB3D39 /* CAV-OK */,
 				C09D66412540BCC200FB3D39 /* CAV-OKTests */,
 				C09D664C2540BCC200FB3D39 /* CAV-OKUITests */,
+				8958CB9329882022001F4553 /* CAV-OK WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -641,6 +774,15 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8958CB9229882022001F4553 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8958CBA229882023001F4553 /* Assets.xcassets in Resources */,
+				894525012991BFF2007CE96F /* CAVOK.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C09D662A2540BCBE00FB3D39 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -693,6 +835,36 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8958CB9029882022001F4553 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8958CB9B29882022001F4553 /* CAV_OK_WidgetBundle.swift in Sources */,
+				894524E529914519007CE96F /* AttributedTextView.swift in Sources */,
+				894524E829914588007CE96F /* Timeslot.swift in Sources */,
+				894524DC29913314007CE96F /* Modules.swift in Sources */,
+				8958CBA429882023001F4553 /* CAV_OK_Widget.intentdefinition in Sources */,
+				894524F329918A7B007CE96F /* CLLocation+Additions.swift in Sources */,
+				894524F0299157BB007CE96F /* ColorRamp.swift in Sources */,
+				894525002991AE58007CE96F /* FileManager+Additions.swift in Sources */,
+				894524E229914448007CE96F /* Observation.swift in Sources */,
+				894524E929914592007CE96F /* AwsService.swift in Sources */,
+				894524EB299145B3007CE96F /* WeatherRegion.swift in Sources */,
+				8958CB9F29882022001F4553 /* CAV_OK_Widget.swift in Sources */,
+				8958CB9D29882022001F4553 /* CAV_OK_WidgetLiveActivity.swift in Sources */,
+				894524EA29914596007CE96F /* AddsService.swift in Sources */,
+				894524DE2991435B007CE96F /* WeatherService.swift in Sources */,
+				894524E42991445C007CE96F /* Taf.swift in Sources */,
+				894524DF299143A8007CE96F /* Metar.swift in Sources */,
+				894524EC29915507007CE96F /* String+Additions.swift in Sources */,
+				894524ED2991551C007CE96F /* Weather.swift in Sources */,
+				894524E729914544007CE96F /* Tokenizer.swift in Sources */,
+				894524E629914538007CE96F /* Station.swift in Sources */,
+				894524F429918C4B007CE96F /* LastLocation.swift in Sources */,
+				894524E329914458007CE96F /* Observations.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C09D66282540BCBE00FB3D39 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -701,9 +873,12 @@
 				B648ECC52666BD38009212F6 /* CavokApp.swift in Sources */,
 				B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */,
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
+				894524EF2991558F007CE96F /* Cavok+Additions.swift in Sources */,
 				B65329CD26A4BCD800B30A64 /* UIColor+Additions.swift in Sources */,
 				B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */,
+				894524F229918A62007CE96F /* CLLocation+Additions.swift in Sources */,
 				895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */,
+				894524DB2991280B007CE96F /* AttributedTextView.swift in Sources */,
 				B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */,
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
@@ -749,8 +924,10 @@
 				B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */,
 				894EA96029842EB0005C986D /* AdaptiveStack.swift in Sources */,
 				C09D66F02540CACA00FB3D39 /* Observation.swift in Sources */,
+				8958CBA529882023001F4553 /* CAV_OK_Widget.intentdefinition in Sources */,
 				C09D66EA2540CACA00FB3D39 /* HeatMapGPU.swift in Sources */,
 				C09D66F22540CACA00FB3D39 /* Metar.swift in Sources */,
+				894524FF2991AC02007CE96F /* FileManager+Additions.swift in Sources */,
 				C09D67012540CACA00FB3D39 /* AwsService.swift in Sources */,
 				C09D66E52540CACA00FB3D39 /* HeatMapCPU.swift in Sources */,
 				C09D66FD2540CACA00FB3D39 /* Timeslot.swift in Sources */,
@@ -779,6 +956,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8958CBA729882023001F4553 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8958CB9329882022001F4553 /* CAV-OK WidgetExtension */;
+			targetProxy = 8958CBA629882023001F4553 /* PBXContainerItemProxy */;
+		};
 		C09D66442540BCC200FB3D39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C09D662B2540BCBE00FB3D39 /* CAV-OK */;
@@ -803,6 +985,66 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8958CBAA29882023001F4553 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK WidgetExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WE3J68227;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CAV-OK Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "CAV-OK Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.tusina.CAVOK.CAV-OK-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8958CBAB29882023001F4553 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK WidgetExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WE3J68227;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CAV-OK Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "CAV-OK Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.tusina.CAVOK.CAV-OK-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C09D66542540BCC200FB3D39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -922,8 +1164,10 @@
 		C09D66572540BCC200FB3D39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CAVOK/Preview Content\"";
 				DEVELOPMENT_TEAM = 3WE3J68227;
@@ -946,8 +1190,10 @@
 		C09D66582540BCC200FB3D39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CAVOK/Preview Content\"";
 				DEVELOPMENT_TEAM = 3WE3J68227;
@@ -1054,6 +1300,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8958CBA929882023001F4553 /* Build configuration list for PBXNativeTarget "CAV-OK WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8958CBAA29882023001F4553 /* Debug */,
+				8958CBAB29882023001F4553 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C09D66272540BCBE00FB3D39 /* Build configuration list for PBXProject "CAV-OK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1093,20 +1348,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		89452502299290E1007CE96F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
-			};
-		};
-		C09D672D2540CD9800FB3D39 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-cocoa";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
 			};
 		};
 		C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */ = {
@@ -1136,15 +1391,35 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C09D67282540CD2300FB3D39 /* SwiftyJSON */ = {
+		894524F5299198AB007CE96F /* Gzip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C09D67392540CE2900FB3D39 /* XCRemoteSwiftPackageReference "GzipSwift" */;
+			productName = Gzip;
+		};
+		894524F7299198B1007CE96F /* SWXMLHash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */;
+			productName = SWXMLHash;
+		};
+		894524F9299198B6007CE96F /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		C09D672E2540CD9800FB3D39 /* RealmSwift */ = {
+		89452503299290E1007CE96F /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C09D672D2540CD9800FB3D39 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 89452502299290E1007CE96F /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		894525532992984B007CE96F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 89452502299290E1007CE96F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		C09D67282540CD2300FB3D39 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
 		};
 		C09D67342540CDC000FB3D39 /* SWXMLHash */ = {
 			isa = XCSwiftPackageProductDependency;

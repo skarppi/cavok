@@ -28,8 +28,8 @@ class ObservationMarker: MaplyScreenMarker {
             if condition == .NA {
                 context.setLineDash(phase: 0, lengths: [5])
                 context.setFillColor(UIColor.black.withAlphaComponent(0).cgColor)
-            } else {
-                context.setFillColor(ColorRamp.color(for: condition, alpha: 0.8).cgColor)
+            } else if let color = ColorRamp.color(for: condition, alpha: 0.8).cgColor {
+                context.setFillColor(color)
             }
             context.setStrokeColor(UIColor.black.cgColor)
             context.addEllipse(in: CGRect(x: 1, y: 1, width: size - 2, height: size - 2))

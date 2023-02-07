@@ -10,21 +10,21 @@
       }
     },
     {
-      "identity" : "realm-cocoa",
+      "identity" : "realm-core",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-cocoa",
+      "location" : "https://github.com/realm/realm-core.git",
       "state" : {
-        "revision" : "328425bfc372ce77ec1f4f2701f61ececbb97d84",
-        "version" : "10.19.0"
+        "revision" : "b77443ca7fa25407869ca537bf3ae912b1427bff",
+        "version" : "12.13.0"
       }
     },
     {
-      "identity" : "realm-core",
+      "identity" : "realm-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-core",
+      "location" : "https://github.com/realm/realm-swift",
       "state" : {
-        "revision" : "b170db6a47789ff5f2fbc3eeed0220b4b0a3f6b7",
-        "version" : "11.6.0"
+        "revision" : "b1072f3ef733108dfcc62c2001781e5d65605fbf",
+        "version" : "10.34.1"
       }
     },
     {

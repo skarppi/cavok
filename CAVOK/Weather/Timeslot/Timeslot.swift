@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public struct Timeslot {
     let date: Date
@@ -15,7 +16,7 @@ public struct Timeslot {
 
     let observations: [Observation]
 
-    var color: UIColor = UIColor.clear
+    var color: Color = Color.clear
 
     init(tafs: [Taf]) {
         self.date = Date.distantFuture

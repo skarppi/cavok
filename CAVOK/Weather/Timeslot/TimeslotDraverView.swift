@@ -65,9 +65,10 @@ struct TimeslotDrawerView: View {
                     .frame(maxWidth: .infinity)
                     .padding(EdgeInsets(top: 10, leading: 3, bottom: 10, trailing: 3))
                     .background(
-                        Rectangle()
-                            .fill(Color(slot.color)
-                                    .opacity(colorScheme == .dark ? 0.9 : 0.4))
+                        Rectangle().fill(
+                            slot.color
+                                .opacity(colorScheme == .dark ? 0.9 : 0.4)
+                        )
                     )
                     .border(state.selectedIndex == index
                             ? (colorScheme == .dark ? Color.white : Color.black)
@@ -92,7 +93,7 @@ struct TimeslotDrawerView: View {
     }
 
     private func status(slot: Timeslot) -> String {
-        let timestamps = slot.observations.map({ $0.datetime })
+        let timestamps = Set(slot.observations.map({ $0.datetime }))
 
         guard let oldest = timestamps.min() else { return "-" }
         guard let latest = timestamps.max() else { return "-" }
@@ -132,7 +133,7 @@ struct TimeslotDrawerView: View {
         let status = status(slot: slot)
 
         self.status = "\(status) ago"
-        self.statusColor = Color(ColorRamp.color(for: slot.date))
+        self.statusColor = ColorRamp.color(for: slot.date)
 
     }
 
@@ -147,8 +148,8 @@ struct TimeslotDraverView_Previews: PreviewProvider {
             Timeslot(date: Date().addMinutes(30), observations: [])
         ]
 
-        state.slots[0].color = UIColor.red
-        state.slots[1].color = UIColor.blue
+        state.slots[0].color = Color.red
+        state.slots[1].color = Color.blue
 
         state.selectedIndex = 0
 

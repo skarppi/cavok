@@ -48,7 +48,16 @@ struct WeatherView: View {
 
     private let haptic = UIImpactFeedbackGenerator(style: .heavy)
 
-    var configuringDetent = PassthroughSubject<UISheetPresentationController.Detent.Identifier,Never>()
+    func observations() -> Observations? {
+        if let observation = selectedObservation {
+            do {
+                return try weatherService.observations(for: observation.station?.identifier ?? "")
+            } catch {
+                Messages.show(error: error)
+            }
+        }
+        return nil
+    }
 
     var body: some View {
         VStack(alignment: .trailing) {
@@ -128,10 +137,10 @@ struct WeatherView: View {
                 }
             },
             mainContent: {
-                if let observation = selectedObservation, let weatherLayer = weatherLayer {
-                    let all = weatherService.observations(for: observation.station?.identifier ?? "")
+
+                if let weatherLayer = weatherLayer, let observations = observations() {
                     ObservationDetailsView(presentation: weatherLayer.presentation,
-                                           observations: all)
+                                           observations: observations)
                 }
             }
         ).presentationDetents(
@@ -176,20 +185,24 @@ struct WeatherView: View {
     private func load() {
         Messages.hide()
 
-        let observations = weatherService.observations()
+        do {
+            let observations = try weatherService.observations()
 
-        let groups = observations.group()
+            let groups = observations.group()
 
-        if let frame = groups.selectedFrame {
-            timeslots.reset(slots: groups.timeslots, selected: frame)
+            if let frame = groups.selectedFrame {
+                timeslots.reset(slots: groups.timeslots, selected: frame)
 
-            weatherLayer?.load(groups: groups, at: LastLocation.load()) { index, color in
-                self.timeslots.update(color: color, at: index)
+                weatherLayer?.load(groups: groups, at: LastLocation.load()) { index, color in
+                    self.timeslots.update(color: color, at: index)
 
-                if index == frame {
-                    self.render(frame: frame)
+                    if index == frame {
+                        self.render(frame: frame)
+                    }
                 }
             }
+        } catch {
+            Messages.show(error: error)
         }
     }
 

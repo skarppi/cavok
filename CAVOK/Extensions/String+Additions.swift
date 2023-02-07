@@ -102,7 +102,7 @@ extension NSMutableAttributedString {
                 self.addAttribute(NSAttributedString.Key(rawValue: name), value: value, range: match.range)
             }
         } catch {
-            NSLog("Error creating regular expresion: \(error)")
+            print("Error creating regular expresion: \(error)")
         }
     }
 }

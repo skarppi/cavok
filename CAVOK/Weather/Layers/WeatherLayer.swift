@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class WeatherLayer {
 
@@ -33,7 +34,7 @@ class WeatherLayer {
         clean()
     }
 
-    func load(groups: ObservationGroups, at coordinate: MaplyCoordinate?, loaded: @MainActor @escaping (Int, UIColor) -> Void) {
+    func load(groups: ObservationGroups, at coordinate: CLLocationCoordinate2D?, loaded: @MainActor @escaping (Int, Color) -> Void) {
         guard let selected = groups.selectedFrame else {
             return
         }
@@ -51,7 +52,7 @@ class WeatherLayer {
             Task(priority: selected ? .userInitiated : .low) {
                 frame.process()
                 if let coordinate = coordinate {
-                    await loaded(frame.index, frame.color(for: coordinate))
+                    await loaded(frame.index, Color(frame.color(for: coordinate)))
                 }
             }
         }

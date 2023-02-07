@@ -17,7 +17,7 @@ struct CavokApp: SwiftUI.App {
 
         if let url = Bundle.main.url(forResource: "CAVOK", withExtension: "plist"),
            let plist = NSDictionary(contentsOf: url) as? [String: Any] {
-            UserDefaults.standard.register(defaults: plist)
+            UserDefaults.cavok?.register(defaults: plist)
         }
 
         initRealms()
@@ -32,7 +32,7 @@ struct CavokApp: SwiftUI.App {
             switch newScenePhase {
             case .background:
                 print("Writing settings to disk -> background")
-                UserDefaults.standard.synchronize()
+                UserDefaults.cavok?.synchronize()
             case .inactive :
                 print("App State: inactive")
             case .active :
@@ -46,9 +46,11 @@ struct CavokApp: SwiftUI.App {
 
 func initRealms() {
     let config = Realm.Configuration(
+        fileURL: FileManager.default.cavokAppGroup()?.appending(path: "default.realm"),
+
         // Set the new schema version. This must be greater than the previously used
         // version (if you've never set a schema version before, the version is 0).
-        schemaVersion: 1,
+        schemaVersion: 0,
 
         // Set the block which will be called automatically when opening a Realm with
         // a schema version lower than the one set above

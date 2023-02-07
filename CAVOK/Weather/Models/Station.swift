@@ -40,8 +40,4 @@ public class Station: Object {
         self.hasMetar = hasMetar
         self.hasTaf = hasTaf
     }
-
-    func coordinate() -> MaplyCoordinate {
-        return MaplyCoordinateMakeWithDegrees(self.longitude, self.latitude)
-    }
 }

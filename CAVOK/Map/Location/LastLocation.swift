@@ -6,28 +6,28 @@
 //  Copyright © 2016 Juho Kolehmainen. All rights reserved.
 //
 
-import Foundation
+import CoreLocation
 
 class LastLocation {
 
-    class func load() -> MaplyCoordinate? {
-        if let location = UserDefaults.standard.dictionary(forKey: "LastLocation") {
-            if let longitude = location["longitude"] as? Float,
-               let latitude = location["latitude"] as? Float {
-                return MaplyCoordinateMakeWithDegrees(longitude, latitude)
+    class func load() -> CLLocationCoordinate2D? {
+        if let location = UserDefaults.cavok?.dictionary(forKey: "LastLocation") {
+            if let longitude = location["longitude"] as? Double,
+               let latitude = location["latitude"] as? Double {
+                return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             }
         }
         return nil
     }
 
-    class func save(location: MaplyCoordinate) {
+    class func save(location: CLLocationCoordinate2D) {
         let lastLocation: [String: Any] = [
-            "longitude": location.deg.x,
-            "latitude": location.deg.y,
+            "longitude": location.longitude,
+            "latitude": location.latitude,
             "date": Date()
         ]
-        let defaults = UserDefaults.standard
-        defaults.set(lastLocation, forKey: "LastLocation")
-        defaults.synchronize()
+        let defaults = UserDefaults.cavok
+        defaults?.set(lastLocation, forKey: "LastLocation")
+        defaults?.synchronize()
     }
 }

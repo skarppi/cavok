@@ -18,7 +18,7 @@ struct ObservationHeaderView: View {
         VStack(alignment: .leading) {
             DrawerTitleView(title: self.obs.station?.name, action: closedAction)
 
-            AttributedText(obs: obs, presentation: presentation)
+            AttributedTextView(obs: obs, presentation: presentation)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top)
         }.padding(.horizontal)
@@ -58,27 +58,11 @@ struct ObservationList: View {
                     .padding(.vertical)
 
                 ForEach(observations.reversed(), id: \.self) { metar in
-                    AttributedText(obs: metar, presentation: self.presentation)
+                    AttributedTextView(obs: metar, presentation: self.presentation)
                         .padding(.bottom, 5)
                 }
             }
         }.frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-struct AttributedText: View {
-    var obs: Observation
-    var presentation: ObservationPresentation
-
-    var data: ObservationPresentationData {
-        presentation.split(observation: obs)
-    }
-
-    var body: some View {
-            Text(data.start)
-                + Text(data.highlighted).foregroundColor(Color(data.color))
-                + Text(data.end)
-        // make it wrap to multiple lines
     }
 }
 

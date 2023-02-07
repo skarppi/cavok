@@ -6,7 +6,7 @@
 //  Copyright © 2016 Juho Kolehmainen. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import RealmSwift
 import CoreLocation
 
@@ -44,21 +44,6 @@ struct ObservationPresentation {
         }
     }
 
-    func highlight(observation: Observation) -> NSAttributedString {
-        let attributed = NSMutableAttributedString(string: observation.raw)
-
-        let mapped = self.mapper(observation)
-        if let value = mapped.value, let source = mapped.source {
-            let color = self.ramp.color(for: Int32(value))
-            attributed.addAttribute(NSAttributedString.Key.foregroundColor.rawValue, value: color, pattern: source)
-        }
-        attributed.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.systemFont(ofSize: UIFont.systemFontSize),
-            range: NSRange(location: 0, length: attributed.length))
-        return attributed
-    }
-
     func split(observation: Observation) -> ObservationPresentationData {
         let str = observation.raw
         let mapped = self.mapper(observation)
@@ -82,7 +67,7 @@ struct ObservationPresentationData {
     var start: String
     var highlighted: String = ""
     var end: String = ""
-    var color: UIColor = UIColor.systemBackground
+    var color: Color = Color.black
 }
 
 open class Observation: Object, Identifiable {

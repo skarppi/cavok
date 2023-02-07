@@ -15,7 +15,7 @@ class LocationManager: NSObject, ObservableObject {
 
     let manager = CLLocationManager()
 
-    @Published var lastLocation: MaplyCoordinate?
+    @Published var lastLocation: CLLocationCoordinate2D?
 
     override private init() {
         super.init()
@@ -56,9 +56,7 @@ extension LocationManager: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            lastLocation = MaplyCoordinateMakeWithDegrees(
-                Float(location.coordinate.longitude),
-                Float(location.coordinate.latitude))
+            lastLocation = location.coordinate
             print("Got location with accuracy \(location.horizontalAccuracy) to \(location.coordinate)")
 
             LastLocation.save(location: lastLocation!)

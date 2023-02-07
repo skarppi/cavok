@@ -88,38 +88,28 @@ public class WeatherServer {
 
     // MARK: - Query cached data
 
-    func getStationCount() -> Int {
-        do {
-            let realm = try Realm()
-            return realm.objects(Station.self).count
-        } catch let error {
-            Messages.show(error: error)
-            return 0
-        }
+    func getStationCount() throws -> Int {
+        let realm = try Realm()
+        return realm.objects(Station.self).count
     }
 
-    private func fetch<Element: Observation>(type: Element.Type, sortKey: String, filter: String?) -> [Element] {
-        do {
-            let realm = try Realm()
+    private func fetch<Element: Observation>(type: Element.Type, sortKey: String, filter: String?) throws -> [Element] {
+        let realm = try Realm()
 
-            let objects = realm.objects(type)
+        let objects = realm.objects(type)
 
-            let filtered: Results<Element>
-            if let filter = filter {
-                filtered = objects.filter("identifier == '\(filter)'")
-            } else {
-                filtered = objects
-            }
-
-            return Array(filtered.sorted(byKeyPath: sortKey))
-        } catch let error {
-            Messages.show(error: error)
-            return Array()
+        let filtered: Results<Element>
+        if let filter = filter {
+            filtered = objects.filter("identifier == '\(filter)'")
+        } else {
+            filtered = objects
         }
+
+        return Array(filtered.sorted(byKeyPath: sortKey))
     }
 
-    func observations(for identifier: String? = nil) -> Observations {
-        return Observations(metars: fetch(type: Metar.self, sortKey: "datetime", filter: identifier),
-                            tafs: fetch(type: Taf.self, sortKey: "from", filter: identifier))
+    func observations(for identifier: String? = nil) throws -> Observations {
+        return Observations(metars: try fetch(type: Metar.self, sortKey: "datetime", filter: identifier),
+                            tafs: try fetch(type: Taf.self, sortKey: "from", filter: identifier))
     }
 }
