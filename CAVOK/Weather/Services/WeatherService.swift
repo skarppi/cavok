@@ -105,7 +105,10 @@ public class WeatherServer {
             filtered = objects
         }
 
-        return Array(filtered.sorted(byKeyPath: sortKey))
+        return Array(
+            filtered.sorted(byKeyPath: sortKey)
+                .map { $0.freeze() }
+        )
     }
 
     func observations(for identifier: String? = nil) throws -> Observations {
