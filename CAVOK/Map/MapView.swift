@@ -46,7 +46,7 @@ struct MapView: View {
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             LastSession.save(
                 center: mapApi.mapView.getPosition(),
-                height: mapApi.mapView.getHeight())
+                height: mapApi.mapView.height)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             locationManager.requestLocation()
         }.sheet(isPresented: $showWebView) {

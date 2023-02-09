@@ -7,31 +7,28 @@
 //
 
 import Foundation
+import CoreLocation
 
-class LastSession {
+struct LastSession: Codable {
 
-    class func load() -> (center: MaplyCoordinate, height: Float)? {
-        if let lastSession = UserDefaults.cavok?.dictionary(forKey: "LastSession") as? [String: Float] {
-            if let longitude = lastSession["longitude"],
-               let latitude = lastSession["latitude"],
-               let height = lastSession["height"] {
-                // print("Restoring location \(lastSession)")
-                return (MaplyCoordinateMakeWithDegrees(longitude, latitude), height)
-            }
-        }
-        return nil
+    let latitude: Float
+    let longitude: Float
+    let height: Float
+
+    var coordinate: MaplyCoordinate {
+        return MaplyCoordinateMakeWithDegrees(longitude, latitude)
     }
 
-    class func save(center: MaplyCoordinate, height: Double) {
-        let lastSession: [String: Any] = [
-            "longitude": center.deg.x,
-            "latitude": center.deg.y,
-            "height": height
-        ]
-        print("Saving location \(lastSession)")
+    static func load() -> LastSession? {
+        return UserDefaults.read()
+    }
 
-        let defaults = UserDefaults.cavok
-        defaults?.set(lastSession, forKey: "LastSession")
-        defaults?.synchronize()
+    static func save(center: MaplyCoordinate, height: Float) {
+
+        let session = LastSession(latitude: center.deg.y, longitude: center.deg.x, height: height)
+
+        print("Saving location \(session)")
+
+        UserDefaults.store(session)
     }
 }

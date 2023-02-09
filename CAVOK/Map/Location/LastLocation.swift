@@ -8,26 +8,26 @@
 
 import CoreLocation
 
-class LastLocation {
+struct LastLocation: Codable {
 
-    class func load() -> CLLocationCoordinate2D? {
-        if let location = UserDefaults.cavok?.dictionary(forKey: "LastLocation") {
-            if let longitude = location["longitude"] as? Double,
-               let latitude = location["latitude"] as? Double {
-                return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            }
+    let latitude: Double
+    let longitude: Double
+    let date: Date
+
+    init(_ coordinate: CLLocationCoordinate2D) {
+        latitude = coordinate.latitude
+        longitude = coordinate.longitude
+        date = Date()
+    }
+
+    static func load() -> CLLocationCoordinate2D? {
+        if let location: LastLocation = UserDefaults.read() {
+            return CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
         }
         return nil
     }
 
-    class func save(location: CLLocationCoordinate2D) {
-        let lastLocation: [String: Any] = [
-            "longitude": location.longitude,
-            "latitude": location.latitude,
-            "date": Date()
-        ]
-        let defaults = UserDefaults.cavok
-        defaults?.set(lastLocation, forKey: "LastLocation")
-        defaults?.synchronize()
+    static func save(location: CLLocationCoordinate2D) {
+        UserDefaults.store(LastLocation(location))
     }
 }
