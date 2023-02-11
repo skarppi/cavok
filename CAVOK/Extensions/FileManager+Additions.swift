@@ -11,14 +11,14 @@ let appGroup = "group.net.tusina.CAVOK"
 
 extension FileManager {
 
-    func cavokAppGroup() -> URL? {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)
+    static var cavok: URL? {
+        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)
     }
 }
 
 extension UserDefaults {
     static var cavok: UserDefaults? {
-        return UserDefaults(suiteName: appGroup)
+        UserDefaults(suiteName: appGroup)
     }
 
     static func store<T: Encodable>(_ object: T) {

@@ -46,7 +46,7 @@ struct CavokApp: SwiftUI.App {
 
 func initRealms() {
     let config = Realm.Configuration(
-        fileURL: FileManager.default.cavokAppGroup()?.appending(path: "default.realm"),
+        fileURL: FileManager.cavok?.appending(path: "default.realm"),
 
         // Set the new schema version. This must be greater than the previously used
         // version (if you've never set a schema version before, the version is 0).

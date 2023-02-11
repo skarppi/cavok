@@ -25,26 +25,32 @@ struct Provider: IntentTimelineProvider {
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
 
+        func complete(metar: Metar?, error: String?, wait: Int) {
+            let entry = SimpleEntry(
+                date: Date(),
+                configuration: configuration,
+                metar: metar,
+                msg: error)
+            completion(Timeline(
+                entries: [entry],
+                policy: .after(Calendar.current.date(byAdding: .minute, value: wait, to: Date())!)
+            ))
+        }
+
         Task {
-            var entries: [SimpleEntry] = []
             do {
-                try await weatherService.refreshObservations()
-                let metar = try weatherService.query.observations(for: "EFHK").metars.last
+                guard let station = configuration.station?.identifier else {
+                    complete(metar: nil, error: "No station selected", wait: 60)
+                    return
+                }
 
-                entries.append(
-                    SimpleEntry(date: Date(),
-                                configuration: configuration,
-                                metar: metar?.freeze(),
-                                msg: nil))
-            } catch let error {
-                entries.append(
-                    SimpleEntry(date: Date(), configuration: configuration, metar: nil, msg: error.localizedDescription))
+                //try await weatherService.refreshObservations()
+                let metar = try weatherService.query.observations(for: station).metars.last
+
+                complete(metar: metar?.freeze(), error: station, wait: 30)
+            } catch {
+                complete(metar: nil, error: error.localizedDescription, wait: 5)
             }
-
-            let timeline = Timeline(entries: entries,
-                                    policy: .after(Calendar.current.date(byAdding: .minute, value: 5, to: Date())!)
-            )
-            completion(timeline)
         }
     }
 }
@@ -68,7 +74,7 @@ struct CAV_OK_WidgetEntryView : View {
         } else if let msg = entry.msg {
             Text(msg)
         } else {
-            Text(entry.date, style: .time)
+            Text(entry.configuration.station?.identifier ?? "-")//, style: .time)
         }
     }
 }
@@ -83,17 +89,20 @@ struct CAV_OK_Widget: Widget {
         }
 
         Realm.Configuration.defaultConfiguration = Realm.Configuration(
-            fileURL: FileManager.default.cavokAppGroup()?.appending(path: "default.realm")
+            fileURL: FileManager.cavok?.appending(path: "default.realm")
         )
     }
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-
+        IntentConfiguration(
+            kind: kind,
+            intent: ConfigurationIntent.self,
+            provider: Provider()
+        ) { entry in
             CAV_OK_WidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Nearby")
-        .description("Nearby weather")
+        .configurationDisplayName("METAR")
+        .description("Show latest METAR from selected station")
     }
 }
 

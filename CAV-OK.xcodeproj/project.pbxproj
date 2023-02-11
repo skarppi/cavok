@@ -52,6 +52,19 @@
 		89797E8A29983DA300DCCE2E /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8929983DA300DCCE2E /* Observations.swift */; };
 		89797E8B2998444400DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
 		89797E8C2998445300DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
+		89797E9B29984CC200DCCE2E /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89797E9A29984CC200DCCE2E /* Intents.framework */; };
+		89797E9E29984CC200DCCE2E /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E9D29984CC200DCCE2E /* IntentHandler.swift */; };
+		89797EA229984CC200DCCE2E /* CAV-OK Intents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 89797E9929984CC200DCCE2E /* CAV-OK Intents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		89797EA729984DF100DCCE2E /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524FE2991AC02007CE96F /* FileManager+Additions.swift */; };
+		89797EA929984E4100DCCE2E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89797EA829984E4100DCCE2E /* RealmSwift */; };
+		89797EAA29984EDC00DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
+		89797EAB29984EE900DCCE2E /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C02540CACA00FB3D39 /* Station.swift */; };
+		89797EAC29984EF800DCCE2E /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C22540CACA00FB3D39 /* Observation.swift */; };
+		89797EAD29984F1B00DCCE2E /* CAV_OK_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8958CBA029882022001F4553 /* CAV_OK_Widget.intentdefinition */; };
+		89797EAE29984F2C00DCCE2E /* Taf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C12540CACA00FB3D39 /* Taf.swift */; };
+		89797EAF29984F3000DCCE2E /* Metar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C42540CACA00FB3D39 /* Metar.swift */; };
+		89797EB029984F4A00DCCE2E /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BF2540CACA00FB3D39 /* Tokenizer.swift */; };
+		89797EB129984F5700DCCE2E /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AE2540CACA00FB3D39 /* String+Additions.swift */; };
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
 		B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9B012653077300F3E74D /* LinkEditView.swift */; };
 		B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63676DA267AFFFE00A92257 /* MapWrapper.swift */; };
@@ -134,6 +147,13 @@
 			remoteGlobalIDString = 8958CB9329882022001F4553;
 			remoteInfo = "CAV-OK WidgetExtension";
 		};
+		89797EA029984CC200DCCE2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C09D66242540BCBE00FB3D39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89797E9829984CC200DCCE2E;
+			remoteInfo = "CAV-OK Intents";
+		};
 		B65F256E295EBB1C0063897D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */;
@@ -178,6 +198,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				89797EA229984CC200DCCE2E /* CAV-OK Intents.appex in Embed Foundation Extensions */,
 				8958CBA829882023001F4553 /* CAV-OK WidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -217,6 +238,11 @@
 		89797E8529983D7800DCCE2E /* ObservationPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationPresentation.swift; sourceTree = "<group>"; };
 		89797E8729983D8D00DCCE2E /* QueryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryService.swift; sourceTree = "<group>"; };
 		89797E8929983DA300DCCE2E /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observations.swift; sourceTree = "<group>"; };
+		89797E9929984CC200DCCE2E /* CAV-OK Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CAV-OK Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89797E9A29984CC200DCCE2E /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		89797E9D29984CC200DCCE2E /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		89797E9F29984CC200DCCE2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89797EA629984CE600DCCE2E /* CAV-OK Intents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CAV-OK Intents.entitlements"; sourceTree = "<group>"; };
 		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
 		B62B9B012653077300F3E74D /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 		B63676DA267AFFFE00A92257 /* MapWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWrapper.swift; sourceTree = "<group>"; };
@@ -307,6 +333,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89797E9629984CC200DCCE2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89797EA929984E4100DCCE2E /* RealmSwift in Frameworks */,
+				89797E9B29984CC200DCCE2E /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C09D66292540BCBE00FB3D39 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -359,19 +394,30 @@
 			path = BottomSheet;
 			sourceTree = "<group>";
 		};
+		89797E9C29984CC200DCCE2E /* CAV-OK Intents */ = {
+			isa = PBXGroup;
+			children = (
+				89797EA629984CE600DCCE2E /* CAV-OK Intents.entitlements */,
+				89797E9D29984CC200DCCE2E /* IntentHandler.swift */,
+				89797E9F29984CC200DCCE2E /* Info.plist */,
+			);
+			path = "CAV-OK Intents";
+			sourceTree = "<group>";
+		};
 		C09D66232540BCBE00FB3D39 = {
 			isa = PBXGroup;
 			children = (
-				894524FB2991AAE9007CE96F /* CAV-OK WidgetExtension.entitlements */,
 				B6D0494726484C65000DF0A8 /* .swiftlint.yml */,
 				C09D675A2540DAB100FB3D39 /* CAVOK.plist */,
 				C09D67592540DAB100FB3D39 /* CAVOK.template.plist */,
 				C09D67532540D94700FB3D39 /* CAV-OK.entitlements */,
+				894524FB2991AAE9007CE96F /* CAV-OK WidgetExtension.entitlements */,
 				C09D67542540D94700FB3D39 /* README.md */,
 				C09D662E2540BCBE00FB3D39 /* CAVOK */,
 				C09D66452540BCC200FB3D39 /* CAVOKTests */,
 				C09D66502540BCC200FB3D39 /* CAVOKUITests */,
 				8958CB9929882022001F4553 /* CAV-OK Widget */,
+				89797E9C29984CC200DCCE2E /* CAV-OK Intents */,
 				C09D662D2540BCBE00FB3D39 /* Products */,
 				C09D666B2540BF3600FB3D39 /* Frameworks */,
 			);
@@ -384,6 +430,7 @@
 				C09D66422540BCC200FB3D39 /* CAV-OKTests.xctest */,
 				C09D664D2540BCC200FB3D39 /* CAV-OKUITests.xctest */,
 				8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */,
+				89797E9929984CC200DCCE2E /* CAV-OK Intents.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -439,6 +486,7 @@
 				C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */,
 				8958CB9529882022001F4553 /* WidgetKit.framework */,
 				8958CB9729882022001F4553 /* SwiftUI.framework */,
+				89797E9A29984CC200DCCE2E /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -633,6 +681,26 @@
 			productReference = 8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		89797E9829984CC200DCCE2E /* CAV-OK Intents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89797EA329984CC200DCCE2E /* Build configuration list for PBXNativeTarget "CAV-OK Intents" */;
+			buildPhases = (
+				89797E9529984CC200DCCE2E /* Sources */,
+				89797E9629984CC200DCCE2E /* Frameworks */,
+				89797E9729984CC200DCCE2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CAV-OK Intents";
+			packageProductDependencies = (
+				89797EA829984E4100DCCE2E /* RealmSwift */,
+			);
+			productName = "CAV-OK Intents";
+			productReference = 89797E9929984CC200DCCE2E /* CAV-OK Intents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C09D662B2540BCBE00FB3D39 /* CAV-OK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C09D66562540BCC200FB3D39 /* Build configuration list for PBXNativeTarget "CAV-OK" */;
@@ -648,6 +716,7 @@
 			);
 			dependencies = (
 				8958CBA729882023001F4553 /* PBXTargetDependency */,
+				89797EA129984CC200DCCE2E /* PBXTargetDependency */,
 			);
 			name = "CAV-OK";
 			packageProductDependencies = (
@@ -709,6 +778,9 @@
 					8958CB9329882022001F4553 = {
 						CreatedOnToolsVersion = 14.2;
 					};
+					89797E9829984CC200DCCE2E = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					C09D662B2540BCBE00FB3D39 = {
 						CreatedOnToolsVersion = 12.0.1;
 					};
@@ -752,6 +824,7 @@
 				C09D66412540BCC200FB3D39 /* CAV-OKTests */,
 				C09D664C2540BCC200FB3D39 /* CAV-OKUITests */,
 				8958CB9329882022001F4553 /* CAV-OK WidgetExtension */,
+				89797E9829984CC200DCCE2E /* CAV-OK Intents */,
 			);
 		};
 /* End PBXProject section */
@@ -787,6 +860,13 @@
 			files = (
 				8958CBA229882023001F4553 /* Assets.xcassets in Resources */,
 				894525012991BFF2007CE96F /* CAVOK.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89797E9729984CC200DCCE2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +950,23 @@
 				894524E729914544007CE96F /* Tokenizer.swift in Sources */,
 				894524E629914538007CE96F /* Station.swift in Sources */,
 				894524F429918C4B007CE96F /* LastLocation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89797E9529984CC200DCCE2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89797E9E29984CC200DCCE2E /* IntentHandler.swift in Sources */,
+				89797EAA29984EDC00DCCE2E /* QueryService.swift in Sources */,
+				89797EAB29984EE900DCCE2E /* Station.swift in Sources */,
+				89797EAD29984F1B00DCCE2E /* CAV_OK_Widget.intentdefinition in Sources */,
+				89797EA729984DF100DCCE2E /* FileManager+Additions.swift in Sources */,
+				89797EAE29984F2C00DCCE2E /* Taf.swift in Sources */,
+				89797EB129984F5700DCCE2E /* String+Additions.swift in Sources */,
+				89797EAC29984EF800DCCE2E /* Observation.swift in Sources */,
+				89797EB029984F4A00DCCE2E /* Tokenizer.swift in Sources */,
+				89797EAF29984F3000DCCE2E /* Metar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,6 +1068,11 @@
 			target = 8958CB9329882022001F4553 /* CAV-OK WidgetExtension */;
 			targetProxy = 8958CBA629882023001F4553 /* PBXContainerItemProxy */;
 		};
+		89797EA129984CC200DCCE2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89797E9829984CC200DCCE2E /* CAV-OK Intents */;
+			targetProxy = 89797EA029984CC200DCCE2E /* PBXContainerItemProxy */;
+		};
 		C09D66442540BCC200FB3D39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C09D662B2540BCBE00FB3D39 /* CAV-OK */;
@@ -1047,6 +1149,62 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.tusina.CAVOK.CAV-OK-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		89797EA429984CC200DCCE2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK Intents/CAV-OK Intents.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WE3J68227;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CAV-OK Intents/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "CAV-OK Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.tusina.CAVOK.CAV-OK-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		89797EA529984CC200DCCE2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "CAV-OK Intents/CAV-OK Intents.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WE3J68227;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CAV-OK Intents/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "CAV-OK Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.tusina.CAVOK.CAV-OK-Intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1319,6 +1477,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		89797EA329984CC200DCCE2E /* Build configuration list for PBXNativeTarget "CAV-OK Intents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89797EA429984CC200DCCE2E /* Debug */,
+				89797EA529984CC200DCCE2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C09D66272540BCBE00FB3D39 /* Build configuration list for PBXProject "CAV-OK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1422,6 +1589,11 @@
 			productName = RealmSwift;
 		};
 		894525532992984B007CE96F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 89452502299290E1007CE96F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		89797EA829984E4100DCCE2E /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 89452502299290E1007CE96F /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
