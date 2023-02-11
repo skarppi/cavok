@@ -29,7 +29,7 @@ struct Provider: IntentTimelineProvider {
             var entries: [SimpleEntry] = []
             do {
                 try await weatherService.refreshObservations()
-                let metar = try weatherService.observations(for: "EFHK").metars.last
+                let metar = try weatherService.query.observations(for: "EFHK").metars.last
 
                 entries.append(
                     SimpleEntry(date: Date(),

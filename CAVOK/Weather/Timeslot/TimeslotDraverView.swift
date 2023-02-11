@@ -42,17 +42,17 @@ struct TimeslotDrawerView: View {
                     })
         }
         .padding(.top, 4)
-        .onReceive(state.$selectedIndex) { index in
+        .onReceive(state.$selectedFrame) { index in
             refreshStatus(slot: state.slots[safe: index])
         }
         .onChange(of: state.slots) { slots in
-            refreshStatus(slot: slots[safe: state.selectedIndex])
+            refreshStatus(slot: slots[safe: state.selectedFrame])
         }
         .onReceive(updateTimestampsTimer) { _ in
-            refreshStatus(slot: state.slots[safe: state.selectedIndex])
+            refreshStatus(slot: state.slots[safe: state.selectedFrame])
         }
         .onAppear {
-            refreshStatus(slot: state.slots[safe: state.selectedIndex])
+            refreshStatus(slot: state.slots[safe: state.selectedFrame])
         }
     }
 
@@ -70,7 +70,7 @@ struct TimeslotDrawerView: View {
                                 .opacity(colorScheme == .dark ? 0.9 : 0.4)
                         )
                     )
-                    .border(state.selectedIndex == index
+                    .border(state.selectedFrame == index
                             ? (colorScheme == .dark ? Color.white : Color.black)
                             : Color.clear)
                     .background(self.rectReader(index: index))
@@ -85,7 +85,7 @@ struct TimeslotDrawerView: View {
         return GeometryReader { (geometry) -> AnyView in
             if geometry.frame(in: .global).contains(self.cursor) {
                 DispatchQueue.main.async {
-                    state.selectedIndex = index
+                    state.selectedFrame = index
                 }
             }
             return AnyView(Rectangle().fill(Color.clear))
@@ -151,7 +151,7 @@ struct TimeslotDraverView_Previews: PreviewProvider {
         state.slots[0].color = Color.red
         state.slots[1].color = Color.blue
 
-        state.selectedIndex = 0
+        state.selectedFrame = 0
 
         return state
     }

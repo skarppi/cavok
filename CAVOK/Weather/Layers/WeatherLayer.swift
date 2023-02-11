@@ -34,16 +34,16 @@ class WeatherLayer {
         clean()
     }
 
-    func load(groups: ObservationGroups, at coordinate: CLLocationCoordinate2D?, loaded: @MainActor @escaping (Int, Color) -> Void) {
-        guard let selected = groups.selectedFrame else {
+    func load(slots: [Timeslot], selected: Int?, at coordinate: CLLocationCoordinate2D?, loaded: @MainActor @escaping (Int, Color) -> Void) {
+        clean()
+
+        guard !slots.isEmpty else {
             return
         }
 
-        clean()
-
         // generate heatmaps in inverse order
-        let frames = groups.timeslots.enumerated().map { index, slot in
-            return HeatMap(index: index, observations: slot.observations, config: config, presentation: self.presentation)
+        let frames = slots.enumerated().map { index, slot in
+            HeatMap(index: index, observations: slot.observations, config: config, presentation: self.presentation)
         }
 
         frames.reversed().forEach { frame in
@@ -69,8 +69,7 @@ class WeatherLayer {
 
         if let fetcher = fetcher, frame < fetcher.frames.count {
             let tileSource = fetcher.frames[frame]
-            // when reloading data the observations might get deleted
-            return tileSource.observations.filter({!$0.isInvalidated})
+            return tileSource.observations
         } else {
             return []
         }
@@ -106,6 +105,7 @@ class WeatherLayer {
             print("ERR: Failed to load weather layer")
             return nil
         }
+        
         loader.setCurrentImage(Double(frames.count - 2))
 
         loader.setTileFetcher(fetcher!)

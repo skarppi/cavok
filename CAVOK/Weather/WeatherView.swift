@@ -51,7 +51,7 @@ struct WeatherView: View {
     func observations() -> Observations? {
         if let observation = selectedObservation {
             do {
-                return try weatherService.observations(for: observation.station?.identifier ?? "")
+                return try weatherService.query.observations(for: observation.station?.identifier ?? "")
             } catch {
                 Messages.show(error: error)
             }
@@ -92,7 +92,7 @@ struct WeatherView: View {
 
             Spacer()
         }
-        .onReceive(timeslots.$selectedIndex) { frame in
+        .onReceive(timeslots.$selectedFrame) { frame in
             render(frame: frame)
         }
         .onReceive(selectedModule.publisher.first()) { newModule in
@@ -186,19 +186,17 @@ struct WeatherView: View {
         Messages.hide()
 
         do {
-            let observations = try weatherService.observations()
+            let observations = try weatherService.query.observations()
 
-            let groups = observations.group()
+            timeslots.reset(observations: observations)
 
-            if let frame = groups.selectedFrame {
-                timeslots.reset(slots: groups.timeslots, selected: frame)
+            weatherLayer?.load(slots: timeslots.slots,
+                               selected: timeslots.selectedFrame,
+                               at: LastLocation.load()) { index, color in
+                self.timeslots.update(color: color, at: index)
 
-                weatherLayer?.load(groups: groups, at: LastLocation.load()) { index, color in
-                    self.timeslots.update(color: color, at: index)
-
-                    if index == frame {
-                        self.render(frame: frame)
-                    }
+                if index == timeslots.selectedFrame {
+                    self.render(frame: timeslots.selectedFrame)
                 }
             }
         } catch {
