@@ -29,8 +29,7 @@ struct TimeslotDrawerView: View {
             Text(status)
                 .font(.body)
                 .padding(.leading, 15)
-                .foregroundColor(
-                    statusColor.lighter(by: colorScheme == .dark ? 0.4 : 0))
+                .foregroundColor(statusColor)
                 .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
                 .background(Color(.secondarySystemFill))
                 .cornerRadius(10)

@@ -31,8 +31,7 @@ struct CavokApp: SwiftUI.App {
         }.onChange(of: scenePhase) { newScenePhase in
             switch newScenePhase {
             case .background:
-                print("Writing settings to disk -> background")
-                UserDefaults.cavok?.synchronize()
+                print("App State: background")
             case .inactive :
                 print("App State: inactive")
             case .active :

@@ -24,6 +24,8 @@ struct LegendView: View {
     // how much overlap in gradient to each direction
     let overlap: CGFloat = 0.05
 
+    @Environment(\.colorScheme) var colorScheme
+
     init(module: Module) {
         self.module = module
         ramp = ColorRamp(module: module)
@@ -75,14 +77,14 @@ struct LegendView: View {
             }
             .frame(height: height)
         }
-            .foregroundColor(Color(.darkGray))
-            .padding(10)
-            .background(Color.white.opacity(0.25))
-            .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.blue, lineWidth: 1)
-            )
+        .foregroundColor(Color.primary)
+        .padding(10)
+        .background(Color.white.opacity(0.25))
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.blue, lineWidth: 1)
+        )
     }
 }
 
