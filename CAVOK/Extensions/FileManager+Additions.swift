@@ -17,6 +17,16 @@ extension FileManager {
 }
 
 extension UserDefaults {
+    static func registerCavok() -> UserDefaults? {
+        if let url = Bundle.main.url(forResource: "CAVOK", withExtension: "plist"),
+           let plist = NSDictionary(contentsOf: url) as? [String: Any] {
+            let suite = UserDefaults(suiteName: appGroup)
+            suite?.register(defaults: plist)
+            return suite
+        }
+        return nil
+    }
+
     static var cavok: UserDefaults? {
         UserDefaults(suiteName: appGroup)
     }

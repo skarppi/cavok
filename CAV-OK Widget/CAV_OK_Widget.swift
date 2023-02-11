@@ -25,7 +25,7 @@ struct Provider: IntentTimelineProvider {
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
 
-        func complete(metar: Metar?, error: String?, wait: Int) {
+        @Sendable func complete(metar: Metar?, error: String?, wait: Int) {
             let entry = SimpleEntry(
                 date: Date(),
                 configuration: configuration,
@@ -65,16 +65,25 @@ struct SimpleEntry: TimelineEntry {
 struct CAV_OK_WidgetEntryView : View {
     var entry: Provider.Entry
 
-    let presentation = ObservationPresentation(module: Modules.available[0])
-
     var body: some View {
+        ZStack {
+            LinearGradient(gradient:
+                            Gradient(colors:[Color(.darkGray),Color(.systemBackground)]),
+                           startPoint: .top,
+                           endPoint: .bottom)
 
-        if let metar = entry.metar {
-            AttributedTextView(obs: metar, presentation: presentation)
-        } else if let msg = entry.msg {
-            Text(msg)
-        } else {
-            Text(entry.configuration.station?.identifier ?? "-")//, style: .time)
+            if let metar = entry.metar, let module = Modules.available.first {
+                AttributedTextView(obs: metar, presentation: ObservationPresentation(module: module))
+                    .padding(.all)
+            } else if let msg = entry.msg {
+                Text(msg).padding(.all)
+            } else if (entry.configuration.station != nil) {
+                Text(entry.configuration.station?.identifier ?? "")
+                    .padding(.all)
+            } else {
+                Text("Edit Widget with the selected station")
+                    .padding(.all)
+            }
         }
     }
 }
@@ -83,11 +92,6 @@ struct CAV_OK_Widget: Widget {
     let kind: String = "CAV_OK_Widget"
 
     init() {
-        if let url = Bundle.main.url(forResource: "CAVOK", withExtension: "plist"),
-           let plist = NSDictionary(contentsOf: url) as? [String: Any] {
-            UserDefaults.cavok?.register(defaults: plist)
-        }
-
         Realm.Configuration.defaultConfiguration = Realm.Configuration(
             fileURL: FileManager.cavok?.appending(path: "default.realm")
         )
@@ -107,8 +111,16 @@ struct CAV_OK_Widget: Widget {
 }
 
 struct CAV_OK_Widget_Previews: PreviewProvider {
+    static let indent: ConfigurationIntent = {
+        let intent = ConfigurationIntent()
+        intent.station = SelectedStation(identifier: "EFHK", display: "Helsinki-Vantaa")
+        return intent
+    }()
+
+
     static var previews: some View {
-        CAV_OK_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), metar: nil, msg: nil))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+
+        CAV_OK_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: indent, metar: nil, msg: nil))
+            .previewContext(WidgetPreviewContext(family: .systemExtraLarge))
     }
 }
