@@ -27,23 +27,31 @@ public class AddsService {
                 latitude: Float(station["latitude"].element!.text)!,
                 longitude: Float(station["longitude"].element!.text)!,
                 elevation: Float(station["elevation_m"].element!.text)!,
+                source: .adds,
                 hasMetar: station["site_type"]["METAR"].element != nil,
                 hasTaf: station["site_type"]["TAF"].element != nil
             )
         }
     }
 
-    class func fetchObservations(_ source: AddsSource, history: Bool, at region: WeatherRegion) async throws -> [String] {
-        let query = [
+    class func fetchObservations(_ source: AddsSource,
+                                 at region: WeatherRegion,
+                                 station: String? = nil,
+                                 history: Bool = true) async throws -> [String] {
+        guard let query = [
             "hoursBeforeNow": "3",
-            "mostRecentForEachStation": String(history == false)
-            //            "fields": "raw_text"
-        ]
+            "mostRecentForEachStation": String(history == false),
+            "stationString": station,
+            "fields": "raw_text"
+        ].filter( { $0.value != nil }) as? [String: String] else { return [] }
+
         let data = try await fetch(dataSource: source.rawValue, with: query, at: region)
         let count = data.children.count
+
         print("Found \(count) ADDS \(source.rawValue)")
 
         let raws = data.children.compactMap { item in
+
             item["raw_text"].element?.text
         }
         // remove possible duplicate entries

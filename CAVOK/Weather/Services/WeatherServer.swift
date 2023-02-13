@@ -20,8 +20,8 @@ public class WeatherServer {
 
         let stations = try await (adds + aws)
             .filter { station -> Bool in
-                return region.inRange(latitude: station.latitude, longitude: station.longitude)
-                    && (station.hasMetar || station.hasTaf)
+                (station.hasMetar || station.hasTaf)
+                    && region.inRange(latitude: station.latitude, longitude: station.longitude)
             }
 
         // remove duplicate identifiers
@@ -45,9 +45,9 @@ public class WeatherServer {
     @MainActor func refreshObservations() async throws {
         let region = WeatherRegion.load()
 
-        async let addsMetars = AddsService.fetchObservations(.METAR, history: true, at: region)
+        async let addsMetars = AddsService.fetchObservations(.METAR, at: region, history: true)
         async let awsMetars = AwsService.fetchObservations(at: region)
-        async let addsTafs = AddsService.fetchObservations(.TAF, history: false, at: region)
+        async let addsTafs = AddsService.fetchObservations(.TAF, at: region, history: false)
 
         let allMetars = try await (addsMetars + awsMetars)
         let allTafs = try await addsTafs
@@ -76,15 +76,40 @@ public class WeatherServer {
         }
     }
 
+    private func latestMetar(station: Station) async throws -> String? {
+        let region = WeatherRegion.load()
+        switch station.source {
+        case .aws:
+            return try await AwsService.fetchLatestObservation(at: region, station: station.identifier)
+        case .adds:
+            return try await AddsService.fetchObservations(.METAR,
+                                                           at: region,
+                                                           station: station.identifier,
+                                                           history: false).first
+        }
+    }
+
+    @MainActor func fetchStation(station id: String) async throws -> Station? {
+        let realm = try await Realm()
+        return realm.object(ofType: Station.self, forPrimaryKey: id)?.freeze()
+    }
+
+    @MainActor func fetchLatest(station: Station) async throws -> Metar? {
+        let realm = try await Realm()
+
+        guard let metar = try await latestMetar(station: station) else {
+            return nil
+        }
+        return parseObservation(Metar(), raw: metar, realm: realm)
+    }
+
     private func parseObservation<T: Observation>(_ obs: T, raw: String, realm: Realm) -> T? {
         obs.parse(raw: raw)
 
-        let stations = realm.objects(Station.self).filter("identifier == '\(obs.identifier)'")
-        if stations.count == 1 {
-            obs.station = stations[0]
-            return obs
-        } else {
+        guard let station = realm.object(ofType: Station.self, forPrimaryKey: obs.identifier) else {
             return nil
         }
+        obs.station = station
+        return obs
     }
 }

@@ -39,15 +39,19 @@ struct Provider: IntentTimelineProvider {
 
         Task {
             do {
-                guard let station = configuration.station?.identifier else {
+                guard let id = configuration.station?.identifier else {
                     complete(metar: nil, error: "No station selected", wait: 60)
                     return
                 }
 
-                //try await weatherService.refreshObservations()
-                let metar = try weatherService.query.observations(for: station).metars.last
+                guard let station = try await weatherService.fetchStation(station: id) else {
+                    complete(metar: nil, error: "Station \(id) not found", wait: 60)
+                    return
+                }
 
-                complete(metar: metar?.freeze(), error: station, wait: 30)
+                let metar = try await weatherService.fetchLatest(station: station)
+
+                complete(metar: metar, error: "Station \(id) has no data", wait: 10)
             } catch {
                 complete(metar: nil, error: error.localizedDescription, wait: 5)
             }
@@ -92,6 +96,8 @@ struct CAV_OK_Widget: Widget {
     let kind: String = "CAV_OK_Widget"
 
     init() {
+        _ = UserDefaults.registerCavok()
+
         Realm.Configuration.defaultConfiguration = Realm.Configuration(
             fileURL: FileManager.cavok?.appending(path: "default.realm")
         )

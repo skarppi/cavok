@@ -9,26 +9,29 @@
 import Foundation
 import RealmSwift
 
+enum WeatherSource: String, PersistableEnum {
+    case aws
+    case adds
+}
+
 public class Station: Object {
 
-    @objc dynamic var identifier: String = ""
-    @objc dynamic var name: String = ""
-    @objc dynamic var latitude: Float = 0
-    @objc dynamic var longitude: Float = 0
-    @objc dynamic var elevation: Float = 0
-    @objc dynamic var hasMetar: Bool = false
-    @objc dynamic var hasTaf: Bool = false
-    @objc dynamic var timestamp: Date = Date()
-
-    override public static func primaryKey() -> String? {
-        return "identifier"
-    }
+    @Persisted(primaryKey: true) var identifier: String = ""
+    @Persisted var name: String = ""
+    @Persisted var latitude: Float = 0
+    @Persisted var longitude: Float = 0
+    @Persisted var elevation: Float = 0
+    @Persisted var source: WeatherSource
+    @Persisted var hasMetar: Bool = false
+    @Persisted var hasTaf: Bool = false
+    @Persisted var timestamp: Date = Date()
 
     convenience init(identifier: String,
                      name: String,
                      latitude: Float,
                      longitude: Float,
                      elevation: Float,
+                     source: WeatherSource,
                      hasMetar: Bool,
                      hasTaf: Bool) {
         self.init()
@@ -37,6 +40,7 @@ public class Station: Object {
         self.latitude = latitude
         self.longitude = longitude
         self.elevation = elevation
+        self.source = source
         self.hasMetar = hasMetar
         self.hasTaf = hasTaf
     }

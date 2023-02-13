@@ -24,6 +24,7 @@ public class AwsService {
                 latitude: station["lat"].floatValue,
                 longitude: station["lon"].floatValue,
                 elevation: 0,
+                source: .aws,
                 hasMetar: true,
                 hasTaf: false
             )
@@ -31,6 +32,13 @@ public class AwsService {
 
         print("Found \(stations.count) AWS stations")
         return stations
+    }
+
+    class func fetchLatestObservation(at region: WeatherRegion, station: String) async throws -> String? {
+        let json = try await fetch(dataSource: AwsSource.STATION, at: region)
+        return json?.dictionaryValue.values
+            .first(where: { sta in sta["p1"].stringValue.subString(0, length: 4) == station })
+            .map { sta in sta["p1"].stringValue }
     }
 
     class func fetchObservations(at region: WeatherRegion) async throws -> [String] {
