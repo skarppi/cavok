@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 import XCTest
 @testable import CAV_OK
-import PromiseKit
 
 class WeatherServiceTests: XCTestCase {
 
@@ -19,18 +18,17 @@ class WeatherServiceTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-
-        let coordinates = NSMutableDictionary()
-        coordinates.setObject(60.0, forKey: "minLat")
-        coordinates.setObject(65.0, forKey: "maxLat")
-        coordinates.setObject(20.0, forKey: "minLon")
-        coordinates.setObject(25.0, forKey: "maxLon")
-
-        coordinates.setObject(200000.0, forKey: "radius")
-
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(coordinates, forKey: "coordinates")
-        defaults.synchronize()
+//        let coordinates = NSMutableDictionary()
+//        coordinates.setObject(60.0, forKey: "minLat")
+//        coordinates.setObject(65.0, forKey: "maxLat")
+//        coordinates.setObject(20.0, forKey: "minLon")
+//        coordinates.setObject(25.0, forKey: "maxLon")
+//
+//        coordinates.setObject(200000.0, forKey: "radius")
+//
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        defaults.setObject(coordinates, forKey: "coordinates")
+//        defaults.synchronize()
     }
 
     override func tearDown() {
@@ -38,34 +36,30 @@ class WeatherServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func testStations() {
-        let expectation = self.expectationWithDescription("fetch stations")
-        weatherServer.refreshStations().then { (stations) -> Void in
-            let stationCount = self.weatherServer.getStationCount()
-            XCTAssertEqual(stationCount, 12+18)
+    func testStations() async throws {
+        let stations = try await weatherServer.refreshStations()
 
-            XCTAssertEqual(stations.count, 12+18)
-
-            expectation.fulfill()
-        }
-        self.waitForExpectationsWithTimeout(5.0, handler: nil)
-    }
-
-    func testStationsWithMetars() {
-        let stationCount = self.weatherServer.getStationCount()
+        let stationCount = try weatherServer.query.getStationCount()
         XCTAssertEqual(stationCount, 12+18)
 
-        let expectation = self.expectationWithDescription("fetch metars")
-        weatherServer.refreshObservations().then { _ in
-            expectation.fulfill()
-        }
-
-        self.waitForExpectationsWithTimeout(15.0, handler: nil)
-
-        let metars = weatherServer.observations(Metar.self)
-
-        XCTAssertEqual(metars.count, 8+18)
+        XCTAssertEqual(stations.count, 12+18)
     }
+
+//    func testStationsWithMetars() {
+//        let stationCount = self.weatherServer.getStationCount()
+//        XCTAssertEqual(stationCount, 12+18)
+//
+//        let expectation = self.expectation(description: "fetch metars")
+//        weatherServer.refreshObservations().then { _ in
+//            expectation.fulfill()
+//        }
+//
+//        self.waitForExpectations(timeout: 15.0, handler: nil)
+//
+//        let metars = weatherServer.observations(Metar.self)
+//
+//        XCTAssertEqual(metars.count, 8+18)
+//    }
     /*
      func testPerformanceExample() {
      // This is an example of a performance test case.

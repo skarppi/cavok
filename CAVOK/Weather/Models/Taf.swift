@@ -14,8 +14,8 @@ public class Taf: Observation {
     @objc public dynamic var to = Date()
 
     // swiftlint:disable:next function_body_length
-    override public func parse(raw: String) {
-        super.parse(raw: raw)
+    override public func parse(raw: String) -> Self {
+        _ = super.parse(raw: raw)
 
         let parser = Tokenizer(raw: self.raw)
 
@@ -90,6 +90,8 @@ public class Taf: Observation {
         }
 
         self.condition = self.parseCondition().rawValue
+
+        return self
     }
 
     private func parse(validity: String?) -> (Date, Date)? {

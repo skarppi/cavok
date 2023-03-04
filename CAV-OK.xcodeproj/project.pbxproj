@@ -65,6 +65,12 @@
 		89797EAF29984F3000DCCE2E /* Metar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C42540CACA00FB3D39 /* Metar.swift */; };
 		89797EB029984F4A00DCCE2E /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66BF2540CACA00FB3D39 /* Tokenizer.swift */; };
 		89797EB129984F5700DCCE2E /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AE2540CACA00FB3D39 /* String+Additions.swift */; };
+		89797EB8299E9D0200DCCE2E /* ObservationPresentationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797EB7299E9D0200DCCE2E /* ObservationPresentationTest.swift */; };
+		89797EC1299E9E4300DCCE2E /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09D675A2540DAB100FB3D39 /* CAVOK.plist */; };
+		89797ED0299E9F9000DCCE2E /* TafTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797EC6299E9F3800DCCE2E /* TafTests.swift */; };
+		89797ED1299E9F9600DCCE2E /* ObservationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797EC4299E9F3800DCCE2E /* ObservationTestCase.swift */; };
+		89797ED2299E9F9A00DCCE2E /* MetarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797EC7299E9F3800DCCE2E /* MetarTests.swift */; };
+		89797ED3299E9FA200DCCE2E /* WeatherServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797EC5299E9F3800DCCE2E /* WeatherServiceTests.swift */; };
 		B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9AFD2650FC5100F3E74D /* LinksView.swift */; };
 		B62B9B022653077300F3E74D /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B9B012653077300F3E74D /* LinkEditView.swift */; };
 		B63676DB267AFFFE00A92257 /* MapWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63676DA267AFFFE00A92257 /* MapWrapper.swift */; };
@@ -243,6 +249,11 @@
 		89797E9D29984CC200DCCE2E /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		89797E9F29984CC200DCCE2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89797EA629984CE600DCCE2E /* CAV-OK Intents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CAV-OK Intents.entitlements"; sourceTree = "<group>"; };
+		89797EB7299E9D0200DCCE2E /* ObservationPresentationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationPresentationTest.swift; sourceTree = "<group>"; };
+		89797EC4299E9F3800DCCE2E /* ObservationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTestCase.swift; sourceTree = "<group>"; };
+		89797EC5299E9F3800DCCE2E /* WeatherServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherServiceTests.swift; sourceTree = "<group>"; };
+		89797EC6299E9F3800DCCE2E /* TafTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TafTests.swift; sourceTree = "<group>"; };
+		89797EC7299E9F3800DCCE2E /* MetarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetarTests.swift; sourceTree = "<group>"; };
 		B62B9AFD2650FC5100F3E74D /* LinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
 		B62B9B012653077300F3E74D /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 		B63676DA267AFFFE00A92257 /* MapWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWrapper.swift; sourceTree = "<group>"; };
@@ -404,6 +415,22 @@
 			path = "CAV-OK Intents";
 			sourceTree = "<group>";
 		};
+		89797EB5299E9CD900DCCE2E /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				89797EB6299E9CE400DCCE2E /* Observations */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
+		89797EB6299E9CE400DCCE2E /* Observations */ = {
+			isa = PBXGroup;
+			children = (
+				89797EB7299E9D0200DCCE2E /* ObservationPresentationTest.swift */,
+			);
+			path = Observations;
+			sourceTree = "<group>";
+		};
 		C09D66232540BCBE00FB3D39 = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +492,11 @@
 		C09D66452540BCC200FB3D39 /* CAVOKTests */ = {
 			isa = PBXGroup;
 			children = (
+				89797EC7299E9F3800DCCE2E /* MetarTests.swift */,
+				89797EC4299E9F3800DCCE2E /* ObservationTestCase.swift */,
+				89797EC6299E9F3800DCCE2E /* TafTests.swift */,
+				89797EC5299E9F3800DCCE2E /* WeatherServiceTests.swift */,
+				89797EB5299E9CD900DCCE2E /* Weather */,
 				C09D66462540BCC200FB3D39 /* CAVOKTests.swift */,
 				C09D66482540BCC200FB3D39 /* Info.plist */,
 			);
@@ -889,6 +921,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89797EC1299E9E4300DCCE2E /* CAVOK.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1048,7 +1081,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89797ED2299E9F9A00DCCE2E /* MetarTests.swift in Sources */,
+				89797ED0299E9F9000DCCE2E /* TafTests.swift in Sources */,
+				89797ED3299E9FA200DCCE2E /* WeatherServiceTests.swift in Sources */,
+				89797EB8299E9D0200DCCE2E /* ObservationPresentationTest.swift in Sources */,
 				C09D66472540BCC200FB3D39 /* CAVOKTests.swift in Sources */,
+				89797ED1299E9F9600DCCE2E /* ObservationTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1389,7 +1427,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1411,7 +1449,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

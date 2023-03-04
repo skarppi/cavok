@@ -104,7 +104,7 @@ public class WeatherServer {
     }
 
     private func parseObservation<T: Observation>(_ obs: T, raw: String, realm: Realm) -> T? {
-        obs.parse(raw: raw)
+        _ = obs.parse(raw: raw)
 
         guard let station = realm.object(ofType: Station.self, forPrimaryKey: obs.identifier) else {
             return nil

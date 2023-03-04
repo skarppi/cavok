@@ -22,6 +22,18 @@ enum ModuleKey: String {
 class Modules {
     static var available = load()
 
+    static var ceiling: Module! {
+        return available.first { module in
+            module.key == ModuleKey.ceiling
+        }
+    }
+
+    static var visibility: Module! {
+        return available.first { module in
+            module.key == ModuleKey.visibility
+        }
+    }
+
     private class func load() -> [Module] {
         guard let modules = UserDefaults.cavok?.array(forKey: "modules") as? [[String: AnyObject]]
             // issues in previews

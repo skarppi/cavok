@@ -163,7 +163,7 @@ struct WeatherView: View {
             return
         }
 
-        let oldModule = weatherLayer?.presentation.module
+        let oldModule = weatherLayer?.presentation.modules.first
 
         guard newModule.key != .web else {
             _ = showWebView(true)

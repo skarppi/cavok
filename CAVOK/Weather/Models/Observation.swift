@@ -11,6 +11,15 @@ import RealmSwift
 
 public enum WeatherConditions: Int16 {
     case NA = 0, VFR = 1, MVFR = 2, IFR = 3
+
+    func toString() -> String {
+        switch self {
+        case .VFR: return "VMC"
+        case .MVFR: return "SVFR"
+        case .IFR: return "IMC"
+        default: return "-"
+        }
+    }
 }
 
 public struct WindData {
@@ -34,7 +43,7 @@ open class Observation: Object, Identifiable {
     @Persisted var cloudHeight: Int?
     @Persisted var condition: Int16 = 0
     @Persisted var datetime: Date = Date()
-    @Persisted var raw: String = ""
+    @Persisted(primaryKey: true) var raw: String = ""
     @Persisted var clouds: String?
     @Persisted var supplements: String?
     @Persisted var visibilityGroup: String?
@@ -56,10 +65,6 @@ open class Observation: Object, Identifiable {
         return raw
     }
 
-    override public static func primaryKey() -> String? {
-        return "raw"
-    }
-
     public var wind: WindData {
         get { return WindData(
             direction: windDirection,
@@ -75,8 +80,9 @@ open class Observation: Object, Identifiable {
         }
     }
 
-    open func parse(raw: String) {
+    open func parse(raw: String) -> Self {
         self.raw = raw
+        return self
     }
 
     // MARK: - Date format
@@ -243,7 +249,6 @@ open class Observation: Object, Identifiable {
             self.verticalVisibility()
         ].compactMap { $0 }.min() ?? 5000
 
-        // let ceiling = ceilingOpt ?? -1
         let vis = self.visibility ?? -1
         if (0 <= ceiling && ceiling < 1500) || (0 <= vis && vis < 5000) {
             return WeatherConditions.IFR

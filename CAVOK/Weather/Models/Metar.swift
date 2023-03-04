@@ -35,8 +35,8 @@ public class Metar: Observation {
 
     // MARK: - Parsers
 
-    override public func parse(raw: String) {
-        super.parse(raw: raw)
+    override public func parse(raw: String) -> Self {
+        _ = super.parse(raw: raw)
 
         let parser = Tokenizer(raw: self.raw)
 
@@ -106,6 +106,8 @@ public class Metar: Observation {
         }
 
         self.condition = self.parseCondition().rawValue
+
+        return self
     }
 
     func parseTemperatures(_ value: String?) -> (Int?, Int?)? {

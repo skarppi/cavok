@@ -89,7 +89,7 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         ])
 
     static var previews: some View {
-        VStack {                              
+        VStack {
             ObservationHeaderView(presentation: presentation,
                                   obs: observations.metars[0],
                                   closedAction: { () in print("Closed")})
@@ -100,16 +100,14 @@ struct ObservationDrawerView_Previews: PreviewProvider {
     }
 
     static func metar(_ raw: String) -> Metar {
-        let metar = Metar()
-        metar.parse(raw: raw)
+        let metar = Metar().parse(raw: raw)
         metar.station = Station()
         metar.station?.name = "Helsinki-Vantaan lentoasema EFHF airport"
         return metar
     }
 
     static func taf(_ raw: String) -> Taf {
-        let taf = Taf()
-        taf.parse(raw: raw)
+        let taf = Taf().parse(raw: raw)
         taf.station = Station()
         taf.station?.name = "Helsinki-Vantaan lentoasema EFHF airport"
         return taf

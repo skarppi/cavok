@@ -65,13 +65,13 @@ class HeatMap {
 
             self.output = HeatMapGPU(input: self.input,
                                      config: self.config,
-                                     steps: self.presentation.ramp.steps)
+                                     steps: self.presentation.ramps[0].steps)
                 .render()
 
             if self.output == nil {
                 self.output = HeatMapCPU(input: self.input,
                                          config: self.config,
-                                         ramp: self.presentation.ramp)
+                                         ramp: self.presentation.ramps[0])
                     .render()
             }
         }

@@ -67,22 +67,65 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct CAV_OK_WidgetEntryView : View {
-    var entry: Provider.Entry
+    let entry: Provider.Entry
+    let station: SelectedStation?
+
+    @Environment(\.widgetFamily) var widgetFamily
+
+    init(entry: Provider.Entry) {
+        self.entry = entry
+        self.station = entry.configuration.station
+    }
 
     var body: some View {
+
         ZStack {
             LinearGradient(gradient:
                             Gradient(colors:[Color(.darkGray),Color(.systemBackground)]),
                            startPoint: .top,
                            endPoint: .bottom)
 
-            if let metar = entry.metar, let module = Modules.available.first {
-                AttributedTextView(obs: metar, presentation: ObservationPresentation(module: module))
-                    .padding(.all)
+            if let metar = entry.metar {
+                let isSmall = widgetFamily == .systemSmall
+
+                VStack(alignment: .leading) {
+                    HStack(alignment: .center) {
+                        Text(station?.displayString ?? "-")
+                            .font(.system(size: isSmall ? 14 : 20 ))
+                            .bold()
+
+                        Spacer(minLength: 0)
+                            .background(.red)
+
+                        let condition = metar.conditionEnum.toString()
+                        Text(isSmall ? String(condition.first ?? "-") : condition)
+                            // reduced padding when small widget
+                            .padding(.horizontal, isSmall ? 7.5 : nil)
+                            .font(.system(size: isSmall ? 14 : 20 ))
+                            .foregroundColor(.white)
+                            .background(
+                                ColorRamp.color(for: metar.conditionEnum, alpha: 0.8)
+                            )
+                            .cornerRadius(15)
+                    }
+                    .padding(.bottom, isSmall ? 1 : 4)
+
+                    AttributedTextView(obs: metar, presentation:
+                                        ObservationPresentation(modules: Modules.available))
+                        .font(.system(size: widgetFamily == .systemSmall ? 14 : 18 ))
+
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity,
+                       maxHeight: .infinity,
+                       alignment: .topLeading)
+
+                // reduced padding when small widget
+                .padding(.all, isSmall ? 10 : nil)
             } else if let msg = entry.msg {
                 Text(msg).padding(.all)
             } else if (entry.configuration.station != nil) {
-                Text(entry.configuration.station?.identifier ?? "")
+                Text(station?.identifier ?? "")
                     .padding(.all)
             } else {
                 Text("Edit Widget with the selected station")
@@ -126,7 +169,7 @@ struct CAV_OK_Widget_Previews: PreviewProvider {
 
     static var previews: some View {
 
-        CAV_OK_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: indent, metar: nil, msg: nil))
-            .previewContext(WidgetPreviewContext(family: .systemExtraLarge))
+        CAV_OK_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: indent, metar: Metar().parse(raw: "EFHK 091950Z 05006KT 3500 -RADZ BR FEW005 05/04 Q1009 NOSIG="), msg: nil))
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
