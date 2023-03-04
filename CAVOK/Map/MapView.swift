@@ -49,9 +49,13 @@ struct MapView: View {
                 height: mapApi.mapView.height)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             locationManager.requestLocation()
-        }.sheet(isPresented: $showWebView) {
-            WebView()
-        }
+        }.bottomSheet(
+            isPresented: $showWebView,
+            headerContent: {},
+            mainContent: {
+                WebView()
+            }
+        )
     }
 
     func userLocationChanged(coordinate: CLLocationCoordinate2D?) {

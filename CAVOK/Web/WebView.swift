@@ -113,7 +113,9 @@ struct LinkWebView: UIViewRepresentable {
             super.init()
 
             observer = webView.observe(\.estimatedProgress, options: [.new]) { _, _ in
-                viewModel.progress = webView.estimatedProgress
+                DispatchQueue.main.async {
+                    viewModel.progress = webView.estimatedProgress
+                }
             }
         }
 
