@@ -26,15 +26,21 @@ struct ConfigContainerView: View {
 
     @State var loading: String?
 
-    @State var selection: PresentationDetent = {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad: return .medium
-        default: return .dynamicHeader
-    }
-    }()
+    @State var selection: PresentationDetent =
+        isPad ? .medium : .dynamicHeader
 
     var body: some View {
-        ZStack {
+        VStack {
+            if Self.isPad {
+                VStack(alignment: .leading) {
+                    headerContent()
+                        .padding(.top, 20)
+
+                    mainContent()
+                }
+                .padding(.top)
+            }
+
         }.onAppear(perform: {
             region.onChange(action: refresh(region:))
             refresh(region: region)
@@ -48,29 +54,35 @@ struct ConfigContainerView: View {
             move(to: coord)
         }
         .bottomSheet(
-            isPresented: $configuring,
+            isPresented: .constant(!Self.isPad),
             onDismiss: {
                 if configuring {
                     endRegionSelection()
                 }
             },
-            headerContent: {
-                if let loading = loading {
-                    ProgressView(loading)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                } else {
-                    ConfigDrawerView(closedAction: {
-                        endRegionSelection()
-                    }).environmentObject(region)
-                }
-            },
-            mainContent: {
-                LinksView(links: $links)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(.top)
-            }
+            headerContent: headerContent,
+            mainContent: mainContent
         )
         .presentationDetents([.dynamicHeader, .medium, .large], selection: $selection)
+    }
+
+    @ViewBuilder
+    private func headerContent() -> some View {
+        if let loading = loading {
+            ProgressView(loading)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        } else {
+            ConfigDrawerView(closedAction: {
+                endRegionSelection()
+            }).environmentObject(region)
+        }
+    }
+
+    @ViewBuilder
+    private func mainContent() -> some View {
+        LinksView(links: $links)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .padding(.top)
     }
 
     private func move(to coord: MaplyCoordinate) {

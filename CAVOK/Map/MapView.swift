@@ -20,7 +20,12 @@ struct MapView: View {
     @Environment(\.isPreview) var isPreview
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        NavigationSplitView {
+            if showConfigView && Self.isPad {
+                ConfigContainerView(configuring: $showConfigView)
+            }
+        } detail: {
+            ZStack(alignment: .topLeading) {
             MapWrapper(mapApi: mapApi)
                 .onAppear {
                     mapApi.mapReady.send()
@@ -29,9 +34,7 @@ struct MapView: View {
                 }
                 .ignoresSafeArea()
 
-            if showConfigView {
-                ConfigContainerView(configuring: $showConfigView)
-            } else {
+            if !showConfigView {
                 WeatherView(showWebView: { show in
                     if show {
                         showWebView = true
@@ -40,7 +43,12 @@ struct MapView: View {
                 }, showConfigView: {
                     showConfigView = true
                 })
+                .ignoresSafeArea()
+            } else if !Self.isPad {
+                ConfigContainerView(configuring: $showConfigView)
             }
+        }
+            .navigationSplitViewStyle(.automatic)
         }.onReceive(locationManager.$lastLocation.first()) { coordinate in
             userLocationChanged(coordinate: coordinate)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in

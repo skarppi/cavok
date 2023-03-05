@@ -66,7 +66,7 @@ struct ConfigDrawerView: View {
         }
         .phoneOnlyStackNavigationView()
         .padding(.horizontal)
-        .edgesIgnoringSafeArea(.all)
+        //.edgesIgnoringSafeArea(.all)
     }
 }
 
