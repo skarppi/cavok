@@ -37,6 +37,8 @@ struct SidebarView: View {
                                            observations: observations)
                 }
             }
+        } else {
+            NearbyObservationsView()
         }
     }
 }

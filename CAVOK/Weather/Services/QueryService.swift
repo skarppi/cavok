@@ -6,6 +6,7 @@
 //
 
 import RealmSwift
+import CoreLocation
 
 public class QueryService {
 
@@ -41,5 +42,12 @@ public class QueryService {
     func observations(for identifier: String? = nil) throws -> Observations {
         return Observations(metars: try fetch(type: Metar.self, sortKey: "datetime", filter: identifier),
                             tafs: try fetch(type: Taf.self, sortKey: "from", filter: identifier))
+    }
+
+    func nearby(location: CLLocationCoordinate2D) throws -> [Metar] {
+        let realm = try Realm()
+
+        let metars = try realm.findNearby(type: Metar.self, origin: location, radius: 100000, sortAscending: true, latitudeKey: "station.latitude", longitudeKey: "station.longitude")
+        return metars
     }
 }
