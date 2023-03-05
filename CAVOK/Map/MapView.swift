@@ -9,9 +9,8 @@ import SwiftUI
 import Combine
 
 struct MapView: View {
-    @State private var showWebView = false
 
-    @State private var showConfigView = false
+    @StateObject var navigation = NavigationManager()
 
     @ObservedObject var locationManager = LocationManager.shared
 
@@ -21,33 +20,28 @@ struct MapView: View {
 
     var body: some View {
         NavigationSplitView {
-            if showConfigView && Self.isPad {
-                ConfigContainerView(configuring: $showConfigView)
+            if navigation.showConfigView && Self.isPad {
+                ConfigContainerView()
+                    .environmentObject(navigation)
             }
         } detail: {
             ZStack(alignment: .topLeading) {
-            MapWrapper(mapApi: mapApi)
-                .onAppear {
-                    mapApi.mapReady.send()
-                    locationManager.requestLocation()
-                    checkForFirstRun()
-                }
-                .ignoresSafeArea()
-
-            if !showConfigView {
-                WeatherView(showWebView: { show in
-                    if show {
-                        showWebView = true
+                MapWrapper(mapApi: mapApi)
+                    .onAppear {
+                        mapApi.mapReady.send()
+                        locationManager.requestLocation()
+                        checkForFirstRun()
                     }
-                    return showWebView
-                }, showConfigView: {
-                    showConfigView = true
-                })
-                .ignoresSafeArea()
-            } else if !Self.isPad {
-                ConfigContainerView(configuring: $showConfigView)
+                    .ignoresSafeArea()
+
+                if !navigation.showConfigView {
+                    WeatherView()
+                        .environmentObject(navigation)
+                } else if !Self.isPad {
+                    ConfigContainerView()
+                        .environmentObject(navigation)
+                }
             }
-        }
             .navigationSplitViewStyle(.automatic)
         }.onReceive(locationManager.$lastLocation.first()) { coordinate in
             userLocationChanged(coordinate: coordinate)
@@ -58,7 +52,7 @@ struct MapView: View {
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             locationManager.requestLocation()
         }.bottomSheet(
-            isPresented: $showWebView,
+            isPresented: $navigation.showWebView,
             headerContent: {},
             mainContent: {
                 WebView()
@@ -89,7 +83,7 @@ struct MapView: View {
     fileprivate func checkForFirstRun() {
         if !WeatherRegion.isSet() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.showConfigView = true
+                navigation.showConfigView = true
             })
         }
     }

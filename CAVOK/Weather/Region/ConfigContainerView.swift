@@ -10,7 +10,7 @@ import Combine
 
 struct ConfigContainerView: View {
 
-    @Binding var configuring: Bool
+    @EnvironmentObject var navigation: NavigationManager
 
     @State private var region = WeatherRegion.load()
 
@@ -56,7 +56,7 @@ struct ConfigContainerView: View {
         .bottomSheet(
             isPresented: .constant(!Self.isPad),
             onDismiss: {
-                if configuring {
+                if navigation.showConfigView {
                     endRegionSelection()
                 }
             },
@@ -158,13 +158,14 @@ struct ConfigContainerView: View {
                 Messages.show(error: error)
             }
 
-            configuring = false
+            navigation.showConfigView = false
         }
     }
 }
 
 struct ConfigContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigContainerView(configuring: .constant(true))
+        ConfigContainerView()
+            .environmentObject(NavigationManager())
     }
 }

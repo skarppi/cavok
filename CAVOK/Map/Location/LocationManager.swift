@@ -25,14 +25,12 @@ class LocationManager: NSObject, ObservableObject {
     }
 
     func requestLocation() {
-        if CLLocationManager.locationServicesEnabled() {
+        if manager.authorizationStatus == .notDetermined {
             manager.requestWhenInUseAuthorization()
-            manager.requestLocation()
 
             print("Location requested")
         } else {
-            print("Location not enabled")
-            lastLocation = nil
+            manager.requestLocation()
         }
     }
 }

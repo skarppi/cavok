@@ -8,7 +8,6 @@
 import SwiftUI
 import Combine
 
-
 struct TimeslotPositions: CaseIterable, RawRepresentable {
     init(rawValue: CGFloat) {
         let maxAvailableHeight = UIScreen.main.bounds.size.height
@@ -26,9 +25,7 @@ struct TimeslotPositions: CaseIterable, RawRepresentable {
 }
 
 struct WeatherView: View {
-    var showWebView: ((Bool) -> Bool)
-
-    var showConfigView: (() -> Void)
+    @EnvironmentObject var navigation: NavigationManager
 
     @State private var selectedModule: Module? = Modules.available[0]
 
@@ -155,7 +152,7 @@ struct WeatherView: View {
 
     func configure() {
         cleanMarkers()
-        showConfigView()
+        navigation.showConfigView = true
     }
 
     func moduleTypeChanged(newModule: Module) {
@@ -166,11 +163,11 @@ struct WeatherView: View {
         let oldModule = weatherLayer?.presentation.modules.first
 
         guard newModule.key != .web else {
-            _ = showWebView(true)
+            navigation.showWebView = true
             selectedModule = oldModule
             return
         }
-        guard !showWebView(false), oldModule != newModule else {
+        guard !navigation.showWebView, oldModule != newModule else {
             return
         }
 
@@ -242,8 +239,7 @@ struct WeatherView: View {
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherView(showWebView: { _ in
-            return true
-        }, showConfigView: {})
+        WeatherView()
+            .environmentObject(NavigationManager())
     }
 }

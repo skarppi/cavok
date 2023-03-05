@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89295ACF29B464F4001A7740 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295ACE29B464F4001A7740 /* NavigationManager.swift */; };
 		894524DB2991280B007CE96F /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524DA2991280B007CE96F /* AttributedTextView.swift */; };
 		894524DC29913314007CE96F /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66982540CAB800FB3D39 /* Modules.swift */; };
 		894524DE2991435B007CE96F /* WeatherServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D52540CACA00FB3D39 /* WeatherServer.swift */; };
@@ -217,6 +218,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		89295ACE29B464F4001A7740 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		894524DA2991280B007CE96F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
 		894524EE2991558F007CE96F /* Cavok+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cavok+Additions.swift"; sourceTree = "<group>"; };
 		894524F129918A62007CE96F /* CLLocation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Additions.swift"; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				C09D66CE2540CACA00FB3D39 /* Timeslot */,
 				B64D83CA261511A3003AE228 /* DrawerTitleView.swift */,
 				B6A829562687CEF100FA5B11 /* LegendView.swift */,
+				89295ACE29B464F4001A7740 /* NavigationManager.swift */,
 				B6972392274E7547000873A3 /* WeatherView.swift */,
 			);
 			path = Weather;
@@ -1023,6 +1026,7 @@
 				B688A4652683C87500EE7373 /* MapApi.swift in Sources */,
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,
 				B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */,
+				89295ACF29B464F4001A7740 /* NavigationManager.swift in Sources */,
 				C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */,
 				C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */,
 				C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */,
