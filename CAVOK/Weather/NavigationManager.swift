@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class NavigationManager: ObservableObject {
     @Published var showWebView = false
@@ -15,4 +16,6 @@ class NavigationManager: ObservableObject {
     @Published var selectedObservation: Observation?
 
     @Published var selectedModule: Module? = Modules.available[0]
+
+    let refreshed = PassthroughSubject<Void, Never>()
 }

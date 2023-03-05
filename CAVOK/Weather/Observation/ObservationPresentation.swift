@@ -40,10 +40,16 @@ struct ObservationPresentation {
         let str = observation.raw
 
         // all groups to be highlighted
-        let groups = modules.map { module in
+        let groups: [ObservationGroup] = modules.map { module in
             self.mapper(observation, module: module)
         }.filter { group in
+            // remove no-matches
             group.value != nil && group.source != nil
+        }.reduce(into: []) { result, group in
+            // remove duplicate groups, e.g. CAVOK can be colored only once
+            if !result.contains(where: { $0.source == group.source }) {
+                result.append(group)
+            }
         }
 
         let rangesAndColors = groups.enumerated().compactMap { (index, group) in
@@ -53,21 +59,22 @@ struct ObservationPresentation {
         }.filter { rangeAndColor in
             rangeAndColor.range != nil
         }.sorted { range1, range2 in
+            // groups have to be sorted in ascending order
             range1.range!.lowerBound < range2.range!.lowerBound
         }
 
         guard !rangesAndColors.isEmpty else {
-            // no highlighting
+            // no highlighting, just the string
             return [ObservationPresentationData(start: str)]
         }
 
         return rangesAndColors.enumerated().map { (index, rangeAndColor) in
             let (range, color) = (rangeAndColor.range!, rangeAndColor.color)
 
-            // current group starts after the previous entry
+            // current group starts after the previous entry, or from the beginning
             let start = index > 0 ? range.lowerBound : str.startIndex
 
-            // and ends before the next entry
+            // groups ends before the next entry, or end of the string
             let end = index < (rangesAndColors.count - 1) ? rangesAndColors[index + 1].range!.lowerBound : str.endIndex
 
             return ObservationPresentationData(

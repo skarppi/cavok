@@ -22,10 +22,8 @@ struct MapView: View {
         NavigationSplitView {
             if navigation.showConfigView && Self.isPad {
                 ConfigContainerView()
-                    .environmentObject(navigation)
             } else {
                 SidebarView()
-                    .environmentObject(navigation)
             }
         } detail: {
             ZStack(alignment: .topLeading) {
@@ -39,14 +37,13 @@ struct MapView: View {
 
                 if !navigation.showConfigView {
                     WeatherView()
-                        .environmentObject(navigation)
                 } else if !Self.isPad {
                     ConfigContainerView()
-                        .environmentObject(navigation)
                 }
             }
             .navigationSplitViewStyle(.automatic)
-        }.onReceive(locationManager.$lastLocation.first()) { coordinate in
+        }
+        .onReceive(locationManager.$lastLocation.first()) { coordinate in
             userLocationChanged(coordinate: coordinate)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             LastSession.save(
@@ -61,6 +58,7 @@ struct MapView: View {
                 WebView()
             }
         )
+        .environmentObject(navigation)
     }
 
     func userLocationChanged(coordinate: CLLocationCoordinate2D?) {

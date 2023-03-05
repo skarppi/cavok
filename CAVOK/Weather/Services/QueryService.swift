@@ -44,10 +44,17 @@ public class QueryService {
                             tafs: try fetch(type: Taf.self, sortKey: "from", filter: identifier))
     }
 
-    func nearby(location: CLLocationCoordinate2D) throws -> [Metar] {
+    func nearby(location: CLLocationCoordinate2D) throws -> [WithDistance<Metar>] {
         let realm = try Realm()
 
-        let metars = try realm.findNearby(type: Metar.self, origin: location, radius: 100000, sortAscending: true, latitudeKey: "station.latitude", longitudeKey: "station.longitude")
+        let metars = try realm.findNearby(type: Metar.self,
+                                          origin: location,
+                                          radius: 100000,
+                                          sortAscending: true,
+                                          distinct: (by: "identifier", sorted: "datetime", ascending: true),
+                                          latitudeKey: "station.latitude",
+                                          longitudeKey: "station.longitude")
+            .map { (obs, distance) in (obs.freeze(), distance) }
         return metars
     }
 }

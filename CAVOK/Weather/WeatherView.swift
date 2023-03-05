@@ -113,6 +113,8 @@ struct WeatherView: View {
                 do {
                     try await weatherService.refreshObservations()
                     loadingMessage = nil
+                    navigation.refreshed.send()
+
                     load()
                 } catch {
                     Messages.show(error: error)

@@ -9,9 +9,13 @@ import RealmSwift
 import CoreLocation
 import MapKit
 
+// copied from https://github.com/mhergon/RealmGeoQueries/blob/master/GeoQueries.swift
+
 enum GeoQueriesError: Error {
     case invalidRealm(String)
 }
+
+public typealias WithDistance<Element: Object> = (element: Element, distanceMeters: Int)
 
 // MARK: - Public extensions
 public extension Realm {
@@ -63,6 +67,7 @@ public extension Realm {
      - parameter order:        Sort by distance (optional)
      - parameter latitudeKey:  Set to use different latitude key in query (default: "lat")
      - parameter longitudeKey: Set to use different longitude key in query (default: "lng")
+     - parameter latitudeKey:  Set to use different latitude key in query (default: "lat")
 
      - returns: Found objects inside radius around the center coordinate
      */
@@ -70,14 +75,19 @@ public extension Realm {
                                      origin center: CLLocationCoordinate2D,
                                      radius: Double,
                                      sortAscending sort: Bool?,
+                                     distinct: (by: String, sorted: String, ascending: Bool),
                                      latitudeKey: String = "lat",
-                                     longitudeKey: String = "lng") throws -> [Element] {
+                                     longitudeKey: String = "lng") throws -> [WithDistance<Element>] {
 
         // Query
-        return try self
-            .objects(type)
+        return try self.objects(type)
+            .sorted(byKeyPath: distinct.sorted, ascending: distinct.ascending)
+            .distinct(by: [distinct.by])
             .filterGeoBox(box: center.geoBox(radius: radius), latitudeKey: latitudeKey, longitudeKey: longitudeKey)
             .filterGeoRadius(center: center, radius: radius, sortAscending: sort, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
+            .map { obj in
+                (element: obj, distanceMeters: Int(obj.objDist))
+            }
 
     }
 
