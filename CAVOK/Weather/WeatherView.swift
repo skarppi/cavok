@@ -27,8 +27,6 @@ struct TimeslotPositions: CaseIterable, RawRepresentable {
 struct WeatherView: View {
     @EnvironmentObject var navigation: NavigationManager
 
-    @State private var selectedModule: Module? = Modules.available[0]
-
     @State private var weatherLayer: WeatherLayer?
 
     @Environment(\.isPreview) var isPreview
@@ -39,14 +37,12 @@ struct WeatherView: View {
 
     let weatherService = WeatherServer()
 
-    @State private var selectedObservation: Observation?
-
     @State private var loadingMessage: String?
 
     private let haptic = UIImpactFeedbackGenerator(style: .heavy)
 
     func observations() -> Observations? {
-        if let observation = selectedObservation {
+        if let observation = navigation.selectedObservation {
             do {
                 return try weatherService.query.observations(for: observation.station?.identifier ?? "")
             } catch {
@@ -58,7 +54,7 @@ struct WeatherView: View {
 
     var body: some View {
         VStack(alignment: .trailing) {
-            Picker("", selection: $selectedModule) {
+            Picker("", selection: $navigation.selectedModule) {
                 ForEach(Modules.available, id: \.self) { module in
                     Text(module.title).tag(module as Module?)
                 }
@@ -68,7 +64,7 @@ struct WeatherView: View {
             .pickerStyle(SegmentedPickerStyle())
             .labelsHidden()
 
-            if let module = selectedModule, module.legend.count > 0 {
+            if let module = navigation.selectedModule, module.legend.count > 0 {
                 LegendView(module: module)
                     .padding(.trailing, 10)
             }
@@ -92,12 +88,15 @@ struct WeatherView: View {
         .onReceive(timeslots.$selectedFrame) { frame in
             render(frame: frame)
         }
-        .onReceive(selectedModule.publisher.first()) { newModule in
+        .onReceive(navigation.selectedModule.publisher.first()) { newModule in
             moduleTypeChanged(newModule: newModule)
+        }
+        .onReceive(navigation.$selectedObservation) { observation in
+            showDetails(observation)
         }
         .onReceive(mapApi.didTapAt) { (_, object) in
             if let observation = object as? Observation {
-                showDetails(observation)
+                navigation.selectedObservation = observation
             }
         }
         .overlay(alignment: .bottom) {
@@ -121,12 +120,12 @@ struct WeatherView: View {
             }
         }
         .bottomSheet(
-            isPresented: .constant(selectedObservation != nil),
+            isPresented: .constant(navigation.selectedObservation != nil && Self.isPhone),
             onDismiss: {
                 showDetails(nil)
             },
             headerContent: {
-                if let observation = selectedObservation, let weatherLayer = weatherLayer {
+                if let observation = navigation.selectedObservation, let weatherLayer = weatherLayer {
                     ObservationHeaderView(presentation: weatherLayer.presentation,
                                           obs: observation) { () in
                         showDetails(nil)
@@ -164,7 +163,7 @@ struct WeatherView: View {
 
         guard newModule.key != .web else {
             navigation.showWebView = true
-            selectedModule = oldModule
+            navigation.selectedModule = oldModule
             return
         }
         guard !navigation.showWebView, oldModule != newModule else {
@@ -226,7 +225,6 @@ struct WeatherView: View {
 
     private func showDetails(_ observation: Observation?) {
         mapApi.clearComponents(ofType: ObservationSelection.self)
-        selectedObservation = observation
 
         if let observation = observation {
             let marker = ObservationSelection(obs: observation)

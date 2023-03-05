@@ -23,6 +23,9 @@ struct MapView: View {
             if navigation.showConfigView && Self.isPad {
                 ConfigContainerView()
                     .environmentObject(navigation)
+            } else {
+                SidebarView()
+                    .environmentObject(navigation)
             }
         } detail: {
             ZStack(alignment: .topLeading) {

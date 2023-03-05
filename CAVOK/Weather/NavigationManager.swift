@@ -11,4 +11,8 @@ class NavigationManager: ObservableObject {
     @Published var showWebView = false
 
     @Published var showConfigView = false
+
+    @Published var selectedObservation: Observation?
+
+    @Published var selectedModule: Module? = Modules.available[0]
 }

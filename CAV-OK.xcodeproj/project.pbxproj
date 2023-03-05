@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		89295ACF29B464F4001A7740 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295ACE29B464F4001A7740 /* NavigationManager.swift */; };
+		89295AD329B46B5C001A7740 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295AD229B46B5C001A7740 /* SidebarView.swift */; };
 		894524DB2991280B007CE96F /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524DA2991280B007CE96F /* AttributedTextView.swift */; };
 		894524DC29913314007CE96F /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66982540CAB800FB3D39 /* Modules.swift */; };
 		894524DE2991435B007CE96F /* WeatherServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D52540CACA00FB3D39 /* WeatherServer.swift */; };
@@ -219,6 +220,7 @@
 
 /* Begin PBXFileReference section */
 		89295ACE29B464F4001A7740 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		89295AD229B46B5C001A7740 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		894524DA2991280B007CE96F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
 		894524EE2991558F007CE96F /* Cavok+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cavok+Additions.swift"; sourceTree = "<group>"; };
 		894524F129918A62007CE96F /* CLLocation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Additions.swift"; sourceTree = "<group>"; };
@@ -378,6 +380,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		89295AD129B46B33001A7740 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				89295AD229B46B5C001A7740 /* SidebarView.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
 		8958CB9929882022001F4553 /* CAV-OK Widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +602,7 @@
 				C09D66D72540CACA00FB3D39 /* Observation */,
 				C09D66C52540CACA00FB3D39 /* Region */,
 				C09D66D32540CACA00FB3D39 /* Services */,
+				89295AD129B46B33001A7740 /* Sidebar */,
 				C09D66CE2540CACA00FB3D39 /* Timeslot */,
 				B64D83CA261511A3003AE228 /* DrawerTitleView.swift */,
 				B6A829562687CEF100FA5B11 /* LegendView.swift */,
@@ -1031,6 +1042,7 @@
 				C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */,
 				C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */,
 				C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */,
+				89295AD329B46B5C001A7740 /* SidebarView.swift in Sources */,
 				C09D66F52540CACA00FB3D39 /* Links.swift in Sources */,
 				C09D669D2540CAB800FB3D39 /* UserMarker.swift in Sources */,
 				C09D66F32540CACA00FB3D39 /* RegionSelection.swift in Sources */,
