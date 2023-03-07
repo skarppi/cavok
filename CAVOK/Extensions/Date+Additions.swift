@@ -124,7 +124,11 @@ public extension Date {
 
     static func since(minutes: Int) -> String {
 
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: "en")
+
         let formatter = DateComponentsFormatter()
+        formatter.calendar = calendar
         if minutes < 60*6 {
             formatter.allowedUnits = [.hour, .minute]
         } else {
