@@ -25,7 +25,6 @@ import Combine
         selectedFrame = metars.isEmpty ? nil : metars.count - 1
     }
 
-
     private func nearestHalfHour(date: Date) -> Date {
         let minute = Calendar.current.component(.minute, from: date)
         let offset = -minute % 30

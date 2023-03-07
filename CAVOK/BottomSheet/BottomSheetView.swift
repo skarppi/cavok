@@ -134,7 +134,6 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
         self.conf.bgColor = bgColor
         return self
     }
-    
 
 //        .onReceive(toDetent) { detent in
 //            guard let sheet = UIApplication.shared.sheetVC() else { return }

@@ -32,9 +32,9 @@ struct CavokApp: SwiftUI.App {
             switch newScenePhase {
             case .background:
                 print("App State: background")
-            case .inactive :
+            case .inactive:
                 print("App State: inactive")
-            case .active :
+            case .active:
                 print("App State: active")
             default:
                 print("App State: unknown")

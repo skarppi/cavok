@@ -158,7 +158,7 @@ class HeatMap {
         }
     }
 
-    func timer<T>(_ title: String, _ operation:() -> T) -> T {
+    func timer<T>(_ title: String, _ operation: () -> T) -> T {
         let startTime = CFAbsoluteTimeGetCurrent()
         let res = operation()
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime

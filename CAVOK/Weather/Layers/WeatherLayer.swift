@@ -105,7 +105,7 @@ class WeatherLayer {
             print("ERR: Failed to load weather layer")
             return nil
         }
-        
+
         loader.setCurrentImage(Double(frames.count - 2))
 
         loader.setTileFetcher(fetcher!)

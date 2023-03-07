@@ -130,9 +130,9 @@ public class Metar: Observation {
                 return nil
             }
             switch (value[0], value[value.index(after: value.startIndex)...]) {
-            case ("Q", let qnh) : return Int(qnh)
-            case ("A", let qnh) : return Int(qnh).map { Int(Double($0) * 0.3386) }
-            default : return nil
+            case ("Q", let qnh): return Int(qnh)
+            case ("A", let qnh): return Int(qnh).map { Int(Double($0) * 0.3386) }
+            default: return nil
             }
         }
         return nil

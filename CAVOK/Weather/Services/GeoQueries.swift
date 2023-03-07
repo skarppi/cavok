@@ -289,7 +289,7 @@ private extension RealmCollection where Element: Object {
             // Calculate distance
             if let latitude = obj.value(forKeyPath: latitudeKey) as? CLLocationDegrees,
                let longitude = obj.value(forKeyPath: longitudeKey) as? CLLocationDegrees {
-                let location = CLLocation(latitude: latitude,longitude: longitude)
+                let location = CLLocation(latitude: latitude, longitude: longitude)
                 let center = CLLocation(latitude: center.latitude, longitude: center.longitude)
                 let distance = location.distance(from: center)
 

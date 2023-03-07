@@ -43,7 +43,7 @@ public class AddsService {
             "mostRecentForEachStation": String(history == false),
             "stationString": station,
             "fields": "raw_text"
-        ].filter( { $0.value != nil }) as? [String: String] else { return [] }
+        ].filter({ $0.value != nil }) as? [String: String] else { return [] }
 
         let data = try await fetch(dataSource: source.rawValue, with: query, at: region)
         let count = data.children.count

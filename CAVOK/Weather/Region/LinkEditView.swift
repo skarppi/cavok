@@ -15,7 +15,7 @@ struct LinkEditView: View {
             Section(header: Text("Link Details")) {
                 TextField("Title", text: $link.title)
                 TextField("Link", text: $link.url)
-                TextField("Block CSS elements on the page", text: $link.blockElements,  axis: .vertical)
+                TextField("Block CSS elements on the page", text: $link.blockElements, axis: .vertical)
                     .multilineTextAlignment(.leading)
                     .frame(minHeight: 100, maxHeight: .infinity, alignment: .topLeading)
             }
