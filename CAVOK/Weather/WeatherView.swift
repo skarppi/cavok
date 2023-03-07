@@ -41,17 +41,6 @@ struct WeatherView: View {
 
     private let haptic = UIImpactFeedbackGenerator(style: .heavy)
 
-    func observations() -> Observations? {
-        if let observation = navigation.selectedObservation {
-            do {
-                return try weatherService.query.observations(for: observation.station?.identifier ?? "")
-            } catch {
-                Messages.show(error: error)
-            }
-        }
-        return nil
-    }
-
     var body: some View {
         VStack(alignment: .trailing) {
             Picker("", selection: $navigation.selectedModule) {
@@ -127,19 +116,10 @@ struct WeatherView: View {
                 showDetails(nil)
             },
             headerContent: {
-                if let observation = navigation.selectedObservation, let weatherLayer = weatherLayer {
-                    ObservationHeaderView(presentation: weatherLayer.presentation,
-                                          obs: observation) { () in
-                        showDetails(nil)
-                    }
-                }
+                ObservationHeaderView()
             },
             mainContent: {
-
-                if let weatherLayer = weatherLayer, let observations = observations() {
-                    ObservationDetailsView(presentation: weatherLayer.presentation,
-                                           observations: observations)
-                }
+                ObservationDetailsView()
             }
         ).presentationDetents(
             [.dynamicHeader, .medium, .large],
@@ -184,7 +164,7 @@ struct WeatherView: View {
         Messages.hide()
 
         do {
-            let observations = try weatherService.query.observations()
+            let observations = try WeatherServer.query.observations()
 
             timeslots.reset(observations: observations)
 

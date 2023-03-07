@@ -51,7 +51,7 @@ public class QueryService {
                                           origin: location,
                                           radius: 100000,
                                           sortAscending: true,
-                                          distinct: (by: "identifier", sorted: "datetime", ascending: true),
+                                          distinct: (by: "identifier", sorted: "datetime", ascending: false),
                                           latitudeKey: "station.latitude",
                                           longitudeKey: "station.longitude")
             .map { (obs, distance) in (obs.freeze(), distance) }

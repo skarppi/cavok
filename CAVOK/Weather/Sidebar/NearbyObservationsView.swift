@@ -10,17 +10,12 @@ import SwiftUI
 struct NearbyObservationsView: View {
     @EnvironmentObject var navigation: NavigationManager
 
-    let weatherService = WeatherServer()
-    let presentation = ObservationPresentation(modules: Modules.available)
-
-    @State var observation: Observation?
-
     @State var observations: [WithDistance<Observation>] = []
 
     func fetchObservations() -> [WithDistance<Observation>] {
         if let location = LastLocation.load() {
             do {
-                return try weatherService.query.nearby(location: location)
+                return try WeatherServer.query.nearby(location: location)
             } catch {
                 Messages.show(error: error)
             }
@@ -32,22 +27,54 @@ struct NearbyObservationsView: View {
         Group {
             if !observations.isEmpty {
                 List(observations, id: \.0, selection: $navigation.selectedObservation) { (obs, distance) in
-                    VStack(alignment: .leading) {
-                        Text("\(Int(distance/1000)) km \(obs.station!.name)")
-                        AttributedTextView(obs: obs, presentation: presentation)
-                    }
 
+                    self.item(obs: obs, distance: distance)
                 }
             } else {
                 Text("No location found")
             }
         }
-        .navigationTitle(observation?.identifier ?? "Nearby Stations")
+        .navigationTitle("Nearby Stations")
         .onAppear {
             observations = fetchObservations()
         }
         .onReceive(navigation.refreshed) {
             observations = fetchObservations()
+        }
+    }
+
+    @ViewBuilder
+    func item(obs: Observation, distance: Int) -> some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(obs.station?.name ?? "-")
+                    .bold()
+
+                if let module = navigation.selectedModule {
+                    let presentation = ObservationPresentation(module: module)
+                    AttributedTextView(obs: obs, presentation: presentation)
+                }
+            }
+
+            Spacer(minLength: 0)
+
+            VStack(alignment: .trailing, spacing: 2) {
+
+                let condition = obs.conditionEnum.toString()
+                Text(condition)
+                    .padding(.horizontal)
+                    .foregroundColor(.white)
+                    .background(
+                        ColorRamp.color(for: obs.conditionEnum, alpha: 0.8)
+                    )
+                    .cornerRadius(15)
+
+                Text("\(Int(distance/1000)) km")
+
+                let age = obs.datetime.minutesSinceNow
+                Text(Date.since(minutes: age))
+                    .foregroundColor(ColorRamp.color(forMinutes: age))
+            }
         }
     }
 }

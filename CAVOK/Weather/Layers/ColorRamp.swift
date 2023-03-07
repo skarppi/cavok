@@ -63,11 +63,6 @@ class ColorRamp {
         }
     }
 
-    class func color(for date: Date, alpha: CGFloat = 1) -> Color {
-        let minutes = Int(-date.timeIntervalSinceNow / 60)
-        return ColorRamp.color(forMinutes: minutes, alpha: alpha)
-    }
-
     class func color(forMinutes minutes: Int, alpha: CGFloat = 1) -> Color {
         if minutes < 0 {
             return Color(hue: CGFloat(blue[0])/360, saturation: 1, brightness: brightness, opacity: alpha)

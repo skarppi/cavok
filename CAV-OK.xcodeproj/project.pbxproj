@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		89295ACC29B3B4F6001A7740 /* GeoQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295ACB29B3B4F6001A7740 /* GeoQueries.swift */; };
 		89295ACF29B464F4001A7740 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295ACE29B464F4001A7740 /* NavigationManager.swift */; };
-		89295AD329B46B5C001A7740 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295AD229B46B5C001A7740 /* SidebarView.swift */; };
 		89295AD629B47045001A7740 /* NearbyObservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295AD529B47045001A7740 /* NearbyObservationsView.swift */; };
 		89295AD929B474FB001A7740 /* GeoQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295ACB29B3B4F6001A7740 /* GeoQueries.swift */; };
 		89295ADA29B474FB001A7740 /* GeoQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295ACB29B3B4F6001A7740 /* GeoQueries.swift */; };
@@ -55,7 +54,6 @@
 		895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B98742977F878005E5D7F /* BottomSheetConfig.swift */; };
 		89797E8629983D7800DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
 		89797E8829983D8D00DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
-		89797E8A29983DA300DCCE2E /* Observations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8929983DA300DCCE2E /* Observations.swift */; };
 		89797E8B2998444400DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
 		89797E8C2998445300DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
 		89797E9B29984CC200DCCE2E /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89797E9A29984CC200DCCE2E /* Intents.framework */; };
@@ -225,7 +223,6 @@
 /* Begin PBXFileReference section */
 		89295ACB29B3B4F6001A7740 /* GeoQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoQueries.swift; sourceTree = "<group>"; };
 		89295ACE29B464F4001A7740 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
-		89295AD229B46B5C001A7740 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		89295AD529B47045001A7740 /* NearbyObservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyObservationsView.swift; sourceTree = "<group>"; };
 		894524DA2991280B007CE96F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
 		894524EE2991558F007CE96F /* Cavok+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cavok+Additions.swift"; sourceTree = "<group>"; };
@@ -246,7 +243,6 @@
 		895B98742977F878005E5D7F /* BottomSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfig.swift; sourceTree = "<group>"; };
 		89797E8529983D7800DCCE2E /* ObservationPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationPresentation.swift; sourceTree = "<group>"; };
 		89797E8729983D8D00DCCE2E /* QueryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryService.swift; sourceTree = "<group>"; };
-		89797E8929983DA300DCCE2E /* Observations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observations.swift; sourceTree = "<group>"; };
 		89797E9929984CC200DCCE2E /* CAV-OK Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CAV-OK Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89797E9A29984CC200DCCE2E /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		89797E9D29984CC200DCCE2E /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -389,7 +385,6 @@
 		89295AD129B46B33001A7740 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
-				89295AD229B46B5C001A7740 /* SidebarView.swift */,
 				89295AD529B47045001A7740 /* NearbyObservationsView.swift */,
 			);
 			path = Sidebar;
@@ -668,7 +663,6 @@
 		C09D66CE2540CACA00FB3D39 /* Timeslot */ = {
 			isa = PBXGroup;
 			children = (
-				89797E8929983DA300DCCE2E /* Observations.swift */,
 				B6C31A37260FD41F0060CA55 /* PullToRefreshView.swift */,
 				C09D66D12540CACA00FB3D39 /* Timeslot.swift */,
 				B6C31A30260F16220060CA55 /* TimeslotDraverView.swift */,
@@ -1054,7 +1048,6 @@
 				C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */,
 				C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */,
 				C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */,
-				89295AD329B46B5C001A7740 /* SidebarView.swift in Sources */,
 				C09D66F52540CACA00FB3D39 /* Links.swift in Sources */,
 				C09D669D2540CAB800FB3D39 /* UserMarker.swift in Sources */,
 				C09D66F32540CACA00FB3D39 /* RegionSelection.swift in Sources */,
@@ -1063,7 +1056,6 @@
 				B6972391274E6CE1000873A3 /* ConfigContainerView.swift in Sources */,
 				C09D669A2540CAB800FB3D39 /* Messages.swift in Sources */,
 				C09D66E62540CACA00FB3D39 /* ColorRamp.swift in Sources */,
-				89797E8A29983DA300DCCE2E /* Observations.swift in Sources */,
 				B6C31A31260F16220060CA55 /* TimeslotDraverView.swift in Sources */,
 				C09D67462540D03100FB3D39 /* ObservationDrawerView.swift in Sources */,
 				C09D67002540CACA00FB3D39 /* WeatherServer.swift in Sources */,

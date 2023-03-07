@@ -97,30 +97,16 @@ struct TimeslotDrawerView: View {
         guard let oldest = timestamps.min() else { return "-" }
         guard let latest = timestamps.max() else { return "-" }
 
-        let oldestMinutes = Int(abs(oldest.timeIntervalSinceNow) / 60)
-        let latestMinutes = Int(abs(latest.timeIntervalSinceNow) / 60)
+        let oldestMinutes = oldest.minutesSinceNow
+        let latestMinutes = latest.minutesSinceNow
 
         if oldest == latest || oldestMinutes >= 120 {
-            return since(minutes: latestMinutes)
+            return Date.since(minutes: latestMinutes)
         } else if oldestMinutes < 60 {
-            return "\(latestMinutes)-\(since(minutes: oldestMinutes))"
+            return "\(latestMinutes)-\(Date.since(minutes: oldestMinutes))"
         } else {
-            return "\(since(minutes: latestMinutes)) - \(since(minutes: oldestMinutes))"
+            return "\(Date.since(minutes: latestMinutes)) - \(Date.since(minutes: oldestMinutes))"
         }
-    }
-
-    private func since(minutes: Int) -> String {
-
-        let formatter = DateComponentsFormatter()
-        if minutes < 60*6 {
-            formatter.allowedUnits = [.hour, .minute]
-        } else {
-            formatter.allowedUnits = [.day, .hour]
-        }
-        formatter.unitsStyle = .brief
-        formatter.zeroFormattingBehavior = .dropLeading
-
-        return formatter.string(from: Double(minutes * 60))!
     }
 
     private func refreshStatus(slot: Timeslot?) {
@@ -132,8 +118,7 @@ struct TimeslotDrawerView: View {
         let status = status(slot: slot)
 
         self.status = "\(status) ago"
-        self.statusColor = ColorRamp.color(for: slot.date)
-
+        self.statusColor = ColorRamp.color(forMinutes: slot.date.minutesSinceNow)
     }
 
 }

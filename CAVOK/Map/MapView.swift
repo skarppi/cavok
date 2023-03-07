@@ -22,8 +22,14 @@ struct MapView: View {
         NavigationSplitView {
             if navigation.showConfigView && Self.isPad {
                 ConfigContainerView()
+            } else if navigation.selectedObservation != nil {
+                VStack {
+                    ObservationHeaderView()
+
+                    ObservationDetailsView()
+                }
             } else {
-                SidebarView()
+                NearbyObservationsView()
             }
         } detail: {
             ZStack(alignment: .topLeading) {

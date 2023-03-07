@@ -95,7 +95,6 @@ struct CAV_OK_WidgetEntryView : View {
                             .bold()
 
                         Spacer(minLength: 0)
-                            .background(.red)
 
                         let condition = metar.conditionEnum.toString()
                         Text(isSmall ? String(condition.first ?? "-") : condition)

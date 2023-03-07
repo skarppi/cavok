@@ -10,7 +10,7 @@ import RealmSwift
 
 public class WeatherServer {
 
-    let query = QueryService()
+    static let query = QueryService()
 
     // query stations available
     func queryStations(at region: WeatherRegion) async throws -> [Station] {

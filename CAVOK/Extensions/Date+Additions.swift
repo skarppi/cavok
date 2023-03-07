@@ -113,4 +113,26 @@ public extension Date {
     func isInFuture() -> Bool {
         return self.isAfter(Date())
     }
+
+    var minutesSinceNow: Int {
+        Int(abs(self.timeIntervalSinceNow) / 60)
+    }
+
+    func since() -> String {
+        Self.since(minutes: self.minutesSinceNow)
+    }
+
+    static func since(minutes: Int) -> String {
+
+        let formatter = DateComponentsFormatter()
+        if minutes < 60*6 {
+            formatter.allowedUnits = [.hour, .minute]
+        } else {
+            formatter.allowedUnits = [.day, .hour]
+        }
+        formatter.unitsStyle = .brief
+        formatter.zeroFormattingBehavior = .dropLeading
+
+        return formatter.string(from: Double(minutes * 60))!
+    }
 }

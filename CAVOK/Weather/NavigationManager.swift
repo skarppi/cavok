@@ -18,4 +18,11 @@ class NavigationManager: ObservableObject {
     @Published var selectedModule: Module? = Modules.available[0]
 
     let refreshed = PassthroughSubject<Void, Never>()
+
+    var presentation: ObservationPresentation? {
+        guard let module = selectedModule else {
+            return nil
+        }
+        return ObservationPresentation(module: module)
+    }
 }

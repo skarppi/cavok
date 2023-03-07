@@ -9,39 +9,60 @@
 import SwiftUI
 
 struct ObservationHeaderView: View {
-    var presentation: ObservationPresentation
-    var obs: Observation
-
-    var closedAction: (() -> Void)
+    @EnvironmentObject var navigation: NavigationManager
 
     var body: some View {
-        VStack(alignment: .leading) {
-            DrawerTitleView(title: self.obs.station?.name, action: closedAction)
+        if let obs = navigation.selectedObservation, let presentation = navigation.presentation {
+            VStack(alignment: .leading) {
+                DrawerTitleView(title: obs.station?.name, action: {
+                    navigation.selectedObservation = nil
+                })
 
-            AttributedTextView(obs: obs, presentation: presentation)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top)
-        }.padding(.horizontal)
+                AttributedTextView(obs: obs, presentation: presentation)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top)
+            }.padding(.horizontal)
+        }
     }
 }
 
 struct ObservationDetailsView: View {
-    var presentation: ObservationPresentation
-    var observations: Observations
+    @State var observations: Observations?
+
+    @EnvironmentObject var navigation: NavigationManager
+
+    @Environment(\.isPreview) var isPreview
+
+    func fetchObservations() -> Observations? {
+        if let observation = navigation.selectedObservation {
+            do {
+                return try WeatherServer.query.observations(for: observation.station?.identifier ?? "")
+            } catch {
+                Messages.show(error: error)
+            }
+        }
+        return nil
+    }
 
     var body: some View {
-        ScrollView {
-            ObservationList(
-                title: "Metar history",
-                observations: observations.metars,
-                presentation: presentation)
+        if let presentation = navigation.presentation {
+            ScrollView {
+                ObservationList(
+                    title: "Metar history",
+                    observations: observations?.metars ?? [],
+                    presentation: presentation)
 
-            ObservationList(
-                title: "Taf",
-                observations: observations.tafs,
-                presentation: presentation)
+                ObservationList(
+                    title: "Taf",
+                    observations: observations?.tafs ?? [],
+                    presentation: presentation)
+            }
+            .padding(.horizontal)
+            .onAppear {
+                guard !isPreview else { return }
+                observations = fetchObservations()
+            }
         }
-        .padding(.horizontal)
     }
 }
 
@@ -67,13 +88,7 @@ struct ObservationList: View {
 }
 
 struct ObservationDrawerView_Previews: PreviewProvider {
-    static let presentation = ObservationPresentation(
-        module: Module(key: ModuleKey.ceiling,
-                       title: "ceil",
-                       unit: "FL",
-                       legend: ["0000": "000", "0500": "005", "1000": "010", "1500": "015", "2000": "020", "5000": "050"]
-                      )
-    )
+    static let manager = NavigationManager()
     static let observations = Observations(
         metars: [
             metar("METAR EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="),
@@ -88,15 +103,18 @@ struct ObservationDrawerView_Previews: PreviewProvider {
             taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30")
         ])
 
+    init() {
+        Self.manager.selectedModule = Modules.visibility
+        Self.manager.selectedObservation = Self.observations.metars[0]
+    }
+
     static var previews: some View {
         VStack {
-            ObservationHeaderView(presentation: presentation,
-                                  obs: observations.metars[0],
-                                  closedAction: { () in print("Closed")})
+            ObservationHeaderView()
 
-            ObservationDetailsView(presentation: presentation,
-                                  observations: observations)
+            ObservationDetailsView(observations: observations)
         }
+        .environmentObject(manager)
     }
 
     static func metar(_ raw: String) -> Metar {
