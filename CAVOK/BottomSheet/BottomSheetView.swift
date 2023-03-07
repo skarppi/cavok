@@ -114,7 +114,10 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
         return self
     }
 
-    func presentationDetents(_ detents: Set<PresentationDetent>, selection: Binding<PresentationDetent>) -> BottomSheetView {
+    func presentationDetents(
+        _ detents: Set<PresentationDetent>,
+        selection: Binding<PresentationDetent>
+    ) -> BottomSheetView {
         self.conf.presentationDetents = detents
         self.conf.selection = selection
         return self
@@ -125,7 +128,9 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
         return self
     }
 
-    func largestUndimmedDetentIdentifier(_ detentIdentifier: UISheetPresentationController.Detent.Identifier) -> BottomSheetView {
+    func largestUndimmedDetentIdentifier(
+        _ detentIdentifier: UISheetPresentationController.Detent.Identifier
+    ) -> BottomSheetView {
         self.conf.largestUndimmedDetentIdentifier = detentIdentifier
         return self
     }

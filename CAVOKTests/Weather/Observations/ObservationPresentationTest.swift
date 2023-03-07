@@ -13,13 +13,23 @@ final class ObservationPresentationTest: XCTestCase {
     let ceilingModule = Module(key: ModuleKey.ceiling,
                               title: "ceil",
                               unit: "FL",
-                              legend: ["0000": "000", "0500": "005", "1000": "010", "1500": "015", "2000": "020", "5000": "050"]
+                              legend: ["0000": "000",
+                                       "0500": "005",
+                                       "1000": "010",
+                                       "1500": "015",
+                                       "2000": "020",
+                                       "5000": "050"]
                              )
 
     let visibilityModule = Module(key: ModuleKey.visibility,
                               title: "vis",
                               unit: "KM",
-                              legend: ["00000": "0", "01500": "1.5", "03000": "3", "05000": "5", "08000": "8", "10000": "10"]
+                              legend: ["00000": "0",
+                                       "01500": "1.5",
+                                       "03000": "3",
+                                       "05000": "5",
+                                       "08000": "8",
+                                       "10000": "10"]
                              )
 
     override func setUpWithError() throws {

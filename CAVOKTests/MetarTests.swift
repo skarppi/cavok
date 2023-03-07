@@ -81,7 +81,8 @@ class MetarTests: ObservationTestCase {
         XCTAssertEqual(metar.dewPoint, 7)
         XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
 
-        metar.parse(raw: "KNYL 101155Z 35007KT 10SM FEW100 12/03 A2993 RMK AO2 SLP135 T01170028 10144 20111 53015 $")
+        _ = metar.parse(raw: "KNYL 101155Z 35007KT 10SM FEW100 12/03 A2993 "
+                        + "RMK AO2 SLP135 T01170028 10144 20111 53015 $")
         XCTAssertEqual(metar.cloudHeight, 10000)
     }
 

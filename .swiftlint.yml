@@ -3,6 +3,9 @@ included:
   - CAVOKTests
   - CAVOKUITests
 
+disabled_rules:
+- large_tuple
+
 identifier_name:
   excluded:
     - id

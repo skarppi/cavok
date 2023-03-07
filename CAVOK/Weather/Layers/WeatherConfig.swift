@@ -48,7 +48,8 @@ class WeatherConfig {
         let bounds = coordSystem.geo(toLocalBox: MaplyBoundingBox(ll: tile.ll.coordinate, ur: tile.ur.coordinate))
         self.bounds = bounds
 
-        let resolution = 156543.03 * cos(region.center.latitude.degreesToRadians) / pow(2.0, Double(maxZoom)) // meters/pixel
+        // meters/pixel
+        let resolution = 156543.03 * cos(region.center.latitude.degreesToRadians) / pow(2.0, Double(maxZoom))
 
         let scale = Double(tilesize) * pow(2.0, Double(maxZoom))
         self.width = Int(round(Double(bounds.ur.x - bounds.ll.x) / (2 * Double.pi) * scale))

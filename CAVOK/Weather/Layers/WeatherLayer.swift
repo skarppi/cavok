@@ -34,7 +34,10 @@ class WeatherLayer {
         clean()
     }
 
-    func load(slots: [Timeslot], selected: Int?, at coordinate: CLLocationCoordinate2D?, loaded: @MainActor @escaping (Int, Color) -> Void) {
+    func load(slots: [Timeslot],
+              selected: Int?,
+              at coordinate: CLLocationCoordinate2D?,
+              loaded: @MainActor @escaping (Int, Color) -> Void) {
         clean()
 
         guard !slots.isEmpty else {

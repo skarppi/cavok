@@ -87,7 +87,7 @@ struct ConfigContainerView: View {
 
     private func move(to coord: MaplyCoordinate) {
         if let selection = mapApi.findComponent(ofType: RegionSelection.self) as? RegionSelection {
-            selection.region.center = coord.cl
+            selection.region.center = coord.cl2d
             refresh(region: selection.region)
         }
     }

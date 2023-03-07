@@ -20,14 +20,12 @@ extension String {
     }
 
     func contains(_ str: String) -> Bool {
-        return self.range(of: str) != nil ? true : false
+        return self.range(of: str) != nil
     }
 
     func contains(_ strs: [String]) -> Bool {
-        for str in strs {
-            if self.range(of: str) != nil {
-                return true
-            }
+        for str in strs where self.range(of: str) != nil {
+            return true
         }
         return false
     }

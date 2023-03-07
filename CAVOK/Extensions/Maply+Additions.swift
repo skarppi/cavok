@@ -51,7 +51,7 @@ extension MaplyCoordinate {
                                y: self.y * MaplyCoordinate.kRadiansToDegrees)
     }
 
-    var cl: CLLocationCoordinate2D {
+    var cl2d: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: Double(self.y * MaplyCoordinate.kRadiansToDegrees),
                                       longitude: Double(self.x * MaplyCoordinate.kRadiansToDegrees))
     }

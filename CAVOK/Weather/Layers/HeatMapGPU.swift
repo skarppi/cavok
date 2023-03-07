@@ -30,7 +30,6 @@ class HeatMapGPU {
         return nil
     }()
 
-    // swiftlint:disable:next function_body_length
     init(input: [HeatData], config: WeatherConfig, steps: [GridStep]) {
         guard let device = HeatMapGPU.device,
               let commandQueue = HeatMapGPU.commandQueue,
