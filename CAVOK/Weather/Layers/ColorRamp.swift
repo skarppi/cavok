@@ -67,21 +67,21 @@ class ColorRamp {
         if minutes < 0 {
             return Color(hue: CGFloat(blue[0])/360, saturation: 1, brightness: brightness, opacity: alpha)
         } else if minutes <= 30 {
-            return ColorRamp.color(for: .VFR, alpha: alpha)
+            return ColorRamp.color(for: .VISUAL, alpha: alpha)
         } else if minutes <= 90 {
-            return ColorRamp.color(for: .MVFR, alpha: alpha)
+            return ColorRamp.color(for: .MARGINAL, alpha: alpha)
         } else {
-            return ColorRamp.color(for: .IFR, alpha: alpha)
+            return ColorRamp.color(for: .INSTRUMENT, alpha: alpha)
         }
     }
 
     class func color(for condition: WeatherConditions, alpha: CGFloat = 1) -> Color {
         switch condition {
-        case .VFR:
+        case .VISUAL:
             return Color(hue: 120/360, saturation: 1, brightness: brightness, opacity: alpha)
-        case .MVFR:
+        case .MARGINAL:
             return Color(hue: CGFloat(orange[0])/360, saturation: 1, brightness: brightness, opacity: alpha)
-        case .IFR:
+        case .INSTRUMENT:
             return Color(hue: 0, saturation: 1, brightness: 0.61, opacity: alpha)
         default:
             return Color(hue: 0, saturation: 0, brightness: 0.1, opacity: alpha)

@@ -39,7 +39,7 @@ class WeatherServiceTests: XCTestCase {
     func testStations() async throws {
         let stations = try await weatherServer.refreshStations()
 
-        let stationCount = try weatherServer.query.getStationCount()
+        let stationCount = try WeatherServer.query.getStationCount()
         XCTAssertEqual(stationCount, 12+18)
 
         XCTAssertEqual(stations.count, 12+18)

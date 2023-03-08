@@ -10,13 +10,13 @@ import Foundation
 import RealmSwift
 
 public enum WeatherConditions: Int16 {
-    case NA = 0, VFR = 1, MVFR = 2, IFR = 3
+    case NA = 0, VISUAL = 1, MARGINAL = 2, INSTRUMENT = 3
 
     func toString() -> String {
         switch self {
-        case .VFR: return "VMC"
-        case .MVFR: return "SVFR"
-        case .IFR: return "IMC"
+        case .VISUAL: return "V"
+        case .MARGINAL: return "M"
+        case .INSTRUMENT: return "I"
         default: return "-"
         }
     }
@@ -250,12 +250,12 @@ open class Observation: Object, Identifiable {
         ].compactMap { $0 }.min() ?? 5000
 
         let vis = self.visibility ?? -1
-        if (0 <= ceiling && ceiling < 1500) || (0 <= vis && vis < 5000) {
-            return WeatherConditions.IFR
-        } else if (1500 <= ceiling && ceiling < 3000) || (5000 <= vis && vis < 8000) {
-            return WeatherConditions.MVFR
+        if (0 <= ceiling && ceiling < 1000) || (0 <= vis && vis < 5000) {
+            return WeatherConditions.INSTRUMENT
+        } else if (1000 <= ceiling && ceiling < 3000) || (5000 <= vis && vis < 8000) {
+            return WeatherConditions.MARGINAL
         } else if 3000 <= ceiling && 8000 <= vis {
-            return WeatherConditions.VFR
+            return WeatherConditions.VISUAL
         } else {
             return WeatherConditions.NA
         }

@@ -60,7 +60,7 @@ class MetarTests: ObservationTestCase {
 
         XCTAssertEqual(metar.cloudHeight, 8900)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
     }
 
     func testUsa() {
@@ -79,7 +79,7 @@ class MetarTests: ObservationTestCase {
         XCTAssertEqual(metar.visibility, 12872)
         XCTAssertEqual(metar.temperature, 7)
         XCTAssertEqual(metar.dewPoint, 7)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
 
         _ = metar.parse(raw: "KNYL 101155Z 35007KT 10SM FEW100 12/03 A2993 "
                         + "RMK AO2 SLP135 T01170028 10144 20111 53015 $")
@@ -152,22 +152,22 @@ class MetarTests: ObservationTestCase {
         let metar = Metar().parse(raw: "ILZU 012120Z AUTO 31009KT 9999 OVC031")
         XCTAssertEqual(metar.cloudHeight, 3100)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 8000 BKN030")
         XCTAssertEqual(metar.cloudHeight, 3000)
         XCTAssertEqual(metar.visibility, 8000)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 8000 FEW010 BKN085")
         XCTAssertEqual(metar.cloudHeight, 1000)
         XCTAssertEqual(metar.visibility, 8000)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 8000 FG BKN030")
         XCTAssertEqual(metar.cloudHeight, 100)
         XCTAssertEqual(metar.visibility, 8000)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
     }
 
     func testCavokConditions() {
@@ -175,17 +175,17 @@ class MetarTests: ObservationTestCase {
             .parse(raw: "ILZU 012120Z AUTO 31009KT CAVOK")
         XCTAssertEqual(metar.cloudHeight, 5000)
         XCTAssertEqual(metar.visibility, 10000)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 8500 CAVOK")
         XCTAssertEqual(metar.cloudHeight, 5000)
         XCTAssertEqual(metar.visibility, 8500)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 8888 FEW001")
         XCTAssertEqual(metar.cloudHeight, 100)
         XCTAssertEqual(metar.visibility, 8888)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
     }
 
     func testMarginalVFRConditions() {
@@ -193,12 +193,12 @@ class MetarTests: ObservationTestCase {
             .parse(raw: "ILZU 012120Z AUTO 31009KT 9999 OVC029")
         XCTAssertEqual(metar.cloudHeight, 2900)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.MVFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.MARGINAL)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 8000 BKN015")
         XCTAssertEqual(metar.cloudHeight, 1500)
         XCTAssertEqual(metar.visibility, 8000)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.MVFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.MARGINAL)
     }
 
     func testIFRConditions() {
@@ -206,22 +206,22 @@ class MetarTests: ObservationTestCase {
             .parse(raw: "ILZU 012120Z AUTO 31009KT 9999 OVC010")
         XCTAssertEqual(metar.cloudHeight, 1000)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.IFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.INSTRUMENT)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 3000 BKN030")
         XCTAssertEqual(metar.cloudHeight, 3000)
         XCTAssertEqual(metar.visibility, 3000)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.IFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.INSTRUMENT)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT FG BKN002")
         XCTAssertEqual(metar.cloudHeight, 100)
         XCTAssertNil(metar.visibility)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.IFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.INSTRUMENT)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT FG BKN000")
         XCTAssertEqual(metar.cloudHeight, 0)
         XCTAssertNil(metar.visibility)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.IFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.INSTRUMENT)
     }
 
     func testVerticalVisibility() {
@@ -229,12 +229,12 @@ class MetarTests: ObservationTestCase {
             .parse(raw: "ILZU 012120Z AUTO 31009KT 9999 VV///")
         XCTAssertEqual(metar.cloudHeight, 100)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.IFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.INSTRUMENT)
 
         _ = metar.parse(raw: "ILZU 012120Z AUTO 31009KT 9999 VV015")
         XCTAssertEqual(metar.cloudHeight, 1500)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.MVFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.MARGINAL)
     }
 
     func testWindVariability() {
@@ -247,7 +247,7 @@ class MetarTests: ObservationTestCase {
         XCTAssertEqual(wind.variability!, "140V230")
         XCTAssertEqual(metar.cloudHeight, 2600)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
     }
 
     func testWindVariable() {
@@ -260,6 +260,6 @@ class MetarTests: ObservationTestCase {
         XCTAssertNil(wind.variability)
         XCTAssertEqual(metar.cloudHeight, 2600)
         XCTAssertEqual(metar.visibility, 9999)
-        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VFR)
+        XCTAssertEqual(metar.conditionEnum, WeatherConditions.VISUAL)
     }
 }

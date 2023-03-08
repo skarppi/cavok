@@ -45,36 +45,31 @@ struct NearbyObservationsView: View {
 
     @ViewBuilder
     func item(obs: Observation, distance: Int) -> some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(alignment: .top) {
                 Text(obs.station?.name ?? "-")
                     .bold()
 
-                if let module = navigation.selectedModule {
-                    let presentation = ObservationPresentation(module: module)
-                    AttributedTextView(obs: obs, presentation: presentation)
-                }
+                Spacer(minLength: 0)
+
+                ConditionView(obs.conditionEnum)
             }
 
-            Spacer(minLength: 0)
+            if let module = navigation.selectedModule {
+                let presentation = ObservationPresentation(module: module)
+                AttributedTextView(obs: obs, presentation: presentation)
+            }
 
-            VStack(alignment: .trailing, spacing: 2) {
-
-                let condition = obs.conditionEnum.toString()
-                Text(condition)
-                    .padding(.horizontal)
-                    .foregroundColor(.white)
-                    .background(
-                        ColorRamp.color(for: obs.conditionEnum, alpha: 0.8)
-                    )
-                    .cornerRadius(15)
-
-                Text("\(Int(distance/1000)) km")
-
+            HStack(alignment: .top) {
                 let age = obs.datetime.minutesSinceNow
                 Text(Date.since(minutes: age))
                     .foregroundColor(ColorRamp.color(forMinutes: age))
+
+                Spacer(minLength: 0)
+
+                Text("\(Int(distance/1000)) km")
             }
+
         }
     }
 }
@@ -90,7 +85,7 @@ struct NearbyObservationsView_Previews: PreviewProvider {
 
     static var previews: some View {
         NearbyObservationsView(observations: [
-            (metar("EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="), 100)
+            (metar("EFHK 091950Z 05006KT 9500 -RADZ BR FEW053 BKN045 05/04 Q1009 NOSIG="), 100)
         ])
         .environmentObject(NavigationManager())
     }

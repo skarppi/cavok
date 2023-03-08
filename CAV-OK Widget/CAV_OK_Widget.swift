@@ -96,22 +96,14 @@ struct CAV_OK_WidgetEntryView : View {
 
                         Spacer(minLength: 0)
 
-                        let condition = metar.conditionEnum.toString()
-                        Text(isSmall ? String(condition.first ?? "-") : condition)
-                            // reduced padding when small widget
-                            .padding(.horizontal, isSmall ? 7.5 : nil)
+                        ConditionView(metar.conditionEnum)
                             .font(.system(size: isSmall ? 14 : 20 ))
-                            .foregroundColor(.white)
-                            .background(
-                                ColorRamp.color(for: metar.conditionEnum, alpha: 0.8)
-                            )
-                            .cornerRadius(15)
                     }
                     .padding(.bottom, isSmall ? 1 : 4)
 
                     AttributedTextView(obs: metar, presentation:
                                         ObservationPresentation(modules: Modules.available))
-                        .font(.system(size: widgetFamily == .systemSmall ? 14 : 18 ))
+                        .font(.system(size: isSmall ? 14 : 18 ))
 
                     Spacer()
                 }

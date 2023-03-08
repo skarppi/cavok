@@ -42,7 +42,7 @@ struct ConfigDrawerView: View {
             AdaptiveStack { isLandscape in
                 if let error = errorMsg {
                     Text(error)
-                        .foregroundColor(ColorRamp.color(for: .IFR, alpha: 1))
+                        .foregroundColor(ColorRamp.color(for: .INSTRUMENT, alpha: 1))
                 } else {
                     Text("Found \(region.matches) stations")
                         .foregroundColor(.blue)
