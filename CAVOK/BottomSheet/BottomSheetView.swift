@@ -48,7 +48,7 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
     func toDynamic(_ detent: PresentationDetent) -> PresentationDetent {
         if detent == .dynamicHeader, let headerSize = headerSize {
             print("sheet using dynamic height \(headerSize) with selection \(conf.presentationDetents)")
-            return PresentationDetent.height(headerSize)
+            return PresentationDetent.height(headerSize + 50)
         }
         return detent
     }
@@ -61,7 +61,7 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
         view.sheet(isPresented: isPresented, onDismiss: onDismiss) {
             VStack(alignment: .leading) {
                 headerContent
-                    .padding(.top, 20)
+                    .frame(alignment: .top)
                     .background(GeometryReader { geometry in
                         Color.clear.onAppear {
                             headerSize = geometry.size.height
@@ -90,7 +90,7 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
                 )
             )
             .presentationDragIndicator(conf.presentationDragIndicator)
-            .interactiveDismissDisabled(false)
+            .interactiveDismissDisabled(conf.interactiveDismissDisabled)
             .onAppear {
                 guard let controller = UIApplication.shared.sceneRootPresentedVC(),
                       let sheet = UIApplication.shared.sheetVC() else {
@@ -107,6 +107,9 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
             }
         }
     }
+}
+
+extension BottomSheetView {
 
     func presentationDetents(_ detents: Set<PresentationDetent>) -> BottomSheetView {
         self.conf.presentationDetents = detents
@@ -140,13 +143,10 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
         return self
     }
 
-//        .onReceive(toDetent) { detent in
-//            guard let sheet = UIApplication.shared.sheetVC() else { return }
-//
-//            sheet.animateChanges {
-//                sheet.selectedDetentIdentifier = detent
-//            }
-//        }
+    func interactiveDismissDisabled(_ disabled: Bool) -> BottomSheetView {
+        self.conf.interactiveDismissDisabled = disabled
+        return self
+    }
 }
 
 struct BottomSheetView_Previews: PreviewProvider {

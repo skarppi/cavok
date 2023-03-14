@@ -23,8 +23,6 @@ struct PullToRefreshView<Content>: View where Content: View {
 
     // for reading how much the user has scrolled
     @State private var scrollOffset: CGFloat = 0
-    // angle the arrow turns
-    @State private var arrowAngle: Double = 0
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -45,7 +43,6 @@ struct PullToRefreshView<Content>: View where Content: View {
                             content()
                                 // prevent bounce up
                                 .offset(y: scrollOffset < 0 ? -scrollOffset : 0)
-                                .opacity(1 - arrowAngle / 180)
                         }
                     }
                 }
@@ -53,10 +50,7 @@ struct PullToRefreshView<Content>: View where Content: View {
             }
             .coordinateSpace(name: "scroll")
             .onPreferenceChange(ViewOffsetKey.self) { value in
-                // get scroll position
                 scrollOffset = value
-                // set arrow angle for the user
-                arrowAngle = Double((value - 10) * 5)
             }
         }
     }

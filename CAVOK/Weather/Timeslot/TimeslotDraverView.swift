@@ -22,9 +22,6 @@ struct TimeslotDrawerView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            Capsule()
-                .fill(Color.secondary)
-                .frame(width: 36, height: 5)
 
             Text(status)
                 .font(.body)
@@ -34,7 +31,7 @@ struct TimeslotDrawerView: View {
                 .background(Color(.secondarySystemFill))
                 .cornerRadius(10)
 
-            timeline.gesture(
+            timeline().gesture(
                 DragGesture(minimumDistance: 0, coordinateSpace: .global)
                     .updating($cursor) { (value, state, _) in
                         state = value.location
@@ -55,7 +52,8 @@ struct TimeslotDrawerView: View {
         }
     }
 
-    private var timeline: some View {
+    @ViewBuilder
+    private func timeline() -> some View {
         HStack(spacing: 0) {
             ForEach(Array(state.slots.enumerated()), id: \.element) { (index, slot) in
                 Text(slot.title)

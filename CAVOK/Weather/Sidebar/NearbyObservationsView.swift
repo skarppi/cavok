@@ -24,17 +24,23 @@ struct NearbyObservationsView: View {
     }
 
     var body: some View {
-        Group {
+        VStack {
+            Text("Nearby Stations")
+                .font(.subheadline)
+                .bold()
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.bottom, -1)
+
             if !observations.isEmpty {
                 List(observations, id: \.0, selection: $navigation.selectedObservation) { (obs, distance) in
 
                     self.item(obs: obs, distance: distance)
                 }
+                .scrollContentBackground(.hidden)
             } else {
                 Text("No location found")
             }
         }
-        .navigationTitle("Nearby Stations")
         .onAppear {
             observations = fetchObservations()
         }
@@ -84,9 +90,9 @@ struct NearbyObservationsView_Previews: PreviewProvider {
     }
 
     static var previews: some View {
-        NearbyObservationsView(observations: [
-            (metar("EFHK 091950Z 05006KT 9500 -RADZ BR FEW053 BKN045 05/04 Q1009 NOSIG="), 100)
-        ])
-        .environmentObject(NavigationManager())
+            NearbyObservationsView(observations: [
+                (metar("EFHK 091950Z 05006KT 9500 -RADZ BR FEW053 BKN045 05/04 Q1009 NOSIG="), 100)
+            ])
+            .environmentObject(NavigationManager())
+        }
     }
-}

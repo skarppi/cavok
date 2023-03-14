@@ -19,19 +19,7 @@ struct MapView: View {
     @Environment(\.isPreview) var isPreview
 
     var body: some View {
-        NavigationSplitView {
-            if navigation.showConfigView && Self.isPad {
-                ConfigContainerView()
-            } else if navigation.selectedObservation != nil {
-                VStack {
-                    ObservationHeaderView()
-
-                    ObservationDetailsView()
-                }
-            } else {
-                NearbyObservationsView()
-            }
-        } detail: {
+        iPadSplitViewOrView(
             ZStack(alignment: .topLeading) {
                 MapWrapper(mapApi: mapApi)
                     .onAppear {
@@ -47,9 +35,8 @@ struct MapView: View {
                     ConfigContainerView()
                 }
             }
-            .navigationSplitViewStyle(.automatic)
-        }
-        .onReceive(locationManager.$lastLocation.first()) { coordinate in
+        )
+        .onReceive(locationManager.$lastLocation) { coordinate in
             userLocationChanged(coordinate: coordinate)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             LastSession.save(
@@ -57,13 +44,7 @@ struct MapView: View {
                 height: mapApi.mapView.height)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             locationManager.requestLocation()
-        }.bottomSheet(
-            isPresented: $navigation.showWebView,
-            headerContent: {},
-            mainContent: {
-                WebView()
             }
-        )
         .environmentObject(navigation)
     }
 
@@ -92,6 +73,32 @@ struct MapView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                 navigation.showConfigView = true
             })
+        }
+    }
+}
+
+extension MapView {
+    @ViewBuilder
+    func iPadSplitViewOrView<Content: View>(_ view: Content) -> some View {
+        if Self.isPad {
+            NavigationSplitView {
+                if navigation.showConfigView {
+                    ConfigContainerView()
+                } else if navigation.selectedObservation != nil {
+                    VStack {
+                        ObservationHeaderView()
+
+                        ObservationDetailsView()
+                    }
+                } else {
+                    NearbyObservationsView()
+                }
+            } detail: {
+                view
+                    .navigationSplitViewStyle(.automatic)
+            }
+        } else {
+            view
         }
     }
 }

@@ -33,6 +33,8 @@ struct WeatherView: View {
 
     @StateObject var timeslots = TimeslotState()
 
+    @State private var timeslotsDetentSize: PresentationDetent = .height(160)
+
     var mapApi = MapApi.shared
 
     let weatherService = WeatherServer()
@@ -88,7 +90,10 @@ struct WeatherView: View {
                 navigation.selectedObservation = observation
             }
         }
+
+        // bottomSheet size cannot be controlled on iPad, use overlay instead
         .overlay(alignment: .bottom) {
+            if Self.isPad {
             PullToRefreshView(loadingMessage: $loadingMessage) {
                 TimeslotDrawerView()
                     .environmentObject(timeslots)
@@ -96,23 +101,16 @@ struct WeatherView: View {
             .frame(height: 100, alignment: .top)
             .background(.regularMaterial)
             .refreshable {
-                loadingMessage = "Reloading weather"
-                haptic.impactOccurred()
-
-                do {
-                    try await weatherService.refreshObservations()
-                    loadingMessage = nil
-                    navigation.refreshed.send()
-
-                    load()
-                } catch {
-                    Messages.show(error: error)
+                    await reload()
                 }
             }
         }
+
+        // show details sheet on iPhone
         .bottomSheet(
             isPresented: .constant(navigation.selectedObservation != nil && Self.isPhone),
             onDismiss: {
+                navigation.selectedObservation = nil
                 showDetails(nil)
             },
             headerContent: {
@@ -125,9 +123,44 @@ struct WeatherView: View {
             [.dynamicHeader, .medium, .large],
             selection: .constant(.dynamicHeader)
         )
+
+        // instead of nearby splitView use bottom sheet on iPhone
+        .bottomSheet(
+            isPresented: .constant(Self.isPhone && !navigation.showWebView),
+            onDismiss: {
+                showDetails(nil)
+            },
+            headerContent: {
+                PullToRefreshView(loadingMessage: $loadingMessage) {
+                        TimeslotDrawerView()
+                            .environmentObject(timeslots)
+                }
+                .frame(height: 100, alignment: .top)
+                .refreshable {
+                    await reload()
+                }
+            },
+            mainContent: {
+                NearbyObservationsView()
+            }
+        ).presentationDetents(
+            [.height(160), .medium, .large],
+            selection: $timeslotsDetentSize
+        )
+        .interactiveDismissDisabled(true)
+
+        .bottomSheet(
+            isPresented: $navigation.showWebView,
+            headerContent: {},
+            mainContent: {
+                WebView()
+            }
+        )
+        .presentationDragIndicator(.visible)
     }
 
     private func cleanMarkers() {
+        guard !isPreview else { return }
         mapApi.clearComponents(ofType: ObservationMarker.self)
     }
 
@@ -136,10 +169,23 @@ struct WeatherView: View {
         navigation.showConfigView = true
     }
 
-    func moduleTypeChanged(newModule: Module) {
-        guard !isPreview else {
-            return
+    func reload() async {
+        loadingMessage = "Reloading weather"
+        haptic.impactOccurred()
+
+        do {
+            try await weatherService.refreshObservations()
+            loadingMessage = nil
+            navigation.refreshed.send()
+
+            loadWeather()
+        } catch {
+            Messages.show(error: error)
         }
+        }
+
+    func moduleTypeChanged(newModule: Module) {
+        guard !isPreview else { return }
 
         let oldModule = weatherLayer?.presentation.modules.first
 
@@ -157,10 +203,10 @@ struct WeatherView: View {
         weatherLayer?.clean()
         weatherLayer = WeatherLayer(mapView: mapApi.mapView, presentation: presentation)
 
-        load()
+        loadWeather()
     }
 
-    private func load() {
+    private func loadWeather() {
         Messages.hide()
 
         do {
@@ -183,9 +229,7 @@ struct WeatherView: View {
     }
 
     private func render(frame: Int?) {
-        guard !isPreview else {
-            return
-        }
+        guard !isPreview else { return }
 
         cleanMarkers()
 
@@ -206,6 +250,8 @@ struct WeatherView: View {
     }
 
     private func showDetails(_ observation: Observation?) {
+        guard !isPreview else { return }
+
         mapApi.clearComponents(ofType: ObservationSelection.self)
 
         if let observation = observation {
@@ -218,8 +264,14 @@ struct WeatherView: View {
 }
 
 struct WeatherView_Previews: PreviewProvider {
+    static var navigation: NavigationManager = {
+        let manager = NavigationManager()
+        manager.showWebView = false
+        return manager
+    }()
+
     static var previews: some View {
         WeatherView()
-            .environmentObject(NavigationManager())
+            .environmentObject(navigation)
     }
 }
