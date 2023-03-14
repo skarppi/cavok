@@ -39,4 +39,13 @@ public class MapApi: ObservableObject {
             components.removeAll()
         }
     }
+
+    func animate(toPosition coordinate: MaplyCoordinate) {
+        let extents = mapView.getCurrentExtents()
+        if !extents.inside(coordinate) {
+            let height = LastSession.load()?.height ?? 0.1
+
+            mapView.animate(toPosition: coordinate, height: height, heading: 0, time: 0.5)
+        }
+    }
 }

@@ -44,7 +44,7 @@ struct MapView: View {
                 height: mapApi.mapView.height)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             locationManager.requestLocation()
-            }
+        }
         .environmentObject(navigation)
     }
 
@@ -59,12 +59,7 @@ struct MapView: View {
                 mapApi.addComponents(key: userLocation, value: objects)
             }
 
-            let extents = mapApi.mapView.getCurrentExtents()
-            if !extents.inside(coordinate) {
-                let height = LastSession.load()?.height ?? 0.1
-
-                mapApi.mapView.animate(toPosition: coordinate, height: height, heading: 0, time: 0.5)
-            }
+            mapApi.animate(toPosition: coordinate)
         }
     }
 

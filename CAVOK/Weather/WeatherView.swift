@@ -258,6 +258,8 @@ struct WeatherView: View {
             let marker = ObservationSelection(obs: observation)
             if let components = mapApi.mapView.addScreenMarkers([marker], desc: nil) {
                 mapApi.addComponents(key: marker, value: components)
+
+                mapApi.animate(toPosition: marker.loc)
             }
         }
     }
