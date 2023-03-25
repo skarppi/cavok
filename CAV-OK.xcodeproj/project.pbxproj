@@ -54,6 +54,8 @@
 		8958CBA829882023001F4553 /* CAV-OK WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		895B987229774600005E5D7F /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B987129774600005E5D7F /* BottomSheetView.swift */; };
 		895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B98742977F878005E5D7F /* BottomSheetConfig.swift */; };
+		8974F53729C6372400350973 /* LastSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66922540CAB800FB3D39 /* LastSession.swift */; };
+		8974F53829C641B200350973 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */; };
 		89797E8629983D7800DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
 		89797E8829983D8D00DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
 		89797E8B2998444400DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
@@ -969,6 +971,7 @@
 				894524E529914519007CE96F /* AttributedTextView.swift in Sources */,
 				894524E829914588007CE96F /* Timeslot.swift in Sources */,
 				894524DC29913314007CE96F /* Modules.swift in Sources */,
+				8974F53729C6372400350973 /* LastSession.swift in Sources */,
 				89797E8C2998445300DCCE2E /* QueryService.swift in Sources */,
 				8958CBA429882023001F4553 /* CAV_OK_Widget.intentdefinition in Sources */,
 				894524F329918A7B007CE96F /* CLLocation+Additions.swift in Sources */,
@@ -982,6 +985,7 @@
 				89797E8B2998444400DCCE2E /* ObservationPresentation.swift in Sources */,
 				8958CB9D29882022001F4553 /* CAV_OK_WidgetLiveActivity.swift in Sources */,
 				894524EA29914596007CE96F /* AddsService.swift in Sources */,
+				8974F53829C641B200350973 /* Date+Additions.swift in Sources */,
 				894524DE2991435B007CE96F /* WeatherServer.swift in Sources */,
 				894524E42991445C007CE96F /* Taf.swift in Sources */,
 				894524DF299143A8007CE96F /* Metar.swift in Sources */,

@@ -14,6 +14,7 @@ struct LastSession: Codable {
     let latitude: Float
     let longitude: Float
     let height: Float
+    let timestamp: Date
 
     var coordinate: MaplyCoordinate {
         return MaplyCoordinateMakeWithDegrees(longitude, latitude)
@@ -25,7 +26,7 @@ struct LastSession: Codable {
 
     static func save(center: MaplyCoordinate, height: Float) {
 
-        let session = LastSession(latitude: center.deg.y, longitude: center.deg.x, height: height)
+        let session = LastSession(latitude: center.deg.y, longitude: center.deg.x, height: height, timestamp: Date())
 
         print("Saving location \(session)")
 

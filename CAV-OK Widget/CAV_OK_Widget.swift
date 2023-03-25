@@ -23,6 +23,21 @@ struct Provider: IntentTimelineProvider {
         completion(SimpleEntry(date: Date(), configuration: configuration, metar: nil, msg: "Example metar here"))
     }
 
+    func waitTime() -> Int {
+        guard let lastUsed = LastSession.load()?.timestamp.minutesSinceNow else {
+            return 30
+        }
+
+        switch lastUsed {
+        case 0..<60:
+            return 5
+        case 30..<60:
+            return 10
+        default:
+            return 60
+        }
+    }
+
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
 
         @Sendable func complete(metar: Metar?, error: String?, wait: Int) {
@@ -51,7 +66,7 @@ struct Provider: IntentTimelineProvider {
 
                 let metar = try await weatherService.fetchLatest(station: station)
 
-                complete(metar: metar, error: "Station \(id) has no data", wait: 10)
+                complete(metar: metar, error: "Station \(id) has no data", wait: waitTime())
             } catch {
                 complete(metar: nil, error: error.localizedDescription, wait: 5)
             }
