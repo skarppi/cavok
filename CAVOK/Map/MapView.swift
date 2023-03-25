@@ -40,7 +40,7 @@ struct MapView: View {
             userLocationChanged(coordinate: coordinate)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             LastSession.save(
-                center: mapApi.mapView.getPosition(),
+                center: mapApi.mapView.getPosition().cl2d,
                 height: mapApi.mapView.height)
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             locationManager.requestLocation()

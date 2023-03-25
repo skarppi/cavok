@@ -70,7 +70,7 @@ struct MapWrapper: UIViewControllerRepresentable {
 
                 if let session = LastSession.load() {
                     self.mapView.height = session.height
-                    self.mapView.setPosition(session.coordinate)
+                    self.mapView.setPosition(session.coordinate.maplyCoordinate)
                 } else {
                     self.mapView.height = 0.7
                     self.mapView.setPosition(MaplyCoordinateMakeWithDegrees(10, 50))

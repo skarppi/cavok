@@ -11,22 +11,22 @@ import CoreLocation
 
 struct LastSession: Codable {
 
-    let latitude: Float
-    let longitude: Float
+    let latitude: Double
+    let longitude: Double
     let height: Float
     let timestamp: Date
 
-    var coordinate: MaplyCoordinate {
-        return MaplyCoordinateMakeWithDegrees(longitude, latitude)
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2DMake(latitude, longitude)
     }
 
     static func load() -> LastSession? {
         return UserDefaults.read()
     }
 
-    static func save(center: MaplyCoordinate, height: Float) {
+    static func save(center: CLLocationCoordinate2D, height: Float) {
 
-        let session = LastSession(latitude: center.deg.y, longitude: center.deg.x, height: height, timestamp: Date())
+        let session = LastSession(latitude: center.latitude, longitude: center.longitude, height: height, timestamp: Date())
 
         print("Saving location \(session)")
 
