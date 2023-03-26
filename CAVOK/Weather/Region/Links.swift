@@ -14,9 +14,9 @@ struct Link: Hashable, Identifiable {
     var url: String
     var blockElements: String
 
-    func buildURL() -> URL? {
+    func buildURL(station: Station?) -> URL? {
         if url.contains("{lat}") || url.contains("{lon") {
-            if let deg = LastLocation.load() {
+            if let deg = (station?.coordinate ?? LastLocation.load()) {
                 let lat = String(deg.latitude) + (deg.latitude > 0 ? "N" : "S")
                 let lon = String(deg.longitude) + (deg.longitude > 0 ? "E" : "W")
 

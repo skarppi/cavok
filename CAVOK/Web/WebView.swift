@@ -11,13 +11,14 @@ import UIKit
 import WebKit
 
 struct WebView: View {
+    @EnvironmentObject var navigation: NavigationManager
+
     var links = Links.load()
 
     @StateObject var viewModel: ViewModel
 
     init() {
         let model = ViewModel()
-        model.link = links.first
 
         _viewModel = StateObject(wrappedValue: model)
     }
@@ -47,6 +48,8 @@ struct WebView: View {
                                         .labelsHidden()
                 )
             }
+        }.onAppear {
+            viewModel.link = navigation.selectedObservation == nil ? links.first : links[1]
         }
     }
 }
@@ -69,6 +72,8 @@ struct LinkWebView: UIViewRepresentable {
 
     @ObservedObject var viewModel: ViewModel
 
+    @EnvironmentObject var navigation: NavigationManager
+
     func makeUIView(context: UIViewRepresentableContext<LinkWebView>) -> WKWebView {
 
         webView.navigationDelegate = context.coordinator
@@ -78,7 +83,7 @@ struct LinkWebView: UIViewRepresentable {
 
     func updateUIView(_ uiView: WKWebView, context: UIViewRepresentableContext<LinkWebView>) {
 
-        guard let url = viewModel.link?.buildURL() else {
+        guard let url = viewModel.link?.buildURL(station: navigation.selectedObservation?.station) else {
             return
         }
 
@@ -90,7 +95,7 @@ struct LinkWebView: UIViewRepresentable {
     }
 
     func load(webView: WKWebView) {
-        guard let url = viewModel.link?.buildURL() else {
+        guard let url = viewModel.link?.buildURL(station: navigation.selectedObservation?.station) else {
             webView.errorPage(msg: "Invalid url:  \(viewModel.link?.url ?? "")")
             return
         }

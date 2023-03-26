@@ -108,7 +108,7 @@ struct WeatherView: View {
 
         // show details sheet on iPhone
         .bottomSheet(
-            isPresented: .constant(navigation.selectedObservation != nil && Self.isPhone),
+            isPresented: .constant(navigation.selectedObservation != nil && !navigation.showWebView && Self.isPhone),
             onDismiss: {
                 navigation.selectedObservation = nil
                 showDetails(nil)

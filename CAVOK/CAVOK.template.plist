@@ -108,15 +108,7 @@
 			<key>url</key>
 			<string>https://www.meteoblue.com/en/weather/forecast/meteogramfive/{lat}{lon}</string>
 			<key>blockElements</key>
-			<string>.bloo form, .bloo .promotion, #meteomail, .app-promotion, .adsbygoogle</string>
-		</dict>
-		<dict>
-			<key>title</key>
-			<string>efhf</string>
-			<key>url</key>
-			<string>http://malmiairport.fi/webcam/image.php</string>
-			<key>blockElements</key>
-			<string></string>
+			<string>.bloo form, .bloo .promotion, #meteomail, .app-promotion, .adsbygoogle, ins</string>
 		</dict>
 	</array>
 </dict>

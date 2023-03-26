@@ -29,7 +29,6 @@
 		894524EB299145B3007CE96F /* WeatherRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66CD2540CACA00FB3D39 /* WeatherRegion.swift */; };
 		894524EC29915507007CE96F /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AE2540CACA00FB3D39 /* String+Additions.swift */; };
 		894524ED2991551C007CE96F /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66C32540CACA00FB3D39 /* Weather.swift */; };
-		894524EF2991558F007CE96F /* Cavok+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524EE2991558F007CE96F /* Cavok+Additions.swift */; };
 		894524F0299157BB007CE96F /* ColorRamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66B72540CACA00FB3D39 /* ColorRamp.swift */; };
 		894524F229918A62007CE96F /* CLLocation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524F129918A62007CE96F /* CLLocation+Additions.swift */; };
 		894524F329918A7B007CE96F /* CLLocation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524F129918A62007CE96F /* CLLocation+Additions.swift */; };
@@ -230,7 +229,6 @@
 		89295AD529B47045001A7740 /* NearbyObservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyObservationsView.swift; sourceTree = "<group>"; };
 		89295AE129B7DCD6001A7740 /* ConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionView.swift; sourceTree = "<group>"; };
 		894524DA2991280B007CE96F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
-		894524EE2991558F007CE96F /* Cavok+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cavok+Additions.swift"; sourceTree = "<group>"; };
 		894524F129918A62007CE96F /* CLLocation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Additions.swift"; sourceTree = "<group>"; };
 		894524FB2991AAE9007CE96F /* CAV-OK WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CAV-OK WidgetExtension.entitlements"; sourceTree = "<group>"; };
 		894524FE2991AC02007CE96F /* FileManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Additions.swift"; sourceTree = "<group>"; };
@@ -594,7 +592,6 @@
 				C09D66AE2540CACA00FB3D39 /* String+Additions.swift */,
 				B65329CC26A4BCD800B30A64 /* UIColor+Additions.swift */,
 				B6A7424027569AEA00CBAA55 /* Collection+Additions.swift */,
-				894524EE2991558F007CE96F /* Cavok+Additions.swift */,
 				894524F129918A62007CE96F /* CLLocation+Additions.swift */,
 				894524FE2991AC02007CE96F /* FileManager+Additions.swift */,
 			);
@@ -1024,7 +1021,6 @@
 				89797E8629983D7800DCCE2E /* ObservationPresentation.swift in Sources */,
 				B64D83C726150F9B003AE228 /* ConfigDrawerView.swift in Sources */,
 				C09D66FA2540CACA00FB3D39 /* WeatherRegion.swift in Sources */,
-				894524EF2991558F007CE96F /* Cavok+Additions.swift in Sources */,
 				B65329CD26A4BCD800B30A64 /* UIColor+Additions.swift in Sources */,
 				89295AD629B47045001A7740 /* NearbyObservationsView.swift in Sources */,
 				B6C31A38260FD41F0060CA55 /* PullToRefreshView.swift in Sources */,

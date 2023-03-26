@@ -13,7 +13,7 @@ class ObservationSelection: MaplyScreenMarker {
     init(obs: Observation) {
         super.init()
         userObject = obs
-        loc = obs.station!.coordinate()
+        loc = obs.station!.coordinate.maplyCoordinate
         size = CGSize(width: 30, height: 30)
 
         layoutImportance = 2.0

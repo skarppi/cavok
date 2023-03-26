@@ -41,7 +41,7 @@ class HeatMap {
                 return nil
             }
 
-            let localCoord = config.coordSystem.geo(toLocal: obs.station!.coordinate())
+            let localCoord = config.coordSystem.geo(toLocal: obs.station!.coordinate.maplyCoordinate)
             guard config.bounds.inside(localCoord) else {
                 return nil
             }

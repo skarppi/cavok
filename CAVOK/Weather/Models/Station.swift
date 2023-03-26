@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import CoreLocation
 
 enum WeatherSource: String, PersistableEnum {
     case aws
@@ -43,5 +44,9 @@ public class Station: Object {
         self.source = source
         self.hasMetar = hasMetar
         self.hasTaf = hasTaf
+    }
+
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2DMake(Double(latitude), Double(longitude))
     }
 }

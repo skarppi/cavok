@@ -13,7 +13,7 @@ class ObservationMarker: MaplyScreenMarker {
     init(obs: Observation) {
         super.init()
         self.userObject = obs
-        self.loc = obs.station!.coordinate()
+        self.loc = obs.station!.coordinate.maplyCoordinate
         self.size = CGSize(width: 10, height: 10)
         self.image = drawRect(condition: obs.conditionEnum)
     }

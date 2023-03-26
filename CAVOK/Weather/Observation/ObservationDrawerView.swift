@@ -44,6 +44,10 @@ struct ObservationDetailsView: View {
         return nil
     }
 
+    func showMeteogram() {
+        navigation.showWebView = true
+    }
+
     var body: some View {
         if let presentation = navigation.presentation {
             ScrollView {
@@ -56,6 +60,17 @@ struct ObservationDetailsView: View {
                     title: "Taf",
                     observations: observations?.tafs ?? [],
                     presentation: presentation)
+
+                Button(action: showMeteogram) {
+                    HStack(spacing: 10) {
+                        Text("Meteogram")
+                        Image(systemName: "location")
+                    }.padding()
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.accentColor, lineWidth: 1)
+                )
             }
             .padding(.horizontal)
             .onAppear {

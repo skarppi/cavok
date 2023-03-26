@@ -32,7 +32,7 @@ class StationMarker: MaplyScreenMarker {
     init(station: Station) {
         super.init()
         self.userObject = station
-        self.loc = station.coordinate()
+        self.loc = station.coordinate.maplyCoordinate
         self.size = CGSize(width: StationMarker.diameter, height: StationMarker.diameter)
         self.image = StationMarker.markerImage
     }
