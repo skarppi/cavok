@@ -48,8 +48,26 @@ struct ObservationDetailsView: View {
         navigation.showWebView = true
     }
 
+    func isFavorite() -> Bool {
+        return navigation.selectedObservation?.station?.favorite == true
+    }
+
+    func changeFavorite() {
+        if let obs = navigation.selectedObservation, let station = obs.station {
+
+            do {
+                try WeatherServer.query.favorite(station: station)
+            } catch {
+                Messages.show(error: error)
+            }
+        }
+
+    }
+
     var body: some View {
+
         if let presentation = navigation.presentation {
+
             ScrollView {
                 ObservationList(
                     title: "Metar history",
@@ -61,16 +79,25 @@ struct ObservationDetailsView: View {
                     observations: observations?.tafs ?? [],
                     presentation: presentation)
 
-                Button(action: showMeteogram) {
-                    HStack(spacing: 10) {
-                        Text("Meteogram")
-                        Image(systemName: "location")
-                    }.padding()
+                HStack {
+                    Button(action: showMeteogram) {
+                        HStack(spacing: 10) {
+                            Text("Meteogram")
+                            Image(systemName: "location")
+                        }.padding()
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.accentColor)
+
+                    Button(action: changeFavorite) {
+                        HStack(spacing: 10) {
+                            Text( isFavorite() ? "Unfavorite" : "Favorite")
+                            Image(systemName: isFavorite() ? "minus" : "plus")
+                        }.padding()
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(isFavorite() ? .red : .green)
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color.accentColor, lineWidth: 1)
-                )
             }
             .padding(.horizontal)
             .onAppear {

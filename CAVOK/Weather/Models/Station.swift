@@ -26,6 +26,7 @@ public class Station: Object {
     @Persisted var hasMetar: Bool = false
     @Persisted var hasTaf: Bool = false
     @Persisted var timestamp: Date = Date()
+    @Persisted var favorite: Bool = false
 
     convenience init(identifier: String,
                      name: String,

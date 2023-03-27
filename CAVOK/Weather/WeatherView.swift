@@ -141,7 +141,10 @@ struct WeatherView: View {
                 }
             },
             mainContent: {
-                NearbyObservationsView()
+                List {
+                    FavoriteObservationsView()
+                    NearbyObservationsView()
+                }
             }
         ).presentationDetents(
             [.height(160), .medium, .large],

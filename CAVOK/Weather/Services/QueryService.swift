@@ -54,7 +54,47 @@ public class QueryService {
                                           distinct: (by: "identifier", sorted: "datetime", ascending: false),
                                           latitudeKey: "station.latitude",
                                           longitudeKey: "station.longitude")
-            .map { (obs, distance) in (obs.freeze(), distance) }
+            .map { obj in  WithDistance(element: obj.element.freeze(), distanceMeters: obj.distanceMeters) }
         return metars
     }
+
+    func favorites(location: CLLocationCoordinate2D?) throws -> [WithDistance<Metar>] {
+        let realm = try Realm()
+        let metars = realm.objects(Metar.self)
+            .sorted(byKeyPath: "datetime", ascending: false)
+            .distinct(by: ["station.identifier"])
+            .where { $0.station.favorite == true }
+            .sorted(byKeyPath: "station.identifier")
+
+        guard let location = location else {
+            return metars.map { metar in
+                WithDistance(element: metar, distanceMeters: nil)
+            }
+        }
+
+        return metars.addDistance(center: location,
+                         latitudeKey: "station.latitude",
+                         longitudeKey: "station.longitude"
+            )
+        .map { obj in  WithDistance(element: obj.element.freeze(), distanceMeters: obj.distanceMeters) }
+    }
+
+    @MainActor func favorite(station source: Station) throws -> Station {
+        let realm = try Realm()
+        guard let station = realm.object(ofType: Station.self, forPrimaryKey: source.identifier) else {
+            return source
+        }
+
+        try realm.write {
+            station.favorite = !station.favorite
+        }
+        return station.freeze()
+    }
+
+    @MainActor func fetchObservation(observation: Observation) throws -> Observation {
+        let realm = try Realm()
+
+        return realm.object(ofType: Observation.self, forPrimaryKey: observation.raw) ?? observation
+    }
+
 }

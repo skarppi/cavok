@@ -55,6 +55,8 @@
 		895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B98742977F878005E5D7F /* BottomSheetConfig.swift */; };
 		8974F53729C6372400350973 /* LastSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66922540CAB800FB3D39 /* LastSession.swift */; };
 		8974F53829C641B200350973 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */; };
+		8974F53E29D018D000350973 /* FavoriteObservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974F53D29D018D000350973 /* FavoriteObservationsView.swift */; };
+		8974F54229D0303200350973 /* StationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974F54129D0303200350973 /* StationListItemView.swift */; };
 		89797E8629983D7800DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
 		89797E8829983D8D00DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
 		89797E8B2998444400DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
@@ -244,6 +246,8 @@
 		8958CBA329882023001F4553 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		895B987129774600005E5D7F /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		895B98742977F878005E5D7F /* BottomSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfig.swift; sourceTree = "<group>"; };
+		8974F53D29D018D000350973 /* FavoriteObservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteObservationsView.swift; sourceTree = "<group>"; };
+		8974F54129D0303200350973 /* StationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListItemView.swift; sourceTree = "<group>"; };
 		89797E8529983D7800DCCE2E /* ObservationPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationPresentation.swift; sourceTree = "<group>"; };
 		89797E8729983D8D00DCCE2E /* QueryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryService.swift; sourceTree = "<group>"; };
 		89797E9929984CC200DCCE2E /* CAV-OK Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CAV-OK Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -389,6 +393,8 @@
 			isa = PBXGroup;
 			children = (
 				89295AD529B47045001A7740 /* NearbyObservationsView.swift */,
+				8974F53D29D018D000350973 /* FavoriteObservationsView.swift */,
+				8974F54129D0303200350973 /* StationListItemView.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -1032,6 +1038,7 @@
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
 				B6A7424127569AEA00CBAA55 /* Collection+Additions.swift in Sources */,
 				C09D66F42540CACA00FB3D39 /* StationMarker.swift in Sources */,
+				8974F54229D0303200350973 /* StationListItemView.swift in Sources */,
 				C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */,
 				C09D66F12540CACA00FB3D39 /* Weather.swift in Sources */,
 				C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */,
@@ -1049,6 +1056,7 @@
 				C09D66E22540CACA00FB3D39 /* WeatherConfig.swift in Sources */,
 				B62B9AFE2650FC5100F3E74D /* LinksView.swift in Sources */,
 				89295ACF29B464F4001A7740 /* NavigationManager.swift in Sources */,
+				8974F53E29D018D000350973 /* FavoriteObservationsView.swift in Sources */,
 				C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */,
 				C09D66E42540CACA00FB3D39 /* DebugTileFetcher.swift in Sources */,
 				C09D669E2540CAB800FB3D39 /* LastLocation.swift in Sources */,

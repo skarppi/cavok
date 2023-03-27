@@ -15,7 +15,10 @@ enum GeoQueriesError: Error {
     case invalidRealm(String)
 }
 
-public typealias WithDistance<Element: Object> = (element: Element, distanceMeters: Int)
+public struct WithDistance<Element: Object> {
+    var element: Element
+    var distanceMeters: Double?
+}
 
 // MARK: - Public extensions
 public extension Realm {
@@ -97,10 +100,6 @@ public extension Realm {
                              sortAscending: sort,
                              latitudeKey: latitudeKey,
                              longitudeKey: longitudeKey)
-            .map { obj in
-                (element: obj, distanceMeters: Int(obj.objDist))
-            }
-
     }
 
 }
@@ -194,7 +193,7 @@ public extension RealmCollection where Element: Object {
                          radius: Double,
                          sortAscending sort: Bool?,
                          latitudeKey: String = "lat",
-                         longitudeKey: String = "lng") throws -> [Element] {
+                         longitudeKey: String = "lng") throws -> [WithDistance<Element>] {
 
         // Realm instance pre-check
         guard realm != nil else {
@@ -207,17 +206,20 @@ public extension RealmCollection where Element: Object {
                                      longitudeKey: longitudeKey)
 
         // add distance
-        let distance = inBox.addDistance(center: center, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
+        let withDistance = inBox.addDistance(center: center, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
 
         // Inside radius
-        let radius = distance.filter { (obj: Object) -> Bool in
-            return obj.objDist <= radius
+        let insideRadius = withDistance.filter { obj -> Bool in
+            if let distance = obj.distanceMeters {
+                return distance <= radius
+            }
+            return false
         }
 
         // Sort results
-        guard let ascending = sort else { return radius }
+        guard let ascending = sort else { return insideRadius }
 
-        return radius.sort(ascending: ascending)
+        return insideRadius.sort(ascending: ascending)
 
     }
 
@@ -232,7 +234,7 @@ public extension RealmCollection where Element: Object {
     func sortByDistance(center: CLLocationCoordinate2D,
                         ascending: Bool,
                         latitudeKey: String = "lat",
-                        longitudeKey: String = "lng") -> [Element] {
+                        longitudeKey: String = "lng") -> [WithDistance<Element>] {
 
         return self
             .addDistance(center: center, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
@@ -292,8 +294,7 @@ public extension MKCoordinateRegion {
 
 }
 
-private extension Array where Element: Object {
-
+private extension Array { // where Element: WithDistance<T: Object> {
     /**
      Sorting function
 
@@ -301,28 +302,24 @@ private extension Array where Element: Object {
 
      - returns: Array of [Object] sorted by distance
      */
-    func sort(ascending: Bool = true) -> [Iterator.Element] {
+    func sort<T: Object>(ascending: Bool = true) -> [Iterator.Element] where Element == WithDistance<T> {
 
-        return self.sorted(by: { (obj1: Object, obj2: Object) -> Bool in
+        return self.sorted(by: { (obj1, obj2) -> Bool in
+
+            guard let dist1 = obj1.distanceMeters else { return false }
+            guard let dist2 = obj2.distanceMeters else { return true }
 
             if ascending {
-
-                return obj1.objDist < obj2.objDist
-
+                return dist1 < dist2
             } else {
-
-                return obj1.objDist > obj2.objDist
-
+                return dist1 > dist2
             }
-
         })
-
     }
-
 }
 
 // MARK: - Private core extensions
-private extension RealmCollection where Element: Object {
+extension RealmCollection where Element: Object {
 
     /**
      Add distance to sort results
@@ -335,9 +332,9 @@ private extension RealmCollection where Element: Object {
      */
     func addDistance(center: CLLocationCoordinate2D,
                      latitudeKey: String = "lat",
-                     longitudeKey: String = "lng") -> [Element] {
+                     longitudeKey: String = "lng") -> [WithDistance<Element>] {
 
-        return self.map { (obj) -> Element in
+        return self.map { obj in
 
             // Calculate distance
             if let latitude = obj.value(forKeyPath: latitudeKey) as? CLLocationDegrees,
@@ -346,34 +343,10 @@ private extension RealmCollection where Element: Object {
                 let center = CLLocation(latitude: center.latitude, longitude: center.longitude)
                 let distance = location.distance(from: center)
 
-                // Save
-                obj.objDist = distance
+                return WithDistance(element: obj, distanceMeters: distance)
             }
-            return obj
+            return WithDistance(element: obj, distanceMeters: 0.0)
 
         }
-
     }
-
-}
-
-private extension Object {
-
-    private struct AssociatedKeys {
-        static var DistanceKey = "DistanceKey"
-    }
-
-    var objDist: Double {
-        get {
-            guard let value = objc_getAssociatedObject(self, &AssociatedKeys.DistanceKey) as? Double else { return 0.0 }
-            return value
-        }
-        set (value) {
-            objc_setAssociatedObject(self,
-                                     &AssociatedKeys.DistanceKey,
-                                     value,
-                                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-
 }
