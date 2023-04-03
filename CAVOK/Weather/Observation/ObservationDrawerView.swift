@@ -29,6 +29,8 @@ struct ObservationHeaderView: View {
 struct ObservationDetailsView: View {
     @State var observations: Observations?
 
+    @State var isFavorite: Bool = true
+
     @EnvironmentObject var navigation: NavigationManager
 
     @Environment(\.isPreview) var isPreview
@@ -48,15 +50,11 @@ struct ObservationDetailsView: View {
         navigation.showWebView = true
     }
 
-    func isFavorite() -> Bool {
-        return navigation.selectedObservation?.station?.favorite == true
-    }
-
     func changeFavorite() {
         if let obs = navigation.selectedObservation, let station = obs.station {
 
             do {
-                try WeatherServer.query.favorite(station: station)
+                isFavorite = try WeatherServer.query.favorite(station: station)
             } catch {
                 Messages.show(error: error)
             }
@@ -91,18 +89,20 @@ struct ObservationDetailsView: View {
 
                     Button(action: changeFavorite) {
                         HStack(spacing: 10) {
-                            Text( isFavorite() ? "Unfavorite" : "Favorite")
+                            Text( isFavorite ? "Unfavorite" : "Favorite")
                             Image(systemName: "heart")
                         }.padding()
                     }
                     .buttonStyle(.bordered)
-                    .tint(isFavorite() ? .red : .green)
+                    .tint(isFavorite ? .red : .green)
                 }
             }
             .padding(.horizontal)
             .onAppear {
                 guard !isPreview else { return }
                 observations = fetchObservations()
+
+                isFavorite = observations?.metars.first?.station?.favorite ?? false
             }
         }
     }

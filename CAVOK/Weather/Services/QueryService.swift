@@ -34,9 +34,7 @@ public class QueryService {
             filtered = objects
         }
 
-        return filtered
-            .sorted(byKeyPath: sortKey)
-            .map { $0.freeze() }
+        return Array(filtered.sorted(byKeyPath: sortKey))
     }
 
     func observations(for identifier: String? = nil) throws -> Observations {
@@ -76,15 +74,16 @@ public class QueryService {
                                   longitudeKey: \Metar.station?.longitude)
     }
 
-    @MainActor func favorite(station source: Station) throws {
+    @MainActor func favorite(station source: Station) throws -> Bool {
         let realm = try Realm()
         guard let station = realm.object(ofType: Station.self, forPrimaryKey: source.identifier) else {
-            return
+            return false
         }
 
         try realm.write {
             station.favorite = !station.favorite
         }
+        return station.favorite
     }
 
     @MainActor func fetchObservation(observation: Observation) throws -> Observation {

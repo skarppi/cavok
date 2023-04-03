@@ -82,8 +82,12 @@ class WeatherLayer {
         if let frameChanger = self.frameChanger {
             mapView.remove(frameChanger)
         }
+        frameChanger = nil
+
         loader?.shutdown()
         loader = nil
+
+        fetcher = nil
     }
 
     private func initLoader(frames: [HeatMap]) -> MaplyQuadImageFrameLoader? {

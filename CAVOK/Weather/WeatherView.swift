@@ -215,6 +215,8 @@ struct WeatherView: View {
         do {
             let observations = try WeatherServer.query.observations()
 
+            weatherLayer?.clean()
+
             timeslots.reset(observations: observations)
 
             weatherLayer?.load(slots: timeslots.slots,
