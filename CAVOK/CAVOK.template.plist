@@ -64,7 +64,34 @@
 		</dict>
 		<dict>
 			<key>key</key>
+			<string>wind</string>
+			<key>name</key>
+			<string>Wind</string>
+			<key>unit</key>
+			<string>KT</string>
+			<key>legend</key>
+			<dict>
+				<key>00025</key>
+				<string>25</string>
+				<key>00020</key>
+				<string>20</string>
+				<key>00015</key>
+				<string>15</string>
+				<key>00010</key>
+				<string>10</string>
+				<key>00005</key>
+				<string>5</string>
+				<key>00000</key>
+				<string>0</string>
+			</dict>
+			<key>reversed</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>key</key>
 			<string>temp</string>
+			<key>class</key>
+			<string>Temperature</string>
 			<key>name</key>
 			<string>Spread</string>
 			<key>unit</key>

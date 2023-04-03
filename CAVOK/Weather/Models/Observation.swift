@@ -49,6 +49,7 @@ open class Observation: Object, Identifiable {
     @Persisted var visibilityGroup: String?
     @Persisted var visibility: Int?
     @Persisted var weather: String?
+    @Persisted var windGroup: String?
     @Persisted var windDirection: Int?
     @Persisted var windGust: Int?
     @Persisted var windSpeed: Int?

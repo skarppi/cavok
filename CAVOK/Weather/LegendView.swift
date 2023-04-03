@@ -95,7 +95,8 @@ struct LegendView_Previews: PreviewProvider {
                 key: ModuleKey.ceiling,
                 title: "Test",
                 unit: "FL",
-                legend: ["01": "000", "02": "005", "03": "010", "04": "015", "05": "020"]
+                legend: ["01": "000", "02": "005", "03": "010", "04": "015", "05": "020"],
+                reversed: false
             )
         )
 

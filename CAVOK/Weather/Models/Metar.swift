@@ -54,10 +54,12 @@ public class Metar: Observation {
             }
         }
 
-        if let wind = parseWind(value: parser.pop()) {
+        if let wind = parseWind(value: parser.peek()) {
             self.wind = wind
+            self.windGroup = parser.pop()
         } else {
             self.wind = WindData()
+            self.windGroup = nil
         }
 
         if parseWindVariability(value: parser.peek()) {

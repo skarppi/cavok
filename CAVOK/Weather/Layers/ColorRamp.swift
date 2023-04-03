@@ -47,7 +47,10 @@ class ColorRamp {
 
         steps = keys.enumerated().map { (i, step) in
             let next = (i + 1) < keys.count ? keys[i + 1] : Int32.max
-            return GridStep(lower: step, upper: next, fromHue: hues[i][0], toHue: hues[i][1])
+
+            let hue = module.reversed ? hues[keys.count - i - 1].reversed() : hues[i]
+
+            return GridStep(lower: step, upper: next, fromHue: hue[0], toHue: hue[1])
         }
     }
 

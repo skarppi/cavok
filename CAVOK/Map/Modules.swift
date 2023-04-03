@@ -13,10 +13,11 @@ struct Module: Hashable {
     var title: String
     var unit: String
     var legend: [String: String]
+    var reversed: Bool
 }
 
 enum ModuleKey: String {
-    case ceiling, visibility, temp, web
+    case ceiling, visibility, wind, temp, web
 }
 
 class Modules {
@@ -47,7 +48,9 @@ class Modules {
                 return Module(key: key,
                               title: name,
                               unit: module["unit"] as? String ?? "",
-                              legend: module["legend"] as? [String: String] ?? [:])
+                              legend: module["legend"] as? [String: String] ?? [:],
+                              reversed: module["reversed"] as? Bool ?? false
+                )
             } else {
                 return nil
             }

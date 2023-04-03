@@ -28,6 +28,8 @@ struct ObservationPresentation {
             return (observation.cloudHeight, observation.clouds)
         case .visibility:
             return (observation.visibility, observation.visibilityGroup)
+        case .wind:
+            return (observation.windGust ?? observation.windSpeed, observation.windGroup)
         case .temp:
             let metar = observation as? Metar
             return (metar?.spreadCeiling(), metar?.temperatureGroup)
