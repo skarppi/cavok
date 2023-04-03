@@ -38,10 +38,8 @@ class DebugTileFetcher: WeatherTileFetcher {
         save(tileID, frame: frame, data: UIImage(cgImage: image).pngData())
     }
 
-    override func data(forTile fetchInfo: Any, tileID: MaplyTileID) -> Any? {
+    override func data(forTile info: WeatherTileFetchInfo, tileID: MaplyTileID) -> Data? {
         //    func fetchTile(layer: MaplyQuadImageLoader, tileID: MaplyTileID, frame:Int32) -> Data? {
-
-        let info = fetchInfo as? WeatherTileFetchInfo
 
         let bbox = loader?.geoBounds(forTile: tileID)
 
@@ -73,7 +71,7 @@ class DebugTileFetcher: WeatherTileFetcher {
         fillColor.setStroke()
         fillColor.setFill()
         ctx?.setTextDrawingMode(CGTextDrawingMode.fill)
-        let textStr = "\(tileID.level) \(info?.frame ?? 0):" +
+        let textStr = "\(tileID.level) \(info.frame):" +
             "(\(tileID.x),\(tileID.y)) \(valid) = (\(bbox?.ll.deg.x ?? 0),\(bbox?.ll.deg.y ?? 0))"
         textStr.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height), withAttributes: nil)
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class WeatherTileFetcher: WeatherSimpleTileFetcher {
+class WeatherTileFetcher: WeatherSimpleTileFetcher {
 
     let frames: [HeatMap]
 
@@ -42,16 +42,13 @@ open class WeatherTileFetcher: WeatherSimpleTileFetcher {
         return config.coordSystem
     }
 
-    open override func data(forTile fetchInfo: Any, tileID: MaplyTileID) -> Any? {
+    override func data(forTile info: WeatherTileFetchInfo, tileID: MaplyTileID) -> Data? {
         let bbox = tileID.bboxFlip
 
         guard tileID.validTile(config: config) else {
             return nil
         }
 
-        guard let info = fetchInfo as? WeatherTileFetchInfo else {
-            return nil
-        }
         let index = info.frame
 
         let frame = frames[index]
