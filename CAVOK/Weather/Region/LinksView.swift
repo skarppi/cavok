@@ -27,7 +27,9 @@ struct LinksView: View {
                 }
                 .onMove(perform: moveRow)
                 .onDelete(perform: deleteRow)
-            }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .scrollContentBackground(.hidden)
             .navigationBarTitle("Web Links", displayMode: .inline)
             .navigationBarItems(
                 trailing: HStack {

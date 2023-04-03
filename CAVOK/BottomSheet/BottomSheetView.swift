@@ -73,7 +73,10 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
                 mainContent
             }
             .padding(.top)
-            .background(Material.ultraThinMaterial)
+
+            .presentationBackground(.thinMaterial)
+            .presentationBackgroundInteraction(
+                .enabled(upThrough: .large))
             .presentationDetents(
                 toDynamic(),
                 selection: Binding(
@@ -102,7 +105,6 @@ struct BottomSheetView<HContent: View, MContent: View, V: View>: View {
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
 
                 sheet.prefersGrabberVisible = false
-                sheet.largestUndimmedDetentIdentifier = conf.largestUndimmedDetentIdentifier
                 sheet.prefersEdgeAttachedInCompactHeight = true
             }
         }
@@ -128,13 +130,6 @@ extension BottomSheetView {
 
     func presentationDragIndicator(_ visibility: Visibility) -> BottomSheetView {
         self.conf.presentationDragIndicator = visibility
-        return self
-    }
-
-    func largestUndimmedDetentIdentifier(
-        _ detentIdentifier: UISheetPresentationController.Detent.Identifier
-    ) -> BottomSheetView {
-        self.conf.largestUndimmedDetentIdentifier = detentIdentifier
         return self
     }
 

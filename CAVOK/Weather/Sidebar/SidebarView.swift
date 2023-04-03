@@ -13,7 +13,7 @@ struct SidebarView: View {
             List {
                 FavoriteObservationsView(now: timeline.date)
                 NearbyObservationsView(now: timeline.date)
-            }
+            }.scrollContentBackground(.hidden)
         }
     }
 }
@@ -21,5 +21,6 @@ struct SidebarView: View {
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarView()
+            .environmentObject(NavigationManager())
     }
 }

@@ -20,6 +20,8 @@ struct LinkEditView: View {
                     .frame(minHeight: 100, maxHeight: .infinity, alignment: .topLeading)
             }
         }
+        .scrollContentBackground(.hidden)
+        .background(.thinMaterial)
     }
 }
 

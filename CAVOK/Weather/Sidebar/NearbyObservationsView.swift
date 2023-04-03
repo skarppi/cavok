@@ -31,7 +31,6 @@ struct NearbyObservationsView: View {
                 ForEach(observations) { obs in
                     StationListItemView(obs: obs, now: now)
                 }
-                .scrollContentBackground(.hidden)
             } else {
                 Text("No location found")
             }

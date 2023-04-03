@@ -11,7 +11,6 @@ internal class BottomSheetConfig {
     var presentationDetents: Set<PresentationDetent> = [.large]
     var selection: Binding<PresentationDetent> = .constant(.large)
     var presentationDragIndicator: Visibility = .visible
-    var largestUndimmedDetentIdentifier: UISheetPresentationController.Detent.Identifier = .large
     var bgColor: UIColor? = UIColor.secondarySystemBackground
     var interactiveDismissDisabled: Bool = false
 }
