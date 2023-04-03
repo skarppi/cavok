@@ -64,23 +64,21 @@ public class Taf: Observation {
             self.windVariability = parser.pop()
         }
 
-        if let vis = parseVisibility(value: parser.peek()) {
-            self.visibility = vis
-            self.visibilityGroup = parser.pop()
-        } else {
-            self.visibility = nil
-            self.visibilityGroup = nil
-        }
+        self.visibilityGroup = parser.loopUntil { current in
+            !isVisibility(field: current)
+        }.joined(separator: " ")
+        self.visibility = horizontalVisibility()
 
-        self.weather = parser.loop { current in
-            return isSkyCondition(field: current)
+        self.weather = parser.loopUntil { current in
+            isSkyCondition(field: current)
         }.joined(separator: " ")
 
-        self.clouds = parser.loop { current in
-            return !isSkyCondition(field: current)
+        self.clouds = parser.loopUntil { current in
+            !isSkyCondition(field: current)
         }.joined(separator: " ")
 
-        self.cloudHeight = getCombinedCloudHeight()
+        self.cloudBase = getCombinedCloudBase()
+        self.cloudCeiling = getCeiling()
 
         self.supplements = parser.all().joined(separator: " ")
 

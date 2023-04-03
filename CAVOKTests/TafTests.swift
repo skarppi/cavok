@@ -33,7 +33,7 @@ class TafTests: ObservationTestCase {
         XCTAssertEqual(taf.weather!, "")
         XCTAssertEqual(taf.clouds!, "CAVOK")
 
-        XCTAssertEqual(taf.cloudHeight, 5000)
+        XCTAssertEqual(taf.cloudBase, 5000)
         XCTAssertEqual(taf.conditionEnum, WeatherConditions.VISUAL)
 
         XCTAssertEqual(taf.supplements!, "TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30 TEMPO 1305/1312 6000 TSRA")
@@ -61,7 +61,7 @@ class TafTests: ObservationTestCase {
         XCTAssertEqual(taf.weather!, "")
         XCTAssertEqual(taf.clouds!, "CAVOK")
 
-        XCTAssertEqual(taf.cloudHeight, 5000)
+        XCTAssertEqual(taf.cloudBase, 5000)
         XCTAssertEqual(taf.conditionEnum, WeatherConditions.VISUAL)
 
         XCTAssertEqual(taf.supplements!,
@@ -91,7 +91,7 @@ class TafTests: ObservationTestCase {
         XCTAssertEqual(taf.weather!, "")
         XCTAssertEqual(taf.clouds!, "FEW005")
 
-        XCTAssertEqual(taf.cloudHeight, 500)
+        XCTAssertEqual(taf.cloudBase, 500)
         XCTAssertEqual(taf.conditionEnum, WeatherConditions.VISUAL)
 
         XCTAssertEqual(taf.supplements!, "PROB30 2319/2408 2000 BCFG BKN002 BECMG 2410/2412 19010KT")
@@ -118,7 +118,7 @@ class TafTests: ObservationTestCase {
         XCTAssertEqual(taf.weather!, "")
         XCTAssertEqual(taf.clouds!, "BKN025")
 
-        XCTAssertEqual(taf.cloudHeight, 2500)
+        XCTAssertEqual(taf.cloudBase, 2500)
         XCTAssertEqual(taf.conditionEnum, WeatherConditions.MARGINAL)
 
         XCTAssertEqual(taf.supplements!, "PROB40 TEMPO 2520/2524 2000 BR BKN003")
@@ -145,7 +145,7 @@ class TafTests: ObservationTestCase {
         XCTAssertEqual(taf.weather!, "")
         XCTAssertEqual(taf.clouds!, "FEW050 SCT080")
 
-        XCTAssertEqual(taf.cloudHeight, 5000)
+        XCTAssertEqual(taf.cloudBase, 5000)
         XCTAssertEqual(taf.conditionEnum, WeatherConditions.VISUAL)
 
         XCTAssertEqual(taf.supplements!, "PROB40 TEMPO 2718/2721 16015G25KT PROB30 TEMPO 2810/2818 SHRA SCT025CB")

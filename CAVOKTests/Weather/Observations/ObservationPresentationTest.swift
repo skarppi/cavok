@@ -18,7 +18,8 @@ final class ObservationPresentationTest: XCTestCase {
                                        "1000": "010",
                                        "1500": "015",
                                        "2000": "020",
-                                       "5000": "050"]
+                                       "5000": "050"],
+                               reversed: false
                              )
 
     let visibilityModule = Module(key: ModuleKey.visibility,
@@ -29,7 +30,8 @@ final class ObservationPresentationTest: XCTestCase {
                                        "03000": "3",
                                        "05000": "5",
                                        "08000": "8",
-                                       "10000": "10"]
+                                       "10000": "10"],
+                              reversed: false
                              )
 
     override func setUpWithError() throws {
@@ -80,19 +82,23 @@ final class ObservationPresentationTest: XCTestCase {
         let splits = ObservationPresentation(modules: Modules.available)
             .split(observation: Metar().parse(raw: "EFHK 091920Z 04006KT 4000 -DZ BR BKN004 05/05 Q1009="))
 
-        XCTAssertEqual(3, splits.count)
+        XCTAssertEqual(4, splits.count)
 
-        XCTAssertEqual("EFHK 091920Z 04006KT ", splits.first?.start)
-        XCTAssertEqual("4000", splits.first?.highlighted)
-        XCTAssertEqual(" -DZ BR ", splits.first?.end)
+        XCTAssertEqual("EFHK 091920Z ", splits[0].start)
+        XCTAssertEqual("04006KT", splits[0].highlighted)
+        XCTAssertEqual(" ", splits[0].end)
 
         XCTAssertEqual("", splits[1].start)
-        XCTAssertEqual("BKN004", splits[1].highlighted)
-        XCTAssertEqual(" ", splits[1].end)
+        XCTAssertEqual("4000", splits[1].highlighted)
+        XCTAssertEqual(" -DZ BR ", splits[1].end)
 
-        XCTAssertEqual("", splits.last?.start)
-        XCTAssertEqual("05/05", splits.last?.highlighted)
-        XCTAssertEqual(" Q1009=", splits.last?.end)
+        XCTAssertEqual("", splits[2].start)
+        XCTAssertEqual("BKN004", splits[2].highlighted)
+        XCTAssertEqual(" ", splits[2].end)
+
+        XCTAssertEqual("", splits[3].start)
+        XCTAssertEqual("05/05", splits[3].highlighted)
+        XCTAssertEqual(" Q1009=", splits[3].end)
 
     }
 }

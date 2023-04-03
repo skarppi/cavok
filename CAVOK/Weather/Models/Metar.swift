@@ -12,7 +12,6 @@ import RealmSwift
 public class Metar: Observation {
 
     @Persisted var altimeter: Int?
-    @Persisted var runwayVisualRange: String?
 
     @Persisted var dewPoint: Int?
     @Persisted var temperature: Int?
@@ -66,24 +65,21 @@ public class Metar: Observation {
             self.windVariability = parser.pop()
         }
 
-        if let vis = parseVisibility(value: parser.peek()) {
-            self.visibility = vis
+        self.visibilityGroup = parser.loopUntil { current in
+            !isVisibility(field: current)
+        }.joined(separator: " ")
+        self.visibility = horizontalVisibility()
 
-            self.visibilityGroup = parser.pop()
-        } else {
-            self.visibility = nil
-            self.visibilityGroup = nil
-        }
-
-        self.weather = parser.loop { current in
-            return isSkyCondition(field: current)
+        self.weather = parser.loopUntil { current in
+            isSkyCondition(field: current)
         }.joined(separator: " ")
 
-        self.clouds = parser.loop { current in
-            return !isSkyCondition(field: current)
+        self.clouds = parser.loopUntil { current in
+            !isSkyCondition(field: current)
         }.joined(separator: " ")
 
-        self.cloudHeight = getCombinedCloudHeight()
+        self.cloudBase = getCombinedCloudBase()
+        self.cloudCeiling = getCeiling()
 
         if let (temp, dewPoint) = parseTemperatures(parser.peek()) {
             self.temperature = temp

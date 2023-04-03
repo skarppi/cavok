@@ -25,7 +25,7 @@ struct ObservationPresentation {
     func mapper(_ observation: Observation, module: Module? = nil) -> ObservationGroup {
         switch (module ?? modules.first)?.key {
         case .ceiling:
-            return (observation.cloudHeight, observation.clouds)
+            return (observation.cloudBase, observation.clouds)
         case .visibility:
             return (observation.visibility, observation.visibilityGroup)
         case .wind:

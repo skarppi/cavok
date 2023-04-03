@@ -40,7 +40,13 @@ open class Observation: Object, Identifiable {
 
     @Persisted var type: String = ""
     @Persisted var identifier: String = ""
-    @Persisted var cloudHeight: Int?
+
+    // A cloud base (or the base of the cloud) is the lowest altitude of the visible portion of a cloud
+    @Persisted var cloudBase: Int?
+
+    // ceiling is a measurement of the height of the base of the lowest clouds
+    // that cover more than half of the sky (more than 4 oktas) relative to the ground
+    @Persisted var cloudCeiling: Int?
     @Persisted var condition: Int16 = 0
     @Persisted var datetime: Date = Date()
     @Persisted(primaryKey: true) var raw: String = ""
@@ -128,7 +134,7 @@ open class Observation: Object, Identifiable {
 
     // 12012G30KT indicates the wind direction is from 120° at a speed of 23 knots gusting 30 knots
     func parseWind(value: String?) -> WindData? {
-        if let value = value, let match = value.getMatches("(\\d{3}|VRB)(\\d{2})(G(\\d{2}))*KT").first {
+        if let value = value, let match = value.getMatches("(\\d{3}|VRB|///)(\\d{2}|//)(G(\\d{2}))*KT").first {
             var windData = WindData()
             windData.direction = Int(value[match.range(at: 1)])
             windData.speed = Int(value[match.range(at: 2)])
@@ -146,6 +152,61 @@ open class Observation: Object, Identifiable {
     }
 
     // MARK: - Visibility Parsers
+
+    func isVisibility(field: String) -> Bool {
+        // 10SM
+        if field.contains("SM") {
+            return true
+        }
+
+        // When the horizontal visibility is not the same in all directions,
+        // the minimum visibility is given for VVVV followed, without a space,
+        // by Dv, the direction of the visibility observed given by a one or two
+        // letter indicator of the eight points of the compass (N, NE, etc.).
+
+        // 1400 indicates the prevailing visibility is 1,400m
+        // 9999NVD = No Directional Variation (available)
+        if field.isMatch("([0-9]{4})(N|NE|E|SE|S|SW|W|NW|NVD){0,1}") {
+            return true
+        }
+
+        // In case of poor visibility, the direction can also be displayed per runway.
+        // This is also called the RVR (Runway Visual Range).
+        // An RVR is usually not reported until visibility is less than 2000 meters.
+        // Examples of an RVR:
+        // R23/0500 visibility for runway 23 is 500 meters
+        // R23/P0500 visibility for runway 23 is more (P) than 500 meters
+        // R23/M0500 visibility for runway 23 is less (M) than 500 meters
+        // R23/0500V1500 visibility for runway 23 varies between 500 and 1500 meters
+        // R23/0500U visibility for runway 23 is 500 meters but increases (U)
+        // R23/0500D visibility for runway 23 is 500 meters but decreases (D)
+        return field.isMatch("R[0-9]{2}/")
+    }
+
+    // the lowest horizontal visibility if multiple directions
+    func horizontalVisibility() -> Int? {
+        return visibilityGroup?.components(separatedBy: " ").compactMap({ value -> Int? in
+            if let mileSeparator = value.range(of: "SM") {
+                return Int(value[..<mileSeparator.lowerBound]).map { $0*1609 }
+            } else if value.isMatch("R[0-9LCR]{2,3}/") {
+                // RVR, take the first 4 digits from any runway
+                let vis = value.dropFirst(3).filter(\.isWholeNumber)
+                let number = Int(vis.subString(0, length: min(vis.length, 4)))
+
+                // FT indicates the units for RVR are feet
+                if value.contains("FT") {
+                    return number.map { Int(Double($0) / 3.281) }
+                }
+
+                return number
+            } else if value.length >= 4 {
+                return Int(value[..<value.index(value.startIndex, offsetBy: 4)])
+            } else {
+                print("Unknown visibility \(value)")
+                return nil
+            }
+        }).min()
+    }
 
     // Clouds cannot be seen because of fog or heavy precipitation, so vertical visibility is given instead.
     func verticalVisibility() -> Int? {
@@ -166,7 +227,21 @@ open class Observation: Object, Identifiable {
 
     let oktas = ["FEW", "SCT", "OVC", "BKN"]
 
-    let cavokSynonyms = ["CAVOK", "SKC", "NCD", "NSC", "CLR"]
+    let cavokSynonyms = [
+        "CAVOK",
+        // "No cloud/Sky clear" used worldwide but in North America is used to indicate a human generated report
+        "SKC",
+
+        // "Nil Cloud detected" automated METAR station has not detected any cloud, either due to a lack of it, or due to an error in the sensors
+        "NCD",
+
+        // "No (nil) significant cloud", i.e., none below 5,000 ft (1,500 m) and no TCU or CB. Not used in North America.
+        "NSC",
+
+        // "No clouds below 12,000 ft (3,700 m) (U.S.) or 25,000 ft (7,600 m) (Canada)",
+        // used mainly within North America and indicates a station that is at least partly automated
+        "CLR"
+    ]
 
     func isCavok() -> Bool {
         return self.clouds?.contains(cavokSynonyms) ?? false
@@ -192,7 +267,7 @@ open class Observation: Object, Identifiable {
 
     // the height above the ground or water of the base of the lowest layer of
     // cloud below 6000 meters (20,000 feet) covering more than half the sky.
-    private func getCeiling() -> Int? {
+    func getCeiling() -> Int? {
         return cloudLevel(layers: ["OVC", "BKN"])
     }
 
@@ -202,7 +277,11 @@ open class Observation: Object, Identifiable {
     }
 
     func isSkyCondition(field: String?) -> Bool {
-        let all = cavokSynonyms + oktas + ["VV", "NIL", "/"]
+        let all = cavokSynonyms + oktas + ["VV", // "Vertical Visibility" = Clouds cannot be seen because of fog or heavy precipitation, so vertical visibility is given instead
+                                           "TCU", // Towering cumulus cloud
+                                           "CB", // Cumulonimbus cloud
+                                           "NIL", // no data
+                                           "/"]
 
         if let field = field {
             return all.contains { item in
@@ -210,19 +289,6 @@ open class Observation: Object, Identifiable {
             }
         }
         return false
-    }
-
-    // 1400 indicates the prevailing visibility is 1,400m, 9999NVD or 10SM
-    func parseVisibility(value: String!) -> Int? {
-        if !self.isSkyCondition(field: value) {
-            if let mileSeparator = value.range(of: "SM") {
-
-                return Int(value[..<mileSeparator.lowerBound]).map { $0*1609 }
-            } else if value.length >= 4 {
-                return Int(value[..<value.index(value.startIndex, offsetBy: 4)])
-            }
-        }
-        return nil
     }
 
     private func weatherLevel() -> Int? {
@@ -236,7 +302,7 @@ open class Observation: Object, Identifiable {
         return nil
     }
 
-    func getCombinedCloudHeight() -> Int? {
+    func getCombinedCloudBase() -> Int? {
         return [
             self.cavokLevel(),
             self.getCloudBase(),
@@ -254,9 +320,9 @@ open class Observation: Object, Identifiable {
         ].compactMap { $0 }.min() ?? 5000
 
         let vis = self.visibility ?? -1
-        if (0 <= ceiling && ceiling < 1000) || (0 <= vis && vis < 5000) {
+        if (0 <= ceiling && ceiling < 1500) || (0 <= vis && vis < 5000) {
             return WeatherConditions.INSTRUMENT
-        } else if (1000 <= ceiling && ceiling < 3000) || (5000 <= vis && vis < 8000) {
+        } else if (1500 <= ceiling && ceiling < 3000) || (5000 <= vis && vis < 8000) {
             return WeatherConditions.MARGINAL
         } else if 3000 <= ceiling && 8000 <= vis {
             return WeatherConditions.VISUAL
