@@ -53,6 +53,8 @@ class HeatMap {
                             value: Int32(value))
         }
 
+        // do not allow any usage until the output is ganerated
+        group.enter()
     }
 
     deinit {
@@ -66,14 +68,17 @@ class HeatMap {
             self.output = HeatMapGPU(input: self.input,
                                      config: self.config,
                                      steps: self.presentation.ramps[0].steps)
-                .render()
+            .render()
 
             if self.output == nil {
                 self.output = HeatMapCPU(input: self.input,
                                          config: self.config,
                                          ramp: self.presentation.ramps[0])
-                    .render()
+                .render()
             }
+
+            // release all waiting threads
+            group.leave()
         }
     }
 
@@ -84,6 +89,7 @@ class HeatMap {
             return CGColor(gray: 0, alpha: 0)
         }
 
+        // wait here until the output is generated
         group.wait()
 
         let pixelData = output!.dataProvider!.data
@@ -121,6 +127,7 @@ class HeatMap {
     }
 
     func render(_ tileID: MaplyTileID, bbox: MaplyBoundingBox, imageSize: Int) -> UIImage? {
+        // wait here until the output is generated
         group.wait()
 
         if tileID.level < Int32(config.maxZoom) {

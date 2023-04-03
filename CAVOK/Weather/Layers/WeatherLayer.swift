@@ -60,9 +60,7 @@ class WeatherLayer {
             }
         }
 
-        DispatchQueue.main.async {
-            self.loader = self.initLoader(frames: frames)
-        }
+        self.loader = self.initLoader(frames: frames)
     }
 
     func go(frame: Int) -> [Observation] {
