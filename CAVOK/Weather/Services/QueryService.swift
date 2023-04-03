@@ -56,7 +56,7 @@ public class QueryService {
         return metars
     }
 
-    func favorites(location: CLLocationCoordinate2D?) throws -> [Metar] {
+    func favorites(location: CLLocationCoordinate2D? = nil) throws -> [Metar] {
         let realm = try Realm()
         let metars = realm.objects(Metar.self)
             .sorted(byKeyPath: "datetime", ascending: false)

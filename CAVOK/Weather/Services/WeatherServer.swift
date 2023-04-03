@@ -35,9 +35,15 @@ public class WeatherServer {
         let stations = try await queryStations(at: WeatherRegion.load())
         let realm = try await Realm()
 
+        // preserve favorites
+        let favorites = try WeatherServer.query.favorites().map { $0.identifier }
+
         try realm.write {
             realm.deleteAll()
-            realm.add(stations)
+            realm.add(stations.map { station in
+                station.favorite = favorites.contains(station.identifier)
+                return station
+            })
         }
         return stations
     }
