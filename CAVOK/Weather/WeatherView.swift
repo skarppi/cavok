@@ -94,13 +94,13 @@ struct WeatherView: View {
         // bottomSheet size cannot be controlled on iPad, use overlay instead
         .overlay(alignment: .bottom) {
             if Self.isPad {
-            PullToRefreshView(loadingMessage: $loadingMessage) {
-                TimeslotDrawerView()
-                    .environmentObject(timeslots)
-            }
-            .frame(height: 100, alignment: .top)
-            .background(.regularMaterial)
-            .refreshable {
+                PullToRefreshView(loadingMessage: $loadingMessage) {
+                    TimeslotDrawerView()
+                        .environmentObject(timeslots)
+                }
+                .frame(height: 100, alignment: .top)
+                .background(.regularMaterial)
+                .refreshable {
                     await reload()
                 }
             }
@@ -141,10 +141,7 @@ struct WeatherView: View {
                 }
             },
             mainContent: {
-                List {
-                    FavoriteObservationsView()
-                    NearbyObservationsView()
-                }
+                SidebarView()
             }
         ).presentationDetents(
             [.height(160), .medium, .large],
@@ -185,7 +182,7 @@ struct WeatherView: View {
         } catch {
             Messages.show(error: error)
         }
-        }
+    }
 
     func moduleTypeChanged(newModule: Module) {
         guard !isPreview else { return }

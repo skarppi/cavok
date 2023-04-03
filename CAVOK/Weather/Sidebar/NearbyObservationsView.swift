@@ -12,6 +12,8 @@ struct NearbyObservationsView: View {
 
     @State var observations: [Metar] = []
 
+    let now: Date
+
     func fetchObservations() -> [Metar] {
         if let location = LastLocation.load() {
             do {
@@ -27,7 +29,7 @@ struct NearbyObservationsView: View {
         Section(header: Text("Nearby Stations")) {
             if !observations.isEmpty {
                 ForEach(observations) { obs in
-                    StationListItemView(obs: obs)
+                    StationListItemView(obs: obs, now: now)
                 }
                 .scrollContentBackground(.hidden)
             } else {
@@ -46,7 +48,7 @@ struct NearbyObservationsView: View {
 struct NearbyObservationsView_Previews: PreviewProvider {
 
     static var previews: some View {
-            NearbyObservationsView(observations: [Metar.metar1])
+            NearbyObservationsView(observations: [Metar.metar1], now: Date())
             .environmentObject(NavigationManager())
         }
     }

@@ -59,6 +59,7 @@
 		8974F54229D0303200350973 /* StationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974F54129D0303200350973 /* StationListItemView.swift */; };
 		8974F54329D1C6E000350973 /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66942540CAB800FB3D39 /* LastLocation.swift */; };
 		8974F54429D1C6EF00350973 /* CLLocation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524F129918A62007CE96F /* CLLocation+Additions.swift */; };
+		8974F54629D37C9000350973 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974F54529D37C9000350973 /* SidebarView.swift */; };
 		89797E8629983D7800DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
 		89797E8829983D8D00DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
 		89797E8B2998444400DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
@@ -250,6 +251,7 @@
 		895B98742977F878005E5D7F /* BottomSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfig.swift; sourceTree = "<group>"; };
 		8974F53D29D018D000350973 /* FavoriteObservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteObservationsView.swift; sourceTree = "<group>"; };
 		8974F54129D0303200350973 /* StationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListItemView.swift; sourceTree = "<group>"; };
+		8974F54529D37C9000350973 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		89797E8529983D7800DCCE2E /* ObservationPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationPresentation.swift; sourceTree = "<group>"; };
 		89797E8729983D8D00DCCE2E /* QueryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryService.swift; sourceTree = "<group>"; };
 		89797E9929984CC200DCCE2E /* CAV-OK Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CAV-OK Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,6 +399,7 @@
 				89295AD529B47045001A7740 /* NearbyObservationsView.swift */,
 				8974F53D29D018D000350973 /* FavoriteObservationsView.swift */,
 				8974F54129D0303200350973 /* StationListItemView.swift */,
+				8974F54529D37C9000350973 /* SidebarView.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -1067,6 +1070,7 @@
 				C09D66DD2540CACA00FB3D39 /* UIView+Additions.swift in Sources */,
 				C09D66F52540CACA00FB3D39 /* Links.swift in Sources */,
 				C09D669D2540CAB800FB3D39 /* UserMarker.swift in Sources */,
+				8974F54629D37C9000350973 /* SidebarView.swift in Sources */,
 				C09D66F32540CACA00FB3D39 /* RegionSelection.swift in Sources */,
 				C09D669C2540CAB800FB3D39 /* LastSession.swift in Sources */,
 				C09D66FF2540CACA00FB3D39 /* AddsService.swift in Sources */,

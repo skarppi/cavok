@@ -118,6 +118,10 @@ public extension Date {
         Int(abs(self.timeIntervalSinceNow) / 60)
     }
 
+    func minutesSince(date: Date) -> Int {
+        Int(abs(self.timeIntervalSince(date)) / 60)
+    }
+
     func since() -> String {
         Self.since(minutes: self.minutesSinceNow)
     }

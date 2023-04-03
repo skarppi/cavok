@@ -12,24 +12,14 @@ struct TimeslotDrawerView: View {
 
     @EnvironmentObject var state: TimeslotState
 
-    @State var status: String = "Loading"
-
-    @State var statusColor = Color.primary
-
     @GestureState var cursor = CGPoint.zero
-
-    let updateTimestampsTimer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack(spacing: 4) {
 
-            Text(status)
-                .font(.body)
-                .padding(.leading, 15)
-                .foregroundColor(statusColor)
-                .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
-                .background(Color(.secondarySystemFill))
-                .cornerRadius(10)
+            TimelineView(.everyMinute) { timeline in
+                TimeslotStatus(slot: state.slots[safe: state.selectedFrame], now: timeline.date)
+            }
 
             timeline().gesture(
                 DragGesture(minimumDistance: 0, coordinateSpace: .global)
@@ -38,18 +28,6 @@ struct TimeslotDrawerView: View {
                     })
         }
         .padding(.top, 4)
-        .onReceive(state.$selectedFrame) { index in
-            refreshStatus(slot: state.slots[safe: index])
-        }
-        .onChange(of: state.slots) { slots in
-            refreshStatus(slot: slots[safe: state.selectedFrame])
-        }
-        .onReceive(updateTimestampsTimer) { _ in
-            refreshStatus(slot: state.slots[safe: state.selectedFrame])
-        }
-        .onAppear {
-            refreshStatus(slot: state.slots[safe: state.selectedFrame])
-        }
     }
 
     @ViewBuilder
@@ -88,37 +66,44 @@ struct TimeslotDrawerView: View {
             return AnyView(Rectangle().fill(Color.clear))
         }
     }
+}
 
-    private func status(slot: Timeslot) -> String {
+struct TimeslotStatus: View {
+    let slot: Timeslot?
+
+    let now: Date
+
+    var body: some View {
+        Text(status())
+            .font(.body)
+            .padding(.leading, 15)
+            .foregroundColor(ColorRamp.color(forMinutes: slot?.date.minutesSinceNow ?? Int.max))
+            .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
+            .background(Color(.secondarySystemFill))
+            .cornerRadius(10)
+    }
+
+    private func status() -> String {
+        guard let slot = slot else {
+            return "No Data"
+        }
+
         let timestamps = Set(slot.observations.map({ $0.datetime }))
 
         guard let oldest = timestamps.min() else { return "-" }
         guard let latest = timestamps.max() else { return "-" }
 
-        let oldestMinutes = oldest.minutesSinceNow
-        let latestMinutes = latest.minutesSinceNow
+        let oldestMinutes = oldest.minutesSince(date: now)
+        let latestMinutes = latest.minutesSince(date: now)
 
         if oldest == latest || oldestMinutes >= 120 {
-            return Date.since(minutes: latestMinutes)
+            return "\(Date.since(minutes: latestMinutes)) ago"
         } else if oldestMinutes < 60 {
-            return "\(latestMinutes)-\(Date.since(minutes: oldestMinutes))"
+            return "\(latestMinutes)-\(Date.since(minutes: oldestMinutes)) ago"
         } else {
-            return "\(Date.since(minutes: latestMinutes)) - \(Date.since(minutes: oldestMinutes))"
+            return "\(Date.since(minutes: latestMinutes)) - \(Date.since(minutes: oldestMinutes)) ago"
         }
     }
-
-    private func refreshStatus(slot: Timeslot?) {
-        guard let slot = slot else {
-            self.status = "No Data"
-            return
-        }
-
-        let status = status(slot: slot)
-
-        self.status = "\(status) ago"
-        self.statusColor = ColorRamp.color(forMinutes: slot.date.minutesSinceNow)
-    }
-
 }
 
 struct TimeslotDraverView_Previews: PreviewProvider {

@@ -12,6 +12,8 @@ struct StationListItemView: View {
 
     let obs: Observation
 
+    let now: Date
+
     var body: some View {
         if obs.isInvalidated {
             Group {}
@@ -32,7 +34,7 @@ struct StationListItemView: View {
                 }
 
                 HStack(alignment: .top) {
-                    let age = obs.datetime.minutesSinceNow
+                    let age = obs.datetime.minutesSince(date: now)
                     Text(Date.since(minutes: age))
                         .foregroundColor(ColorRamp.color(forMinutes: age))
 
@@ -52,7 +54,7 @@ struct StationListItemView: View {
 
 struct StationListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        StationListItemView(obs: Metar.metar1)
+        StationListItemView(obs: Metar.metar1, now: Date())
             .environmentObject(NavigationManager())
     }
 }

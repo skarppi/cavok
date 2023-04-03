@@ -10,7 +10,7 @@ import Combine
 
 // Our observable object class
 @MainActor class TimeslotState: ObservableObject {
-    @Published var slots: [Timeslot] = []
+    var slots: [Timeslot] = []
 
     var count: Int {
         return slots.count

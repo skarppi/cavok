@@ -13,6 +13,8 @@ struct FavoriteObservationsView: View {
 
     @State var observations: [Metar] = []
 
+    let now: Date
+
     func fetchObservations() -> [Metar] {
         do {
             return try WeatherServer.query.favorites(location: LastLocation.load())
@@ -28,7 +30,7 @@ struct FavoriteObservationsView: View {
                 Text("No favorite stations")
             } else {
                 ForEach(observations) { obs in
-                    StationListItemView(obs: obs)
+                    StationListItemView(obs: obs, now: now)
                 }
             }
         }
@@ -44,7 +46,7 @@ struct FavoriteObservationsView: View {
 struct FavoriteObservationsView_Previews: PreviewProvider {
 
     static var previews: some View {
-        FavoriteObservationsView(observations: [Metar.metar1])
+        FavoriteObservationsView(observations: [Metar.metar1], now: Date())
             .environmentObject(NavigationManager())
     }
 }

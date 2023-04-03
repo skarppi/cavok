@@ -86,7 +86,7 @@ extension MapView {
                         ObservationDetailsView()
                     }
                 } else {
-                    NearbyObservationsView()
+                    SidebarView()
                 }
             } detail: {
                 view
