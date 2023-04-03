@@ -18,19 +18,8 @@ class Messages {
         SwiftMessages.defaultConfig.duration = .forever
     }
 
-    static func messageView(backgroundColor: UIColor = UIColor.clear) -> MessageView {
-        let status = MessageView.viewFromNib(layout: .statusLine)
-        status.backgroundView.backgroundColor = backgroundColor
-        return status
-    }
-
-    class func show(text: String) {
-        print("show message: \(text)")
-
-        let view = messageView()
-        view.configureContent(body: text)
-
-        Messages.show(view: view, seconds: nil)
+    class func showCopiedToClipboard() {
+        Messages.show(text: "Copied to clipboard", seconds: 2)
     }
 
     class func show(error: Error) {
@@ -45,18 +34,22 @@ class Messages {
     }
 
     class func show(error: String) {
-        let view = messageView(backgroundColor: UIColor.red.withAlphaComponent(0.5))
-        view.configureContent(body: error)
-        Messages.show(view: view, seconds: 5)
+        Messages.show(text: error, theme: .error, seconds: 5)
     }
 
-    class func show(view: MessageView, seconds: Double?) {
+    class func show(text: String, theme: Theme = .info, seconds: Double? = nil) {
         var config = SwiftMessages.defaultConfig
         if let seconds = seconds {
             config.duration = .seconds(seconds: seconds)
         }
 
         SwiftMessages.hideAll()
+
+        let view = MessageView.viewFromNib(layout: .cardView)
+        view.titleLabel?.isHidden = true
+        view.button?.isHidden = true
+        view.configureTheme(.info)
+        view.configureContent(body: text)
         SwiftMessages.show(config: config, view: view)
     }
 

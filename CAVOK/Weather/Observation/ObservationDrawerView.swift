@@ -21,6 +21,11 @@ struct ObservationHeaderView: View {
                 AttributedTextView(obs: obs, presentation: presentation)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top)
+                    .onTapGesture {}
+                    .onLongPressGesture {
+                        UIPasteboard.general.string = obs.raw
+                        Messages.showCopiedToClipboard()
+                    }
             }.padding(.horizontal)
         }
     }
@@ -123,6 +128,11 @@ struct ObservationList: View {
                 ForEach(observations.reversed(), id: \.self) { metar in
                     AttributedTextView(obs: metar, presentation: self.presentation)
                         .padding(.bottom, 5)
+                        .onTapGesture {}
+                        .onLongPressGesture {
+                            UIPasteboard.general.string = metar.raw
+                            Messages.showCopiedToClipboard()
+                        }
                 }
             }
         }.frame(maxWidth: .infinity, alignment: .leading)

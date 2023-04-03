@@ -48,6 +48,10 @@ struct StationListItemView: View {
             }.onTapGesture {
                 navigation.selectedObservation = obs
             }
+            .onLongPressGesture {
+                UIPasteboard.general.string = obs.raw
+                Messages.showCopiedToClipboard()
+            }
         }
     }
 }
