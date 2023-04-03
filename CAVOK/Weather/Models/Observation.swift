@@ -56,6 +56,9 @@ open class Observation: Object, Identifiable {
 
     @Persisted var station: Station?
 
+    // distance of the station
+    public var distance: Double?
+
     public var conditionEnum: WeatherConditions {
         get { return WeatherConditions(rawValue: self.condition) ?? .NA }
         set { self.condition = newValue.rawValue }

@@ -57,6 +57,8 @@
 		8974F53829C641B200350973 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */; };
 		8974F53E29D018D000350973 /* FavoriteObservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974F53D29D018D000350973 /* FavoriteObservationsView.swift */; };
 		8974F54229D0303200350973 /* StationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974F54129D0303200350973 /* StationListItemView.swift */; };
+		8974F54329D1C6E000350973 /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66942540CAB800FB3D39 /* LastLocation.swift */; };
+		8974F54429D1C6EF00350973 /* CLLocation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524F129918A62007CE96F /* CLLocation+Additions.swift */; };
 		89797E8629983D7800DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
 		89797E8829983D8D00DCCE2E /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8729983D8D00DCCE2E /* QueryService.swift */; };
 		89797E8B2998444400DCCE2E /* ObservationPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89797E8529983D7800DCCE2E /* ObservationPresentation.swift */; };
@@ -1005,6 +1007,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89797E9E29984CC200DCCE2E /* IntentHandler.swift in Sources */,
+				8974F54429D1C6EF00350973 /* CLLocation+Additions.swift in Sources */,
 				89797EAA29984EDC00DCCE2E /* QueryService.swift in Sources */,
 				89797EAB29984EE900DCCE2E /* Station.swift in Sources */,
 				89797EAD29984F1B00DCCE2E /* CAV_OK_Widget.intentdefinition in Sources */,
@@ -1014,6 +1017,7 @@
 				89797EAC29984EF800DCCE2E /* Observation.swift in Sources */,
 				89797EB029984F4A00DCCE2E /* Tokenizer.swift in Sources */,
 				89797EAF29984F3000DCCE2E /* Metar.swift in Sources */,
+				8974F54329D1C6E000350973 /* LastLocation.swift in Sources */,
 				89295AD929B474FB001A7740 /* GeoQueries.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -44,7 +44,7 @@ public class QueryService {
                             tafs: try fetch(type: Taf.self, sortKey: "from", filter: identifier))
     }
 
-    func nearby(location: CLLocationCoordinate2D) throws -> [WithDistance<Metar>] {
+    func nearby(location: CLLocationCoordinate2D) throws -> [Metar] {
         let realm = try Realm()
 
         let metars = try realm.findNearby(type: Metar.self,
@@ -52,13 +52,13 @@ public class QueryService {
                                           radius: 100000,
                                           sortAscending: true,
                                           distinct: (by: "identifier", sorted: "datetime", ascending: false),
-                                          latitudeKey: "station.latitude",
-                                          longitudeKey: "station.longitude")
-            .map { obj in  WithDistance(element: obj.element.freeze(), distanceMeters: obj.distanceMeters) }
+                                          distanceKey: \Metar.distance,
+                                          latitudeKey: \Metar.station?.latitude,
+                                          longitudeKey: \Metar.station?.longitude)
         return metars
     }
 
-    func favorites(location: CLLocationCoordinate2D?) throws -> [WithDistance<Metar>] {
+    func favorites(location: CLLocationCoordinate2D?) throws -> [Metar] {
         let realm = try Realm()
         let metars = realm.objects(Metar.self)
             .sorted(byKeyPath: "datetime", ascending: false)
@@ -67,28 +67,24 @@ public class QueryService {
             .sorted(byKeyPath: "station.identifier")
 
         guard let location = location else {
-            return metars.map { metar in
-                WithDistance(element: metar, distanceMeters: nil)
-            }
+            return Array(metars)
         }
 
         return metars.addDistance(center: location,
-                         latitudeKey: "station.latitude",
-                         longitudeKey: "station.longitude"
-            )
-        .map { obj in  WithDistance(element: obj.element.freeze(), distanceMeters: obj.distanceMeters) }
+                                  distanceKey: \Metar.distance,
+                                  latitudeKey: \Metar.station?.latitude,
+                                  longitudeKey: \Metar.station?.longitude)
     }
 
-    @MainActor func favorite(station source: Station) throws -> Station {
+    @MainActor func favorite(station source: Station) throws {
         let realm = try Realm()
         guard let station = realm.object(ofType: Station.self, forPrimaryKey: source.identifier) else {
-            return source
+            return
         }
 
         try realm.write {
             station.favorite = !station.favorite
         }
-        return station.freeze()
     }
 
     @MainActor func fetchObservation(observation: Observation) throws -> Observation {

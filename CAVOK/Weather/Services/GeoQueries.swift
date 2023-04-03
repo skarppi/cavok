@@ -15,11 +15,6 @@ enum GeoQueriesError: Error {
     case invalidRealm(String)
 }
 
-public struct WithDistance<Element: Object> {
-    var element: Element
-    var distanceMeters: Double?
-}
-
 // MARK: - Public extensions
 public extension Realm {
 
@@ -35,8 +30,8 @@ public extension Realm {
      */
     func findInRegion<Element: Object>(type: Element.Type,
                                        region: MKCoordinateRegion,
-                                       latitudeKey: String = "lat",
-                                       longitudeKey: String = "lng") throws -> Results<Element> {
+                                       latitudeKey: KeyPath<Element, Float?>,
+                                       longitudeKey: KeyPath<Element, Float?>) throws -> Results<Element> {
 
         // Query
         return try self
@@ -57,8 +52,8 @@ public extension Realm {
      */
     func findInBox<Element: Object>(type: Element.Type,
                                     box: GeoBox,
-                                    latitudeKey: String = "lat",
-                                    longitudeKey: String = "lng") throws -> Results<Element> {
+                                    latitudeKey: KeyPath<Element, Float?>,
+                                    longitudeKey: KeyPath<Element, Float?>) throws -> Results<Element> {
 
         // Query
         return try self
@@ -82,13 +77,15 @@ public extension Realm {
 
      - returns: Found objects inside radius around the center coordinate
      */
-    func findNearby<Element: Object>(type: Element.Type,
-                                     origin center: CLLocationCoordinate2D,
-                                     radius: Double,
-                                     sortAscending sort: Bool?,
-                                     distinct: DistinctQuery,
-                                     latitudeKey: String = "lat",
-                                     longitudeKey: String = "lng") throws -> [WithDistance<Element>] {
+    func findNearby<Element: Object>(
+        type: Element.Type,
+        origin center: CLLocationCoordinate2D,
+        radius: Double,
+        sortAscending sort: Bool?,
+        distinct: DistinctQuery,
+        distanceKey: ReferenceWritableKeyPath<Element, Double?>,
+        latitudeKey: KeyPath<Element, Float?>,
+        longitudeKey: KeyPath<Element, Float?>) throws -> [Element] {
 
         // Query
         return try self.objects(type)
@@ -98,6 +95,7 @@ public extension Realm {
             .filterGeoRadius(center: center,
                              radius: radius,
                              sortAscending: sort,
+                             distanceKey: distanceKey,
                              latitudeKey: latitudeKey,
                              longitudeKey: longitudeKey)
     }
@@ -105,45 +103,6 @@ public extension Realm {
 }
 
 public extension RealmCollection where Element: Object {
-
-    /**
-     Filter results from Realm query using MKCoordinateRegion
-
-     - parameter region:       Region that fits MapKit view
-     - parameter latitudeKey:  Set to use different latitude key in query (default: "lat")
-     - parameter longitudeKey: Set to use different longitude key in query (default: "lng")
-
-     - returns: Filtered objects inside MKCoordinateRegion
-     */
-    func filterGeoRegion(region: MKCoordinateRegion,
-                         latitudeKey: String = "lat",
-                         longitudeKey: String = "lng") throws -> Results<Element> {
-
-        // Realm instance pre-check
-        guard realm != nil else {
-            throw GeoQueriesError.invalidRealm("RLMRealm instance is needed to call this method")
-        }
-
-        let box = region.geoBox
-
-        let topLeftPredicate = NSPredicate(format: "%K <= %f AND %K >= %f",
-                                           latitudeKey,
-                                           box.topLeft.latitude,
-                                           longitudeKey,
-                                           box.topLeft.longitude)
-        let bottomRightPredicate = NSPredicate(format: "%K >= %f AND %K <= %f",
-                                               latitudeKey,
-                                               box.bottomRight.latitude,
-                                               longitudeKey,
-                                               box.bottomRight.longitude)
-        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            topLeftPredicate,
-            bottomRightPredicate
-        ])
-
-        return self.filter(compoundPredicate)
-
-    }
 
     /**
      Filter results from Realm query using GeoBox
@@ -155,27 +114,23 @@ public extension RealmCollection where Element: Object {
      - returns: Filtered objects inside GeoBox
      */
     func filterGeoBox(box: GeoBox,
-                      latitudeKey: String = "lat",
-                      longitudeKey: String = "lng") throws -> Results<Element> {
+                      latitudeKey: KeyPath<Element, Float?>,
+                      longitudeKey: KeyPath<Element, Float?>) throws -> Results<Element> {
 
         // Realm instance pre-check
         guard realm != nil else {
             throw GeoQueriesError.invalidRealm("RLMRealm instance is needed to call this method")
         }
 
-        let topLeftPredicate = NSPredicate(format: "%K <= %f AND %K >= %f",
-                                           latitudeKey, box.topLeft.latitude, longitudeKey, box.topLeft.longitude)
-        let bottomRightPredicate = NSPredicate(format: "%K >= %f AND %K <= %f",
-                                               latitudeKey,
-                                               box.bottomRight.latitude,
-                                               longitudeKey,
-                                               box.bottomRight.longitude)
-        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            topLeftPredicate, bottomRightPredicate
-        ])
+        return self.where {
+            let latitude = $0[dynamicMember: latitudeKey]
+            let longitude = $0[dynamicMember: longitudeKey]
+            let topLeftPredicate = latitude <= Float(box.topLeft.latitude) && longitude >= Float(box.topLeft.longitude)
+            let bottomRightPredicate = latitude >= Float(box.bottomRight.latitude)
+                && longitude <= Float(box.bottomRight.longitude)
 
-        return self.filter(compoundPredicate)
-
+            return topLeftPredicate && bottomRightPredicate
+        }
     }
 
     /**
@@ -192,8 +147,9 @@ public extension RealmCollection where Element: Object {
     func filterGeoRadius(center: CLLocationCoordinate2D,
                          radius: Double,
                          sortAscending sort: Bool?,
-                         latitudeKey: String = "lat",
-                         longitudeKey: String = "lng") throws -> [WithDistance<Element>] {
+                         distanceKey: ReferenceWritableKeyPath<Element, Double?>,
+                         latitudeKey: KeyPath<Element, Float?>,
+                         longitudeKey: KeyPath<Element, Float?>) throws -> [Element] {
 
         // Realm instance pre-check
         guard realm != nil else {
@@ -206,11 +162,11 @@ public extension RealmCollection where Element: Object {
                                      longitudeKey: longitudeKey)
 
         // add distance
-        let withDistance = inBox.addDistance(center: center, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
+        let withDistance = inBox.addDistance(center: center, distanceKey: distanceKey, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
 
         // Inside radius
         let insideRadius = withDistance.filter { obj -> Bool in
-            if let distance = obj.distanceMeters {
+            if let distance = obj[keyPath: distanceKey] {
                 return distance <= radius
             }
             return false
@@ -219,7 +175,7 @@ public extension RealmCollection where Element: Object {
         // Sort results
         guard let ascending = sort else { return insideRadius }
 
-        return insideRadius.sort(ascending: ascending)
+        return insideRadius.sort(ascending: ascending, distanceKey: distanceKey)
 
     }
 
@@ -233,13 +189,13 @@ public extension RealmCollection where Element: Object {
     /// - Returns: Sorted objects
     func sortByDistance(center: CLLocationCoordinate2D,
                         ascending: Bool,
-                        latitudeKey: String = "lat",
-                        longitudeKey: String = "lng") -> [WithDistance<Element>] {
+                        distanceKey: ReferenceWritableKeyPath<Element, Double?>,
+                        latitudeKey: KeyPath<Element, Float?>,
+                        longitudeKey: KeyPath<Element, Float?>) -> [Element] {
 
         return self
-            .addDistance(center: center, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
-            .sort(ascending: ascending)
-
+            .addDistance(center: center, distanceKey: distanceKey, latitudeKey: latitudeKey, longitudeKey: longitudeKey)
+            .sort(ascending: ascending, distanceKey: distanceKey)
     }
 
 }
@@ -294,7 +250,7 @@ public extension MKCoordinateRegion {
 
 }
 
-private extension Array { // where Element: WithDistance<T: Object> {
+private extension Array where Element: Object {
     /**
      Sorting function
 
@@ -302,12 +258,12 @@ private extension Array { // where Element: WithDistance<T: Object> {
 
      - returns: Array of [Object] sorted by distance
      */
-    func sort<T: Object>(ascending: Bool = true) -> [Iterator.Element] where Element == WithDistance<T> {
+    func sort(ascending: Bool = true, distanceKey: ReferenceWritableKeyPath<Element, Double?>) -> [Iterator.Element] {
 
         return self.sorted(by: { (obj1, obj2) -> Bool in
 
-            guard let dist1 = obj1.distanceMeters else { return false }
-            guard let dist2 = obj2.distanceMeters else { return true }
+            guard let dist1 = obj1[keyPath: distanceKey] else { return false }
+            guard let dist2 = obj2[keyPath: distanceKey] else { return true }
 
             if ascending {
                 return dist1 < dist2
@@ -331,21 +287,19 @@ extension RealmCollection where Element: Object {
      - returns: Array of results sorted
      */
     func addDistance(center: CLLocationCoordinate2D,
-                     latitudeKey: String = "lat",
-                     longitudeKey: String = "lng") -> [WithDistance<Element>] {
+                     distanceKey: ReferenceWritableKeyPath<Element, Double?>,
+                     latitudeKey: KeyPath<Element, Float?>,
+                     longitudeKey: KeyPath<Element, Float?>) -> [Element] {
 
         return self.map { obj in
 
             // Calculate distance
-            if let latitude = obj.value(forKeyPath: latitudeKey) as? CLLocationDegrees,
-               let longitude = obj.value(forKeyPath: longitudeKey) as? CLLocationDegrees {
-                let location = CLLocation(latitude: latitude, longitude: longitude)
-                let center = CLLocation(latitude: center.latitude, longitude: center.longitude)
-                let distance = location.distance(from: center)
+            if let latitude = obj[keyPath: latitudeKey], let longitude = obj[keyPath: longitudeKey] {
+                let location = CLLocationCoordinate2DMake(Double(latitude), Double(longitude))
 
-                return WithDistance(element: obj, distanceMeters: distance)
+                obj[keyPath: distanceKey] = location.distanceMeters(to: center)
             }
-            return WithDistance(element: obj, distanceMeters: 0.0)
+            return obj
 
         }
     }

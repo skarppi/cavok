@@ -92,7 +92,7 @@ struct ObservationDetailsView: View {
                     Button(action: changeFavorite) {
                         HStack(spacing: 10) {
                             Text( isFavorite() ? "Unfavorite" : "Favorite")
-                            Image(systemName: isFavorite() ? "minus" : "plus")
+                            Image(systemName: "heart")
                         }.padding()
                     }
                     .buttonStyle(.bordered)
@@ -133,14 +133,14 @@ struct ObservationDrawerView_Previews: PreviewProvider {
     static let manager = NavigationManager()
     static let observations = Observations(
         metars: [
-            metar("EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="),
-            metar("EFHK 091920Z 04006KT 4000 -DZ BR BKN004 05/05 Q1009="),
-            metar("EFHK 091650Z 08004KT 7000 SCT004 BKN006 "
+            Metar.metar("EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="),
+            Metar.metar("EFHK 091920Z 04006KT 4000 -DZ BR BKN004 05/05 Q1009="),
+            Metar.metar("EFHK 091650Z 08004KT 7000 SCT004 BKN006 "
                   + "05/05 RMK AO2 SLP135 T01170028 10144 AO2 "
                   + "SLP135 T01170028 10144 20111 Q1009=")
         ],
         tafs: [
-            taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30")
+            Taf.taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30")
         ])
 
     init() {
@@ -157,17 +157,4 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         .environmentObject(manager)
     }
 
-    static func metar(_ raw: String) -> Metar {
-        let metar = Metar().parse(raw: raw)
-        metar.station = Station()
-        metar.station?.name = "Helsinki-Vantaan lentoasema EFHF airport"
-        return metar
-    }
-
-    static func taf(_ raw: String) -> Taf {
-        let taf = Taf().parse(raw: raw)
-        taf.station = Station()
-        taf.station?.name = "Helsinki-Vantaan lentoasema EFHF airport"
-        return taf
-    }
 }

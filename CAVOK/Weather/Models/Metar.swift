@@ -138,3 +138,18 @@ public class Metar: Observation {
         return nil
     }
 }
+
+#if DEBUG
+extension Metar {
+    static func metar(_ raw: String, distance: Double? = nil) -> Metar {
+        let metar = Metar().parse(raw: raw)
+        metar.station = Station()
+        metar.station?.name = "Helsinki-Vantaan lentoasema"
+        metar.distance = distance ?? 0
+        return metar
+    }
+
+    static let metar1 = metar("EFHK 091950Z 05006KT 9500 -RADZ BR FEW053 BKN045 05/04 Q1009 NOSIG=")
+}
+
+#endif

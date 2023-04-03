@@ -30,4 +30,10 @@ extension CLLocationCoordinate2D {
             longitude: dLon.radiansToDegrees + self.longitude
         )
     }
+
+    func distanceMeters(to: CLLocationCoordinate2D) -> Double {
+        let location = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        let center = CLLocation(latitude: to.latitude, longitude: to.longitude)
+        return location.distance(from: center)
+    }
 }

@@ -110,3 +110,14 @@ public class Taf: Observation {
     }
 
 }
+
+#if DEBUG
+extension Taf {
+    static func taf(_ raw: String) -> Taf {
+        let taf = Taf().parse(raw: raw)
+        taf.station = Station()
+        taf.station?.name = "Helsinki-Vantaan lentoasema"
+        return taf
+    }
+}
+#endif
