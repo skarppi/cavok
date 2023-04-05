@@ -41,7 +41,7 @@ public class AwsService {
             .map { sta in sta["p1"].stringValue }
     }
 
-    class func fetchObservations(at region: WeatherRegion) async throws -> [String] {
+    class func fetchObservations(at region: WeatherRegion) async throws -> [Metar] {
         let json = try await fetch(dataSource: AwsSource.METAR, at: region)
         let raws = json?["data"]["aws"]["finland"].dictionaryValue.values.flatMap { obs -> [String] in
             return [obs["message"].stringValue] + obs["old_messages"].arrayValue.map { $0.stringValue }
@@ -49,8 +49,9 @@ public class AwsService {
 
         print("Found \(raws.count) AWS metars")
 
-        // remove possible duplicate entries
-        return raws// Array(Set(raws))
+        return raws.map { raw in
+            Metar().parse(raw: raw)
+        }
     }
 
     private class func fetch(dataSource: AwsSource, at region: WeatherRegion) async throws -> JSON? {

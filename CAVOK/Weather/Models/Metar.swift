@@ -17,6 +17,9 @@ public class Metar: Observation {
     @Persisted var temperature: Int?
     @Persisted var temperatureGroup: String?
 
+    @Persisted var atisLetter: String?
+    @Persisted var atisUrl: String?
+
     // The cloud base can be estimated from surface measurements of air temperature and
     // humidity by calculating the lifted condensation level.
     // - Find the difference between the surface temperature and the dew point.

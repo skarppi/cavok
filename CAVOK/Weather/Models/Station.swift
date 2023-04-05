@@ -13,6 +13,7 @@ import CoreLocation
 enum WeatherSource: String, PersistableEnum {
     case aws
     case adds
+    case atis
 }
 
 public class Station: Object {

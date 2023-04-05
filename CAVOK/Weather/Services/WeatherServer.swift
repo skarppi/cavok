@@ -17,8 +17,9 @@ public class WeatherServer {
 
         async let adds = AddsService.fetchStations(at: region)
         async let aws = AwsService.fetchStations(at: region)
+        async let atis = AtisService.fetchStations(at: region)
 
-        let stations = try await (adds + aws)
+        let stations = try await (adds + aws + atis)
             .filter { station -> Bool in
                 (station.hasMetar || station.hasTaf)
                     && region.inRange(latitude: station.latitude, longitude: station.longitude)
@@ -53,22 +54,19 @@ public class WeatherServer {
 
         async let addsMetars = AddsService.fetchObservations(.METAR, at: region, history: true)
         async let awsMetars = AwsService.fetchObservations(at: region)
+        async let atisMetars = AtisService.fetchObservations(at: region)
         async let addsTafs = AddsService.fetchObservations(.TAF, at: region, history: false)
 
-        let allMetars = try await (addsMetars + awsMetars)
+        let allMetars = try await (addsMetars + awsMetars + atisMetars)
         let allTafs = try await addsTafs
 
         let realm = try await Realm()
         let metars = allMetars.compactMap { metar in
-            self.parseObservation(Metar(), raw: metar, realm: realm)
-        }.sorted { metar1, metar2 in
-            metar1.datetime < metar2.datetime
+            enrichObservation(metar, realm: realm)
         }
 
-        let tafs = allTafs.compactMap { raw in
-            self.parseObservation(Taf(), raw: raw, realm: realm)
-        }.sorted { taf1, taf2 in
-            taf1.from < taf2.from
+        let tafs = allTafs.compactMap { taf in
+            enrichObservation(taf, realm: realm)
         }
 
         let oldMetars = realm.objects(Metar.self)
@@ -91,7 +89,9 @@ public class WeatherServer {
             return try await AddsService.fetchObservations(.METAR,
                                                            at: region,
                                                            station: station.identifier,
-                                                           history: false).first
+                                                           history: false).first?.raw
+        case .atis:
+            return try await AtisService.fetchLatestObservation(at: region, station: station.identifier)
         }
     }
 
@@ -106,12 +106,10 @@ public class WeatherServer {
         guard let metar = try await latestMetar(station: station) else {
             return nil
         }
-        return parseObservation(Metar(), raw: metar, realm: realm)
+        return enrichObservation(Metar().parse(raw: metar), realm: realm)
     }
 
-    private func parseObservation<T: Observation>(_ obs: T, raw: String, realm: Realm) -> T? {
-        _ = obs.parse(raw: raw)
-
+    private func enrichObservation<T: Observation>(_ obs: T, realm: Realm) -> T? {
         guard let station = realm.object(ofType: Station.self, forPrimaryKey: obs.identifier) else {
             return nil
         }

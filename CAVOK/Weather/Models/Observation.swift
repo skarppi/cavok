@@ -202,7 +202,6 @@ open class Observation: Object, Identifiable {
             } else if value.length >= 4 {
                 return Int(value[..<value.index(value.startIndex, offsetBy: 4)])
             } else {
-                print("Unknown visibility \(value)")
                 return nil
             }
         }).min()

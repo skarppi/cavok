@@ -45,21 +45,13 @@ class WeatherServiceTests: XCTestCase {
         XCTAssertEqual(stations.count, 12+18)
     }
 
-//    func testStationsWithMetars() {
-//        let stationCount = self.weatherServer.getStationCount()
-//        XCTAssertEqual(stationCount, 12+18)
-//
-//        let expectation = self.expectation(description: "fetch metars")
-//        weatherServer.refreshObservations().then { _ in
-//            expectation.fulfill()
-//        }
-//
-//        self.waitForExpectations(timeout: 15.0, handler: nil)
-//
-//        let metars = weatherServer.observations(Metar.self)
-//
-//        XCTAssertEqual(metars.count, 8+18)
-//    }
+    func testStationsWithMetars() async throws {
+        // let station = try await weatherServer.fetchStation(station: "EFNU")!
+
+        let metar = try await weatherServer.fetchLatest(station: AtisService.efnu)
+        XCTAssertEqual("MOI", metar?.raw)
+
+    }
     /*
      func testPerformanceExample() {
      // This is an example of a performance test case.

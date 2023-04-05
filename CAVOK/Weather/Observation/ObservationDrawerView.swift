@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import AVFoundation
+import Combine
 
 struct ObservationHeaderView: View {
     @EnvironmentObject var navigation: NavigationManager
@@ -31,10 +33,15 @@ struct ObservationHeaderView: View {
     }
 }
 
+let audioPlayer = AVPlayer()
+let timeControlStatus = TimeControlStatusObserver(player: audioPlayer)
+
 struct ObservationDetailsView: View {
     @State var observations: Observations?
 
     @State var isFavorite: Bool = true
+
+    @State var playerStatus = "spinner"
 
     @EnvironmentObject var navigation: NavigationManager
 
@@ -64,7 +71,20 @@ struct ObservationDetailsView: View {
                 Messages.show(error: error)
             }
         }
+    }
 
+    func play() {
+        if audioPlayer.timeControlStatus == .playing {
+            audioPlayer.pause()
+        } else if let obs = navigation.selectedObservation, let atisUrl = (obs as? Metar)?.atisUrl {
+            let url = URL(string: atisUrl)!
+
+            let playerItem = AVPlayerItem(url: url)
+            audioPlayer.replaceCurrentItem(with: playerItem)
+
+            // playerObserver = PlayerItemObserver(player: audioPlayer)
+            audioPlayer.playImmediately(atRate: 1)
+        }
     }
 
     var body: some View {
@@ -72,10 +92,23 @@ struct ObservationDetailsView: View {
         if let presentation = navigation.presentation {
 
             ScrollView {
-                ObservationList(
-                    title: "Metar history",
-                    observations: observations?.metars ?? [],
-                    presentation: presentation)
+                if let obs = navigation.selectedObservation, let letter = (obs as? Metar)?.atisLetter {
+                    Button(action: play) {
+                        HStack(spacing: 10) {
+                            Image(systemName: playerStatus)
+
+                            Text("ATIS Information \(letter)")
+                        }.padding()
+                    }.buttonStyle(.bordered)
+                    .tint(.accentColor)
+                }
+
+                if observations?.metars.count != 1 {
+                    ObservationList(
+                        title: "Metar history",
+                        observations: observations?.metars ?? [],
+                        presentation: presentation)
+                }
 
                 ObservationList(
                     title: "Taf",
@@ -109,6 +142,29 @@ struct ObservationDetailsView: View {
 
                 isFavorite = observations?.metars.first?.station?.favorite ?? false
             }
+            .onDisappear {
+                audioPlayer.replaceCurrentItem(with: nil)
+            }.onReceive(timeControlStatus.$currentStatus) { status in
+                if status == .playing {
+                    playerStatus = "pause"
+                } else if status == .waitingToPlayAtSpecifiedRate {
+                    playerStatus = "circle.dotted"
+                } else {
+                    playerStatus = "play"
+                }
+            }
+        }
+    }
+}
+
+class TimeControlStatusObserver {
+    @Published var currentStatus: AVPlayer.TimeControlStatus?
+    private var itemObservation: AnyCancellable?
+
+    init(player: AVPlayer?) {
+        // Observe the current item changing
+        itemObservation = player?.publisher(for: \.timeControlStatus).sink { newStatus in
+            self.currentStatus = newStatus
         }
     }
 }
@@ -140,7 +196,15 @@ struct ObservationList: View {
 }
 
 struct ObservationDrawerView_Previews: PreviewProvider {
-    static let manager = NavigationManager()
+    static let manager: NavigationManager = {
+
+        let nav = NavigationManager()
+        nav.selectedModule = Modules.visibility
+        var metar = Metar.metar("EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG=")
+        metar.atisLetter = "XRAY"
+        nav.selectedObservation = metar
+        return nav
+    }()
     static let observations = Observations(
         metars: [
             Metar.metar("EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="),
@@ -152,11 +216,6 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         tafs: [
             Taf.taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30")
         ])
-
-    init() {
-        Self.manager.selectedModule = Modules.visibility
-        Self.manager.selectedObservation = Self.observations.metars[0]
-    }
 
     static var previews: some View {
         VStack {

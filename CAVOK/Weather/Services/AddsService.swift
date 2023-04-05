@@ -37,7 +37,7 @@ public class AddsService {
     class func fetchObservations(_ source: AddsSource,
                                  at region: WeatherRegion,
                                  station: String? = nil,
-                                 history: Bool = true) async throws -> [String] {
+                                 history: Bool = true) async throws -> [Observation] {
         guard let query = [
             "hoursBeforeNow": "3",
             "mostRecentForEachStation": String(history == false),
@@ -51,11 +51,16 @@ public class AddsService {
         print("Found \(count) ADDS \(source.rawValue)")
 
         let raws = data.children.compactMap { item in
-
             item["raw_text"].element?.text
         }
         // remove possible duplicate entries
-        return Array(Set(raws))
+        return Array(Set(raws)).map { raw in
+            if source == .TAF {
+                return Taf().parse(raw: raw)
+            } else {
+                return Metar().parse(raw: raw)
+            }
+        }
     }
 
     private class func parse(data: Data) throws -> XMLIndexer {

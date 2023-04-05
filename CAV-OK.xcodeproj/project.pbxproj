@@ -41,6 +41,7 @@
 		894525012991BFF2007CE96F /* CAVOK.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09D675A2540DAB100FB3D39 /* CAVOK.plist */; };
 		89452504299290E1007CE96F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89452503299290E1007CE96F /* RealmSwift */; };
 		894525562992D9DF007CE96F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 894525532992984B007CE96F /* RealmSwift */; };
+		8946427629DDE04500B76FA8 /* AtisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8965C1A629DC2A6D002204D7 /* AtisService.swift */; };
 		894EA96029842EB0005C986D /* AdaptiveStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894EA95F29842EB0005C986D /* AdaptiveStack.swift */; };
 		8958CB9629882022001F4553 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8958CB9529882022001F4553 /* WidgetKit.framework */; };
 		8958CB9829882022001F4553 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8958CB9729882022001F4553 /* SwiftUI.framework */; };
@@ -53,6 +54,7 @@
 		8958CBA829882023001F4553 /* CAV-OK WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8958CB9429882022001F4553 /* CAV-OK WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		895B987229774600005E5D7F /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B987129774600005E5D7F /* BottomSheetView.swift */; };
 		895B98752977F878005E5D7F /* BottomSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B98742977F878005E5D7F /* BottomSheetConfig.swift */; };
+		8965C1A729DC2A6D002204D7 /* AtisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8965C1A629DC2A6D002204D7 /* AtisService.swift */; };
 		8974F53729C6372400350973 /* LastSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66922540CAB800FB3D39 /* LastSession.swift */; };
 		8974F53829C641B200350973 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66AC2540CACA00FB3D39 /* Date+Additions.swift */; };
 		8974F53E29D018D000350973 /* FavoriteObservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974F53D29D018D000350973 /* FavoriteObservationsView.swift */; };
@@ -249,6 +251,7 @@
 		8958CBA329882023001F4553 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		895B987129774600005E5D7F /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		895B98742977F878005E5D7F /* BottomSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfig.swift; sourceTree = "<group>"; };
+		8965C1A629DC2A6D002204D7 /* AtisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtisService.swift; sourceTree = "<group>"; };
 		8974F53D29D018D000350973 /* FavoriteObservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteObservationsView.swift; sourceTree = "<group>"; };
 		8974F54129D0303200350973 /* StationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListItemView.swift; sourceTree = "<group>"; };
 		8974F54529D37C9000350973 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
@@ -692,6 +695,7 @@
 				C09D66D62540CACA00FB3D39 /* AwsService.swift */,
 				C09D66D52540CACA00FB3D39 /* WeatherServer.swift */,
 				89295ACB29B3B4F6001A7740 /* GeoQueries.swift */,
+				8965C1A629DC2A6D002204D7 /* AtisService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -997,6 +1001,7 @@
 				894524DE2991435B007CE96F /* WeatherServer.swift in Sources */,
 				894524E42991445C007CE96F /* Taf.swift in Sources */,
 				894524DF299143A8007CE96F /* Metar.swift in Sources */,
+				8946427629DDE04500B76FA8 /* AtisService.swift in Sources */,
 				894524EC29915507007CE96F /* String+Additions.swift in Sources */,
 				894524ED2991551C007CE96F /* Weather.swift in Sources */,
 				894524E729914544007CE96F /* Tokenizer.swift in Sources */,
@@ -1044,6 +1049,7 @@
 				C09D66DE2540CACA00FB3D39 /* Date+Additions.swift in Sources */,
 				C09D66A22540CAB800FB3D39 /* Modules.swift in Sources */,
 				B6A7424127569AEA00CBAA55 /* Collection+Additions.swift in Sources */,
+				8965C1A729DC2A6D002204D7 /* AtisService.swift in Sources */,
 				C09D66F42540CACA00FB3D39 /* StationMarker.swift in Sources */,
 				8974F54229D0303200350973 /* StationListItemView.swift in Sources */,
 				C09D66DF2540CACA00FB3D39 /* Maply+Additions.swift in Sources */,
@@ -1454,7 +1460,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1476,7 +1482,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3WE3J68227;
 				INFOPLIST_FILE = CAVOKTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
