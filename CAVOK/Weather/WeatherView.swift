@@ -90,6 +90,19 @@ struct WeatherView: View {
                 navigation.selectedObservation = observation
             }
         }
+        .onOpenURL { url in
+            if url.scheme == "cavok" {
+                Task {
+                    do {
+                        if let station = try await weatherService.fetchStation(station: url.lastPathComponent) {
+                            navigation.selectedObservation = try await weatherService.fetchLatest(station: station)
+                        }
+                    } catch {
+                        Messages.show(error: error)
+                    }
+                }
+            }
+        }
 
         // bottomSheet size cannot be controlled on iPad, use overlay instead
         .overlay(alignment: .bottom) {

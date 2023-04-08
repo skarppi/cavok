@@ -122,6 +122,7 @@ struct CAV_OK_WidgetEntryView : View {
 
                     Spacer()
                 }
+                .widgetURL(URL(string: "cavok://stations/\(metar.station?.identifier ?? "")")!)
                 .frame(maxWidth: .infinity,
                        maxHeight: .infinity,
                        alignment: .topLeading)
