@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+enum Orientation {
+    case HORIZONTAL, VERTICAL
+}
+
 struct AdaptiveStack<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    let overrideOrientation: Orientation?
     let horizontalAlignment: HorizontalAlignment
     let verticalAlignment: VerticalAlignment
     let spacing: CGFloat?
@@ -17,10 +22,12 @@ struct AdaptiveStack<Content: View>: View {
 
     @State private var orientation = UIDeviceOrientation.unknown
 
-    init(horizontalAlignment: HorizontalAlignment = .leading,
+    init(overrideOrientation: Orientation? = nil,
+         horizontalAlignment: HorizontalAlignment = .leading,
          verticalAlignment: VerticalAlignment = .center,
          spacing: CGFloat? = nil,
          @ViewBuilder content: @escaping (Bool) -> Content) {
+        self.overrideOrientation = overrideOrientation
         self.horizontalAlignment = horizontalAlignment
         self.verticalAlignment = verticalAlignment
         self.spacing = spacing
@@ -28,8 +35,11 @@ struct AdaptiveStack<Content: View>: View {
     }
 
     var body: some View {
+        let horizontal = overrideOrientation == .HORIZONTAL
+        || overrideOrientation != .VERTICAL
+            && (verticalSizeClass == .compact || horizontalSizeClass == .regular)
         Group {
-            if verticalSizeClass == .compact || horizontalSizeClass == .regular {
+            if horizontal {
                 HStack(alignment: verticalAlignment, spacing: spacing) {
                     content(true)
                 }

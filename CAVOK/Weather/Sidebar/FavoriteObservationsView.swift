@@ -15,7 +15,13 @@ struct FavoriteObservationsView: View {
 
     let now: Date
 
+    @Environment(\.isPreview) var isPreview
+
     func fetchObservations() -> [Metar] {
+        guard !isPreview else {
+            return Observations.testData.metars
+        }
+
         do {
             return try WeatherServer.query.favorites(location: LastLocation.load())
         } catch {

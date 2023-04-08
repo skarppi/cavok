@@ -34,6 +34,22 @@ struct Observations {
     let tafs: [Taf]
 }
 
+#if DEBUG
+extension Observations {
+    static let testData = Observations(
+        metars: [
+            Metar.metar("EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="),
+            Metar.metar("EFHK 091920Z 04006KT 4000 -DZ BR BKN004 05/05 Q1009="),
+            Metar.metar("EFHK 091650Z 08004KT 7000 SCT004 BKN006 "
+                  + "05/05 RMK AO2 SLP135 T01170028 10144 AO2 "
+                  + "SLP135 T01170028 10144 20111 Q1009=")
+        ],
+        tafs: [
+            Taf.taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30")
+        ])
+}
+#endif
+
 open class Observation: Object, Identifiable {
     // current date, will be used to parse dates
     var now: Date = Date()

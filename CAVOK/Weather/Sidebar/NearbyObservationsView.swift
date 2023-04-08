@@ -14,7 +14,13 @@ struct NearbyObservationsView: View {
 
     let now: Date
 
+    @Environment(\.isPreview) var isPreview
+
     func fetchObservations() -> [Metar] {
+        guard !isPreview else {
+            return Observations.testData.metars
+        }
+
         if let location = LastLocation.load() {
             do {
                 return try WeatherServer.query.nearby(location: location)

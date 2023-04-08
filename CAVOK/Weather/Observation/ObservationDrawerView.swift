@@ -81,8 +81,6 @@ struct ObservationDetailsView: View {
 
             let playerItem = AVPlayerItem(url: url)
             audioPlayer.replaceCurrentItem(with: playerItem)
-
-            // playerObserver = PlayerItemObserver(player: audioPlayer)
             audioPlayer.playImmediately(atRate: 1)
         }
     }
@@ -115,12 +113,14 @@ struct ObservationDetailsView: View {
                     observations: observations?.tafs ?? [],
                     presentation: presentation)
 
-                HStack {
+                AdaptiveStack(overrideOrientation: Self.isPad ? .VERTICAL : .HORIZONTAL) { _ in
                     Button(action: showMeteogram) {
                         HStack(spacing: 10) {
                             Text("Meteogram")
                             Image(systemName: "location")
-                        }.padding()
+                        }
+                        .padding()
+                        .frame(maxWidth: Self.isPad ? .infinity : nil)
                     }
                     .buttonStyle(.bordered)
                     .tint(.accentColor)
@@ -129,11 +129,13 @@ struct ObservationDetailsView: View {
                         HStack(spacing: 10) {
                             Text( isFavorite ? "Unfavorite" : "Favorite")
                             Image(systemName: "heart")
-                        }.padding()
+                        }
+                        .padding()
+                        .frame(maxWidth: Self.isPad ? .infinity : nil)
                     }
                     .buttonStyle(.bordered)
                     .tint(isFavorite ? .red : .green)
-                }
+                }.padding(.top)
             }
             .padding(.horizontal)
             .onAppear {
@@ -205,20 +207,10 @@ struct ObservationDrawerView_Previews: PreviewProvider {
         nav.selectedObservation = metar
         return nav
     }()
-    static let observations = Observations(
-        metars: [
-            Metar.metar("EFHK 091950Z 05006KT 3500 -RADZ BR FEW003 BKN005 05/04 Q1009 NOSIG="),
-            Metar.metar("EFHK 091920Z 04006KT 4000 -DZ BR BKN004 05/05 Q1009="),
-            Metar.metar("EFHK 091650Z 08004KT 7000 SCT004 BKN006 "
-                  + "05/05 RMK AO2 SLP135 T01170028 10144 AO2 "
-                  + "SLP135 T01170028 10144 20111 Q1009=")
-        ],
-        tafs: [
-            Taf.taf("TAF EFHK 121430Z 1215/1315 24008KT CAVOK TEMPO 1305/1313 SHRA BKN012 BKN020CB PROB30")
-        ])
+    static let observations = Observations.testData
 
     static var previews: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ObservationHeaderView()
 
             ObservationDetailsView(observations: observations)
