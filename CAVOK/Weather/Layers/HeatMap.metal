@@ -74,7 +74,7 @@ kernel void heatMapShader(
     float hue = 0.0f;
     
     for (int i = 5*4; i >= 0; i=i-4) {
-        if(value >= steps[i]) {
+        if(value >= steps[i] && value < steps[i+1]) {
             hue = HueValue(value, steps[i], steps[i+1], steps[i+2], steps[i+3]);
             break;
         }

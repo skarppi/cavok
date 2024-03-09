@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -173,6 +173,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 89797E9829984CC200DCCE2E;
 			remoteInfo = "CAV-OK Intents";
+		};
+		89AFB4492B9C86A100279AF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C09D666C2540BF3700FB3D39 /* WhirlyGlobeMaplyComponent.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 310573EA2863C72D00B50828;
+			remoteInfo = WhirlyGlobeMin;
 		};
 		C09D66432540BCC200FB3D39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -551,6 +558,7 @@
 			isa = PBXGroup;
 			children = (
 				C09D66722540BF3700FB3D39 /* WhirlyGlobe.framework */,
+				89AFB44A2B9C86A100279AF0 /* WhirlyGlobe.framework */,
 				C09D66742540BF3700FB3D39 /* WhirlyGlobeMaplyComponentTests.xctest */,
 			);
 			name = Products;
@@ -888,6 +896,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		89AFB44A2B9C86A100279AF0 /* WhirlyGlobe.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WhirlyGlobe.framework;
+			remoteRef = 89AFB4492B9C86A100279AF0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C09D66722540BF3700FB3D39 /* WhirlyGlobe.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
