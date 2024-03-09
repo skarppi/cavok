@@ -7,31 +7,33 @@
 //
 
 import Foundation
-import SWXMLHash
-import Gzip
+import SwiftyJSON
 
 enum AddsSource: String {
-    case STATION = "stations", METAR = "metars", TAF = "tafs"
+    case STATION = "stationinfo", METAR = "metar", TAF = "tafs"
 }
 
 public class AddsService {
 
     class func fetchStations(at region: WeatherRegion) async throws -> [Station] {
-        let data = try await fetch(dataSource: "stations", at: region)
-        print("Found \(data.children.count) ADDS stations")
+        let data = try await fetch(dataSource: AddsSource.STATION, with: ["format": "json"], at: region)
 
-        return data.children.map { station in
-            Station(
-                identifier: station["station_id"].element!.text,
-                name: station["site"].element!.text,
-                latitude: Float(station["latitude"].element!.text)!,
-                longitude: Float(station["longitude"].element!.text)!,
-                elevation: Float(station["elevation_m"].element!.text)!,
+        let stations = try JSON(data: data).arrayValue.map { station -> Station in
+            let name = station["site"].stringValue.split(separator: "Arpt").first
+            return Station(
+                identifier: station["icaoId"].stringValue,
+                name: String(name ?? "-"),
+                latitude: station["lat"].floatValue,
+                longitude: station["lon"].floatValue,
+                elevation: station["elev"].floatValue,
                 source: .adds,
-                hasMetar: station["site_type"]["METAR"].element != nil,
-                hasTaf: station["site_type"]["TAF"].element != nil
+                hasMetar: true,
+                hasTaf: station["priority"].intValue <= 5
             )
         }
+        
+        print("Found \(stations.count) ADDS stations")
+        return stations
     }
 
     class func fetchObservations(_ source: AddsSource,
@@ -39,77 +41,42 @@ public class AddsService {
                                  station: String? = nil,
                                  history: Bool = true) async throws -> [Observation] {
         guard let query = [
-            "hoursBeforeNow": "3",
-            "mostRecentForEachStation": String(history == false),
-            "stationString": station,
-            "fields": "raw_text"
+            "hours": history ? "3" : nil,
+            "ids": station,
+            "format": "raw",
+            "taf": "true"
         ].filter({ $0.value != nil }) as? [String: String] else { return [] }
-
-        let data = try await fetch(dataSource: source.rawValue, with: query, at: region)
-        let count = data.children.count
-
-        print("Found \(count) ADDS \(source.rawValue)")
-
-        let raws = data.children.compactMap { item in
-            item["raw_text"].element?.text
-        }
-        // remove possible duplicate entries
-        return Array(Set(raws)).map { raw in
-            if source == .TAF {
-                return Taf().parse(raw: raw)
+        
+        let data = try await fetch(dataSource: source, with: query, at: region)
+        
+        let result = String(data: data, encoding: String.Encoding.ascii)?.split(whereSeparator: \.isNewline)
+        return result?.map { raw in
+            
+            if raw.starts(with: "TAF ") {
+                return Taf().parse(raw: String(raw))
             } else {
-                return Metar().parse(raw: raw)
+                return Metar().parse(raw: String(raw))
             }
-        }
+        } ?? []
     }
-
-    private class func parse(data: Data) throws -> XMLIndexer {
-        let response = SWXMLHash.parse(data)["response"]
-
-        let errors = response["errors"]
-        guard errors.children.count == 0  else {
-            let msgs = errors["error"].all.compactMap { $0.element?.text }
-            throw Weather.error(msg: msgs.joined(separator: ", "))
-        }
-
-        let warnings = response["warnings"]
-        if warnings.children.count > 0 {
-            let msgs = warnings["warning"].all.compactMap { $0.element?.text }
-            print("ADDS warning: \(msgs.joined())")
-        }
-
-        return response["data"]
-    }
-
-    private class func fetch(dataSource: String,
+    
+    private class func fetch(dataSource: AddsSource,
                              with: [String: String] = [:],
-                             at region: WeatherRegion) async throws -> XMLIndexer {
+                             at region: WeatherRegion) async throws -> Data {
         var params = [
-            "dataSource": dataSource,
-            "requestType": "retrieve",
-            "format": "xml",
-            "compression": "gzip",
-            "minLat": String(region.minLat),
-            "minLon": String(region.minLon),
-            "maxLat": String(region.maxLat),
-            "maxLon": String(region.maxLon)
+            "bbox": "\(region.minLat),\(region.minLon),\(region.maxLat),\(region.maxLon)",
         ]
         with.forEach { params[$0] = $1 }
 
         let host = UserDefaults.cavok?.string(forKey: "addsURL")
-        var components = URLComponents(string: host!)!
+        var components = URLComponents(string: "\(host!)/\(dataSource.rawValue)")!
         components.queryItems = params.map { name, value in URLQueryItem(name: name, value: value) }
-
-        return try await execute(url: components.url!)
-    }
-
-    private class func execute(url: URL) async throws -> XMLIndexer {
-        print("Fetching ADDS data from \(url)")
-
-        let (data, _)  = try await URLSession.shared.data(from: url)
+        
+        print("Fetching ADDS data from \(components.url!)")
 
         do {
-            return try self.parse(data: data.isGzipped ? data.gunzipped() : data)
+            let (data, _)  = try await URLSession.shared.data(from: components.url!)
+            return data
         } catch Weather.error(let msg) {
             print(msg)
             throw Weather.error(msg: "ADDS temporarily unavailable")

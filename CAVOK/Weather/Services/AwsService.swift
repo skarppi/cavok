@@ -60,7 +60,7 @@ public class AwsService {
             return nil
         }
 
-        let url = URL(string: UserDefaults.cavok!.string(forKey: dataSource.rawValue)!)!
+        let url = URL(string: UserDefaults.cavok!.string(forKey: dataSource.rawValue)!.removingPercentEncoding!)!
 
         print("Fetching AWS data from \(url)")
         let (data, _) = try await URLSession.shared.data(from: url)

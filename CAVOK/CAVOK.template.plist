@@ -7,11 +7,11 @@
 	<key>basemapURLdark</key>
 	<string>https://api.mapbox.com/styles/v1/skarppi/ckwltncmreswg15qnv14ops3t/tiles/256/{z}/{x}/{y}?access_token=MAPBOX_TOKEN</string>
 	<key>addsURL</key>
-	<string>https://www.aviationweather.gov/adds/dataserver_current/httpparam</string>
+	<string>https://aviationweather.gov/api/data</string>
 	<key>awsMetarsURL</key>
 	<string>https://ilmailusaa.fi/weatheranim.php?id=viscloud</string>
 	<key>awsStationsURL</key>
-	<string>https://ilmailusaa.fi/backend.php?%7B%22mode%22%3A%22autometar%22%2C%22radius%22%3A%2250%22%2C%22points%22%3A%5B%7B%22_area%22%3A%221%22%7D%5D%7D</string>
+	<string>https://ilmailusaa.fi/backend.php?{%22mode%22:%22awsaviation%22,%22radius%22:%22100%22,%22points%22:[{%22_area%22:%221%22}]}</string>
 	<key>airspaceURL</key>
 	<string>http://tusina.net:8000/aip</string>
 	<key>atisURL</key>

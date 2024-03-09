@@ -1,4 +1,5 @@
 {
+  "originHash" : "e852c782bf528e72b8a37e6fe1f40593696118ea75420e8bf6c646064646b23a",
   "pins" : [
     {
       "identity" : "gzipswift",
@@ -44,16 +45,7 @@
         "revision" : "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
         "version" : "5.0.1"
       }
-    },
-    {
-      "identity" : "swxmlhash",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/drmohundro/SWXMLHash",
-      "state" : {
-        "revision" : "9183170d20857753d4f331b0ca63f73c60764bf3",
-        "version" : "5.0.2"
-      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

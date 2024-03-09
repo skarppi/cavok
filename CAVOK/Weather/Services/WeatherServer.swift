@@ -52,20 +52,19 @@ public class WeatherServer {
     @MainActor func refreshObservations() async throws {
         let region = WeatherRegion.load()
 
-        async let addsMetars = AddsService.fetchObservations(.METAR, at: region, history: true)
-        async let awsMetars = AwsService.fetchObservations(at: region)
-        async let atisMetars = AtisService.fetchObservations(at: region)
-        async let addsTafs = AddsService.fetchObservations(.TAF, at: region, history: false)
+        async let adds = AddsService.fetchObservations(.METAR, at: region, history: true)
+        async let aws = AwsService.fetchObservations(at: region)
+        async let atis = AtisService.fetchObservations(at: region)
 
-        let allMetars = try await (addsMetars + awsMetars + atisMetars)
-        let allTafs = try await addsTafs
+        let allMetars = try await (adds + aws + atis)
+        let allTafs = try await adds
 
         let realm = try await Realm()
-        let metars = allMetars.compactMap { metar in
+        let metars = allMetars.filter( { $0.isKind(of: Metar.self) }).compactMap { metar in
             enrichObservation(metar, realm: realm)
         }
 
-        let tafs = allTafs.compactMap { taf in
+        let tafs = allTafs.filter({$0.isKind(of: Taf.self)}).compactMap { taf in
             enrichObservation(taf, realm: realm)
         }
 

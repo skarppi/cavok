@@ -34,7 +34,6 @@
 		894524F329918A7B007CE96F /* CLLocation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524F129918A62007CE96F /* CLLocation+Additions.swift */; };
 		894524F429918C4B007CE96F /* LastLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66942540CAB800FB3D39 /* LastLocation.swift */; };
 		894524F6299198AB007CE96F /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 894524F5299198AB007CE96F /* Gzip */; };
-		894524F8299198B1007CE96F /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = 894524F7299198B1007CE96F /* SWXMLHash */; };
 		894524FA299198B6007CE96F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 894524F9299198B6007CE96F /* SwiftyJSON */; };
 		894524FF2991AC02007CE96F /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524FE2991AC02007CE96F /* FileManager+Additions.swift */; };
 		894525002991AE58007CE96F /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894524FE2991AC02007CE96F /* FileManager+Additions.swift */; };
@@ -148,7 +147,6 @@
 		C09D67022540CACA00FB3D39 /* ObservationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66D82540CACA00FB3D39 /* ObservationSelection.swift */; };
 		C09D67042540CACA00FB3D39 /* ObservationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D66DA2540CACA00FB3D39 /* ObservationMarker.swift */; };
 		C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67282540CD2300FB3D39 /* SwiftyJSON */; };
-		C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67342540CDC000FB3D39 /* SWXMLHash */; };
 		C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = C09D673A2540CE2900FB3D39 /* Gzip */; };
 		C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = C09D67402540CE5700FB3D39 /* SwiftMessages */; };
 		C09D67462540D03100FB3D39 /* ObservationDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09D67452540D03100FB3D39 /* ObservationDrawerView.swift */; };
@@ -358,7 +356,6 @@
 				894525562992D9DF007CE96F /* RealmSwift in Frameworks */,
 				894524FA299198B6007CE96F /* SwiftyJSON in Frameworks */,
 				8958CB9829882022001F4553 /* SwiftUI.framework in Frameworks */,
-				894524F8299198B1007CE96F /* SWXMLHash in Frameworks */,
 				894524F6299198AB007CE96F /* Gzip in Frameworks */,
 				8958CB9629882022001F4553 /* WidgetKit.framework in Frameworks */,
 			);
@@ -379,7 +376,6 @@
 			files = (
 				89452504299290E1007CE96F /* RealmSwift in Frameworks */,
 				C09D67412540CE5700FB3D39 /* SwiftMessages in Frameworks */,
-				C09D67352540CDC000FB3D39 /* SWXMLHash in Frameworks */,
 				C09D67292540CD2300FB3D39 /* SwiftyJSON in Frameworks */,
 				C09D673B2540CE2900FB3D39 /* Gzip in Frameworks */,
 				C076EC7D2572E54500470190 /* WhirlyGlobe.framework in Frameworks */,
@@ -739,7 +735,6 @@
 			name = "CAV-OK WidgetExtension";
 			packageProductDependencies = (
 				894524F5299198AB007CE96F /* Gzip */,
-				894524F7299198B1007CE96F /* SWXMLHash */,
 				894524F9299198B6007CE96F /* SwiftyJSON */,
 				894525532992984B007CE96F /* RealmSwift */,
 			);
@@ -787,7 +782,6 @@
 			name = "CAV-OK";
 			packageProductDependencies = (
 				C09D67282540CD2300FB3D39 /* SwiftyJSON */,
-				C09D67342540CDC000FB3D39 /* SWXMLHash */,
 				C09D673A2540CE2900FB3D39 /* Gzip */,
 				C09D67402540CE5700FB3D39 /* SwiftMessages */,
 				89452503299290E1007CE96F /* RealmSwift */,
@@ -871,7 +865,6 @@
 			mainGroup = C09D66232540BCBE00FB3D39;
 			packageReferences = (
 				C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */,
 				C09D67392540CE2900FB3D39 /* XCRemoteSwiftPackageReference "GzipSwift" */,
 				C09D673F2540CE5700FB3D39 /* XCRemoteSwiftPackageReference "SwiftMessages" */,
 				89452502299290E1007CE96F /* XCRemoteSwiftPackageReference "realm-swift" */,
@@ -1627,14 +1620,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/drmohundro/SWXMLHash";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
-			};
-		};
 		C09D67392540CE2900FB3D39 /* XCRemoteSwiftPackageReference "GzipSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/1024jp/GzipSwift";
@@ -1658,11 +1643,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C09D67392540CE2900FB3D39 /* XCRemoteSwiftPackageReference "GzipSwift" */;
 			productName = Gzip;
-		};
-		894524F7299198B1007CE96F /* SWXMLHash */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */;
-			productName = SWXMLHash;
 		};
 		894524F9299198B6007CE96F /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1688,11 +1668,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C09D67272540CD2300FB3D39 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
-		};
-		C09D67342540CDC000FB3D39 /* SWXMLHash */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C09D67332540CDC000FB3D39 /* XCRemoteSwiftPackageReference "SWXMLHash" */;
-			productName = SWXMLHash;
 		};
 		C09D673A2540CE2900FB3D39 /* Gzip */ = {
 			isa = XCSwiftPackageProductDependency;
